@@ -6,13 +6,13 @@ import Styled from 'styled-components';
 const MainContainer = Styled.div`
     display: flex;
     flex: 1;
+    flex-direction: column;
     padding: 1rem;
     border: 1px solid red;
 `
 
 const ControlBar = Styled.div`
     display: flex;
-    flex: 1;
     padding: 1rem;
     border: 1px solid green;
 `
@@ -74,6 +74,18 @@ const FilterButton = Styled.button`
     }
 `
 
+const TableMainContainer = Styled.div`
+    display: flex;
+    flex: 1;
+    border: 1px solid yellow;
+`
+
+const Pagination = Styled.div`
+    display: flex;
+    border: 1px blue solid;
+    justify-content: center;
+`
+
 
 export default function MyWords() {
     return (
@@ -85,6 +97,14 @@ export default function MyWords() {
                     <FilterButton>|||</FilterButton>
                 </SearchBar>
             </ControlBar>
+            <TableMainContainer>
+                TEST
+            </TableMainContainer>
+            <Pagination>
+                <FilterButton>|||</FilterButton>
+                <FilterButton>|||</FilterButton>
+                <FilterButton>|||</FilterButton>
+            </Pagination>
         </MainContainer>
     )
 }
