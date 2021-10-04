@@ -7,8 +7,8 @@ import { MdVolumeUp } from 'react-icons/md'
 
 const Card = styled.div`
     background-color:   #aaa2a2;
-    border-radius: 0.5rem;
-    margin: 1rem;
+    border-radius: 8px;
+    margin: 16px;
     width: 30%;
     min-width: 20rem;
     min-height: 0;
@@ -24,8 +24,7 @@ const CardHeader = styled.div`
 `
 
 const CardBody = styled.div`
-    padding: 2.5rem;
-    padding-bottom: 1.5rem;
+    padding: 40px 40px 24px 40px;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -38,14 +37,14 @@ const Title = styled.div`
     display: flex;
     justify-content: space-between;
     font-size: 2rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 40px;
 `
 
 const Icon = styled.div`
     display: flex;
     align-items: center;
     color: #e4dcdc;
-    padding-left: 1rem;
+    padding-left: 16px;
 `
 
 const ScrollContainer = styled.div`
@@ -53,36 +52,36 @@ const ScrollContainer = styled.div`
     min-height: 0;
     overflow: scroll;
     flex: 1;
-    margin-bottom: 1.5rem;
+    margin-bottom: 24px;
 `
 
 const TagContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 0.5rem;
+    margin-bottom: 8px;
 `
 
 const Tag = styled.div`
     background-color: #857f7f;
-    margin: 0 0.25rem 0.5rem 0;
-    padding: 0.25rem 1rem;
-    border-radius: 1rem;
+    margin: 0 4px 8px 0;
+    padding: 4px 8px;
+    border-radius: 16px;
     font-size: 1.5rem;
 `
 
 const LighterCard = styled.div`
     background-color:#c7bebe;
-    border-radius: 0.25rem;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
+    border-radius: 8px;
+    padding: 8px;
+    margin-bottom: 16px;
 `
 
 const Sentence = styled.div`
     background-color:#aaa2a2;
-    margin: 0.25rem;
+    margin: 4px;
     font-size: 1.25rem;
-    padding: 0.5rem;
-    border-radius: 0.25rem;
+    padding: 8px;
+    border-radius: 4px;
 `
 
 const ButtonContainer = styled.div`
@@ -92,10 +91,10 @@ const ButtonContainer = styled.div`
 
 const Button = styled.div`
     background-color: ${({ color }: any) => color};
-    border-radius: 0.25rem;
+    border-radius: 4px;
     font-weight: bold;
-    margin-top: 0.25rem;
-    padding: 0.75rem;
+    margin-top: 4px;
+    padding: 12px;
     width: 35%;
     text-align: center;
     font-size: 0.8rem;
