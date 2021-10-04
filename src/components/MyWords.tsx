@@ -1,5 +1,8 @@
 import React from 'react';
 
+/* Icons */
+import { FaBeer } from 'react-icons/fa';
+
 /* Styles */
 import Styled from 'styled-components';
 
@@ -152,7 +155,7 @@ export default function MyWords() {
                         English Word 1
                         Magyar szó 1
                         Magyar szó 2
-                        <FilterButton>|||</FilterButton>
+                        <FaBeer />
                         Long Term Memory
                         <FilterButton>H</FilterButton>
                         <FilterButton>E</FilterButton>
