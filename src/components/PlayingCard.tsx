@@ -2,6 +2,7 @@ import React from 'react';
 
 /* Styles */
 import styled from 'styled-components';
+import { MdVolumeUp } from 'react-icons/md'
 
 
 const Card = styled.div`
@@ -38,6 +39,13 @@ const Title = styled.div`
     justify-content: space-between;
     font-size: 2rem;
     margin-bottom: 2.5rem;
+`
+
+const Icon = styled.div`
+    display: flex;
+    align-items: center;
+    color: #e4dcdc;
+    padding-left: 1rem;
 `
 
 const ScrollContainer = styled.div`
@@ -98,7 +106,7 @@ export default function WordCard() {
         <CardHeader />
 
         <CardBody>
-            <Title>Petra's English word <div>H</div></Title>
+            <Title>Petra's English word <Icon><MdVolumeUp /></Icon></Title>
 
             <ScrollContainer>
                 <TagContainer>
