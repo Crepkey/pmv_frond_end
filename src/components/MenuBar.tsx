@@ -4,7 +4,8 @@ import React from 'react';
 import Styled from 'styled-components';
 
 const MainContainer = Styled.div`
-    background-color: #534a4a;
+    background-image: linear-gradient(to top,#d8d7dd,#dbdee7,#e2e5eb);
+    border-bottom: 1px solid #b1bcc7;
     display: flex;
     justify-content: space-between;
 `

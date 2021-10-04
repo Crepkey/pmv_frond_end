@@ -180,7 +180,6 @@ const WordHandler = Styled.div`
 
 const Pagination = Styled.div`
     display: flex;
-    border: 1px blue solid;
     justify-content: center;
 `
 
