@@ -77,7 +77,52 @@ const FilterButton = Styled.button`
 const TableMainContainer = Styled.div`
     display: flex;
     flex: 1;
-    border: 1px solid yellow;
+    flex-direction: column;
+    padding: 1rem;
+    margin: 2rem;
+    background-image: linear-gradient(to right top, #3f444b, #596468, #798685, #9ea8a2, #c7cac1);
+    border-radius: 10px;
+    max-height: 70%;
+    
+`
+
+const TabContainer = Styled.div`
+    display: flex;
+    flex: 1;
+`
+
+const Tab = Styled.div`
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    font-weight: 550;
+    border: 1px solid #4d5053;
+    border-radius: 10px 10px 0 0;
+    background-image: linear-gradient(to right top, #3f444b, #596468, #798685, #9ea8a2, #c7cac1);
+    :hover{
+        background-image: linear-gradient(to left top, #3f444b, #596468, #798685, #9ea8a2, #c7cac1);
+        color: #27e627;
+    }
+`
+
+const WordContainer = Styled.div`
+    display: flex;
+    flex: 10;
+    flex-direction: column;
+    overflow: scroll;
+    border-left: 1px solid #4d5053;
+    border-right: 1px solid #4d5053;
+    border-bottom: 1px solid #4d5053;
+    border-radius: 0 0 10px 10px;
+`
+
+const WordRow = Styled.div`
+    display: flex;
+    flex: 1;
+    min-height: 2rem;
+    background-image: linear-gradient(to right top, #7f848b, #8c969a, #9ca8a7, #b0b9b4, #c7cac1);
+    border-bottom: 1px #d0d1d1 solid;
 `
 
 const Pagination = Styled.div`
@@ -98,7 +143,176 @@ export default function MyWords() {
                 </SearchBar>
             </ControlBar>
             <TableMainContainer>
-                TEST
+                <TabContainer>
+                    <Tab>Active Words</Tab>
+                    <Tab>Deleted Words</Tab>
+                </TabContainer>
+                <WordContainer>
+                    <WordRow>
+                        English Word 1
+                        Magyar szó 1
+                        Magyar szó 2
+                        <FilterButton>|||</FilterButton>
+                        Long Term Memory
+                        <FilterButton>H</FilterButton>
+                        <FilterButton>E</FilterButton>
+                        <FilterButton>D</FilterButton>
+                    </WordRow>
+                    <WordRow>
+                        English Word 1
+                        Magyar szó 1
+                        Magyar szó 2
+                        <FilterButton>|||</FilterButton>
+                        Long Term Memory
+                        <FilterButton>H</FilterButton>
+                        <FilterButton>E</FilterButton>
+                        <FilterButton>D</FilterButton>
+                    </WordRow>
+                    <WordRow>
+                        English Word 1
+                        Magyar szó 1
+                        Magyar szó 2
+                        <FilterButton>|||</FilterButton>
+                        Long Term Memory
+                        <FilterButton>H</FilterButton>
+                        <FilterButton>E</FilterButton>
+                        <FilterButton>D</FilterButton>
+                    </WordRow>
+                    <WordRow>
+                        English Word 1
+                        Magyar szó 1
+                        Magyar szó 2
+                        <FilterButton>|||</FilterButton>
+                        Long Term Memory
+                        <FilterButton>H</FilterButton>
+                        <FilterButton>E</FilterButton>
+                        <FilterButton>D</FilterButton>
+                    </WordRow>
+                    <WordRow>
+                        English Word 1
+                        Magyar szó 1
+                        Magyar szó 2
+                        <FilterButton>|||</FilterButton>
+                        Long Term Memory
+                        <FilterButton>H</FilterButton>
+                        <FilterButton>E</FilterButton>
+                        <FilterButton>D</FilterButton>
+                    </WordRow>
+                    <WordRow>
+                        English Word 1
+                        Magyar szó 1
+                        Magyar szó 2
+                        <FilterButton>|||</FilterButton>
+                        Long Term Memory
+                        <FilterButton>H</FilterButton>
+                        <FilterButton>E</FilterButton>
+                        <FilterButton>D</FilterButton>
+                    </WordRow>
+                    <WordRow>
+                        English Word 1
+                        Magyar szó 1
+                        Magyar szó 2
+                        <FilterButton>|||</FilterButton>
+                        Long Term Memory
+                        <FilterButton>H</FilterButton>
+                        <FilterButton>E</FilterButton>
+                        <FilterButton>D</FilterButton>
+                    </WordRow>
+                    <WordRow>
+                        English Word 1
+                        Magyar szó 1
+                        Magyar szó 2
+                        <FilterButton>|||</FilterButton>
+                        Long Term Memory
+                        <FilterButton>H</FilterButton>
+                        <FilterButton>E</FilterButton>
+                        <FilterButton>D</FilterButton>
+                    </WordRow>
+                    <WordRow>
+                        English Word 1
+                        Magyar szó 1
+                        Magyar szó 2
+                        <FilterButton>|||</FilterButton>
+                        Long Term Memory
+                        <FilterButton>H</FilterButton>
+                        <FilterButton>E</FilterButton>
+                        <FilterButton>D</FilterButton>
+                    </WordRow>
+                    <WordRow>
+                        English Word 1
+                        Magyar szó 1
+                        Magyar szó 2
+                        <FilterButton>|||</FilterButton>
+                        Long Term Memory
+                        <FilterButton>H</FilterButton>
+                        <FilterButton>E</FilterButton>
+                        <FilterButton>D</FilterButton>
+                    </WordRow>
+                    <WordRow>
+                        English Word 1
+                        Magyar szó 1
+                        Magyar szó 2
+                        <FilterButton>|||</FilterButton>
+                        Long Term Memory
+                        <FilterButton>H</FilterButton>
+                        <FilterButton>E</FilterButton>
+                        <FilterButton>D</FilterButton>
+                    </WordRow>
+                    <WordRow>
+                        English Word 1
+                        Magyar szó 1
+                        Magyar szó 2
+                        <FilterButton>|||</FilterButton>
+                        Long Term Memory
+                        <FilterButton>H</FilterButton>
+                        <FilterButton>E</FilterButton>
+                        <FilterButton>D</FilterButton>
+                    </WordRow>
+                    <WordRow>
+                        English Word 1
+                        Magyar szó 1
+                        Magyar szó 2
+                        <FilterButton>|||</FilterButton>
+                        Long Term Memory
+                        <FilterButton>H</FilterButton>
+                        <FilterButton>E</FilterButton>
+                        <FilterButton>D</FilterButton>
+                    </WordRow>
+                    <WordRow>
+                        English Word 1
+                        Magyar szó 1
+                        Magyar szó 2
+                        <FilterButton>|||</FilterButton>
+                        Long Term Memory
+                        <FilterButton>H</FilterButton>
+                        <FilterButton>E</FilterButton>
+                        <FilterButton>D</FilterButton>
+                    </WordRow>
+                    <WordRow>
+                        English Word 1
+                        Magyar szó 1
+                        Magyar szó 2
+                        <FilterButton>|||</FilterButton>
+                        Long Term Memory
+                        <FilterButton>H</FilterButton>
+                        <FilterButton>E</FilterButton>
+                        <FilterButton>D</FilterButton>
+                    </WordRow>
+                    <WordRow>
+                        English Word 1
+                        Magyar szó 1
+                        Magyar szó 2
+                        <FilterButton>|||</FilterButton>
+                        Long Term Memory
+                        <FilterButton>H</FilterButton>
+                        <FilterButton>E</FilterButton>
+                        <FilterButton>D</FilterButton>
+                    </WordRow>
+                </WordContainer>
+
+
+
+
             </TableMainContainer>
             <Pagination>
                 <FilterButton>|||</FilterButton>
