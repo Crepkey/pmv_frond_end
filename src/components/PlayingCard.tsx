@@ -30,7 +30,6 @@ const CardBody = styled.div`
     flex: 1;
     min-width: 0;
     min-height: 0;
-    overflow: hidden;
 `
 
 const Title = styled.div`
