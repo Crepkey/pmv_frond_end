@@ -3,40 +3,55 @@ import React from 'react';
 /* Styles */
 import styled from 'styled-components';
 
+
 const Card = styled.div`
     background-color:   #aaa2a2;
-    border-radius: 0.25rem;
-    width: 30%; /* TODO fit content? */
+    border-radius: 0.5rem;
     margin: 1rem;
+    width: 30%;
+    min-width: 20rem;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 `
 
 const CardHeader = styled.div`
     background-color: #58708B;  /* TODO use different color for both of us */
     background-color: #BE8BA1;
-    border-radius: 0.25rem 0.25rem 0 0;
-    height: 3rem;
+    min-height: 3.5rem;
 `
 
 const CardBody = styled.div`
-    padding: 2rem;
+    padding: 2.5rem;
+    padding-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
 `
 
 const Title = styled.div`
     display: flex;
     justify-content: space-between;
     font-size: 2rem;
-    padding: 0.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
 `
 
 const ScrollContainer = styled.div`
+    min-width: 0;
+    min-height: 0;
     overflow: scroll;
+    flex: 1;
+    margin-bottom: 1.5rem;
 `
 
 const TagContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
-    margin: 1rem 0;
+    margin-bottom: 0.5rem;
 `
 
 const Tag = styled.div`
@@ -51,7 +66,7 @@ const LighterCard = styled.div`
     background-color:#c7bebe;
     border-radius: 0.25rem;
     padding: 0.5rem;
-    margin: 1rem 0;
+    margin-bottom: 1rem;
 `
 
 const Sentence = styled.div`
@@ -62,7 +77,23 @@ const Sentence = styled.div`
     border-radius: 0.25rem;
 `
 
-export default function PlayingCard() {
+const ButtonContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+`
+
+const Button = styled.div`
+    background-color: ${({ color }: any) => color};
+    border-radius: 0.25rem;
+    font-weight: bold;
+    margin-top: 0.25rem;
+    padding: 0.75rem;
+    width: 35%;
+    text-align: center;
+    font-size: 0.8rem;
+`
+
+export default function WordCard() {
     return <Card>
         <CardHeader />
 
@@ -81,9 +112,14 @@ export default function PlayingCard() {
                     <Sentence>Example sentence 3</Sentence>
                 </LighterCard>
                 <LighterCard>Notes notes notes ... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</LighterCard>
+
             </ScrollContainer>
 
-            Correct Not correct
+            <ButtonContainer>
+                <Button color="green">CORRECT</Button>
+                <Button color="darkred">NOT CORRECT</Button>
+            </ButtonContainer>
         </CardBody>
     </Card>
+
 }

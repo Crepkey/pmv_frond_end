@@ -11,17 +11,25 @@ const MainContainer = Styled.div`
   width: 100vw;
 `
 
+const Body = Styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+`
+
 
 function App() {
   return (
     <MainContainer>
       <MenuBar />
-      <MyWords />
+      {/* <MyWords /> */}
 
 
-      {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <Body>
         <PlayingCard />
-      </div> */}
+      </Body>
     </MainContainer>
   );
 }
