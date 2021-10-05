@@ -2,7 +2,7 @@ import React from 'react';
 
 /* Icons */
 import { CgSpinnerTwo } from 'react-icons/cg';
-import { BsSuitHeartFill, BsSuitHeart, BsTrash, BsSearch } from "react-icons/bs";
+import { BsSuitHeartFill, BsSuitHeart, BsTrash, BsFilter } from "react-icons/bs";
 import { MdEdit } from "react-icons/md";
 
 
@@ -31,12 +31,11 @@ const AddNewWordButton = Styled.button`
 	font-weight: bold;
 	padding:6px 24px;
 	text-decoration:none;
-    box-shadow:inset 0px 1px 0px 0px #d9fbbe;
-	border-radius:15px;
+	border-radius:16px;
 	border: none;
 	background-color:#51cb33;
     :hover {
-	background:linear-gradient(to bottom, #a5cc52 5%, #b8e356 100%);
+	background:linear-gradient(to bottom, #a5cc52 5%, #7e9c39 100%);
 	background-color:#a5cc52;
     }
     :active {
@@ -66,16 +65,14 @@ const FilterButton = Styled.button`
 	font-size:15px;
 	font-weight: 550;
 	text-decoration:none;
-	text-shadow:0px 1px 0px #4751ae;
-    box-shadow:inset 0px 1px 0px 0px #bedffb;
-	padding:6px 24px;
+	padding: 2px 12px 0 12px;
     margin-left: 16px;
 	background-color:#56abe3;
 	border-radius:16px;
 	border: none;
     :hover {
-	background:linear-gradient(to bottom, #527dcc 5%, ##56abe3 100%);
-	background-color:#527dcc;
+	background:linear-gradient(to bottom, #81cdff 5%, #5d8fec 100%);
+	background-color:#81cdff;
     }
     :active {
         position:relative;
@@ -92,7 +89,7 @@ const TableMainContainer = Styled.div`
     padding: 32px;
     margin: 16px;
     background: #F7F6FC;
-    border-radius: 20px;  
+    border-radius: 24px;  
 `
 
 const TabContainer = Styled.div`
@@ -107,7 +104,7 @@ const Tab = Styled.div`
     align-items: center;
     font-weight: 550;
     border: 1px solid #b1bcc7;
-    border-radius: 10px 10px 0 0;
+    border-radius: 8px 8px 0 0;
     background: white; /* Use this #e9e9e9 for inactive tabs in the later developments*/
     :hover{
         color: #27e627;
@@ -124,7 +121,7 @@ const WordContainer = Styled.div`
     border-left: 1px solid #b1bcc7;
     border-right: 1px solid #b1bcc7;
     border-bottom: 1px solid #b1bcc7;
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 16px 16px;
 `
 
 const WordRowWhite = Styled.div`
@@ -191,7 +188,7 @@ export default function MyWords() {
                 <AddNewWordButton>Add new word</AddNewWordButton>
                 <SearchContainer>
                     <SearchBar type="search" id="lname" name="lname" placeholder="Type here for searching" />
-                    <FilterButton><BsSearch /></FilterButton>
+                    <FilterButton><BsFilter size={24} /></FilterButton>
                 </SearchContainer>
             </ControlBar>
             <TableMainContainer>

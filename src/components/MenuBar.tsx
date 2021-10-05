@@ -1,5 +1,9 @@
 import React from 'react';
 
+/* Icons */
+
+import { FcPodiumWithSpeaker } from 'react-icons/fc'
+
 /* Styles */
 import Styled from 'styled-components';
 
@@ -13,6 +17,9 @@ const MainContainer = Styled.div`
 const LogoContainer = Styled.div`
     display: flex;
     align-items: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding: 0 24px 0 24px;
 `
 
 const Menu = Styled.div`
@@ -38,7 +45,8 @@ export default function MenuBar() {
     return (
         <MainContainer>
             <LogoContainer>
-                Pimp My Vocabulary
+                <FcPodiumWithSpeaker size={32} />
+                PIMP MY VOCAB
             </LogoContainer>
             <Menu>
                 <MenuItem>My words</MenuItem>
