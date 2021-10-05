@@ -135,7 +135,7 @@ const WordRowWhite = Styled.div`
     justify-content: space-between;
     align-items: center;
     min-height: 2rem;
-    padding: 3px 10px 3px 10px;
+    padding: 3px 12px 3px 12px;
     background: white;
     border-bottom: 1px #e1e1e1 solid;
 `
@@ -144,7 +144,7 @@ const WordRowGray = Styled.div`
     justify-content: space-between;
     align-items: center;
     min-height: 2rem;
-    padding: 3px 10px 3px 10px;
+    padding: 3px 12px 3px 12px;
     background: #ecebf0;
     border-bottom: 1px #c7c7c7 solid;
 `
@@ -152,14 +152,14 @@ const WordRowGray = Styled.div`
 const EnglishWord = Styled.div`
     display: flex;
     flex: 2;
-    padding: 0 10px 0 10px; 
+    padding-right: 12px; 
     font-weight: 450;
 `
 
 const HungarianWords = Styled.div`
     display: flex;
     flex: 5;
-    padding: 0 10px 0 10px; 
+    padding-right: 12px; 
     font-weight: 300;
 `
 
@@ -167,7 +167,7 @@ const MemoryLevel = Styled.div`
     display: flex;
     flex: 2;
     align-items: center;
-    padding: 0 10px 0 10px; 
+    padding-right: 12px; 
 `
 
 const MemoryState = Styled.div`
@@ -178,7 +178,7 @@ const WordHandler = Styled.div`
     display: flex;
     flex: 1;
     justify-content: space-between;
-    padding: 0 10px 0 10px; 
+    padding-right: 12px; 
 `
 
 const PaginationContainer = Styled.div`
