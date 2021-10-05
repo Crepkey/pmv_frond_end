@@ -35,6 +35,7 @@ const MenuItem = Styled.div`
     padding: 8px;
     border-bottom: 3px rgba(86, 171, 227, 0) solid;
     :hover{
+        color: rgb(80, 80, 80);
         border-bottom: 3px rgba(86, 171, 227, 1) solid;
     }
 `
