@@ -2,6 +2,8 @@ import React from 'react';
 import MenuBar from './components/MenuBar';
 import PlayingCard from './components/PlayingCard';
 import MyWords from './components/MyWords';
+import EditWord from './components/EditWord'
+
 import Styled from 'styled-components';
 
 const MainContainer = Styled.div`
@@ -28,7 +30,8 @@ function App() {
 
 
       <Body>
-        <PlayingCard />
+        {/* <PlayingCard /> */}
+        <EditWord />
       </Body>
     </MainContainer>
   );
