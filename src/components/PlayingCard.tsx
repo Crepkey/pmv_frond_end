@@ -6,10 +6,10 @@ import { MdVolumeUp } from 'react-icons/md'
 
 
 const Card = styled.div`
-    background-color:   #aaa2a2;
+    border: 1px solid #b1bcc7;
     border-radius: 8px;
     margin: 16px;
-    width: 30%;
+    width: 32%;
     min-width: 20rem;
     min-height: 0;
     display: flex;
@@ -20,11 +20,12 @@ const Card = styled.div`
 const CardHeader = styled.div`
     background-color: #58708B;  /* TODO use different color for both of us */
     background-color: #BE8BA1;
+    border-bottom: 1px solid #b1bcc7;
     min-height: 3.5rem;
 `
 
 const CardBody = styled.div`
-    padding: 40px 40px 24px 40px;
+    padding: 32px;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -36,13 +37,14 @@ const Title = styled.div`
     display: flex;
     justify-content: space-between;
     font-size: 2rem;
-    margin-bottom: 40px;
+    margin-bottom: 32px;
+    font-weight: 550;
 `
 
 const Icon = styled.div`
     display: flex;
     align-items: center;
-    color: #e4dcdc;
+    color: #c7c7c7;
     padding-left: 16px;
 `
 
@@ -61,26 +63,30 @@ const TagContainer = styled.div`
 `
 
 const Tag = styled.div`
-    background-color: #857f7f;
-    margin: 0 4px 8px 0;
-    padding: 4px 8px;
-    border-radius: 16px;
-    font-size: 1.5rem;
+    background: #ecebf0;
+    margin: 0 16px 16px 0;
+    padding: 4px 16px;
+    border-radius: 30px;
+    font-size: 1.25rem;
+    font-weight: 400;
 `
 
 const LighterCard = styled.div`
-    background-color:#c7bebe;
+    background: #F7F6FC;
     border-radius: 8px;
-    padding: 8px;
+    padding: 20px;
     margin-bottom: 16px;
+    font-weight: 300;
 `
 
 const Sentence = styled.div`
-    background-color:#aaa2a2;
-    margin: 4px;
-    font-size: 1.25rem;
+    background: white;
+    margin-bottom: 8px;
+    font-size: 1.15rem;
     padding: 8px;
     border-radius: 4px;
+    font-weight: 300;
+    border-bottom: 1px #c7c7c7 solid;
 `
 
 const ButtonContainer = styled.div`
@@ -89,14 +95,20 @@ const ButtonContainer = styled.div`
 `
 
 const Button = styled.div`
-    background-color: ${({ color }: any) => color};
-    border-radius: 4px;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 1rem;
     font-weight: bold;
-    margin-top: 4px;
-    padding: 12px;
-    width: 35%;
-    text-align: center;
-    font-size: 0.8rem;
+    padding: 6px 24px;
+    text-decoration: none;
+    border-radius: 15px;
+    border: none;
+    background-color: #51cb33;
+    :hover {
+        background: linear-gradient(to bottom, #a5cc52 5%, #b8e356 100%);
+        background-color:#a5cc52;
+    }
 `
 
 export default function WordCard() {
@@ -110,7 +122,7 @@ export default function WordCard() {
                 <TagContainer>
                     <Tag>első jelentés</Tag>
                     <Tag>második jelentés</Tag>
-                    <Tag>......</Tag>
+                    <Tag>harmadik jelentés</Tag>
                 </TagContainer>
                 <LighterCard>
                     <Sentence>Example sentence with very very very very very very very very very long text</Sentence>
@@ -122,8 +134,8 @@ export default function WordCard() {
             </ScrollContainer>
 
             <ButtonContainer>
-                <Button color="green">CORRECT</Button>
-                <Button color="darkred">NOT CORRECT</Button>
+                <Button>CORRECT</Button>
+                <Button>NOT CORRECT</Button> {/*  TODO red button */}
             </ButtonContainer>
         </CardBody>
     </Card>
