@@ -10,7 +10,9 @@ export const colors = {
     acceptButtonGradientLight: 'rgba(165, 204, 82, 1)',
     acceptButtonGradientDark: 'rgba(126, 156, 57, 1)',
 
-    /* refusing colors are here */
+    rejectButtonBackground: 'rgba(203, 51, 93, 1)',
+    rejectButtonGradientLight: 'rgba(243, 60, 112, 1)',
+    rejectButtonGradientDark: 'rgba(161, 40, 75, 1)',
 
     buttonBackground: 'rgba(86, 171, 227, 1)',
     buttonGradientLight: 'rgba(129, 205, 255, 1)',

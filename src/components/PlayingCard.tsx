@@ -2,6 +2,7 @@ import React from 'react';
 
 /* Styles */
 import styled from 'styled-components';
+import { colors } from './colors';
 import { MdVolumeUp } from 'react-icons/md'
 
 
@@ -95,19 +96,43 @@ const ButtonContainer = styled.div`
 `
 
 const Button = styled.div`
-    display: inline-block;
-    cursor: pointer;
-    color: #ffffff;
-    font-size: 1rem;
-    font-weight: bold;
-    padding: 6px 24px;
-    text-decoration: none;
-    border-radius: 15px;
-    border: none;
-    background-color: #51cb33;
+	display:inline-block;
+	cursor:pointer;
+	color: ${colors.buttonFont};
+	font-size:1rem;
+	font-weight: bold;
+	padding:6px 24px;
+	text-decoration:none;
+	border-radius:16px;
+	border: none;
+	background-color: ${colors.acceptButtonBackground};
     :hover {
-        background: linear-gradient(to bottom, #a5cc52 5%, #b8e356 100%);
-        background-color:#a5cc52;
+	background:linear-gradient(to bottom, ${colors.acceptButtonGradientLight} 5%, ${colors.acceptButtonGradientDark} 100%);
+	background-color: ${colors.acceptButtonGradientLight};
+    }
+    :active {
+        position:relative;
+        top:1px;
+    }
+`
+
+const RejectButton = styled.div`
+	display:inline-block;
+	cursor:pointer;
+	color: ${colors.buttonFont};
+	font-size:1rem;
+	font-weight: bold;
+	padding:6px 24px;
+	text-decoration:none;
+	border-radius:16px;
+	border: none;
+	background-color: rgba(203, 51, 93, 1);
+    :hover {
+	background:linear-gradient(to bottom, rgba(243, 60, 112, 1) 5%, rgba(161, 40, 75, 1) 100%);
+    }
+    :active {
+        position:relative;
+        top:1px;
     }
 `
 
@@ -135,7 +160,7 @@ export default function WordCard() {
 
             <ButtonContainer>
                 <Button>CORRECT</Button>
-                <Button>NOT CORRECT</Button> {/*  TODO red button */}
+                <RejectButton>NOT CORRECT</RejectButton> {/*  TODO red button */}
             </ButtonContainer>
         </CardBody>
     </Card>

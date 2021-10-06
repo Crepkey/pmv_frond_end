@@ -26,13 +26,13 @@ function App() {
   return (
     <MainContainer>
       <MenuBar />
-      <MyWords />
+      {/*  <MyWords />
+ */}
 
-
-      {/*<Body>
+      <Body>
         <PlayingCard />
-        <EditWord /> 
-        </Body> */}
+        {/* <EditWord />  */}
+      </Body>
     </MainContainer>
   );
 }
