@@ -30,7 +30,7 @@ function App() {
 
 
       <Body>
-        {/* <PlayingCard /> */}
+        <PlayingCard />
         <EditWord />
       </Body>
     </MainContainer >

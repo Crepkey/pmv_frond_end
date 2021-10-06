@@ -177,7 +177,7 @@ export default function WordCard() {
 
                 <ButtonContainer>
                     <Button>CORRECT</Button>
-                    <RejectButton>NOT CORRECT</RejectButton> {/*  TODO red button */}
+                    <RejectButton>NOT CORRECT</RejectButton>
                 </ButtonContainer>
             </CardBody>
         </Card>

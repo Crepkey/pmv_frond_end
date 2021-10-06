@@ -2,10 +2,11 @@ import React from 'react';
 
 /* Styles */
 import styled from 'styled-components';
+import { colors } from './colors';
 import { BsSuitHeart, BsPlus, BsX } from 'react-icons/bs'
 
 const Card = styled.div`
-    border: 1px solid #b1bcc7;
+    border: 1px solid ${colors.border};
     border-radius: 8px;
     margin: 16px;
     width: 30vw;
@@ -17,14 +18,14 @@ const Card = styled.div`
 `
 
 const CardHeader = styled.div`
-    background-color: #ecebf0;
-    border-bottom: 1px solid #b1bcc7;
-    padding: 0 16px;
-    min-height: 3.5rem;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    font-size: 1.25rem;
+    font-weight: 450;
+    background-image: linear-gradient(to top,${colors.headerGradientDarker},${colors.headerGradientDark},${colors.headerGradientLight});
+    border-bottom: 1px solid ${colors.border};
+    min-height: 3rem;
+    justify-content: space-between;
+    padding: 0 16px;
 `
 
 const Icon = styled.div`
@@ -37,11 +38,11 @@ const Icon = styled.div`
 `
 
 const HeartIcon = styled(Icon)`
-    margin-bottom: 12px;
+    margin-bottom: 24px;
 `
 
 const CardBody = styled.div`
-    padding: 24px;
+    padding-bottom: 24px;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -51,8 +52,16 @@ const CardBody = styled.div`
 
 const Row = styled.div`
     display: flex;
-    flex: 1;
     justify-content: center;
+`
+
+const ScrollContainer = styled.div`
+    min-width: 0;
+    min-height: 0;
+    overflow: scroll;
+    flex: 1;
+    margin-bottom: 24px;
+    padding: 24px 24px 0 24px;
 `
 
 const Form = styled.form`
@@ -60,14 +69,14 @@ const Form = styled.form`
     flex-direction: column;
 `
 
-const LighterCard = styled.div`
+const Block = styled.div`
+    background: ${colors.blockBackground};
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 24px;
+    font-weight: 300;
     display: flex;
     flex-direction: column;
-    background: #F7F6FC;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 16px;
-    font-weight: 300;
 `
 
 const String = styled.input`
@@ -75,15 +84,15 @@ const String = styled.input`
     flex: 1;
     font-size: 1rem;
     padding: 8px 12px;
-    margin-bottom: 12px;
-    border: 1px #c7c7c7 solid;
+    margin-bottom: 24px;
+    border: 1px ${colors.inputBorder} solid;
     border-radius: 20px;
     color: grey;
     ::placeholder{
-        color: #c7c7c7;
+        color: ${colors.placeholderFont};
     }
     :focus{
-        outline: 1px #56abe3 solid;
+        outline: 1px ${colors.activeBorder} solid;
     }
 `
 
@@ -102,15 +111,14 @@ const CircleButton = styled.button`
 	border-radius:12px;
     margin-right: 8px;
 	cursor:pointer;
-	color:#ffffff;
+	color:${colors.buttonFont};
 	font-size:1rem;
 	text-decoration:none;
-	text-shadow:0px 1px 0px #4751ae;
-	background-color:#56abe3;
+	background-color:${colors.buttonBackground};
 	border: none;
     :hover {
-	background:linear-gradient(to bottom, #527dcc 5%, #56abe3 100%);
-	background-color:#527dcc;
+        background:linear-gradient(to bottom, ${colors.buttonGradientLight} 5%, ${colors.buttonGradientDark} 100%);
+        background-color:${colors.buttonGradientLight};
     }
     :active {
         position:relative;
@@ -123,15 +131,12 @@ const Select = styled.select`
     flex: 1;
     font-size: 1rem;
     padding: 8px 12px;
-    margin-bottom: 12px;
-    border: 1px #c7c7c7 solid;
+    margin-bottom: 24px;
+    border: 1px ${colors.inputBorder} solid;
     border-radius: 20px;
     color: grey;
-    ::placeholder{
-        color: #c7c7c7;
-    }
     :focus{
-        outline: 1px #56abe3 solid;
+        outline: 1px ${colors.activeBorder} solid;
     }
 `
 
@@ -141,17 +146,17 @@ const Textarea = styled.textarea`
     sans-serif;
     font-size: 1rem;
     padding: 8px 12px;
-    margin-bottom: 12px;
-    border: 1px #c7c7c7 solid;
+    margin-bottom: 24px;
+    border: 1px ${colors.inputBorder} solid;
     border-radius: 20px;
     color: grey;
     resize: none;
     min-height: 5rem;
     ::placeholder{
-        color: #c7c7c7;
+        color: ${colors.placeholderFont};
     }
     :focus{
-        outline: 1px #56abe3 solid;
+        outline: 1px ${colors.activeBorder} solid;
     }
 `
 
@@ -159,18 +164,17 @@ const Button = styled.div`
     display: inline-block;
     width: fit-content;
     cursor: pointer;
-    color: #ffffff;
+	color: ${colors.buttonFont};
     font-size: 1rem;
     font-weight: bold;
     padding: 6px 24px;
-    margin-top: 16px;
     text-decoration: none;
     border-radius: 15px;
     border: none;
-    background-color: #51cb33;
+	background-color: ${colors.acceptButtonBackground};
     :hover {
-        background: linear-gradient(to bottom, #a5cc52 5%, #b8e356 100%);
-        background-color:#a5cc52;
+        background:linear-gradient(to bottom, ${colors.acceptButtonGradientLight} 5%, ${colors.acceptButtonGradientDark} 100%);
+        background-color: ${colors.acceptButtonGradientLight};
     }
     :active {
         position:relative;
@@ -184,40 +188,38 @@ export default function EditWord() {
         <CardHeader>Add new word <Icon><BsX size={20} /></Icon></CardHeader>
         <CardBody>
 
-            <Form>
-                <Row>
-                    <String placeholder="English word or expression" />
-                    <HeartIcon>
-                        <BsSuitHeart size={24} />
-                    </HeartIcon>
-                </Row>
+            <ScrollContainer>
+                <Form>
+                    <Row>
+                        <String placeholder="English word or expression" />
+                        <HeartIcon>
+                            <BsSuitHeart size={24} />
+                        </HeartIcon>
+                    </Row>
+                    <Block>
+                        <String placeholder="Hungarian meaning" />
+                        <AddNewRow>
+                            <CircleButton><BsPlus /></CircleButton>
+                            Add one more Hungarian meaning
+                        </AddNewRow>
+                    </Block>
+                    <Block>
+                        <String placeholder="Example sentence" />
+                        <AddNewRow>
+                            <CircleButton><BsPlus /></CircleButton>
+                            Add one more example sentence
+                        </AddNewRow>
+                    </Block>
+                    <Select >
+                        <option>Word</option>
+                        <option>Expression</option>
+                    </Select>
+                    <Textarea placeholder="You can write your notes here"></Textarea>
+                </Form>
+            </ScrollContainer>
 
-                <LighterCard>
-                    <String placeholder="Hungarian meaning" />
-                    <AddNewRow>
-                        <CircleButton><BsPlus /></CircleButton>
-                        Add one more Hungarian meaning
-                    </AddNewRow>
-                </LighterCard>
-
-                <LighterCard>
-                    <String placeholder="Example sentence" />
-                    <AddNewRow>
-                        <CircleButton><BsPlus /></CircleButton>
-                        Add one more example sentence
-                    </AddNewRow>
-                </LighterCard>
-
-                <Select placeholder="Type">
-                    <option>Word</option>
-                    <option>Expression</option>
-                </Select>
-
-                <Textarea placeholder="You can write your notes here"></Textarea>
-
-                <Row><Button>Save</Button></Row>
-            </Form>
-
+            <Row><Button>Save</Button></Row>
         </CardBody>
+
     </Card>
 }
