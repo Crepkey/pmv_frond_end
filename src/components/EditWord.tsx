@@ -2,9 +2,7 @@ import React from 'react';
 
 /* Styles */
 import styled from 'styled-components';
-import { IoClose } from 'react-icons/io5'
-import { MdOutlineAdd } from 'react-icons/md'
-import { BsSuitHeart } from 'react-icons/bs'
+import { BsSuitHeart, BsPlus, BsX } from 'react-icons/bs'
 
 const Card = styled.div`
     border: 1px solid #b1bcc7;
@@ -100,8 +98,7 @@ const CircleButton = styled.button`
 	display:flex;
     justify-content: center;
     align-items: center;
-    height: 24px;
-    width: 24px;
+    padding: 4px;
 	border-radius:12px;
     margin-right: 8px;
 	cursor:pointer;
@@ -109,7 +106,6 @@ const CircleButton = styled.button`
 	font-size:1rem;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #4751ae;
-    box-shadow:inset 0px 1px 0px 0px #bedffb;
 	background-color:#56abe3;
 	border: none;
     :hover {
@@ -185,7 +181,7 @@ const Button = styled.div`
 export default function EditWord() {
 
     return <Card>
-        <CardHeader>Add new word <Icon><IoClose /></Icon></CardHeader>
+        <CardHeader>Add new word <Icon><BsX size={20} /></Icon></CardHeader>
         <CardBody>
 
             <Form>
@@ -199,7 +195,7 @@ export default function EditWord() {
                 <LighterCard>
                     <String placeholder="Hungarian meaning" />
                     <AddNewRow>
-                        <CircleButton><MdOutlineAdd size={12} /></CircleButton>
+                        <CircleButton><BsPlus /></CircleButton>
                         Add one more Hungarian meaning
                     </AddNewRow>
                 </LighterCard>
@@ -207,7 +203,7 @@ export default function EditWord() {
                 <LighterCard>
                     <String placeholder="Example sentence" />
                     <AddNewRow>
-                        <CircleButton><MdOutlineAdd size={12} /></CircleButton>
+                        <CircleButton><BsPlus /></CircleButton>
                         Add one more example sentence
                     </AddNewRow>
                 </LighterCard>
