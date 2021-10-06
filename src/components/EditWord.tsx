@@ -4,6 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { IoClose } from 'react-icons/io5'
 import { MdOutlineAdd } from 'react-icons/md'
+import { BsSuitHeart } from 'react-icons/bs'
 
 const Card = styled.div`
     border: 1px solid #b1bcc7;
@@ -32,8 +33,14 @@ const Icon = styled.div`
     display: flex;
     align-items: center;
     padding-left: 16px;
+    :hover{
+        cursor: pointer;
+    }
 `
 
+const HeartIcon = styled(Icon)`
+    margin-bottom: 12px;
+`
 
 const CardBody = styled.div`
     padding: 24px;
@@ -42,6 +49,12 @@ const CardBody = styled.div`
     flex: 1;
     min-width: 0;
     min-height: 0;
+`
+
+const Row = styled.div`
+    display: flex;
+    flex: 1;
+    justify-content: center;
 `
 
 const Form = styled.form`
@@ -154,6 +167,7 @@ const Button = styled.div`
     font-size: 1rem;
     font-weight: bold;
     padding: 6px 24px;
+    margin-top: 16px;
     text-decoration: none;
     border-radius: 15px;
     border: none;
@@ -175,7 +189,12 @@ export default function EditWord() {
         <CardBody>
 
             <Form>
-                <String placeholder="English word or expression" />
+                <Row>
+                    <String placeholder="English word or expression" />
+                    <HeartIcon>
+                        <BsSuitHeart size={24} />
+                    </HeartIcon>
+                </Row>
 
                 <LighterCard>
                     <String placeholder="Hungarian meaning" />
@@ -200,7 +219,7 @@ export default function EditWord() {
 
                 <Textarea placeholder="You can write your notes here"></Textarea>
 
-                <Button>Save</Button>
+                <Row><Button>Save</Button></Row>
             </Form>
 
         </CardBody>
