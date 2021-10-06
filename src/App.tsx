@@ -1,6 +1,9 @@
 import React from 'react';
 import MenuBar from './components/MenuBar';
+import PlayingCard from './components/PlayingCard';
 import MyWords from './components/MyWords';
+import EditWord from './components/EditWord'
+
 import Styled from 'styled-components';
 
 const MainContainer = Styled.div`
@@ -10,12 +13,26 @@ const MainContainer = Styled.div`
   width: 100vw;
 `
 
+const Body = Styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+`
+
 
 function App() {
   return (
     <MainContainer>
       <MenuBar />
-      <MyWords />
+      {/* <MyWords /> */}
+
+
+      <Body>
+        {/* <PlayingCard /> */}
+        <EditWord />
+      </Body>
     </MainContainer>
   );
 }
