@@ -2,10 +2,21 @@ import React from 'react';
 
 /* Icons */
 import { CgSpinnerTwo } from 'react-icons/cg';
-import { BsSuitHeartFill, BsSuitHeart, BsTrash, BsFilter, BsChevronLeft, BsChevronRight, BsChevronDoubleLeft, BsChevronDoubleRight, BsPencil } from "react-icons/bs";
+import {
+    BsSuitHeartFill,
+    BsSuitHeart,
+    BsTrash,
+    BsFilter,
+    BsChevronLeft,
+    BsChevronRight,
+    BsChevronDoubleLeft,
+    BsChevronDoubleRight,
+    BsPencil
+} from "react-icons/bs";
 
 
 /* Styles */
+import { colors } from './colors';
 import Styled from 'styled-components';
 
 const MainContainer = Styled.div`
@@ -24,17 +35,17 @@ const ControlBarContainer = Styled.div`
 const AddNewWordButton = Styled.button`
 	display:inline-block;
 	cursor:pointer;
-	color:#ffffff;
+	color: ${colors.buttonFont};
 	font-size:1rem;
 	font-weight: bold;
 	padding:6px 24px;
 	text-decoration:none;
 	border-radius:16px;
 	border: none;
-	background-color:#51cb33;
+	background-color: ${colors.acceptButtonBackground};
     :hover {
-	background:linear-gradient(to bottom, #a5cc52 5%, #7e9c39 100%);
-	background-color:#a5cc52;
+	background:linear-gradient(to bottom, ${colors.acceptButtonGradientLight} 5%, ${colors.acceptButtonGradientDark} 100%);
+	background-color: ${colors.acceptButtonGradientLight};
     }
     :active {
         position:relative;
@@ -51,26 +62,26 @@ const SearchContainer = Styled.div`
 const SearchBar = Styled.input`
     width: 32%;
     padding: 0 16px 0 16px;
-    border: 1px #b1bcc7 solid;
+    border: 1px ${colors.border} solid;
     border-radius: 16px;
 `
 
 const FilterButton = Styled.button`
 	display:inline-block;
 	cursor:pointer;
-	color:#ffffff;
+	color: ${colors.buttonFont};
 	font-family:Arial;
 	font-size:15px;
 	font-weight: 550;
 	text-decoration:none;
 	padding: 2px 12px 0 12px;
     margin-left: 16px;
-	background-color:#56abe3;
+	background-color:${colors.buttonBackground};
 	border-radius:16px;
 	border: none;
     :hover {
-	background:linear-gradient(to bottom, #81cdff 5%, #5d8fec 100%);
-	background-color:#81cdff;
+	background:linear-gradient(to bottom, ${colors.buttonGradientLight} 5%, ${colors.buttonGradientDark} 100%);
+	background-color:${colors.buttonGradientLight};
     }
     :active {
         position:relative;
@@ -93,7 +104,7 @@ const TableBlock = Styled.div`
     min-width: 0;
     min-height: 0;
     padding: 32px;
-    background: #F7F6FC;
+    background: ${colors.blockBackground};
     border-radius: 24px;  
 `
 
@@ -108,12 +119,12 @@ const Tab = Styled.div`
     justify-content: center;
     align-items: center;
     font-weight: 550;
-    border: 1px solid #b1bcc7;
+    border: 1px solid ${colors.border};
     border-radius: 8px 8px 0 0;
-    background: white; /* Use this #e9e9e9 for inactive tabs in the later developments*/
+    background: ${colors.background};
     :hover{
-        color: rgb(80, 80, 80);
-        border-bottom: 3px rgba(86, 171, 227, 1) solid;
+        color: ${colors.activeFont};
+        border-bottom: 3px ${colors.activeBorder} solid;
     }
 `
 
@@ -124,10 +135,11 @@ const WordContainer = Styled.div`
     overflow: scroll;
     min-width: 0;
     min-height: 0;
-    border-left: 1px solid #b1bcc7;
-    border-right: 1px solid #b1bcc7;
-    border-bottom: 1px solid #b1bcc7;
+    border-left: 1px solid ${colors.border};
+    border-right: 1px solid ${colors.border};
+    border-bottom: 1px solid ${colors.border};
     border-radius: 0 0 16px 16px;
+    background: ${colors.background};
 `
 
 const WordRowWhite = Styled.div`
@@ -136,8 +148,8 @@ const WordRowWhite = Styled.div`
     align-items: center;
     min-height: 2rem;
     padding: 3px 12px 3px 12px;
-    background: white;
-    border-bottom: 1px #e1e1e1 solid;
+    background: ${colors.rowBackgroundLight};
+    border-bottom: 1px ${colors.rowBorder} solid;
 `
 const WordRowGray = Styled.div`
     display: flex;
@@ -145,8 +157,8 @@ const WordRowGray = Styled.div`
     align-items: center;
     min-height: 2rem;
     padding: 3px 12px 3px 12px;
-    background: #ecebf0;
-    border-bottom: 1px #c7c7c7 solid;
+    background: ${colors.rowBackgroundDark};
+    border-bottom: 1px ${colors.rowBorder} solid;
 `
 
 const EnglishWord = Styled.div`
@@ -190,19 +202,19 @@ const PaginationContainer = Styled.div`
 const PaginationButton = Styled.button`
 	display:inline-block;
 	cursor:pointer;
-	color:#ffffff;
+	color: ${colors.buttonFont};
 	font-family:Arial;
 	font-size:15px;
 	font-weight: 550;
 	text-decoration:none;
 	padding: 2px 12px 0 12px;
     margin: 0 8px 0 8px;
-	background-color:#56abe3;
-	border-radius: 16px;
+	background-color:${colors.buttonBackground};
+	border-radius:16px;
 	border: none;
     :hover {
-	background:linear-gradient(to bottom, #81cdff 5%, #5d8fec 100%);
-	background-color:#81cdff;
+	background:linear-gradient(to bottom, ${colors.buttonGradientLight} 5%, ${colors.buttonGradientDark} 100%);
+	background-color:${colors.buttonGradientLight};
     }
     :active {
         position:relative;
@@ -233,7 +245,7 @@ export default function MyWords() {
                 <TableBlock>
                     <TabContainer>
                         <Tab>Active Words</Tab>
-                        <Tab style={{ backgroundColor: '#ECEBF1' }}>Deleted Words</Tab>
+                        <Tab style={{ backgroundColor: `${colors.inactiveBackground}`, color: `${colors.inactiveFont}` }}>Deleted Words</Tab>
                     </TabContainer>
                     <WordContainer>
                         <WordRowWhite>
