@@ -4,6 +4,7 @@ export const colors = {
     buttonFont: 'rgba(255, 255, 255, 1)',
     activeFont: ' rgba(80, 80, 80, 1)',
     inactiveFont: 'rgba(150, 150, 150, 1)',
+    placeholderFont: 'rgba(225, 225, 225, 1)',
 
     // BUTTONS
     acceptButtonBackground: 'rgba(81, 203, 51, 1)',
@@ -35,6 +36,7 @@ export const colors = {
     // BORDERS
     activeBorder: 'rgba(86, 171, 227, 1)',
     border: 'rgba(177, 188, 199, 1)',
-    rowBorder: 'rgba(225, 225, 225, 1)'
+    rowBorder: 'rgba(225, 225, 225, 1)',
+    inputBorder: 'rgba(225, 225, 225, 1)'
 
 }
