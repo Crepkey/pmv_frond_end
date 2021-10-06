@@ -201,7 +201,7 @@ export default function EditWord() {
 					<Form>
 						<Label>English word or expression</Label>
 						<Row>
-							<String placeholder="Type here your English word or expression..." />
+							<String placeholder="Type your English word or expression here..." />
 							<HeartIcon>
 								<BsSuitHeart size={24} />
 							</HeartIcon>
@@ -209,7 +209,7 @@ export default function EditWord() {
 
 						<Label>Hungarian meanings</Label>
 						<Block>
-							<String placeholder="Type here one Hungarian meaning..." />
+							<String placeholder="Type one Hungarian meaning here..." />
 							<AddNewRow>
 								<CircleButton>
 									<BsPlus />
@@ -220,7 +220,7 @@ export default function EditWord() {
 
 						<Label>Example sentences</Label>
 						<Block>
-							<String placeholder="Type here one example sentence..." />
+							<String placeholder="Type one example sentence here..." />
 							<AddNewRow>
 								<CircleButton>
 									<BsPlus />
@@ -235,7 +235,7 @@ export default function EditWord() {
 							<option>Expression</option>
 						</Select>
 
-						<Label>Note</Label>
+						<Label>Notes</Label>
 						<Textarea placeholder="Type your notes here..."></Textarea>
 					</Form>
 				</ScrollContainer>
