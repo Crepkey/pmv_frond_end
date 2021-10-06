@@ -112,7 +112,8 @@ const Tab = Styled.div`
     border-radius: 8px 8px 0 0;
     background: white; /* Use this #e9e9e9 for inactive tabs in the later developments*/
     :hover{
-        color: #27e627;
+        color: rgb(80, 80, 80);
+        border-bottom: 3px rgba(86, 171, 227, 1) solid;
     }
 `
 
