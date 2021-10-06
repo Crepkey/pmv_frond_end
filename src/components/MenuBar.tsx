@@ -7,10 +7,11 @@ import { BsPersonCircle } from 'react-icons/bs';
 
 /* Styles */
 import styled from 'styled-components';
+import { colors } from './colors';
 
 const MainContainer = styled.div`
-    background-image: linear-gradient(to top,#d8d7dd,#dbdee7,#e2e5eb);
-    border-bottom: 1px solid #b1bcc7;
+    background-image: linear-gradient(to top,${colors.headerGradientDarker},${colors.headerGradientDark},${colors.headerGradientLight});
+    border-bottom: 1px solid ${colors.border};
     display: flex;
     justify-content: space-between;
 `
@@ -35,8 +36,8 @@ const MenuItem = styled.div`
     padding: 8px;
     border-bottom: 3px rgba(86, 171, 227, 0) solid;
     :hover{
-        color: rgb(80, 80, 80);
-        border-bottom: 3px rgba(86, 171, 227, 1) solid;
+        color: ${colors.activeFont};
+        border-bottom: 3px ${colors.activeBorder} solid;
     }
 `
 
