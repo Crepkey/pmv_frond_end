@@ -6,16 +6,16 @@ import { FcPodiumWithSpeaker } from 'react-icons/fc'
 import { BsPersonCircle } from 'react-icons/bs';
 
 /* Styles */
-import Styled from 'styled-components';
+import styled from 'styled-components';
 
-const MainContainer = Styled.div`
+const MainContainer = styled.div`
     background-image: linear-gradient(to top,#d8d7dd,#dbdee7,#e2e5eb);
     border-bottom: 1px solid #b1bcc7;
     display: flex;
     justify-content: space-between;
 `
 
-const LogoContainer = Styled.div`
+const LogoContainer = styled.div`
     display: flex;
     align-items: center;
     font-weight: bold;
@@ -23,13 +23,13 @@ const LogoContainer = Styled.div`
     padding: 0 24px 0 24px;
 `
 
-const Menu = Styled.div`
+const Menu = styled.div`
     display: flex;
     flex:  1;
     justify-content: flex-end;
 `
 
-const MenuItem = Styled.div`
+const MenuItem = styled.div`
     font-weight: 550;
     margin-right: 8px;
     padding: 8px;
@@ -40,7 +40,7 @@ const MenuItem = Styled.div`
     }
 `
 
-const UserAvatarContainer = Styled.div`
+const UserAvatarContainer = styled.div`
     display: flex;
     align-items: center;
     padding: 0 24px 0 24px;

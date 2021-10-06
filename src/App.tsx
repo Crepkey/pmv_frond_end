@@ -4,16 +4,16 @@ import PlayingCard from './components/PlayingCard';
 import MyWords from './components/MyWords';
 import EditWord from './components/EditWord'
 
-import Styled from 'styled-components';
+import styled from 'styled-components';
 
-const MainContainer = Styled.div`
+const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
   width: 100vw;
 `
 
-const Body = Styled.div`
+const Body = styled.div`
   display: flex;
   flex: 1;
   justify-content: center;
@@ -33,7 +33,7 @@ function App() {
         {/* <PlayingCard /> */}
         <EditWord />
       </Body>
-    </MainContainer>
+    </MainContainer >
   );
 }
 
