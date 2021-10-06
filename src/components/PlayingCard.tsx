@@ -23,33 +23,33 @@ const CardHeader = styled.div`
     display: flex;
     align-items: center;
     font-weight: 450;
-    background-image: linear-gradient(to top,#d8d7dd,#dbdee7,#e2e5eb);
-    border-bottom: 1px solid #b1bcc7;
+    background-image: linear-gradient(to top,${colors.headerGradientDarker},${colors.headerGradientDark},${colors.headerGradientLight});
+    border-bottom: 1px solid ${colors.border};
     padding: 0 16px 0 16px;
     min-height: 3rem;
 `
 
 const CardBody = styled.div`
-    padding: 32px;
     display: flex;
     flex-direction: column;
     flex: 1;
     min-width: 0;
     min-height: 0;
+    padding: 24px;
 `
 
 const Title = styled.div`
     display: flex;
     justify-content: space-between;
     font-size: 2rem;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
     font-weight: 550;
 `
 
 const Icon = styled.div`
     display: flex;
     align-items: center;
-    color: #c7c7c7;
+    color: gray;
     padding-left: 16px;
 `
 
@@ -68,31 +68,34 @@ const TagContainer = styled.div`
 `
 
 const Tag = styled.div`
-    background: #ecebf0;
+    background: ${colors.tagBackground};
     margin: 0 16px 16px 0;
     padding: 4px 16px;
     border-radius: 30px;
     font-size: 1.25rem;
     font-weight: 400;
+    border-bottom: 1px ${colors.border} solid;
 `
 
-const LighterCard = styled.div`
-    background: #F7F6FC;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 16px;
+const Block = styled.div`
+    background: ${colors.blockBackground};
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 24px;
     font-weight: 300;
 `
 
-const Sentence = styled.div`
-    background: white;
+const SentenceCard = styled.div`
+    background:${colors.background};
     margin-bottom: 8px;
     font-size: 1.15rem;
     padding: 8px;
-    border-radius: 4px;
+    border-radius: 8px;
     font-weight: 300;
-    border-bottom: 1px #c7c7c7 solid;
+    border-bottom: 1px ${colors.border} solid;
 `
+
+/* TODO: We should a great solution for the margin problem above. The last element margin-bottom should be removed somehow*/
 
 const ButtonContainer = styled.div`
     display: flex;
@@ -100,7 +103,9 @@ const ButtonContainer = styled.div`
 `
 
 const Button = styled.div`
-	display:inline-block;
+	display:flex;
+    justify-content: center;
+    align-items: center;
 	cursor:pointer;
 	color: ${colors.buttonFont};
 	font-size:1rem;
@@ -109,6 +114,7 @@ const Button = styled.div`
 	text-decoration:none;
 	border-radius:16px;
 	border: none;
+    width: 30%;
 	background-color: ${colors.acceptButtonBackground};
     :hover {
 	background:linear-gradient(to bottom, ${colors.acceptButtonGradientLight} 5%, ${colors.acceptButtonGradientDark} 100%);
@@ -121,7 +127,9 @@ const Button = styled.div`
 `
 
 const RejectButton = styled.div`
-	display:inline-block;
+	display:flex;
+    justify-content: center;
+    align-items: center;
 	cursor:pointer;
 	color: ${colors.buttonFont};
 	font-size:1rem;
@@ -130,6 +138,7 @@ const RejectButton = styled.div`
 	text-decoration:none;
 	border-radius:16px;
 	border: none;
+    width: 30%;
 	background-color: ${colors.rejectButtonBackground};
     :hover {
 	background:linear-gradient(to bottom, ${colors.rejectButtonGradientLight} 5%, ${colors.rejectButtonGradientDark} 100%);
@@ -157,12 +166,12 @@ export default function WordCard() {
                         <Tag>második jelentés</Tag>
                         <Tag>harmadik jelentés</Tag>
                     </TagContainer>
-                    <LighterCard>
-                        <Sentence>Example sentence with very very very very very very very very very long text</Sentence>
-                        <Sentence>Example sentence 2</Sentence>
-                        <Sentence>Example sentence 3</Sentence>
-                    </LighterCard>
-                    <LighterCard>Notes notes notes ... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</LighterCard>
+                    <Block>
+                        <SentenceCard>Example sentence with very very very very very very very very very long text</SentenceCard>
+                        <SentenceCard>Example sentence 2</SentenceCard>
+                        <SentenceCard>Example sentence 3</SentenceCard>
+                    </Block>
+                    <Block>Notes notes notes ... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</Block>
 
                 </ScrollContainer>
 

@@ -23,6 +23,12 @@ export const colors = {
     background: 'rgba(255, 255, 255, 1)',
     blockBackground: 'rgba(247, 246, 252, 1)',
     inactiveBackground: 'rgba(236, 235, 240, 1)',
+    tagBackground: 'rgba(236, 235, 240, 1)',
+
+    headerGradientDarker: 'rgba(216, 215, 221, 1)',
+    headerGradientDark: 'rgba(219, 222, 231, 1)',
+    headerGradientLight: 'rgba(226, 229, 235, 1)',
+
     rowBackgroundDark: 'rgba(236, 235, 240, 1)',
     rowBackgroundLight: 'rgba(255, 255, 255, 1)',
 
@@ -30,7 +36,5 @@ export const colors = {
     activeBorder: 'rgba(86, 171, 227, 1)',
     border: 'rgba(177, 188, 199, 1)',
     rowBorder: 'rgba(225, 225, 225, 1)'
-
-    // USER RELATED COLORS
 
 }
