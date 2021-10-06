@@ -148,7 +148,7 @@ const RejectButton = styled.div`
 	}
 `;
 
-export default function WordCard() {
+export default function PlayingCard() {
 	return (
 		<Card>
 			<CardHeader>
@@ -158,7 +158,7 @@ export default function WordCard() {
 
 			<CardBody>
 				<Title>
-					Petra's English word{" "}
+					Petra's English word
 					<Icon>
 						<MdVolumeUp />
 					</Icon>
@@ -184,6 +184,7 @@ export default function WordCard() {
 				</ScrollContainer>
 
 				<ButtonContainer>
+					{/* TODO media query: on smaller screens we should only use icons */}
 					<Button>CORRECT</Button>
 					<RejectButton>NOT CORRECT</RejectButton>
 				</ButtonContainer>
