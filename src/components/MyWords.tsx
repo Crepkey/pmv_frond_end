@@ -17,9 +17,9 @@ import {
 
 /* Styles */
 import { colors } from './colors';
-import Styled from 'styled-components';
+import styled from 'styled-components';
 
-const MainContainer = Styled.div`
+const MainContainer = styled.div`
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -27,12 +27,12 @@ const MainContainer = Styled.div`
     min-height: 0;
 `
 
-const ControlBarContainer = Styled.div`
+const ControlBarContainer = styled.div`
     display: flex;
     padding: 24px 24px 12px 24px;
 `
 
-const AddNewWordButton = Styled.button`
+const AddNewWordButton = styled.button`
 	display:inline-block;
 	cursor:pointer;
 	color: ${colors.buttonFont};
@@ -53,20 +53,20 @@ const AddNewWordButton = Styled.button`
     }
 `
 
-const SearchContainer = Styled.div`
+const SearchContainer = styled.div`
     display: flex;
     flex: 1;
     justify-content: flex-end;
 `
 
-const SearchBar = Styled.input`
+const SearchBar = styled.input`
     width: 32%;
     padding: 0 16px 0 16px;
     border: 1px ${colors.border} solid;
     border-radius: 16px;
 `
 
-const FilterButton = Styled.button`
+const FilterButton = styled.button`
 	display:inline-block;
 	cursor:pointer;
 	color: ${colors.buttonFont};
@@ -89,7 +89,7 @@ const FilterButton = Styled.button`
     }
 `
 
-const TableContainer = Styled.div`
+const TableContainer = styled.div`
     display: flex;
     flex: 1;
     min-width: 0;
@@ -97,7 +97,7 @@ const TableContainer = Styled.div`
     padding: 12px 24px 12px 24px;
 `
 
-const TableBlock = Styled.div`
+const TableBlock = styled.div`
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -108,12 +108,12 @@ const TableBlock = Styled.div`
     border-radius: 24px;  
 `
 
-const TabContainer = Styled.div`
+const TabContainer = styled.div`
     display: flex;
     flex: 1;
 `
 
-const Tab = Styled.div`
+const Tab = styled.div`
     display: flex;
     flex: 1;
     justify-content: center;
@@ -128,7 +128,7 @@ const Tab = Styled.div`
     }
 `
 
-const WordContainer = Styled.div`
+const WordContainer = styled.div`
     display: flex;
     flex: 10;
     flex-direction: column;
@@ -142,7 +142,7 @@ const WordContainer = Styled.div`
     background: ${colors.background};
 `
 
-const WordRowWhite = Styled.div`
+const WordRowWhite = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -151,7 +151,7 @@ const WordRowWhite = Styled.div`
     background: ${colors.rowBackgroundLight};
     border-bottom: 1px ${colors.rowBorder} solid;
 `
-const WordRowGray = Styled.div`
+const WordRowGray = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -161,45 +161,45 @@ const WordRowGray = Styled.div`
     border-bottom: 1px ${colors.rowBorder} solid;
 `
 
-const EnglishWord = Styled.div`
+const EnglishWord = styled.div`
     display: flex;
     flex: 2;
     padding-right: 12px; 
     font-weight: 450;
 `
 
-const HungarianWords = Styled.div`
+const HungarianWords = styled.div`
     display: flex;
     flex: 5;
     padding-right: 12px; 
     font-weight: 300;
 `
 
-const MemoryLevel = Styled.div`
+const MemoryLevel = styled.div`
     display: flex;
     flex: 2;
     align-items: center;
     padding-right: 12px; 
 `
 
-const MemoryState = Styled.div`
+const MemoryState = styled.div`
     font-weight: 350;
 `
 
-const WordHandler = Styled.div`
+const WordHandler = styled.div`
     display: flex;
     flex: 1;
     justify-content: space-between;
     padding-right: 12px; 
 `
 
-const PaginationContainer = Styled.div`
+const PaginationContainer = styled.div`
     display: flex;
     justify-content: center;
     padding: 12px 24px 24px 24px;
 `
 
-const PaginationButton = Styled.button`
+const PaginationButton = styled.button`
 	display:inline-block;
 	cursor:pointer;
 	color: ${colors.buttonFont};
@@ -222,7 +222,7 @@ const PaginationButton = Styled.button`
     }
 `
 
-const PageNumber = Styled.div`
+const PageNumber = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
