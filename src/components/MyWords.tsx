@@ -2,11 +2,21 @@ import React from 'react';
 
 /* Icons */
 import { CgSpinnerTwo } from 'react-icons/cg';
-import { BsSuitHeartFill, BsSuitHeart, BsTrash, BsSearch } from "react-icons/bs";
-import { MdEdit } from "react-icons/md";
+import {
+    BsSuitHeartFill,
+    BsSuitHeart,
+    BsTrash,
+    BsFilter,
+    BsChevronLeft,
+    BsChevronRight,
+    BsChevronDoubleLeft,
+    BsChevronDoubleRight,
+    BsPencil
+} from "react-icons/bs";
 
 
 /* Styles */
+import { colors } from './colors';
 import Styled from 'styled-components';
 
 const MainContainer = Styled.div`
@@ -15,29 +25,27 @@ const MainContainer = Styled.div`
     flex-direction: column;
     min-width: 0;
     min-height: 0;
-    padding: 10px;
 `
 
-const ControlBar = Styled.div`
+const ControlBarContainer = Styled.div`
     display: flex;
-    padding: 16px;
+    padding: 24px 24px 12px 24px;
 `
 
 const AddNewWordButton = Styled.button`
 	display:inline-block;
 	cursor:pointer;
-	color:#ffffff;
+	color: ${colors.buttonFont};
 	font-size:1rem;
 	font-weight: bold;
 	padding:6px 24px;
 	text-decoration:none;
-    box-shadow:inset 0px 1px 0px 0px #d9fbbe;
-	border-radius:15px;
+	border-radius:16px;
 	border: none;
-	background-color:#51cb33;
+	background-color: ${colors.acceptButtonBackground};
     :hover {
-	background:linear-gradient(to bottom, #a5cc52 5%, #b8e356 100%);
-	background-color:#a5cc52;
+	background:linear-gradient(to bottom, ${colors.acceptButtonGradientLight} 5%, ${colors.acceptButtonGradientDark} 100%);
+	background-color: ${colors.acceptButtonGradientLight};
     }
     :active {
         position:relative;
@@ -54,28 +62,26 @@ const SearchContainer = Styled.div`
 const SearchBar = Styled.input`
     width: 32%;
     padding: 0 16px 0 16px;
-    border: 1px #b1bcc7 solid;
+    border: 1px ${colors.border} solid;
     border-radius: 16px;
 `
 
 const FilterButton = Styled.button`
 	display:inline-block;
 	cursor:pointer;
-	color:#ffffff;
+	color: ${colors.buttonFont};
 	font-family:Arial;
 	font-size:15px;
 	font-weight: 550;
 	text-decoration:none;
-	text-shadow:0px 1px 0px #4751ae;
-    box-shadow:inset 0px 1px 0px 0px #bedffb;
-	padding:6px 24px;
+	padding: 2px 12px 0 12px;
     margin-left: 16px;
-	background-color:#56abe3;
+	background-color:${colors.buttonBackground};
 	border-radius:16px;
 	border: none;
     :hover {
-	background:linear-gradient(to bottom, #527dcc 5%, ##56abe3 100%);
-	background-color:#527dcc;
+	background:linear-gradient(to bottom, ${colors.buttonGradientLight} 5%, ${colors.buttonGradientDark} 100%);
+	background-color:${colors.buttonGradientLight};
     }
     :active {
         position:relative;
@@ -83,16 +89,23 @@ const FilterButton = Styled.button`
     }
 `
 
-const TableMainContainer = Styled.div`
+const TableContainer = Styled.div`
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    padding: 12px 24px 12px 24px;
+`
+
+const TableBlock = Styled.div`
     display: flex;
     flex: 1;
     flex-direction: column;
     min-width: 0;
     min-height: 0;
     padding: 32px;
-    margin: 16px;
-    background: #F7F6FC;
-    border-radius: 20px;  
+    background: ${colors.blockBackground};
+    border-radius: 24px;  
 `
 
 const TabContainer = Styled.div`
@@ -106,11 +119,12 @@ const Tab = Styled.div`
     justify-content: center;
     align-items: center;
     font-weight: 550;
-    border: 1px solid #b1bcc7;
-    border-radius: 10px 10px 0 0;
-    background: white; /* Use this #e9e9e9 for inactive tabs in the later developments*/
+    border: 1px solid ${colors.border};
+    border-radius: 8px 8px 0 0;
+    background: ${colors.background};
     :hover{
-        color: #27e627;
+        color: ${colors.activeFont};
+        border-bottom: 3px ${colors.activeBorder} solid;
     }
 `
 
@@ -121,10 +135,11 @@ const WordContainer = Styled.div`
     overflow: scroll;
     min-width: 0;
     min-height: 0;
-    border-left: 1px solid #b1bcc7;
-    border-right: 1px solid #b1bcc7;
-    border-bottom: 1px solid #b1bcc7;
-    border-radius: 0 0 10px 10px;
+    border-left: 1px solid ${colors.border};
+    border-right: 1px solid ${colors.border};
+    border-bottom: 1px solid ${colors.border};
+    border-radius: 0 0 16px 16px;
+    background: ${colors.background};
 `
 
 const WordRowWhite = Styled.div`
@@ -132,31 +147,31 @@ const WordRowWhite = Styled.div`
     justify-content: space-between;
     align-items: center;
     min-height: 2rem;
-    padding: 3px 10px 3px 10px;
-    background: white;
-    border-bottom: 1px #e1e1e1 solid;
+    padding: 3px 12px 3px 12px;
+    background: ${colors.rowBackgroundLight};
+    border-bottom: 1px ${colors.rowBorder} solid;
 `
 const WordRowGray = Styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
     min-height: 2rem;
-    padding: 3px 10px 3px 10px;
-    background: #ecebf0;
-    border-bottom: 1px #c7c7c7 solid;
+    padding: 3px 12px 3px 12px;
+    background: ${colors.rowBackgroundDark};
+    border-bottom: 1px ${colors.rowBorder} solid;
 `
 
 const EnglishWord = Styled.div`
     display: flex;
     flex: 2;
-    padding: 0 10px 0 10px; 
+    padding-right: 12px; 
     font-weight: 450;
 `
 
 const HungarianWords = Styled.div`
     display: flex;
     flex: 5;
-    padding: 0 10px 0 10px; 
+    padding-right: 12px; 
     font-weight: 300;
 `
 
@@ -164,7 +179,7 @@ const MemoryLevel = Styled.div`
     display: flex;
     flex: 2;
     align-items: center;
-    padding: 0 10px 0 10px; 
+    padding-right: 12px; 
 `
 
 const MemoryState = Styled.div`
@@ -175,451 +190,111 @@ const WordHandler = Styled.div`
     display: flex;
     flex: 1;
     justify-content: space-between;
-    padding: 0 10px 0 10px; 
+    padding-right: 12px; 
 `
 
-const Pagination = Styled.div`
+const PaginationContainer = Styled.div`
     display: flex;
     justify-content: center;
+    padding: 12px 24px 24px 24px;
+`
+
+const PaginationButton = Styled.button`
+	display:inline-block;
+	cursor:pointer;
+	color: ${colors.buttonFont};
+	font-family:Arial;
+	font-size:15px;
+	font-weight: 550;
+	text-decoration:none;
+	padding: 2px 12px 0 12px;
+    margin: 0 8px 0 8px;
+	background-color:${colors.buttonBackground};
+	border-radius:16px;
+	border: none;
+    :hover {
+	background:linear-gradient(to bottom, ${colors.buttonGradientLight} 5%, ${colors.buttonGradientDark} 100%);
+	background-color:${colors.buttonGradientLight};
+    }
+    :active {
+        position:relative;
+        top:1px;
+    }
+`
+
+const PageNumber = Styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.25rem;
+    padding: 0 8px 0 8px;
 `
 
 
 export default function MyWords() {
     return (
         <MainContainer>
-            <ControlBar>
+            <ControlBarContainer>
                 <AddNewWordButton>Add new word</AddNewWordButton>
                 <SearchContainer>
                     <SearchBar type="search" id="lname" name="lname" placeholder="Type here for searching" />
-                    <FilterButton><BsSearch /></FilterButton>
+                    <FilterButton><BsFilter size={24} /></FilterButton>
                 </SearchContainer>
-            </ControlBar>
-            <TableMainContainer>
-                <TabContainer>
-                    <Tab>Active Words</Tab>
-                    <Tab style={{ backgroundColor: '#ECEBF1' }}>Deleted Words</Tab>
-                </TabContainer>
-                <WordContainer>
+            </ControlBarContainer>
+            <TableContainer>
+                <TableBlock>
+                    <TabContainer>
+                        <Tab>Active Words</Tab>
+                        <Tab style={{ backgroundColor: `${colors.inactiveBackground}`, color: `${colors.inactiveFont}` }}>Deleted Words</Tab>
+                    </TabContainer>
+                    <WordContainer>
+                        <WordRowWhite>
+                            <EnglishWord>English Word 1</EnglishWord>
+                            <HungarianWords>
+                                Magyar szó 1,
+                                Magyar szó 2
+                            </HungarianWords>
+                            <MemoryLevel>
+                                <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
+                                <MemoryState>Long Term Memory</MemoryState>
+                            </MemoryLevel>
+                            <WordHandler>
+                                <BsSuitHeartFill size={25} />
+                                <BsPencil size={25} />
+                                <BsTrash size={25} />
+                            </WordHandler>
+                        </WordRowWhite>
+                        <WordRowGray>
+                            <EnglishWord>Longer English Word about...</EnglishWord>
+                            <HungarianWords>
+                                Bélapátfalva,
+                                Budapest,
+                                Ugod,
+                                Pápa,
+                                Harci majom,
+                                Elkelkáposztástalanítottátok
+                            </HungarianWords>
+                            <MemoryLevel>
+                                <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
+                                <MemoryState>Long Term Memory</MemoryState>
+                            </MemoryLevel>
+                            <WordHandler>
+                                <BsSuitHeart size={25} />
+                                <BsPencil size={25} />
+                                <BsTrash size={25} />
+                            </WordHandler>
+                        </WordRowGray>
+                    </WordContainer>
+                </TableBlock>
 
-                    <WordRowWhite>
-                        <EnglishWord>English Word 1</EnglishWord>
-                        <HungarianWords>
-                            Magyar szó 1,
-                            Magyar szó 2
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeartFill size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowWhite>
-                    <WordRowGray>
-                        <EnglishWord>Longer English Word about...</EnglishWord>
-                        <HungarianWords>
-                            Bélapátfalva,
-                            Budapest,
-                            Ugod,
-                            Pápa,
-                            Harci majom,
-                            Elkelkáposztástalanítottátok
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeart size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowGray>
-
-                    <WordRowWhite>
-                        <EnglishWord>English Word 1</EnglishWord>
-                        <HungarianWords>
-                            Magyar szó 1,
-                            Magyar szó 2
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeartFill size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowWhite>
-                    <WordRowGray>
-                        <EnglishWord>Longer English Word about...</EnglishWord>
-                        <HungarianWords>
-                            Bélapátfalva,
-                            Budapest,
-                            Ugod,
-                            Pápa,
-                            Harci majom,
-                            Elkelkáposztástalanítottátok
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeart size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowGray>
-
-                    <WordRowWhite>
-                        <EnglishWord>English Word 1</EnglishWord>
-                        <HungarianWords>
-                            Magyar szó 1,
-                            Magyar szó 2
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeartFill size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowWhite>
-                    <WordRowGray>
-                        <EnglishWord>Longer English Word about...</EnglishWord>
-                        <HungarianWords>
-                            Bélapátfalva,
-                            Budapest,
-                            Ugod,
-                            Pápa,
-                            Harci majom,
-                            Elkelkáposztástalanítottátok
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeart size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowGray>
-
-                    <WordRowWhite>
-                        <EnglishWord>English Word 1</EnglishWord>
-                        <HungarianWords>
-                            Magyar szó 1,
-                            Magyar szó 2
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeartFill size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowWhite>
-                    <WordRowGray>
-                        <EnglishWord>Longer English Word about...</EnglishWord>
-                        <HungarianWords>
-                            Bélapátfalva,
-                            Budapest,
-                            Ugod,
-                            Pápa,
-                            Harci majom,
-                            Elkelkáposztástalanítottátok
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeart size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowGray>
-
-                    <WordRowWhite>
-                        <EnglishWord>English Word 1</EnglishWord>
-                        <HungarianWords>
-                            Magyar szó 1,
-                            Magyar szó 2
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeartFill size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowWhite>
-                    <WordRowGray>
-                        <EnglishWord>Longer English Word about...</EnglishWord>
-                        <HungarianWords>
-                            Bélapátfalva,
-                            Budapest,
-                            Ugod,
-                            Pápa,
-                            Harci majom,
-                            Elkelkáposztástalanítottátok
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeart size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowGray>
-
-                    <WordRowWhite>
-                        <EnglishWord>English Word 1</EnglishWord>
-                        <HungarianWords>
-                            Magyar szó 1,
-                            Magyar szó 2
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeartFill size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowWhite>
-                    <WordRowGray>
-                        <EnglishWord>Longer English Word about...</EnglishWord>
-                        <HungarianWords>
-                            Bélapátfalva,
-                            Budapest,
-                            Ugod,
-                            Pápa,
-                            Harci majom,
-                            Elkelkáposztástalanítottátok
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeart size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowGray>
-
-                    <WordRowWhite>
-                        <EnglishWord>English Word 1</EnglishWord>
-                        <HungarianWords>
-                            Magyar szó 1,
-                            Magyar szó 2
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeartFill size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowWhite>
-                    <WordRowGray>
-                        <EnglishWord>Longer English Word about...</EnglishWord>
-                        <HungarianWords>
-                            Bélapátfalva,
-                            Budapest,
-                            Ugod,
-                            Pápa,
-                            Harci majom,
-                            Elkelkáposztástalanítottátok
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeart size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowGray>
-
-                    <WordRowWhite>
-                        <EnglishWord>English Word 1</EnglishWord>
-                        <HungarianWords>
-                            Magyar szó 1,
-                            Magyar szó 2
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeartFill size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowWhite>
-                    <WordRowGray>
-                        <EnglishWord>Longer English Word about...</EnglishWord>
-                        <HungarianWords>
-                            Bélapátfalva,
-                            Budapest,
-                            Ugod,
-                            Pápa,
-                            Harci majom,
-                            Elkelkáposztástalanítottátok
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeart size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowGray>
-
-                    <WordRowWhite>
-                        <EnglishWord>English Word 1</EnglishWord>
-                        <HungarianWords>
-                            Magyar szó 1,
-                            Magyar szó 2
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeartFill size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowWhite>
-                    <WordRowGray>
-                        <EnglishWord>Longer English Word about...</EnglishWord>
-                        <HungarianWords>
-                            Bélapátfalva,
-                            Budapest,
-                            Ugod,
-                            Pápa,
-                            Harci majom,
-                            Elkelkáposztástalanítottátok
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeart size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowGray>
-
-                    <WordRowWhite>
-                        <EnglishWord>English Word 1</EnglishWord>
-                        <HungarianWords>
-                            Magyar szó 1,
-                            Magyar szó 2
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeartFill size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowWhite>
-                    <WordRowGray>
-                        <EnglishWord>Longer English Word about...</EnglishWord>
-                        <HungarianWords>
-                            Bélapátfalva,
-                            Budapest,
-                            Ugod,
-                            Pápa,
-                            Harci majom,
-                            Elkelkáposztástalanítottátok
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeart size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowGray>
-
-                    <WordRowWhite>
-                        <EnglishWord>English Word 1</EnglishWord>
-                        <HungarianWords>
-                            Magyar szó 1,
-                            Magyar szó 2
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeartFill size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowWhite>
-                    <WordRowGray>
-                        <EnglishWord>Longer English Word about...</EnglishWord>
-                        <HungarianWords>
-                            Bélapátfalva,
-                            Budapest,
-                            Ugod,
-                            Pápa,
-                            Harci majom,
-                            Elkelkáposztástalanítottátok
-                        </HungarianWords>
-                        <MemoryLevel>
-                            <CgSpinnerTwo size={30} style={{ marginRight: '10px' }} />
-                            <MemoryState>Long Term Memory</MemoryState>
-                        </MemoryLevel>
-                        <WordHandler>
-                            <BsSuitHeart size={25} />
-                            <MdEdit size={25} />
-                            <BsTrash size={25} />
-                        </WordHandler>
-                    </WordRowGray>
-
-
-                </WordContainer>
-
-
-
-
-            </TableMainContainer>
-            <Pagination>
-                <FilterButton>|||</FilterButton>
-                <FilterButton>|||</FilterButton>
-                <FilterButton>|||</FilterButton>
-            </Pagination>
+            </TableContainer>
+            <PaginationContainer>
+                <PaginationButton><BsChevronDoubleLeft /></PaginationButton>
+                <PaginationButton><BsChevronLeft /></PaginationButton>
+                <PageNumber>2</PageNumber>
+                <PaginationButton><BsChevronRight /></PaginationButton>
+                <PaginationButton><BsChevronDoubleRight /></PaginationButton>
+            </PaginationContainer>
         </MainContainer>
     )
 }
