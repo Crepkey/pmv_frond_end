@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { colors } from "./colors";
 import { BsSuitHeart, BsPlus, BsX } from "react-icons/bs";
 
-import { Word } from "../dummyData/interfaces";
+import { Word } from "../utils/interfaces";
 
 const Card = styled.div`
 	border: 1px solid ${colors.border};

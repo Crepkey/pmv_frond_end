@@ -6,8 +6,8 @@ import { colors } from "./colors";
 import { MdVolumeUp } from "react-icons/md";
 import { GiSwordwoman, GiSwordman } from "react-icons/gi";
 
-import { data_2 as data } from "../dummyData/playingCard";
-import { Owner, Word } from "../dummyData/interfaces";
+import { data_2 as data } from "../utils/playingCard";
+import { Owner, Word } from "../utils/interfaces";
 
 const Card = styled.div`
 	border: 1px solid ${colors.border};
