@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 /* Styles */
 import styled from "styled-components";
 import { colors } from "./colors";
 import { BsSuitHeart, BsPlus, BsX } from "react-icons/bs";
+
+import { Word } from "../dummyData/interfaces";
 
 const Card = styled.div`
 	border: 1px solid ${colors.border};
@@ -109,7 +111,7 @@ const AddNewRow = styled.div`
 	font-size: 0.9rem;
 `;
 
-const CircleButton = styled.button`
+const CircleButton = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -187,11 +189,19 @@ const Button = styled.div`
 	}
 `;
 
-export default function EditWord() {
+interface EditWordProps {
+	initialWord: Word;
+	title: string;
+}
+
+export default function EditWord({ initialWord, title }: EditWordProps) {
+	const [word, setWord] = useState<Word>(initialWord);
+	console.log(word);
+
 	return (
 		<Card>
 			<CardHeader>
-				Add new word{" "}
+				{title}
 				<Icon>
 					<BsX size={20} />
 				</Icon>
@@ -201,7 +211,12 @@ export default function EditWord() {
 					<Form>
 						<Label>English word or expression</Label>
 						<Row>
-							<String placeholder="Type your English word or expression here..." />
+							<String
+								placeholder="Type your English word or expression here..."
+								onChange={(e) => {
+									setWord({ ...word, english: e.target.value });
+								}}
+							/>
 							<HeartIcon>
 								<BsSuitHeart size={24} />
 							</HeartIcon>
@@ -209,9 +224,22 @@ export default function EditWord() {
 
 						<Label>Hungarian meanings</Label>
 						<Block>
-							<String placeholder="Type one Hungarian meaning here..." />
+							{word.hungarian.map((meaning: string, i: number) => (
+								<String
+									key={i}
+									placeholder="Type one Hungarian meaning here..."
+									value={meaning}
+									onChange={(e) => {
+										// TODO set on the correct index in the array
+										console.log("blabla");
+									}}
+								/>
+							))}
 							<AddNewRow>
-								<CircleButton>
+								<CircleButton
+									onClick={() => {
+										setWord({ ...word, hungarian: [...word.hungarian, ""] });
+									}}>
 									<BsPlus />
 								</CircleButton>
 								Add one more Hungarian meaning

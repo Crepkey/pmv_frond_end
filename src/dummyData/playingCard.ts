@@ -1,15 +1,4 @@
-export interface Owner {
-	name: string;
-	sex: "male" | "female";
-}
-
-export interface Word {
-	english: string;
-	hungarian: string[];
-	sentences: string[];
-	notes?: string;
-}
-
+import { Owner, Word } from "./interfaces";
 interface Data {
 	owner: Owner;
 	word: Word;

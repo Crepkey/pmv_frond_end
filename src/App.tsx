@@ -28,8 +28,8 @@ function App() {
 			{/* <MyWords /> */}
 
 			<Body>
-				<PlayingCard />
-				{/* <EditWord /> */}
+				{/* <PlayingCard /> */}
+				<EditWord title="Add new word" initialWord={{ english: "", hungarian: [""], sentences: [""] }} />
 			</Body>
 		</MainContainer>
 	);
