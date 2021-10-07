@@ -6,6 +6,7 @@ import { colors } from "./colors";
 import { BsSuitHeart, BsPlus, BsX } from "react-icons/bs";
 
 import { Word } from "../utils/interfaces";
+import set from "lodash/set";
 
 const Card = styled.div`
 	border: 1px solid ${colors.border};
@@ -230,8 +231,8 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 									placeholder="Type one Hungarian meaning here..."
 									value={meaning}
 									onChange={(e) => {
-										// TODO set on the correct index in the array
-										console.log("blabla");
+										const newWord = set({ ...word }, ["hungarian", i], e.target.value);
+										setWord(newWord);
 									}}
 								/>
 							))}
