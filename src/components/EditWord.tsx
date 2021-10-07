@@ -3,9 +3,9 @@ import React, { useState } from "react";
 /* Styles */
 import styled from "styled-components";
 import { colors } from "./colors";
-import { BsSuitHeart, BsPlus, BsX } from "react-icons/bs";
+import { BsSuitHeart, BsSuitHeartFill, BsPlus, BsX } from "react-icons/bs";
 
-import { Word } from "../utils/interfaces";
+import { Word, WordType } from "../utils/interfaces";
 import set from "lodash/set";
 
 const Card = styled.div`
@@ -197,7 +197,6 @@ interface EditWordProps {
 
 export default function EditWord({ initialWord, title }: EditWordProps) {
 	const [word, setWord] = useState<Word>(initialWord);
-	console.log(word);
 
 	return (
 		<Card>
@@ -218,8 +217,11 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 									setWord({ ...word, english: e.target.value });
 								}}
 							/>
-							<HeartIcon>
-								<BsSuitHeart size={24} />
+							<HeartIcon
+								onClick={(e) => {
+									setWord({ ...word, favourite: !word.favourite });
+								}}>
+								{word.favourite ? <BsSuitHeartFill size={24} /> : <BsSuitHeart size={24} />}
 							</HeartIcon>
 						</Row>
 
@@ -249,9 +251,22 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 
 						<Label>Example sentences</Label>
 						<Block>
-							<String placeholder="Type one example sentence here..." />
+							{word.sentences.map((sentence: string, i: number) => (
+								<String
+									key={i}
+									placeholder="Type one example sentence here..."
+									value={sentence}
+									onChange={(e) => {
+										const newWord = set({ ...word }, ["sentences", i], e.target.value);
+										setWord(newWord);
+									}}
+								/>
+							))}
 							<AddNewRow>
-								<CircleButton>
+								<CircleButton
+									onClick={() => {
+										setWord({ ...word, sentences: [...word.sentences, ""] });
+									}}>
 									<BsPlus />
 								</CircleButton>
 								Add one more example sentence
@@ -259,18 +274,33 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 						</Block>
 
 						<Label>Type</Label>
-						<Select>
-							<option>Word</option>
-							<option>Expression</option>
+						<Select
+							defaultValue="word"
+							onChange={(e) => {
+								setWord({ ...word, type: e.target.value as WordType });
+							}}>
+							<option value="word">Word</option>
+							<option value="expression">Expression</option>
 						</Select>
 
 						<Label>Notes</Label>
-						<Textarea placeholder="Type your notes here..."></Textarea>
+						<Textarea
+							placeholder="Type your notes here..."
+							onChange={(e) => {
+								setWord({ ...word, notes: e.target.value });
+							}}>
+							{word.notes}
+						</Textarea>
 					</Form>
 				</ScrollContainer>
 
 				<Row>
-					<Button>Save</Button>
+					<Button
+						onClick={() => {
+							console.log(word);
+						}}>
+						Save
+					</Button>
 				</Row>
 			</CardBody>
 		</Card>
