@@ -3,7 +3,7 @@ import React, { useState } from "react";
 /* Styles */
 import styled from "styled-components";
 import { colors } from "./colors";
-import { BsSuitHeart, BsSuitHeartFill, BsPlus, BsX } from "react-icons/bs";
+import { BsSuitHeart, BsSuitHeartFill, BsPlus, BsX, BsTrash } from "react-icons/bs";
 
 import { Word, WordType } from "../utils/interfaces";
 import set from "lodash/set";
@@ -41,6 +41,10 @@ const Icon = styled.div`
 `;
 
 const HeartIcon = styled(Icon)`
+	margin-bottom: 24px;
+`;
+
+const DeleteIcon = styled(Icon)`
 	margin-bottom: 24px;
 `;
 
@@ -228,15 +232,26 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 						<Label>Hungarian meanings</Label>
 						<Block>
 							{word.hungarian.map((meaning: string, i: number) => (
-								<String
-									key={i}
-									placeholder="Type one Hungarian meaning here..."
-									value={meaning}
-									onChange={(e) => {
-										const newWord = set({ ...word }, ["hungarian", i], e.target.value);
-										setWord(newWord);
-									}}
-								/>
+								<Row key={i}>
+									<String
+										placeholder="Type one Hungarian meaning here..."
+										value={meaning}
+										onChange={(e) => {
+											const newWord = set({ ...word }, ["hungarian", i], e.target.value);
+											setWord(newWord);
+										}}
+									/>
+									{i !== 0 && (
+										<DeleteIcon>
+											<BsTrash
+												onClick={(e) => {
+													const newArray = word.hungarian.filter((s: string, index: number) => index !== i);
+													setWord({ ...word, hungarian: newArray });
+												}}
+											/>
+										</DeleteIcon>
+									)}
+								</Row>
 							))}
 							<AddNewRow>
 								<CircleButton
@@ -252,15 +267,27 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 						<Label>Example sentences</Label>
 						<Block>
 							{word.sentences.map((sentence: string, i: number) => (
-								<String
-									key={i}
-									placeholder="Type one example sentence here..."
-									value={sentence}
-									onChange={(e) => {
-										const newWord = set({ ...word }, ["sentences", i], e.target.value);
-										setWord(newWord);
-									}}
-								/>
+								<Row key={i}>
+									<String
+										placeholder="Type one example sentence here..."
+										value={sentence}
+										onChange={(e) => {
+											const newWord = set({ ...word }, ["sentences", i], e.target.value);
+											setWord(newWord);
+										}}
+									/>
+
+									{i !== 0 && (
+										<DeleteIcon>
+											<BsTrash
+												onClick={(e) => {
+													const newArray = word.sentences.filter((s: string, index: number) => index !== i);
+													setWord({ ...word, sentences: newArray });
+												}}
+											/>
+										</DeleteIcon>
+									)}
+								</Row>
 							))}
 							<AddNewRow>
 								<CircleButton
