@@ -3,7 +3,7 @@ import React from "react";
 /* Styles */
 import styled from "styled-components";
 
-const MainContainer = styled.div`
+const MainContainer = styled.div<SpinnerBarStyleProps>`
 	display: flex;
 	width: 500px;
 	height: 500px;
@@ -11,37 +11,37 @@ const MainContainer = styled.div`
 	border: 1px solid yellow;
 `;
 
-const RedArea = styled.div<SpinnerBarStyleProps>`
+const RedArea = styled.div`
 	width: 47%;
 	height: 47%;
-	background-image: ${({ actualState }) => actualState.red};
+	background-image: linear-gradient(to left top, #c72929, #d34340, #de5956, #e86e6d, #f18383);
 	border-radius: 100px 0 0 0;
 	margin-right: 3%;
 	margin-bottom: 3%;
 `;
 
-const OrangeArea = styled.div<SpinnerBarStyleProps>`
+const OrangeArea = styled.div`
 	width: 47%;
 	height: 47%;
-	background-image: ${({ actualState }) => actualState.orange};
+	background-image: linear-gradient(to right top, #ff8100, #ff8f23, #ff9c39, #ffa94e, #ffb562);
 	border-radius: 0 100px 0 0;
 	margin-left: 3%;
 	margin-bottom: 3%;
 `;
 
-const YellowArea = styled.div<SpinnerBarStyleProps>`
+const YellowArea = styled.div`
 	width: 47%;
 	height: 47%;
-	background-image: ${({ actualState }) => actualState.yellow};
+	background-image: linear-gradient(to right bottom, #ffdb00, #f8e033, #f1e54d, #ebe963, #e7ec77);
 	border-radius: 0 0 100px 0;
 	margin-left: 3%;
 	margin-top: 3%;
 `;
 
-const GreenArea = styled.div<SpinnerBarStyleProps>`
+const GreenArea = styled.div`
 	width: 47%;
 	height: 47%;
-	background-image: ${({ actualState }) => actualState.green};
+	background-image: linear-gradient(to left bottom, #0bc900, #41d02c, #5dd845, #74df5a, #89e66e);
 	border-radius: 0 0 0 100px;
 	margin-right: 3%;
 	margin-top: 3%;
@@ -58,48 +58,22 @@ const WhiteCircle = styled.div<SpinnerBarStyleProps>`
 `;
 
 interface SpinnerBarStyleProps {
-	actualState: { [key: string]: string }; // red, orange, yellow, green properties and their numbers
-	size?: number | string;
+	size?: number;
 	background?: string;
 }
 interface SpinnerBarProps {
-	status: number; // This number can be between 0 and 100
-	size: number | string; // This value can be a number or a string in the following format: '213px' | '213%'
+	size: number;
 	backgroundColor?: string; // A color code in HEX or RGB(a)
 }
 
-export default function SpinnerBar({ status, size = "50px", backgroundColor = "rgba(255, 255, 255, 1)" }: SpinnerBarProps) {
-	const actualState: { [key: string]: string } = (function () {
-		const result = {
-			red: "rgba(0, 0, 0, 0)",
-			orange: "rgba(0, 0, 0, 0)",
-			yellow: "rgba(0, 0, 0, 0)",
-			green: "rgba(0, 0, 0, 0)",
-		};
-
-		if (status > 0) {
-			result.red = "linear-gradient(to left top, #c72929, #d34340, #de5956, #e86e6d, #f18383)";
-		}
-		if (status > 25) {
-			result.orange = "linear-gradient(to right top, #ff8100, #ff8f23, #ff9c39, #ffa94e, #ffb562)";
-		}
-		if (status >= 50) {
-			result.yellow = "linear-gradient(to right bottom, #ffdb00, #f8e033, #f1e54d, #ebe963, #e7ec77)";
-		}
-		if (status >= 75) {
-			result.green = "linear-gradient(to left bottom, #0bc900, #41d02c, #5dd845, #74df5a, #89e66e)";
-		}
-
-		return result;
-	})();
-
+export default function SpinnerBar({ size = 50, backgroundColor = "rgba(255, 255, 255, 1)" }: SpinnerBarProps) {
 	return (
-		<MainContainer>
-			<RedArea actualState={actualState} background={backgroundColor} size={size} />
-			<OrangeArea actualState={actualState} background={backgroundColor} size={size} />
-			<GreenArea actualState={actualState} background={backgroundColor} size={size} />
-			<YellowArea actualState={actualState} background={backgroundColor} size={size} />
-			<WhiteCircle actualState={actualState} background={backgroundColor} size={size} />
+		<MainContainer size={size}>
+			<RedArea />
+			<OrangeArea />
+			<GreenArea />
+			<YellowArea />
+			<WhiteCircle background={backgroundColor} />
 		</MainContainer>
 	);
 }
