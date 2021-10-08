@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 /* Styles */
 import styled from "styled-components";
 import { colors } from "./colors";
 import { MdVolumeUp } from "react-icons/md";
-import { GiSwordwoman } from "react-icons/gi";
+import { GiSwordwoman, GiSwordman } from "react-icons/gi";
+
+import { data_2 as data } from "../utils/playingCard";
+import { Owner, Word } from "../utils/interfaces";
 
 const Card = styled.div`
 	border: 1px solid ${colors.border};
@@ -148,17 +151,36 @@ const RejectButton = styled.div`
 	}
 `;
 
-export default function WordCard() {
+const HeaderIcon = styled.div`
+	border: 2px gray solid;
+	width: 30px;
+	height: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 30px;
+	margin-right: 16px;
+`;
+
+export default function PlayingCard() {
+	const [owner, setOwner] = useState<Owner | null>(null);
+	const [word, setWord] = useState<Word | null>(null);
+
+	useEffect(() => {
+		setOwner(data.owner);
+		setWord(data.word);
+	}, []);
+
 	return (
 		<Card>
 			<CardHeader>
-				<GiSwordwoman size={28} style={{ border: "2px gray solid", borderRadius: 100, background: "white", marginRight: "16px" }} />
-				This word belongs to Petra
+				<HeaderIcon>{owner?.sex === "male" ? <GiSwordman size={28} /> : <GiSwordwoman size={28} />}</HeaderIcon>
+				This word belongs to {owner?.name}
 			</CardHeader>
 
 			<CardBody>
 				<Title>
-					Petra's English word{" "}
+					{word?.english}
 					<Icon>
 						<MdVolumeUp />
 					</Icon>
@@ -166,24 +188,20 @@ export default function WordCard() {
 
 				<ScrollContainer>
 					<TagContainer>
-						<Tag>első jelentés</Tag>
-						<Tag>második jelentés</Tag>
-						<Tag>harmadik jelentés</Tag>
+						{word?.hungarian.map((meaning: string, i: number) => (
+							<Tag key={i}>{meaning}</Tag>
+						))}
 					</TagContainer>
 					<Block>
-						<SentenceCard>Example sentence with very very very very very very very very very long text</SentenceCard>
-						<SentenceCard>Example sentence 2</SentenceCard>
-						<SentenceCard>Example sentence 3</SentenceCard>
+						{word?.sentences.map((sentence: string, i: number) => (
+							<SentenceCard key={i}>{sentence}</SentenceCard>
+						))}
 					</Block>
-					<Block>
-						Notes notes notes ... Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-						dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
-						sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-					</Block>
+					{word?.notes && <Block>{word?.notes}</Block>}
 				</ScrollContainer>
 
 				<ButtonContainer>
+					{/* TODO media query: on smaller screens we should only use icons */}
 					<Button>CORRECT</Button>
 					<RejectButton>NOT CORRECT</RejectButton>
 				</ButtonContainer>

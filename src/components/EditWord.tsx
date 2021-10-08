@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 
 /* Styles */
 import styled from "styled-components";
 import { colors } from "./colors";
-import { BsSuitHeart, BsPlus, BsX } from "react-icons/bs";
+import { BsSuitHeart, BsSuitHeartFill, BsPlus, BsX, BsTrash } from "react-icons/bs";
+
+import { Word, WordType } from "../utils/interfaces";
+import set from "lodash/set";
 
 const Card = styled.div`
 	border: 1px solid ${colors.border};
 	border-radius: 8px;
 	margin: 16px;
-	width: 30vw;
+	width: 40vw;
 	min-width: 20rem;
 	min-height: 0;
 	display: flex;
@@ -38,6 +41,10 @@ const Icon = styled.div`
 `;
 
 const HeartIcon = styled(Icon)`
+	margin-bottom: 24px;
+`;
+
+const DeleteIcon = styled(Icon)`
 	margin-bottom: 24px;
 `;
 
@@ -79,26 +86,27 @@ const Block = styled.div`
 	flex-direction: column;
 `;
 
-const Label = styled.div`
-	color: ${colors.inactiveFont};
+const Label = styled.div<{ error?: boolean }>`
+	color: ${({ error }: any) => (error ? colors.error : colors.inactiveFont)};
+	font-weight: ${({ error }: any) => (error ? "bold" : "auto")};
 	font-size: 0.75rem;
 	margin: 0 0 4px 12px;
 `;
 
-const String = styled.input`
+const String = styled.input<{ error?: boolean }>`
 	display: flex;
 	flex: 1;
 	font-size: 1rem;
 	padding: 8px 12px;
 	margin-bottom: 24px;
-	border: 1px ${colors.inputBorder} solid;
+	border: ${({ error }: any) => (error ? `2px solid ${colors.error}` : `1px ${colors.inputBorder} solid`)};
 	border-radius: 20px;
 	color: grey;
 	::placeholder {
 		color: ${colors.placeholderFont};
 	}
 	:focus {
-		outline: 1px ${colors.activeBorder} solid;
+		outline: ${({ error }: any) => (error ? `none` : `1px ${colors.activeBorder} solid`)};
 	}
 `;
 
@@ -109,7 +117,7 @@ const AddNewRow = styled.div`
 	font-size: 0.9rem;
 `;
 
-const CircleButton = styled.button`
+const CircleButton = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -187,11 +195,51 @@ const Button = styled.div`
 	}
 `;
 
-export default function EditWord() {
+interface EditWordProps {
+	initialWord: Word;
+	title: string;
+}
+
+const errorMessages: { [key: number]: string } = {
+	1: "English field is required.",
+	2: "At least one Hungarian meaning is required.",
+	3: "At least one example sentence is required.",
+};
+
+export default function EditWord({ initialWord, title }: EditWordProps) {
+	const [word, setWord] = useState<Word>(initialWord);
+	const [errors, setErrors] = useState<number[]>([]);
+
+	function onSave() {
+		const checkedErrors: number[] = [];
+		if (word.english.length === 0) {
+			checkedErrors.push(1);
+		}
+
+		const hungarianMeaning = word.hungarian.filter((s: string) => s.length > 0);
+		if (hungarianMeaning.length === 0) {
+			checkedErrors.push(2);
+		}
+
+		const sentences = word.sentences.filter((s: string) => s.length > 0);
+		if (sentences.length === 0) {
+			checkedErrors.push(3);
+		}
+
+		if (checkedErrors.length > 0) {
+			setErrors(checkedErrors);
+			return;
+		}
+
+		const wordToSave = { ...word, hungarian: hungarianMeaning, sentences }; // contains only the filtered arrays, without empty strings
+
+		// TODO save to database
+	}
+
 	return (
 		<Card>
 			<CardHeader>
-				Add new word{" "}
+				{title}
 				<Icon>
 					<BsX size={20} />
 				</Icon>
@@ -199,30 +247,96 @@ export default function EditWord() {
 			<CardBody>
 				<ScrollContainer>
 					<Form>
-						<Label>English word or expression</Label>
+						{errors.includes(1) ? <Label error={true}>{errorMessages[1]}</Label> : <Label>English word or expression</Label>}
 						<Row>
-							<String placeholder="Type your English word or expression here..." />
-							<HeartIcon>
-								<BsSuitHeart size={24} />
+							<String
+								error={errors.includes(1)}
+								placeholder="Type your English word or expression here..."
+								value={word.english}
+								onChange={(e) => {
+									// REFACTOR optimization: setErrors only has to run, if there was an error, and we should use a general component for handling inputs and error labels ---> we only have to check once, if there was an error or not
+									setErrors(errors.filter((e: number) => e !== 1));
+									setWord({ ...word, english: e.target.value });
+								}}
+							/>
+							<HeartIcon
+								onClick={(e) => {
+									setWord({ ...word, favourite: !word.favourite });
+								}}>
+								{word.favourite ? <BsSuitHeartFill size={24} /> : <BsSuitHeart size={24} />}
 							</HeartIcon>
 						</Row>
 
-						<Label>Hungarian meanings</Label>
+						{errors.includes(2) ? <Label error={true}>{errorMessages[2]}</Label> : <Label>Hungarian meanings</Label>}
 						<Block>
-							<String placeholder="Type one Hungarian meaning here..." />
+							{word.hungarian.map((meaning: string, i: number) => (
+								<Row key={i}>
+									<String
+										error={errors.includes(2) && i === 0}
+										placeholder="Type one Hungarian meaning here..."
+										value={meaning}
+										onChange={(e) => {
+											setErrors(errors.filter((e: number) => e !== 2));
+											const newWord = set({ ...word }, ["hungarian", i], e.target.value);
+											setWord(newWord);
+										}}
+									/>
+									{i !== 0 && (
+										<DeleteIcon>
+											<BsTrash
+												onClick={(e) => {
+													const newArray = word.hungarian.filter((s: string, index: number) => index !== i);
+													setWord({ ...word, hungarian: newArray });
+												}}
+											/>
+										</DeleteIcon>
+									)}
+								</Row>
+							))}
 							<AddNewRow>
-								<CircleButton>
+								<CircleButton
+									onClick={() => {
+										setWord({ ...word, hungarian: [...word.hungarian, ""] });
+									}}>
 									<BsPlus />
 								</CircleButton>
 								Add one more Hungarian meaning
 							</AddNewRow>
 						</Block>
 
-						<Label>Example sentences</Label>
+						{errors.includes(3) ? <Label error={true}>{errorMessages[3]}</Label> : <Label>Example sentences</Label>}
 						<Block>
-							<String placeholder="Type one example sentence here..." />
+							{word.sentences.map((sentence: string, i: number) => (
+								<Row key={i}>
+									{/* TODO we should use a textarea here which is automatically resized when the text is too long */}
+									<String
+										error={errors.includes(3) && i === 0}
+										placeholder="Type one example sentence here..."
+										value={sentence}
+										onChange={(e) => {
+											setErrors(errors.filter((e: number) => e !== 3));
+											const newWord = set({ ...word }, ["sentences", i], e.target.value);
+											setWord(newWord);
+										}}
+									/>
+
+									{i !== 0 && (
+										<DeleteIcon>
+											<BsTrash
+												onClick={(e) => {
+													const newArray = word.sentences.filter((s: string, index: number) => index !== i);
+													setWord({ ...word, sentences: newArray });
+												}}
+											/>
+										</DeleteIcon>
+									)}
+								</Row>
+							))}
 							<AddNewRow>
-								<CircleButton>
+								<CircleButton
+									onClick={() => {
+										setWord({ ...word, sentences: [...word.sentences, ""] });
+									}}>
 									<BsPlus />
 								</CircleButton>
 								Add one more example sentence
@@ -230,18 +344,28 @@ export default function EditWord() {
 						</Block>
 
 						<Label>Type</Label>
-						<Select>
-							<option>Word</option>
-							<option>Expression</option>
+						<Select
+							defaultValue="word"
+							onChange={(e) => {
+								setWord({ ...word, type: e.target.value as WordType });
+							}}>
+							<option value="word">Word</option>
+							<option value="expression">Expression</option>
 						</Select>
 
 						<Label>Notes</Label>
-						<Textarea placeholder="Type your notes here..."></Textarea>
+						<Textarea
+							placeholder="Type your notes here..."
+							onChange={(e) => {
+								setWord({ ...word, notes: e.target.value });
+							}}>
+							{word.notes}
+						</Textarea>
 					</Form>
 				</ScrollContainer>
 
 				<Row>
-					<Button>Save</Button>
+					<Button onClick={onSave}>Save</Button>
 				</Row>
 			</CardBody>
 		</Card>
