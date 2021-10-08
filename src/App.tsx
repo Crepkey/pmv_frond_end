@@ -29,7 +29,18 @@ function App() {
 
 			<Body>
 				{/* <PlayingCard /> */}
-				<EditWord title="Add new word" initialWord={{ english: "", hungarian: [""], sentences: [""], type: "word" }} />
+				{/* <EditWord title="Add new word" initialWord={{ english: "", hungarian: [""], sentences: [""], type: "word" }} /> */}
+				<EditWord
+					title="Edit word"
+					initialWord={{
+						english: "Vastly",
+						hungarian: ["mérhetetlenül", "nagy mértékben"],
+						sentences: ["Business practices differ vastly from country to country."],
+						type: "word",
+						notes: "Find more example sentences!",
+						favourite: true,
+					}}
+				/>
 			</Body>
 		</MainContainer>
 	);

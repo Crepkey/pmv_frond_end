@@ -12,7 +12,7 @@ const Card = styled.div`
 	border: 1px solid ${colors.border};
 	border-radius: 8px;
 	margin: 16px;
-	width: 30vw;
+	width: 40vw;
 	min-width: 20rem;
 	min-height: 0;
 	display: flex;
@@ -252,6 +252,7 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 							<String
 								error={errors.includes(1)}
 								placeholder="Type your English word or expression here..."
+								value={word.english}
 								onChange={(e) => {
 									// TODO optimization: setErrors only has to run, if there was an error, and we should use a general component for handling inputs and error labels ---> we only have to check once, if there was an error or not
 									setErrors(errors.filter((e: number) => e !== 1));
