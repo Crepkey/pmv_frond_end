@@ -3,6 +3,7 @@ import get from "lodash/get";
 
 /* Styles */
 import styled from "styled-components";
+import { colors } from "./colors";
 
 const MainContainer = styled.div<SpinnerBarStyle>`
 	display: flex;
@@ -18,7 +19,7 @@ const MainContainer = styled.div<SpinnerBarStyle>`
 const RedArea = styled.div<SpinnerBarState>`
 	width: 47%;
 	height: 47%;
-	background-image: ${({ red }) => red};
+	background: ${({ red }) => red};
 	border-radius: 100% 0 0 0;
 	margin-right: 3%;
 	margin-bottom: 3%;
@@ -27,16 +28,16 @@ const RedArea = styled.div<SpinnerBarState>`
 const OrangeArea = styled.div<SpinnerBarState>`
 	width: 47%;
 	height: 47%;
-	background-image: ${({ orange }) => orange};
+	background: ${({ orange }) => orange};
 	border-radius: 0 100% 0 0;
 	margin-left: 3%;
 	margin-bottom: 3%;
 `;
 
-const YellowArea = styled.div<SpinnerBarState>`
+const BlueArea = styled.div<SpinnerBarState>`
 	width: 47%;
 	height: 47%;
-	background-image: ${({ yellow }) => yellow};
+	background: ${({ blue }) => blue};
 	border-radius: 0 0 100% 0;
 	margin-left: 3%;
 	margin-top: 3%;
@@ -45,7 +46,7 @@ const YellowArea = styled.div<SpinnerBarState>`
 const GreenArea = styled.div<SpinnerBarState>`
 	width: 47%;
 	height: 47%;
-	background-image: ${({ green }) => green};
+	background: ${({ green }) => green};
 	border-radius: 0 0 0 100%;
 	margin-right: 3%;
 	margin-top: 3%;
@@ -71,7 +72,7 @@ interface SpinnerBarStyle {
 interface SpinnerBarState {
 	red: string; //RGBa only
 	orange: string; //RGBa only
-	yellow: string; //RGBa only
+	blue: string; //RGBa only
 	green: string; //RGBa only
 }
 
@@ -86,21 +87,21 @@ export default function SpinnerBar({ status, size, style }: SpinnerBarProps) {
 		const result = {
 			red: "rgba(0, 0, 0, 0)",
 			orange: "rgba(0, 0, 0, 0)",
-			yellow: "rgba(0, 0, 0, 0)",
+			blue: "rgba(0, 0, 0, 0)",
 			green: "rgba(0, 0, 0, 0)",
 		};
 
 		if (status > 0) {
-			result.red = "linear-gradient(to left top, #c72929, #d34340, #de5956, #e86e6d, #f18383)";
+			result.red = `${colors.progressRed}`;
 		}
 		if (status > 25) {
-			result.orange = "linear-gradient(to right top, #ff8100, #ff8f23, #ff9c39, #ffa94e, #ffb562)";
+			result.orange = `${colors.progressOrange}`;
 		}
 		if (status >= 50) {
-			result.yellow = "linear-gradient(to right bottom, #ffdb00, #f8e033, #f1e54d, #ebe963, #e7ec77)";
+			result.blue = `${colors.progressBlue}`;
 		}
 		if (status >= 75) {
-			result.green = "linear-gradient(to left bottom, #0bc900, #41d02c, #5dd845, #74df5a, #89e66e)";
+			result.green = `${colors.progressGreen}`;
 		}
 
 		return result;
@@ -118,7 +119,7 @@ export default function SpinnerBar({ status, size, style }: SpinnerBarProps) {
 			<RedArea {...actualState} />
 			<OrangeArea {...actualState} />
 			<GreenArea {...actualState} />
-			<YellowArea {...actualState} />
+			<BlueArea {...actualState} />
 			<InnerCircle {...style} />
 		</MainContainer>
 	);
