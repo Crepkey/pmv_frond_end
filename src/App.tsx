@@ -25,7 +25,7 @@ function App() {
 	return (
 		<MainContainer>
 			<MenuBar />
-			{/* <MyWords /> */}
+			<MyWords />
 
 			<Body>
 				{/* <PlayingCard /> */}
