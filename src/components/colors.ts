@@ -39,4 +39,11 @@ export const colors = {
 
 	//STANDARD COLORS
 	error: "rgba(243, 78, 123, 1)",
+
+	// PROGRESS
+
+	progressRed: "rgba(222, 89, 86, 1)",
+	progressOrange: "rgba(255, 143, 35, 1)",
+	progressBlue: "rgba(86, 171, 227, 1)",
+	progressGreen: "rgba(11, 201, 0, 1)",
 };

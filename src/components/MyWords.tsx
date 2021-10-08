@@ -253,7 +253,7 @@ export default function MyWords() {
 							<EnglishWord>English Word 1</EnglishWord>
 							<HungarianWords>Magyar szó 1, Magyar szó 2</HungarianWords>
 							<MemoryLevel>
-								<SpinnerBar size={30} status={34} style={{ margin: "0 12px 0 0" }} />
+								<SpinnerBar size={24} status={34} style={{ margin: "0 12px 0 0" }} />
 								<MemoryState>Long Term Memory</MemoryState>
 							</MemoryLevel>
 							<WordHandler>
@@ -266,7 +266,189 @@ export default function MyWords() {
 							<EnglishWord>Longer English Word about...</EnglishWord>
 							<HungarianWords>Bélapátfalva, Budapest, Ugod, Pápa, Harci majom, Elkelkáposztástalanítottátok</HungarianWords>
 							<MemoryLevel>
-								<SpinnerBar size={30} status={96} style={{ margin: "0 12px 0 0", background: `${colors.rowBackgroundDark}` }} />
+								<SpinnerBar size={24} status={96} style={{ margin: "0 12px 0 0", background: `${colors.rowBackgroundDark}` }} />
+								<MemoryState>Long Term Memory</MemoryState>
+							</MemoryLevel>
+							<WordHandler>
+								<BsSuitHeart size={25} />
+								<BsPencil size={25} />
+								<BsTrash size={25} />
+							</WordHandler>
+						</WordRowGray>
+						<WordRowWhite>
+							<EnglishWord>English Word 1</EnglishWord>
+							<HungarianWords>Magyar szó 1, Magyar szó 2</HungarianWords>
+							<MemoryLevel>
+								<SpinnerBar size={24} status={34} style={{ margin: "0 12px 0 0" }} />
+								<MemoryState>Long Term Memory</MemoryState>
+							</MemoryLevel>
+							<WordHandler>
+								<BsSuitHeartFill size={25} />
+								<BsPencil size={25} />
+								<BsTrash size={25} />
+							</WordHandler>
+						</WordRowWhite>
+						<WordRowGray>
+							<EnglishWord>Longer English Word about...</EnglishWord>
+							<HungarianWords>Bélapátfalva, Budapest, Ugod, Pápa, Harci majom, Elkelkáposztástalanítottátok</HungarianWords>
+							<MemoryLevel>
+								<SpinnerBar size={24} status={96} style={{ margin: "0 12px 0 0", background: `${colors.rowBackgroundDark}` }} />
+								<MemoryState>Long Term Memory</MemoryState>
+							</MemoryLevel>
+							<WordHandler>
+								<BsSuitHeart size={25} />
+								<BsPencil size={25} />
+								<BsTrash size={25} />
+							</WordHandler>
+						</WordRowGray>
+						<WordRowWhite>
+							<EnglishWord>English Word 1</EnglishWord>
+							<HungarianWords>Magyar szó 1, Magyar szó 2</HungarianWords>
+							<MemoryLevel>
+								<SpinnerBar size={24} status={34} style={{ margin: "0 12px 0 0" }} />
+								<MemoryState>Long Term Memory</MemoryState>
+							</MemoryLevel>
+							<WordHandler>
+								<BsSuitHeartFill size={25} />
+								<BsPencil size={25} />
+								<BsTrash size={25} />
+							</WordHandler>
+						</WordRowWhite>
+						<WordRowGray>
+							<EnglishWord>Longer English Word about...</EnglishWord>
+							<HungarianWords>Bélapátfalva, Budapest, Ugod, Pápa, Harci majom, Elkelkáposztástalanítottátok</HungarianWords>
+							<MemoryLevel>
+								<SpinnerBar size={24} status={96} style={{ margin: "0 12px 0 0", background: `${colors.rowBackgroundDark}` }} />
+								<MemoryState>Long Term Memory</MemoryState>
+							</MemoryLevel>
+							<WordHandler>
+								<BsSuitHeart size={25} />
+								<BsPencil size={25} />
+								<BsTrash size={25} />
+							</WordHandler>
+						</WordRowGray>
+						<WordRowWhite>
+							<EnglishWord>English Word 1</EnglishWord>
+							<HungarianWords>Magyar szó 1, Magyar szó 2</HungarianWords>
+							<MemoryLevel>
+								<SpinnerBar size={24} status={34} style={{ margin: "0 12px 0 0" }} />
+								<MemoryState>Long Term Memory</MemoryState>
+							</MemoryLevel>
+							<WordHandler>
+								<BsSuitHeartFill size={25} />
+								<BsPencil size={25} />
+								<BsTrash size={25} />
+							</WordHandler>
+						</WordRowWhite>
+						<WordRowGray>
+							<EnglishWord>Longer English Word about...</EnglishWord>
+							<HungarianWords>Bélapátfalva, Budapest, Ugod, Pápa, Harci majom, Elkelkáposztástalanítottátok</HungarianWords>
+							<MemoryLevel>
+								<SpinnerBar size={24} status={96} style={{ margin: "0 12px 0 0", background: `${colors.rowBackgroundDark}` }} />
+								<MemoryState>Long Term Memory</MemoryState>
+							</MemoryLevel>
+							<WordHandler>
+								<BsSuitHeart size={25} />
+								<BsPencil size={25} />
+								<BsTrash size={25} />
+							</WordHandler>
+						</WordRowGray>
+						<WordRowWhite>
+							<EnglishWord>English Word 1</EnglishWord>
+							<HungarianWords>Magyar szó 1, Magyar szó 2</HungarianWords>
+							<MemoryLevel>
+								<SpinnerBar size={24} status={34} style={{ margin: "0 12px 0 0" }} />
+								<MemoryState>Long Term Memory</MemoryState>
+							</MemoryLevel>
+							<WordHandler>
+								<BsSuitHeartFill size={25} />
+								<BsPencil size={25} />
+								<BsTrash size={25} />
+							</WordHandler>
+						</WordRowWhite>
+						<WordRowGray>
+							<EnglishWord>Longer English Word about...</EnglishWord>
+							<HungarianWords>Bélapátfalva, Budapest, Ugod, Pápa, Harci majom, Elkelkáposztástalanítottátok</HungarianWords>
+							<MemoryLevel>
+								<SpinnerBar size={24} status={96} style={{ margin: "0 12px 0 0", background: `${colors.rowBackgroundDark}` }} />
+								<MemoryState>Long Term Memory</MemoryState>
+							</MemoryLevel>
+							<WordHandler>
+								<BsSuitHeart size={25} />
+								<BsPencil size={25} />
+								<BsTrash size={25} />
+							</WordHandler>
+						</WordRowGray>
+						<WordRowWhite>
+							<EnglishWord>English Word 1</EnglishWord>
+							<HungarianWords>Magyar szó 1, Magyar szó 2</HungarianWords>
+							<MemoryLevel>
+								<SpinnerBar size={24} status={34} style={{ margin: "0 12px 0 0" }} />
+								<MemoryState>Long Term Memory</MemoryState>
+							</MemoryLevel>
+							<WordHandler>
+								<BsSuitHeartFill size={25} />
+								<BsPencil size={25} />
+								<BsTrash size={25} />
+							</WordHandler>
+						</WordRowWhite>
+						<WordRowGray>
+							<EnglishWord>Longer English Word about...</EnglishWord>
+							<HungarianWords>Bélapátfalva, Budapest, Ugod, Pápa, Harci majom, Elkelkáposztástalanítottátok</HungarianWords>
+							<MemoryLevel>
+								<SpinnerBar size={24} status={96} style={{ margin: "0 12px 0 0", background: `${colors.rowBackgroundDark}` }} />
+								<MemoryState>Long Term Memory</MemoryState>
+							</MemoryLevel>
+							<WordHandler>
+								<BsSuitHeart size={25} />
+								<BsPencil size={25} />
+								<BsTrash size={25} />
+							</WordHandler>
+						</WordRowGray>
+						<WordRowWhite>
+							<EnglishWord>English Word 1</EnglishWord>
+							<HungarianWords>Magyar szó 1, Magyar szó 2</HungarianWords>
+							<MemoryLevel>
+								<SpinnerBar size={24} status={34} style={{ margin: "0 12px 0 0" }} />
+								<MemoryState>Long Term Memory</MemoryState>
+							</MemoryLevel>
+							<WordHandler>
+								<BsSuitHeartFill size={25} />
+								<BsPencil size={25} />
+								<BsTrash size={25} />
+							</WordHandler>
+						</WordRowWhite>
+						<WordRowGray>
+							<EnglishWord>Longer English Word about...</EnglishWord>
+							<HungarianWords>Bélapátfalva, Budapest, Ugod, Pápa, Harci majom, Elkelkáposztástalanítottátok</HungarianWords>
+							<MemoryLevel>
+								<SpinnerBar size={24} status={96} style={{ margin: "0 12px 0 0", background: `${colors.rowBackgroundDark}` }} />
+								<MemoryState>Long Term Memory</MemoryState>
+							</MemoryLevel>
+							<WordHandler>
+								<BsSuitHeart size={25} />
+								<BsPencil size={25} />
+								<BsTrash size={25} />
+							</WordHandler>
+						</WordRowGray>
+						<WordRowWhite>
+							<EnglishWord>English Word 1</EnglishWord>
+							<HungarianWords>Magyar szó 1, Magyar szó 2</HungarianWords>
+							<MemoryLevel>
+								<SpinnerBar size={24} status={34} style={{ margin: "0 12px 0 0" }} />
+								<MemoryState>Long Term Memory</MemoryState>
+							</MemoryLevel>
+							<WordHandler>
+								<BsSuitHeartFill size={25} />
+								<BsPencil size={25} />
+								<BsTrash size={25} />
+							</WordHandler>
+						</WordRowWhite>
+						<WordRowGray>
+							<EnglishWord>Longer English Word about...</EnglishWord>
+							<HungarianWords>Bélapátfalva, Budapest, Ugod, Pápa, Harci majom, Elkelkáposztástalanítottátok</HungarianWords>
+							<MemoryLevel>
+								<SpinnerBar size={24} status={96} style={{ margin: "0 12px 0 0", background: `${colors.rowBackgroundDark}` }} />
 								<MemoryState>Long Term Memory</MemoryState>
 							</MemoryLevel>
 							<WordHandler>
