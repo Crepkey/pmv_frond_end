@@ -1,8 +1,8 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 /* Icons */
 
-import { FcPodiumWithSpeaker } from "react-icons/fc";
 import { BsPersonCircle } from "react-icons/bs";
 import MainLogo from "./MainLogo";
 
@@ -17,7 +17,9 @@ const MainContainer = styled.div`
 	justify-content: space-between;
 `;
 
-const LogoContainer = styled.div`
+const LogoContainer = styled(Link)`
+	text-decoration: none;
+	color: ${colors.inactiveFont};
 	display: flex;
 	align-items: center;
 	font-weight: bold;
@@ -31,11 +33,13 @@ const Menu = styled.div`
 	justify-content: flex-end;
 `;
 
-const MenuItem = styled.div`
+const MenuItem = styled(Link)`
+	text-decoration: none;
+	color: ${colors.inactiveFont};
 	font-weight: 550;
 	margin-right: 8px;
 	padding: 8px;
-	border-bottom: 3px rgba(86, 171, 227, 0) solid;
+	border-bottom: 3px rgba(0, 0, 0, 0) solid; // invisible border, but needed for the fix height
 	:hover {
 		color: ${colors.activeFont};
 		border-bottom: 3px ${colors.activeBorder} solid;
@@ -53,13 +57,14 @@ const UserAvatarContainer = styled.div`
 export default function MenuBar() {
 	return (
 		<MainContainer>
-			<LogoContainer>
+			<LogoContainer to="/">
+				{/* TODO: it would be great if the logo could spin on hover :) */}
 				<MainLogo size={28} backgroundColor={colors.headerGradientDarker} />
 				PIMP MY VOCAB
 			</LogoContainer>
 			<Menu>
-				<MenuItem>My words</MenuItem>
-				<MenuItem>Let's play</MenuItem>
+				<MenuItem to="/my-words">My words</MenuItem>
+				<MenuItem to="/lets-play">Let's play</MenuItem>
 			</Menu>
 			<UserAvatarContainer>
 				<BsPersonCircle size={28} />

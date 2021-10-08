@@ -1,9 +1,14 @@
 import React from "react";
-import MenuBar from "./components/MenuBar";
-import PlayingCard from "./components/PlayingCard";
-import MyWords from "./components/MyWords";
-import EditWord from "./components/EditWord";
+import { Route, Redirect } from "react-router-dom";
 
+// Components
+import MenuBar from "./components/MenuBar";
+
+import MyWords from "./components/MyWords";
+import Home from "./components/Home";
+import Game from "./components/Game";
+
+// Styles
 import styled from "styled-components";
 
 const MainContainer = styled.div`
@@ -13,35 +18,15 @@ const MainContainer = styled.div`
 	width: 100vw;
 `;
 
-const Body = styled.div`
-	display: flex;
-	flex: 1;
-	justify-content: center;
-	min-width: 0;
-	min-height: 0;
-`;
-
 function App() {
 	return (
 		<MainContainer>
 			<MenuBar />
-			<MyWords />
 
-			<Body>
-				{/* <PlayingCard /> */}
-				{/* <EditWord title="Add new word" initialWord={{ english: "", hungarian: [""], sentences: [""], type: "word" }} /> */}
-				<EditWord
-					title="Edit word"
-					initialWord={{
-						english: "Vastly",
-						hungarian: ["mérhetetlenül", "nagy mértékben"],
-						sentences: ["Business practices differ vastly from country to country."],
-						type: "word",
-						notes: "Find more example sentences!",
-						favourite: true,
-					}}
-				/>
-			</Body>
+			<Route path="/my-words" component={MyWords} />
+			<Route path="/lets-play" component={Game} />
+			<Route path="/" exact component={Home} />
+			<Redirect to="/" />
 		</MainContainer>
 	);
 }
