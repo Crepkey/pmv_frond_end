@@ -26,7 +26,7 @@ function App() {
 	return (
 		<MainContainer>
 			<MenuBar />
-			<SpinnerBar size={25} status={76} />
+			<SpinnerBar size={567} status={76} />
 			{/* <MyWords /> */}
 
 			{/* <Body>

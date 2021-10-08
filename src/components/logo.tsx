@@ -3,51 +3,51 @@ import React from "react";
 /* Styles */
 import styled from "styled-components";
 
-const MainContainer = styled.div<SpinnerBarStyleSize>`
+const MainContainer = styled.div`
 	display: flex;
-	width: ${({ size }) => size + "px"};
-	height: ${({ size }) => size + "px"};
+	width: 500px;
+	height: 500px;
 	flex-wrap: wrap;
 	border: 1px solid yellow;
 `;
 
-const RedArea = styled.div<SpinnerBarStyleState>`
+const RedArea = styled.div<SpinnerBarStyleProps>`
 	width: 47%;
 	height: 47%;
 	background-image: ${({ actualState }) => actualState.red};
-	border-radius: 100% 0 0 0;
+	border-radius: 100px 0 0 0;
 	margin-right: 3%;
 	margin-bottom: 3%;
 `;
 
-const OrangeArea = styled.div<SpinnerBarStyleState>`
+const OrangeArea = styled.div<SpinnerBarStyleProps>`
 	width: 47%;
 	height: 47%;
 	background-image: ${({ actualState }) => actualState.orange};
-	border-radius: 0 100% 0 0;
+	border-radius: 0 100px 0 0;
 	margin-left: 3%;
 	margin-bottom: 3%;
 `;
 
-const YellowArea = styled.div<SpinnerBarStyleState>`
+const YellowArea = styled.div<SpinnerBarStyleProps>`
 	width: 47%;
 	height: 47%;
 	background-image: ${({ actualState }) => actualState.yellow};
-	border-radius: 0 0 100% 0;
+	border-radius: 0 0 100px 0;
 	margin-left: 3%;
 	margin-top: 3%;
 `;
 
-const GreenArea = styled.div<SpinnerBarStyleState>`
+const GreenArea = styled.div<SpinnerBarStyleProps>`
 	width: 47%;
 	height: 47%;
 	background-image: ${({ actualState }) => actualState.green};
-	border-radius: 0 0 0 100%;
+	border-radius: 0 0 0 100px;
 	margin-right: 3%;
 	margin-top: 3%;
 `;
 
-const InnerCircle = styled.div<SpinnerBarStyleBackground>`
+const WhiteCircle = styled.div<SpinnerBarStyleProps>`
 	width: 50%;
 	height: 50%;
 	position: relative;
@@ -57,23 +57,18 @@ const InnerCircle = styled.div<SpinnerBarStyleBackground>`
 	background: white;
 `;
 
-interface SpinnerBarStyleSize {
-	size: number;
-}
-interface SpinnerBarStyleState {
+interface SpinnerBarStyleProps {
 	actualState: { [key: string]: string }; // red, orange, yellow, green properties and their numbers
-}
-
-interface SpinnerBarStyleBackground {
-	background: string;
+	size?: number | string;
+	background?: string;
 }
 interface SpinnerBarProps {
 	status: number; // This number can be between 0 and 100
-	size?: number;
+	size: number | string; // This value can be a number or a string in the following format: '213px' | '213%'
 	backgroundColor?: string; // A color code in HEX or RGB(a)
 }
 
-export default function SpinnerBar({ status, size = 50, backgroundColor = "rgba(255, 255, 255, 1)" }: SpinnerBarProps) {
+export default function SpinnerBar({ status, size = "50px", backgroundColor = "rgba(255, 255, 255, 1)" }: SpinnerBarProps) {
 	const actualState: { [key: string]: string } = (function () {
 		const result = {
 			red: "rgba(0, 0, 0, 0)",
@@ -99,12 +94,12 @@ export default function SpinnerBar({ status, size = 50, backgroundColor = "rgba(
 	})();
 
 	return (
-		<MainContainer size={size}>
-			<RedArea actualState={actualState} />
-			<OrangeArea actualState={actualState} />
-			<GreenArea actualState={actualState} />
-			<YellowArea actualState={actualState} />
-			<InnerCircle background={backgroundColor} />
+		<MainContainer>
+			<RedArea actualState={actualState} background={backgroundColor} size={size} />
+			<OrangeArea actualState={actualState} background={backgroundColor} size={size} />
+			<GreenArea actualState={actualState} background={backgroundColor} size={size} />
+			<YellowArea actualState={actualState} background={backgroundColor} size={size} />
+			<WhiteCircle actualState={actualState} background={backgroundColor} size={size} />
 		</MainContainer>
 	);
 }
