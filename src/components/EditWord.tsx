@@ -358,9 +358,8 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 							placeholder="Type your notes here..."
 							onChange={(e) => {
 								setWord({ ...word, notes: e.target.value });
-							}}>
-							{word.notes}
-						</Textarea>
+							}}
+							value={word.notes}></Textarea>
 					</Form>
 				</ScrollContainer>
 
