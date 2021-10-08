@@ -1,80 +1,88 @@
-import React from "react";
+/* Util */
+import get from "lodash/get";
 
 /* Styles */
 import styled from "styled-components";
 
-const MainContainer = styled.div<SpinnerBarStyleSize>`
+const MainContainer = styled.div<SpinnerBarStyle>`
 	display: flex;
-	width: ${({ size }) => size + "px"};
-	height: ${({ size }) => size + "px"};
+	width: ${({ size }) => size};
+	height: ${({ size }) => size};
+	min-width: ${({ size }) => size};
+	min-height: ${({ size }) => size};
+	margin: ${({ margin }) => margin};
+	padding: ${({ padding }) => padding};
 	flex-wrap: wrap;
-	border: 1px solid yellow;
 `;
 
-const RedArea = styled.div<SpinnerBarStyleState>`
+const RedArea = styled.div<SpinnerBarState>`
 	width: 47%;
 	height: 47%;
-	background-image: ${({ actualState }) => actualState.red};
+	background-image: ${({ red }) => red};
 	border-radius: 100% 0 0 0;
 	margin-right: 3%;
 	margin-bottom: 3%;
 `;
 
-const OrangeArea = styled.div<SpinnerBarStyleState>`
+const OrangeArea = styled.div<SpinnerBarState>`
 	width: 47%;
 	height: 47%;
-	background-image: ${({ actualState }) => actualState.orange};
+	background-image: ${({ orange }) => orange};
 	border-radius: 0 100% 0 0;
 	margin-left: 3%;
 	margin-bottom: 3%;
 `;
 
-const YellowArea = styled.div<SpinnerBarStyleState>`
+const YellowArea = styled.div<SpinnerBarState>`
 	width: 47%;
 	height: 47%;
-	background-image: ${({ actualState }) => actualState.yellow};
+	background-image: ${({ yellow }) => yellow};
 	border-radius: 0 0 100% 0;
 	margin-left: 3%;
 	margin-top: 3%;
 `;
 
-const GreenArea = styled.div<SpinnerBarStyleState>`
+const GreenArea = styled.div<SpinnerBarState>`
 	width: 47%;
 	height: 47%;
-	background-image: ${({ actualState }) => actualState.green};
+	background-image: ${({ green }) => green};
 	border-radius: 0 0 0 100%;
 	margin-right: 3%;
 	margin-top: 3%;
 `;
 
-const InnerCircle = styled.div<SpinnerBarStyleBackground>`
+const InnerCircle = styled.div<SpinnerBarStyle>`
 	width: 50%;
 	height: 50%;
 	position: relative;
 	bottom: 75%;
 	left: 25%;
 	border-radius: 100%;
-	background: white;
+	background: ${({ background }) => background};
 `;
 
-interface SpinnerBarStyleSize {
-	size: number;
-}
-interface SpinnerBarStyleState {
-	actualState: { [key: string]: string }; // red, orange, yellow, green properties and their numbers
+interface SpinnerBarStyle {
+	size?: string;
+	padding?: string; // String is only acceptable in the following format: '0 12px 0 20%'
+	margin?: string; // String is only acceptable in the following format: '0 12px 0 20%'
+	background?: string; // A color code in HEX or RGB(a)
 }
 
-interface SpinnerBarStyleBackground {
-	background: string;
+interface SpinnerBarState {
+	red: string; //RGBa only
+	orange: string; //RGBa only
+	yellow: string; //RGBa only
+	green: string; //RGBa only
 }
+
 interface SpinnerBarProps {
 	status: number; // This number can be between 0 and 100
 	size?: number;
-	backgroundColor?: string; // A color code in HEX or RGB(a)
+	style?: SpinnerBarStyle;
 }
 
-export default function SpinnerBar({ status, size = 50, backgroundColor = "rgba(255, 255, 255, 1)" }: SpinnerBarProps) {
-	const actualState: { [key: string]: string } = (function () {
+export default function SpinnerBar({ status, size, style }: SpinnerBarProps) {
+	const actualState: SpinnerBarState = (function () {
 		const result = {
 			red: "rgba(0, 0, 0, 0)",
 			orange: "rgba(0, 0, 0, 0)",
@@ -98,13 +106,20 @@ export default function SpinnerBar({ status, size = 50, backgroundColor = "rgba(
 		return result;
 	})();
 
+	style = {
+		size: (size ? size : 50) + "px",
+		padding: get(style, "padding", "0"),
+		margin: get(style, "margin", "0"),
+		background: get(style, "background", "rgba(255, 255, 255, 1)"),
+	};
+
 	return (
-		<MainContainer size={size}>
-			<RedArea actualState={actualState} />
-			<OrangeArea actualState={actualState} />
-			<GreenArea actualState={actualState} />
-			<YellowArea actualState={actualState} />
-			<InnerCircle background={backgroundColor} />
+		<MainContainer {...style}>
+			<RedArea {...actualState} />
+			<OrangeArea {...actualState} />
+			<GreenArea {...actualState} />
+			<YellowArea {...actualState} />
+			<InnerCircle {...style} />
 		</MainContainer>
 	);
 }

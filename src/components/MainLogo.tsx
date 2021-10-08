@@ -18,6 +18,11 @@ const RedArea = styled.div`
 	border-radius: 50% 0 0 0;
 	margin-right: 3%;
 	margin-bottom: 3%;
+	:hover {
+		-ms-transform: rotate(360deg); /* IE 9 */
+		-webkit-transform: rotate(360deg); /* Chrome, Safari, Opera */
+		transform: rotate(360deg);
+	}
 `;
 
 const OrangeArea = styled.div`
@@ -61,7 +66,7 @@ interface SpinnerBarProps {
 	backgroundColor?: string; // A color code in HEX or RGB(a)
 }
 
-export default function SpinnerBar({ size = 50, backgroundColor = "rgba(255, 255, 255, 1)" }: SpinnerBarProps) {
+export default function MainLogo({ size = 50, backgroundColor = "rgba(255, 255, 255, 1)" }: SpinnerBarProps) {
 	return (
 		<MainContainer size={size}>
 			<RedArea />
@@ -72,3 +77,5 @@ export default function SpinnerBar({ size = 50, backgroundColor = "rgba(255, 255
 		</MainContainer>
 	);
 }
+
+/* TODO: It's worth to copy the custom style handling of SpinnerBar */

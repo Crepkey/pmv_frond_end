@@ -17,6 +17,7 @@ import {
 /* Styles */
 import { colors } from "./colors";
 import styled from "styled-components";
+import SpinnerBar from "./SpinnerBar";
 
 const MainContainer = styled.div`
 	display: flex;
@@ -252,7 +253,7 @@ export default function MyWords() {
 							<EnglishWord>English Word 1</EnglishWord>
 							<HungarianWords>Magyar szó 1, Magyar szó 2</HungarianWords>
 							<MemoryLevel>
-								<CgSpinnerTwo size={30} style={{ marginRight: "10px" }} />
+								<SpinnerBar size={30} status={34} style={{ margin: "0 12px 0 0" }} />
 								<MemoryState>Long Term Memory</MemoryState>
 							</MemoryLevel>
 							<WordHandler>
@@ -265,7 +266,7 @@ export default function MyWords() {
 							<EnglishWord>Longer English Word about...</EnglishWord>
 							<HungarianWords>Bélapátfalva, Budapest, Ugod, Pápa, Harci majom, Elkelkáposztástalanítottátok</HungarianWords>
 							<MemoryLevel>
-								<CgSpinnerTwo size={30} style={{ marginRight: "10px" }} />
+								<SpinnerBar size={30} status={96} style={{ margin: "0 12px 0 0", background: `${colors.rowBackgroundDark}` }} />
 								<MemoryState>Long Term Memory</MemoryState>
 							</MemoryLevel>
 							<WordHandler>
