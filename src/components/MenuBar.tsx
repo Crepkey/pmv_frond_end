@@ -4,6 +4,7 @@ import React from "react";
 
 import { FcPodiumWithSpeaker } from "react-icons/fc";
 import { BsPersonCircle } from "react-icons/bs";
+import MainLogo from "./MainLogo";
 
 /* Styles */
 import styled from "styled-components";
@@ -53,7 +54,7 @@ export default function MenuBar() {
 	return (
 		<MainContainer>
 			<LogoContainer>
-				<FcPodiumWithSpeaker size={32} style={{ paddingRight: "16px" }} />
+				<MainLogo size={28} backgroundColor={colors.headerGradientDarker} />
 				PIMP MY VOCAB
 			</LogoContainer>
 			<Menu>

@@ -5,7 +5,6 @@ import MyWords from "./components/MyWords";
 import EditWord from "./components/EditWord";
 
 import styled from "styled-components";
-import SpinnerBar from "./components/SpinnerBar";
 
 const MainContainer = styled.div`
 	display: flex;
@@ -26,8 +25,7 @@ function App() {
 	return (
 		<MainContainer>
 			<MenuBar />
-			<SpinnerBar size={567} status={76} />
-			{/* <MyWords /> */}
+			<MyWords />
 
 			{/* <Body>
         <PlayingCard />
