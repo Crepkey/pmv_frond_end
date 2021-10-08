@@ -6,7 +6,7 @@ import { colors } from "./colors";
 import { MdVolumeUp } from "react-icons/md";
 import { GiSwordwoman, GiSwordman } from "react-icons/gi";
 
-import { data_2 as data } from "../utils/playingCard";
+import { data_2 as data } from "../utils/testData";
 import { Owner, Word } from "../utils/interfaces";
 
 const Card = styled.div`

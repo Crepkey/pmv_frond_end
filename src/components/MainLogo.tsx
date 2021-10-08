@@ -1,6 +1,4 @@
-import React from "react";
-
-/* Styles */
+import { colors } from "./colors";
 import styled from "styled-components";
 
 const MainContainer = styled.div<SpinnerBarProps>`
@@ -14,7 +12,7 @@ const MainContainer = styled.div<SpinnerBarProps>`
 const RedArea = styled.div`
 	width: 47%;
 	height: 47%;
-	background: #de5956;
+	background: ${colors.progressRed};
 	border-radius: 50% 0 0 0;
 	margin-right: 3%;
 	margin-bottom: 3%;
@@ -23,16 +21,16 @@ const RedArea = styled.div`
 const OrangeArea = styled.div`
 	width: 47%;
 	height: 47%;
-	background: #ff8f23;
+	background: ${colors.progressOrange};
 	border-radius: 0 50% 0 0;
 	margin-left: 3%;
 	margin-bottom: 3%;
 `;
 
-const YellowArea = styled.div`
+const BlueArea = styled.div`
 	width: 47%;
 	height: 47%;
-	background: rgba(86, 171, 227, 1);
+	background: ${colors.progressBlue};
 	border-radius: 0 0 50% 0;
 	margin-left: 3%;
 	margin-top: 3%;
@@ -41,7 +39,7 @@ const YellowArea = styled.div`
 const GreenArea = styled.div`
 	width: 47%;
 	height: 47%;
-	background: #0bc900;
+	background: ${colors.progressGreen};
 	border-radius: 0 0 0 50%;
 	margin-right: 3%;
 	margin-top: 3%;
@@ -61,14 +59,16 @@ interface SpinnerBarProps {
 	backgroundColor?: string; // A color code in HEX or RGB(a)
 }
 
-export default function SpinnerBar({ size = 50, backgroundColor = "rgba(255, 255, 255, 1)" }: SpinnerBarProps) {
+export default function MainLogo({ size = 50, backgroundColor = "rgba(255, 255, 255, 1)" }: SpinnerBarProps) {
 	return (
 		<MainContainer size={size}>
 			<RedArea />
 			<OrangeArea />
 			<GreenArea />
-			<YellowArea />
+			<BlueArea />
 			<WhiteCircle backgroundColor={backgroundColor} />
 		</MainContainer>
 	);
 }
+
+/* TODO: It's worth to copy the custom style handling of SpinnerBar */

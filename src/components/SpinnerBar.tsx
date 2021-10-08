@@ -1,110 +1,126 @@
-import React from "react";
+/* Util */
+import get from "lodash/get";
 
 /* Styles */
 import styled from "styled-components";
+import { colors } from "./colors";
 
-const MainContainer = styled.div<SpinnerBarStyleSize>`
+const MainContainer = styled.div<SpinnerBarStyle>`
 	display: flex;
-	width: ${({ size }) => size + "px"};
-	height: ${({ size }) => size + "px"};
+	width: ${({ size }) => size};
+	height: ${({ size }) => size};
+	min-width: ${({ size }) => size};
+	min-height: ${({ size }) => size};
+	margin: ${({ margin }) => margin};
+	padding: ${({ padding }) => padding};
 	flex-wrap: wrap;
-	border: 1px solid yellow;
 `;
 
-const RedArea = styled.div<SpinnerBarStyleState>`
+const RedArea = styled.div<SpinnerBarState>`
 	width: 47%;
 	height: 47%;
-	background-image: ${({ actualState }) => actualState.red};
+	background: ${({ red }) => red};
 	border-radius: 100% 0 0 0;
 	margin-right: 3%;
 	margin-bottom: 3%;
 `;
 
-const OrangeArea = styled.div<SpinnerBarStyleState>`
+const OrangeArea = styled.div<SpinnerBarState>`
 	width: 47%;
 	height: 47%;
-	background-image: ${({ actualState }) => actualState.orange};
+	background: ${({ orange }) => orange};
 	border-radius: 0 100% 0 0;
 	margin-left: 3%;
 	margin-bottom: 3%;
 `;
 
-const YellowArea = styled.div<SpinnerBarStyleState>`
+const BlueArea = styled.div<SpinnerBarState>`
 	width: 47%;
 	height: 47%;
-	background-image: ${({ actualState }) => actualState.yellow};
+	background: ${({ blue }) => blue};
 	border-radius: 0 0 100% 0;
 	margin-left: 3%;
 	margin-top: 3%;
 `;
 
-const GreenArea = styled.div<SpinnerBarStyleState>`
+const GreenArea = styled.div<SpinnerBarState>`
 	width: 47%;
 	height: 47%;
-	background-image: ${({ actualState }) => actualState.green};
+	background: ${({ green }) => green};
 	border-radius: 0 0 0 100%;
 	margin-right: 3%;
 	margin-top: 3%;
 `;
 
-const InnerCircle = styled.div<SpinnerBarStyleBackground>`
+const InnerCircle = styled.div<SpinnerBarStyle>`
 	width: 50%;
 	height: 50%;
 	position: relative;
 	bottom: 75%;
 	left: 25%;
 	border-radius: 100%;
-	background: white;
+	background: ${({ background }) => background};
 `;
 
-interface SpinnerBarStyleSize {
-	size: number;
-}
-interface SpinnerBarStyleState {
-	actualState: { [key: string]: string }; // red, orange, yellow, green properties and their numbers
+interface SpinnerBarStyle {
+	size?: string;
+	padding?: string; // String is only acceptable in the following format: '0 12px 0 20%'
+	margin?: string; // String is only acceptable in the following format: '0 12px 0 20%'
+	background?: string; // A color code in HEX or RGB(a)
 }
 
-interface SpinnerBarStyleBackground {
-	background: string;
+interface SpinnerBarState {
+	red: string; //RGBa only
+	orange: string; //RGBa only
+	blue: string; //RGBa only
+	green: string; //RGBa only
 }
+
 interface SpinnerBarProps {
 	status: number; // This number can be between 0 and 100
 	size?: number;
-	backgroundColor?: string; // A color code in HEX or RGB(a)
+	style?: SpinnerBarStyle;
 }
 
-export default function SpinnerBar({ status, size = 50, backgroundColor = "rgba(255, 255, 255, 1)" }: SpinnerBarProps) {
-	const actualState: { [key: string]: string } = (function () {
+export default function SpinnerBar({ status, size, style }: SpinnerBarProps) {
+	const actualState: SpinnerBarState = (function () {
 		const result = {
 			red: "rgba(0, 0, 0, 0)",
 			orange: "rgba(0, 0, 0, 0)",
-			yellow: "rgba(0, 0, 0, 0)",
+			blue: "rgba(0, 0, 0, 0)",
 			green: "rgba(0, 0, 0, 0)",
 		};
 
 		if (status > 0) {
-			result.red = "linear-gradient(to left top, #c72929, #d34340, #de5956, #e86e6d, #f18383)";
+			result.red = `${colors.progressRed}`;
 		}
 		if (status > 25) {
-			result.orange = "linear-gradient(to right top, #ff8100, #ff8f23, #ff9c39, #ffa94e, #ffb562)";
+			result.orange = `${colors.progressOrange}`;
 		}
 		if (status >= 50) {
-			result.yellow = "linear-gradient(to right bottom, #ffdb00, #f8e033, #f1e54d, #ebe963, #e7ec77)";
+			result.blue = `${colors.progressBlue}`;
 		}
 		if (status >= 75) {
-			result.green = "linear-gradient(to left bottom, #0bc900, #41d02c, #5dd845, #74df5a, #89e66e)";
+			result.green = `${colors.progressGreen}`;
 		}
 
 		return result;
 	})();
 
+	style = {
+		size: (size ? size : 50) + "px",
+		padding: get(style, "padding", "0"),
+		margin: get(style, "margin", "0"),
+		background: get(style, "background", "rgba(255, 255, 255, 1)"),
+	};
+
 	return (
-		<MainContainer size={size}>
-			<RedArea actualState={actualState} />
-			<OrangeArea actualState={actualState} />
-			<GreenArea actualState={actualState} />
-			<YellowArea actualState={actualState} />
-			<InnerCircle background={backgroundColor} />
+		<MainContainer {...style}>
+			<RedArea {...actualState} />
+			<OrangeArea {...actualState} />
+			<GreenArea {...actualState} />
+			<BlueArea {...actualState} />
+			<InnerCircle {...style} />
 		</MainContainer>
 	);
 }
