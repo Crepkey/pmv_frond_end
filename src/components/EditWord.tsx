@@ -254,7 +254,7 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 								placeholder="Type your English word or expression here..."
 								value={word.english}
 								onChange={(e) => {
-									// TODO optimization: setErrors only has to run, if there was an error, and we should use a general component for handling inputs and error labels ---> we only have to check once, if there was an error or not
+									// REFACTOR optimization: setErrors only has to run, if there was an error, and we should use a general component for handling inputs and error labels ---> we only have to check once, if there was an error or not
 									setErrors(errors.filter((e: number) => e !== 1));
 									setWord({ ...word, english: e.target.value });
 								}}
@@ -308,6 +308,7 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 						<Block>
 							{word.sentences.map((sentence: string, i: number) => (
 								<Row key={i}>
+									{/* TODO we should use a textarea here which is automatically resized when the text is too long */}
 									<String
 										error={errors.includes(3) && i === 0}
 										placeholder="Type one example sentence here..."
