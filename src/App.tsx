@@ -27,10 +27,10 @@ function App() {
 			<MenuBar />
 			<MyWords />
 
-			<Body>
-				{/* <PlayingCard /> */}
-				{/* <EditWord title="Add new word" initialWord={{ english: "", hungarian: [""], sentences: [""], type: "word" }} /> */}
-				<EditWord
+			{/* <Body> */}
+			{/* <PlayingCard /> */}
+			{/* <EditWord title="Add new word" initialWord={{ english: "", hungarian: [""], sentences: [""], type: "word" }} /> */}
+			{/* <EditWord
 					title="Edit word"
 					initialWord={{
 						english: "Vastly",
@@ -40,8 +40,8 @@ function App() {
 						notes: "Find more example sentences!",
 						favourite: true,
 					}}
-				/>
-			</Body>
+				/> */}
+			{/* </Body> */}
 		</MainContainer>
 	);
 }
