@@ -3,7 +3,7 @@ import get from "lodash/get";
 
 /* Styles */
 import styled from "styled-components";
-import { colors } from "./colors";
+import { colors } from "../../utils/colors";
 
 const MainContainer = styled.div<SpinnerBarStyle>`
 	display: flex;

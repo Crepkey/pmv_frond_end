@@ -1,4 +1,4 @@
-import { colors } from "./colors";
+import { colors } from "../../utils/colors";
 import styled from "styled-components";
 
 const MainContainer = styled.div<SpinnerBarProps>`

@@ -2,11 +2,11 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
 // Components
-import MenuBar from "./components/MenuBar";
+import MenuBar from "./components/mainComponents/MenuBar";
 
-import MyWords from "./components/MyWords";
-import Home from "./components/Home";
-import Game from "./components/Game";
+import MyWords from "./components/mainComponents/MyWords";
+import Home from "./components/mainComponents/Home";
+import Game from "./components/mainComponents/Game";
 
 // Styles
 import styled from "styled-components";
@@ -26,7 +26,7 @@ function App() {
 			<Route path="/my-words" component={MyWords} />
 			<Route path="/lets-play" component={Game} />
 			<Route path="/" exact component={Home} />
-			<Redirect to="/" />
+			{/* <Redirect to="/" /> */}
 		</MainContainer>
 	);
 }

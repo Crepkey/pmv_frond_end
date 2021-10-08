@@ -1,7 +1,6 @@
 import React from "react";
 
 /* Icons */
-import { CgSpinnerTwo } from "react-icons/cg";
 import {
 	BsSuitHeartFill,
 	BsSuitHeart,
@@ -15,9 +14,9 @@ import {
 } from "react-icons/bs";
 
 /* Styles */
-import { colors } from "./colors";
+import { colors } from "../../utils/colors";
 import styled from "styled-components";
-import SpinnerBar from "./SpinnerBar";
+import SpinnerBar from "../generalComponents/SpinnerBar";
 
 const MainContainer = styled.div`
 	display: flex;

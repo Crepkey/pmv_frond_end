@@ -4,7 +4,7 @@ import React from "react";
 import styled from "styled-components";
 
 // Components
-import PlayingCard from "./PlayingCard";
+import PlayingCard from "../subComponents/game/PlayingCard";
 
 const Body = styled.div`
 	display: flex;

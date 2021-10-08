@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 /* Icons */
 
 import { BsPersonCircle } from "react-icons/bs";
-import MainLogo from "./MainLogo";
+import MainLogo from "../generalComponents/MainLogo";
 
 /* Styles */
 import styled from "styled-components";
-import { colors } from "./colors";
+import { colors } from "../../utils/colors";
 
 const MainContainer = styled.div`
 	background-image: linear-gradient(to top, ${colors.headerGradientDarker}, ${colors.headerGradientDark}, ${colors.headerGradientLight});

@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 
 /* Styles */
 import styled from "styled-components";
-import { colors } from "./colors";
+import { colors } from "../../../utils/colors";
 import { MdVolumeUp } from "react-icons/md";
 import { GiSwordwoman, GiSwordman } from "react-icons/gi";
 
-import { data_2 as data } from "../utils/testData";
-import { Owner, Word } from "../utils/interfaces";
+import { data_2 as data } from "../../../utils/testData";
+import { Owner, Word } from "../../../utils/interfaces";
 
 const Card = styled.div`
 	border: 1px solid ${colors.border};

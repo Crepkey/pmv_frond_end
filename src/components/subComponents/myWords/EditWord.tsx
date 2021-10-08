@@ -2,10 +2,10 @@ import React, { useState } from "react";
 
 /* Styles */
 import styled from "styled-components";
-import { colors } from "./colors";
+import { colors } from "../../../utils/colors";
 import { BsSuitHeart, BsSuitHeartFill, BsPlus, BsX, BsTrash } from "react-icons/bs";
 
-import { Word, WordType } from "../utils/interfaces";
+import { Word, WordType } from "../../../utils/interfaces";
 import set from "lodash/set";
 
 const Card = styled.div`
