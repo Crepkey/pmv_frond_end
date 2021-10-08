@@ -86,26 +86,27 @@ const Block = styled.div`
 	flex-direction: column;
 `;
 
-const Label = styled.div`
-	color: ${colors.inactiveFont};
+const Label = styled.div<{ error?: boolean }>`
+	color: ${({ error }: any) => (error ? colors.error : colors.inactiveFont)};
+	font-weight: ${({ error }: any) => (error ? "bold" : "auto")};
 	font-size: 0.75rem;
 	margin: 0 0 4px 12px;
 `;
 
-const String = styled.input`
+const String = styled.input<{ error?: boolean }>`
 	display: flex;
 	flex: 1;
 	font-size: 1rem;
 	padding: 8px 12px;
 	margin-bottom: 24px;
-	border: 1px ${colors.inputBorder} solid;
+	border: ${({ error }: any) => (error ? `2px solid ${colors.error}` : `1px ${colors.inputBorder} solid`)};
 	border-radius: 20px;
 	color: grey;
 	::placeholder {
 		color: ${colors.placeholderFont};
 	}
 	:focus {
-		outline: 1px ${colors.activeBorder} solid;
+		outline: ${({ error }: any) => (error ? `none` : `1px ${colors.activeBorder} solid`)};
 	}
 `;
 
@@ -199,8 +200,41 @@ interface EditWordProps {
 	title: string;
 }
 
+const errorMessages: { [key: number]: string } = {
+	1: "English field is required.",
+	2: "At least one Hungarian meaning is required.",
+	3: "At least one example sentence is required.",
+};
+
 export default function EditWord({ initialWord, title }: EditWordProps) {
 	const [word, setWord] = useState<Word>(initialWord);
+	const [errors, setErrors] = useState<number[]>([]);
+
+	function onSave() {
+		const checkedErrors: number[] = [];
+		if (word.english.length === 0) {
+			checkedErrors.push(1);
+		}
+
+		const hungarianMeaning = word.hungarian.filter((s: string) => s.length > 0);
+		if (hungarianMeaning.length === 0) {
+			checkedErrors.push(2);
+		}
+
+		const sentences = word.sentences.filter((s: string) => s.length > 0);
+		if (sentences.length === 0) {
+			checkedErrors.push(3);
+		}
+
+		if (checkedErrors.length > 0) {
+			setErrors(checkedErrors);
+			return;
+		}
+
+		const wordToSave = { ...word, hungarian: hungarianMeaning, sentences }; // contains only the filtered arrays, without empty strings
+
+		// TODO save to database
+	}
 
 	return (
 		<Card>
@@ -213,11 +247,14 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 			<CardBody>
 				<ScrollContainer>
 					<Form>
-						<Label>English word or expression</Label>
+						{errors.includes(1) ? <Label error={true}>{errorMessages[1]}</Label> : <Label>English word or expression</Label>}
 						<Row>
 							<String
+								error={errors.includes(1)}
 								placeholder="Type your English word or expression here..."
 								onChange={(e) => {
+									// TODO optimization: setErrors only has to run, if there was an error, and we should use a general component for handling inputs and error labels ---> we only have to check once, if there was an error or not
+									setErrors(errors.filter((e: number) => e !== 1));
 									setWord({ ...word, english: e.target.value });
 								}}
 							/>
@@ -229,14 +266,16 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 							</HeartIcon>
 						</Row>
 
-						<Label>Hungarian meanings</Label>
+						{errors.includes(2) ? <Label error={true}>{errorMessages[2]}</Label> : <Label>Hungarian meanings</Label>}
 						<Block>
 							{word.hungarian.map((meaning: string, i: number) => (
 								<Row key={i}>
 									<String
+										error={errors.includes(2) && i === 0}
 										placeholder="Type one Hungarian meaning here..."
 										value={meaning}
 										onChange={(e) => {
+											setErrors(errors.filter((e: number) => e !== 2));
 											const newWord = set({ ...word }, ["hungarian", i], e.target.value);
 											setWord(newWord);
 										}}
@@ -264,14 +303,16 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 							</AddNewRow>
 						</Block>
 
-						<Label>Example sentences</Label>
+						{errors.includes(3) ? <Label error={true}>{errorMessages[3]}</Label> : <Label>Example sentences</Label>}
 						<Block>
 							{word.sentences.map((sentence: string, i: number) => (
 								<Row key={i}>
 									<String
+										error={errors.includes(3) && i === 0}
 										placeholder="Type one example sentence here..."
 										value={sentence}
 										onChange={(e) => {
+											setErrors(errors.filter((e: number) => e !== 3));
 											const newWord = set({ ...word }, ["sentences", i], e.target.value);
 											setWord(newWord);
 										}}
@@ -322,12 +363,7 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 				</ScrollContainer>
 
 				<Row>
-					<Button
-						onClick={() => {
-							console.log(word);
-						}}>
-						Save
-					</Button>
+					<Button onClick={onSave}>Save</Button>
 				</Row>
 			</CardBody>
 		</Card>

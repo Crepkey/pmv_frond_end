@@ -19,7 +19,6 @@ export const colors = {
 	buttonGradientDark: "rgba(93, 143, 236, 1)",
 
 	// BACKGROUNDS
-
 	background: "rgba(255, 255, 255, 1)",
 	blockBackground: "rgba(247, 246, 252, 1)",
 	inactiveBackground: "rgba(236, 235, 240, 1)",
@@ -37,4 +36,7 @@ export const colors = {
 	border: "rgba(177, 188, 199, 1)",
 	rowBorder: "rgba(225, 225, 225, 1)",
 	inputBorder: "rgba(216, 215, 221, 1)",
+
+	//STANDARD COLORS
+	error: "rgba(243, 78, 123, 1)",
 };
