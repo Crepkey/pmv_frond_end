@@ -319,7 +319,13 @@ export default function MyWords() {
 				<TableBlock>
 					<TabContainer>
 						<Tab>Active Words</Tab>
-						<Tab style={{ backgroundColor: `${colors.inactiveBackground}`, color: `${colors.inactiveFont}` }}>Deleted Words</Tab>
+						<Tab
+							onClick={() => {
+								console.log("THIS IS WORKING");
+							}}
+							style={{ backgroundColor: `${colors.inactiveBackground}`, color: `${colors.inactiveFont}` }}>
+							Deleted Words
+						</Tab>
 					</TabContainer>
 					<WordContainer>
 						{words.map((word: ExtendedWord, index: number) => (
