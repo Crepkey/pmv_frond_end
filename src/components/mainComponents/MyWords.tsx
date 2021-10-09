@@ -232,11 +232,11 @@ const PageNumber = styled.div`
 	padding: 0 8px 0 8px;
 `;
 
-interface ExtendedWords extends Word {
+interface ExtendedWord extends Word {
 	active: boolean;
 }
 
-const dummyData: ExtendedWords[] = [
+const dummyData: ExtendedWord[] = [
 	{
 		english: "English",
 		hungarian: ["hun1", "hun2", "hun3"],
@@ -280,7 +280,7 @@ const dummyData: ExtendedWords[] = [
 ];
 
 export default function MyWords() {
-	const [words, setWords] = useState<ExtendedWords[]>([]);
+	const [words, setWords] = useState<ExtendedWord[]>([]);
 
 	useEffect(() => {
 		load();
@@ -308,7 +308,25 @@ export default function MyWords() {
 						<Tab style={{ backgroundColor: `${colors.inactiveBackground}`, color: `${colors.inactiveFont}` }}>Deleted Words</Tab>
 					</TabContainer>
 					<WordContainer>
-						<WordRowWhite>
+						{words.map((word: ExtendedWord) => (
+							<WordRowWhite>
+								<EnglishWord>{word.english}</EnglishWord>
+								<HungarianWords>{word.hungarian.map((hunWord: string) => `${hunWord} `)}</HungarianWords>
+								<MemoryLevel>
+									<SpinnerBar size={24} status={word.memoryLevel} style={{ margin: "0 12px 0 0" }} />
+									<MemoryState>Long Term Memory</MemoryState>{" "}
+									{/* TODO: I need a function which calculate the term based on the memory */}
+									level number
+								</MemoryLevel>
+								<WordHandler>
+									{word.favourite ? <BsSuitHeartFill size={25} /> : <BsSuitHeart size={25} />}
+									<BsPencil size={25} />
+									<BsTrash size={25} />
+								</WordHandler>
+							</WordRowWhite>
+						))}
+
+						{/* <WordRowWhite>
 							<EnglishWord>English Word 1</EnglishWord>
 							<HungarianWords>Magyar szó 1, Magyar szó 2</HungarianWords>
 							<MemoryLevel>
@@ -333,7 +351,7 @@ export default function MyWords() {
 								<BsPencil size={25} />
 								<BsTrash size={25} />
 							</WordHandler>
-						</WordRowGray>
+						</WordRowGray> */}
 					</WordContainer>
 				</TableBlock>
 			</TableContainer>

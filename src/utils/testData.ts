@@ -14,6 +14,7 @@ export const data: Data = {
 		hungarian: ["árok", "csatorna", "körülárkol"],
 		sentences: ["Why do you have a ditch in front of your house?"],
 		notes: "I dont have notes here",
+		memoryLevel: 0,
 	},
 };
 
@@ -26,5 +27,6 @@ export const data_2: Data = {
 		english: "candid",
 		hungarian: ["őszinte", "nyílt", "pártatlan"],
 		sentences: ["His responses were remarkably candid.", "Candid is my new favourite word."],
+		memoryLevel: 0,
 	},
 };

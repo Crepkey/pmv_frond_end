@@ -11,5 +11,5 @@ export interface Word {
 	notes?: string;
 	type?: WordType;
 	favourite?: boolean;
-	memoryLevel?: number;
+	memoryLevel: number;
 }

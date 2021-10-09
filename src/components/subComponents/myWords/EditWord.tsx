@@ -212,7 +212,7 @@ const errorMessages: { [key: number]: string } = {
 };
 
 export default function EditWord({ initialWord, title }: EditWordProps) {
-	const [word, setWord] = useState<Word>(initialWord || { english: "", hungarian: [""], sentences: [""], type: "word" });
+	const [word, setWord] = useState<Word>(initialWord || { english: "", hungarian: [""], sentences: [""], type: "word", memoryLevel: 0 });
 	const [errors, setErrors] = useState<number[]>([]);
 
 	function onSave() {
