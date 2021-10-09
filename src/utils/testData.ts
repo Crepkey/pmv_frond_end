@@ -1,30 +1,30 @@
 import { Owner, Word } from "./interfaces";
-interface Data {
-	owner: Owner;
-	word: Word;
-}
 
-export const data: Data = {
-	owner: {
+export const testOwners: Owner[] = [
+	{
+		name: "Ati",
+		sex: "male",
+		id: 1,
+	},
+	{
 		name: "Petra",
 		sex: "female",
+		id: 2,
 	},
-	word: {
+];
+
+export const testWords: Word[] = [
+	{
 		english: "ditch",
 		hungarian: ["árok", "csatorna", "körülárkol"],
 		sentences: ["Why do you have a ditch in front of your house?"],
 		notes: "I dont have notes here",
+		ownerId: 1,
 	},
-};
-
-export const data_2: Data = {
-	owner: {
-		name: "Édi",
-		sex: "male",
-	},
-	word: {
+	{
 		english: "candid",
 		hungarian: ["őszinte", "nyílt", "pártatlan"],
 		sentences: ["His responses were remarkably candid.", "Candid is my new favourite word."],
+		ownerId: 2,
 	},
-};
+];

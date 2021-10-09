@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 /* Styles */
 import styled from "styled-components";
 import { colors } from "../../../utils/colors";
@@ -10,9 +8,6 @@ import { GiSwordwoman, GiSwordman } from "react-icons/gi";
 
 // Interfaces
 import { Owner, Word } from "../../../utils/interfaces";
-
-// Test data
-import { data_2 as data } from "../../../utils/testData";
 
 const Card = styled.div`
 	border: 1px solid ${colors.border};
@@ -102,59 +97,7 @@ const SentenceCard = styled.div`
 	border-bottom: 1px ${colors.border} solid;
 `;
 
-/* TODO: We should a great solution for the margin problem above. The last element margin-bottom should be removed somehow*/
-
-const ButtonContainer = styled.div`
-	display: flex;
-	justify-content: space-between;
-`;
-
-const Button = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	cursor: pointer;
-	color: ${colors.buttonFont};
-	font-size: 1rem;
-	font-weight: bold;
-	padding: 6px 24px;
-	text-decoration: none;
-	border-radius: 16px;
-	border: none;
-	width: 30%;
-	background-color: ${colors.acceptButtonBackground};
-	:hover {
-		background: linear-gradient(to bottom, ${colors.acceptButtonGradientLight} 5%, ${colors.acceptButtonGradientDark} 100%);
-		background-color: ${colors.acceptButtonGradientLight};
-	}
-	:active {
-		position: relative;
-		top: 1px;
-	}
-`;
-
-const RejectButton = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	cursor: pointer;
-	color: ${colors.buttonFont};
-	font-size: 1rem;
-	font-weight: bold;
-	padding: 6px 24px;
-	text-decoration: none;
-	border-radius: 16px;
-	border: none;
-	width: 30%;
-	background-color: ${colors.rejectButtonBackground};
-	:hover {
-		background: linear-gradient(to bottom, ${colors.rejectButtonGradientLight} 5%, ${colors.rejectButtonGradientDark} 100%);
-	}
-	:active {
-		position: relative;
-		top: 1px;
-	}
-`;
+/* TODO: We should find a great solution for the margin problem above. The last element margin-bottom should be removed somehow*/
 
 const HeaderIcon = styled.div`
 	border: 2px gray solid;
@@ -167,15 +110,12 @@ const HeaderIcon = styled.div`
 	margin-right: 16px;
 `;
 
-export default function PlayingCard() {
-	const [owner, setOwner] = useState<Owner | null>(null);
-	const [word, setWord] = useState<Word | null>(null);
+interface PlayingCardProps {
+	owner: Owner | undefined;
+	word: Word | undefined;
+}
 
-	useEffect(() => {
-		setOwner(data.owner);
-		setWord(data.word);
-	}, []);
-
+export default function PlayingCard({ owner, word }: PlayingCardProps) {
 	return (
 		<Card>
 			<CardHeader>
@@ -204,12 +144,6 @@ export default function PlayingCard() {
 					</Block>
 					{word?.notes && <Block>{word?.notes}</Block>}
 				</ScrollContainer>
-
-				<ButtonContainer>
-					{/* TODO media query: on smaller screens we should only use icons */}
-					<Button>CORRECT</Button>
-					<RejectButton>NOT CORRECT</RejectButton>
-				</ButtonContainer>
 			</CardBody>
 		</Card>
 	);
