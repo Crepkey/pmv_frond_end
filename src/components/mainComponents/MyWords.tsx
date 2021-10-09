@@ -235,7 +235,7 @@ const dummyData: ExtendedWord[] = [
 		notes: "This is a notes",
 		type: "word",
 		favourite: true,
-		memoryLevel: 67,
+		memoryLevel: 0,
 		active: true,
 	},
 	{
@@ -245,7 +245,7 @@ const dummyData: ExtendedWord[] = [
 		notes: "This is a notes",
 		type: "word",
 		favourite: false,
-		memoryLevel: 12,
+		memoryLevel: 18,
 		active: false,
 	},
 	{
@@ -255,11 +255,21 @@ const dummyData: ExtendedWord[] = [
 		notes: "This is a notes",
 		type: "word",
 		favourite: false,
-		memoryLevel: 78,
+		memoryLevel: 38,
 		active: true,
 	},
 	{
 		english: "English4",
+		hungarian: ["hun1", "hun2", "hun3"],
+		sentences: ["sentence1", "sentence2", "sentence3"],
+		notes: "This is a notes",
+		type: "word",
+		favourite: true,
+		memoryLevel: 67,
+		active: true,
+	},
+	{
+		english: "English5",
 		hungarian: ["hun1", "hun2", "hun3"],
 		sentences: ["sentence1", "sentence2", "sentence3"],
 		notes: "This is a notes",
@@ -286,6 +296,14 @@ export default function MyWords() {
 		return colors.rowBackgroundDark;
 	}
 
+	function convertMemoryLevelToText(memoryLevel: number) {
+		if (memoryLevel === 0) return "Unused word";
+		if (memoryLevel >= 1 && memoryLevel <= 25) return "New word";
+		if (memoryLevel >= 26 && memoryLevel <= 50) return "Short term memory";
+		if (memoryLevel >= 51 && memoryLevel <= 75) return "Medium term memory";
+		if (memoryLevel >= 76 && memoryLevel <= 100) return "Long term memory";
+	}
+
 	return (
 		<MainContainer>
 			<ControlBarContainer>
@@ -305,14 +323,16 @@ export default function MyWords() {
 					</TabContainer>
 					<WordContainer>
 						{words.map((word: ExtendedWord, index: number) => (
-							<WordRowWhite background={calculateRowBackground(index)}>
+							<WordRowWhite key={`${index}_word`} background={calculateRowBackground(index)}>
 								<EnglishWord>{word.english}</EnglishWord>
 								<HungarianWords>{word.hungarian.map((hunWord: string) => `${hunWord} `)}</HungarianWords>
 								<MemoryLevel>
-									<SpinnerBar size={24} status={word.memoryLevel} style={{ margin: "0 12px 0 0" }} />
-									<MemoryState>Long Term Memory</MemoryState>{" "}
-									{/* TODO: I need a function which calculate the term based on the memory */}
-									level number
+									<SpinnerBar
+										size={24}
+										status={word.memoryLevel}
+										style={{ margin: "0 12px 0 0", background: calculateRowBackground(index) }}
+									/>
+									<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>
 								</MemoryLevel>
 								<WordHandler>
 									{word.favourite ? <BsSuitHeartFill size={25} /> : <BsSuitHeart size={25} />}
@@ -322,32 +342,7 @@ export default function MyWords() {
 							</WordRowWhite>
 						))}
 
-						{/* <WordRowWhite>
-							<EnglishWord>English Word 1</EnglishWord>
-							<HungarianWords>Magyar szó 1, Magyar szó 2</HungarianWords>
-							<MemoryLevel>
-								<SpinnerBar size={24} status={34} style={{ margin: "0 12px 0 0" }} />
-								<MemoryState>Long Term Memory</MemoryState>
-							</MemoryLevel>
-							<WordHandler>
-								<BsSuitHeartFill size={25} />
-								<BsPencil size={25} />
-								<BsTrash size={25} />
-							</WordHandler>
-						</WordRowWhite>
-						<WordRowGray>
-							<EnglishWord>Longer English Word about...</EnglishWord>
-							<HungarianWords>Bélapátfalva, Budapest, Ugod, Pápa, Harci majom, Elkelkáposztástalanítottátok</HungarianWords>
-							<MemoryLevel>
-								<SpinnerBar size={24} status={96} style={{ margin: "0 12px 0 0", background: `${colors.rowBackgroundDark}` }} />
-								<MemoryState>Long Term Memory</MemoryState>
-							</MemoryLevel>
-							<WordHandler>
-								<BsSuitHeart size={25} />
-								<BsPencil size={25} />
-								<BsTrash size={25} />
-							</WordHandler>
-						</WordRowGray> */}
+						{/* FIXME: Find a solution which is better than index using as a key */}
 					</WordContainer>
 				</TableBlock>
 			</TableContainer>
