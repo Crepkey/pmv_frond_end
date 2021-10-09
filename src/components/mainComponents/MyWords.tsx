@@ -1,3 +1,8 @@
+import { useState, useEffect } from "react";
+
+/* Interfaces */
+import { Word } from "../../utils/interfaces";
+
 /* Icons */
 import {
 	BsSuitHeartFill,
@@ -227,7 +232,64 @@ const PageNumber = styled.div`
 	padding: 0 8px 0 8px;
 `;
 
+interface ExtendedWords extends Word {
+	active: boolean;
+}
+
+const dummyData: ExtendedWords[] = [
+	{
+		english: "English",
+		hungarian: ["hun1", "hun2", "hun3"],
+		sentences: ["sentence1", "sentence2", "sentence3"],
+		notes: "This is a notes",
+		type: "word",
+		favourite: true,
+		memoryLevel: 67,
+		active: true,
+	},
+	{
+		english: "English2",
+		hungarian: ["hun1", "hun2", "hun3"],
+		sentences: ["sentence1", "sentence2", "sentence3"],
+		notes: "This is a notes",
+		type: "word",
+		favourite: false,
+		memoryLevel: 12,
+		active: false,
+	},
+	{
+		english: "English3",
+		hungarian: ["hun1", "hun2", "hun3"],
+		sentences: ["sentence1", "sentence2", "sentence3"],
+		notes: "This is a notes",
+		type: "word",
+		favourite: false,
+		memoryLevel: 78,
+		active: true,
+	},
+	{
+		english: "English4",
+		hungarian: ["hun1", "hun2", "hun3"],
+		sentences: ["sentence1", "sentence2", "sentence3"],
+		notes: "This is a notes",
+		type: "word",
+		favourite: true,
+		memoryLevel: 98,
+		active: true,
+	},
+];
+
 export default function MyWords() {
+	const [words, setWords] = useState<ExtendedWords[]>([]);
+
+	useEffect(() => {
+		load();
+	}, []);
+
+	function load() {
+		setWords(dummyData);
+	}
+
 	return (
 		<MainContainer>
 			<ControlBarContainer>
