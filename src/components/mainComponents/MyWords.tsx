@@ -144,22 +144,13 @@ const WordContainer = styled.div`
 	background: ${colors.background};
 `;
 
-const WordRowWhite = styled.div`
+const WordRowWhite = styled.div<{ background: string }>`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	min-height: 2rem;
 	padding: 3px 12px 3px 12px;
-	background: ${colors.rowBackgroundLight};
-	border-bottom: 1px ${colors.rowBorder} solid;
-`;
-const WordRowGray = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	min-height: 2rem;
-	padding: 3px 12px 3px 12px;
-	background: ${colors.rowBackgroundDark};
+	background: ${({ background }) => background};
 	border-bottom: 1px ${colors.rowBorder} solid;
 `;
 
@@ -290,6 +281,11 @@ export default function MyWords() {
 		setWords(dummyData);
 	}
 
+	function calculateRowBackground(index: number) {
+		if (index % 2 === 0) return colors.rowBackgroundLight;
+		return colors.rowBackgroundDark;
+	}
+
 	return (
 		<MainContainer>
 			<ControlBarContainer>
@@ -308,8 +304,8 @@ export default function MyWords() {
 						<Tab style={{ backgroundColor: `${colors.inactiveBackground}`, color: `${colors.inactiveFont}` }}>Deleted Words</Tab>
 					</TabContainer>
 					<WordContainer>
-						{words.map((word: ExtendedWord) => (
-							<WordRowWhite>
+						{words.map((word: ExtendedWord, index: number) => (
+							<WordRowWhite background={calculateRowBackground(index)}>
 								<EnglishWord>{word.english}</EnglishWord>
 								<HungarianWords>{word.hungarian.map((hunWord: string) => `${hunWord} `)}</HungarianWords>
 								<MemoryLevel>
