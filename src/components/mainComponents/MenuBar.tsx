@@ -1,8 +1,6 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 /* Icons */
-
 import { BsPersonCircle } from "react-icons/bs";
 import MainLogo from "../generalComponents/MainLogo";
 

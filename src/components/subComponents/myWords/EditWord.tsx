@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 /* Styles */
 import styled from "styled-components";
 import { colors } from "../../../utils/colors";
+
+// Icons
 import { BsSuitHeart, BsSuitHeartFill, BsPlus, BsX, BsTrash } from "react-icons/bs";
 
+// Interfaces
 import { Word, WordType } from "../../../utils/interfaces";
+
+// Utils
 import set from "lodash/set";
 
 const Card = styled.div`

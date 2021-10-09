@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 /* Styles */
 import styled from "styled-components";
 import { colors } from "../../../utils/colors";
+
+// Icons
 import { MdVolumeUp } from "react-icons/md";
 import { GiSwordwoman, GiSwordman } from "react-icons/gi";
 
-import { data_2 as data } from "../../../utils/testData";
+// Interfaces
 import { Owner, Word } from "../../../utils/interfaces";
+
+// Test data
+import { data_2 as data } from "../../../utils/testData";
 
 const Card = styled.div`
 	border: 1px solid ${colors.border};

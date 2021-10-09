@@ -1,9 +1,7 @@
-import React from "react";
 import { Route, Redirect, Switch } from "react-router-dom";
 
 // Components
 import MenuBar from "./components/mainComponents/MenuBar";
-
 import MyWords from "./components/mainComponents/MyWords";
 import Home from "./components/mainComponents/Home";
 import Game from "./components/mainComponents/Game";
