@@ -212,7 +212,7 @@ const errorMessages: { [key: number]: string } = {
 };
 
 export default function EditWord({ initialWord, title }: EditWordProps) {
-	const newEmptyWord: Word = { english: "", hungarian: [""], sentences: [""], type: "word", ownerId: 0 };
+	const newEmptyWord: Word = { english: "", hungarian: [""], sentences: [""], type: "word", ownerId: 0, memoryLevel: 0 };
 	// TODO set the actul user's ID as ownerId
 
 	const [word, setWord] = useState<Word>(initialWord || newEmptyWord);
