@@ -122,7 +122,7 @@ const CircleButton = styled.div`
 	justify-content: center;
 	align-items: center;
 	padding: 4px;
-	border-radius: 12px;
+	border-radius: 100%;
 	margin-right: 8px;
 	cursor: pointer;
 	color: ${colors.buttonFont};
@@ -196,7 +196,7 @@ const Button = styled.div`
 `;
 
 interface EditWordProps {
-	initialWord: Word;
+	initialWord?: Word;
 	title: string;
 }
 
@@ -207,7 +207,7 @@ const errorMessages: { [key: number]: string } = {
 };
 
 export default function EditWord({ initialWord, title }: EditWordProps) {
-	const [word, setWord] = useState<Word>(initialWord);
+	const [word, setWord] = useState<Word>(initialWord || { english: "", hungarian: [""], sentences: [""], type: "word" });
 	const [errors, setErrors] = useState<number[]>([]);
 
 	function onSave() {
