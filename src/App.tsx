@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 
 // Components
 import MenuBar from "./components/mainComponents/MenuBar";
@@ -23,10 +23,12 @@ function App() {
 		<MainContainer>
 			<MenuBar />
 
-			<Route path="/my-words" component={MyWords} />
-			<Route path="/lets-play" component={Game} />
-			<Route path="/" exact component={Home} />
-			{/* <Redirect to="/" /> */}
+			<Switch>
+				<Route path="/my-words" component={MyWords} />
+				<Route path="/lets-play" component={Game} />
+				<Route path="/" exact component={Home} />
+				<Redirect to="/" />
+			</Switch>
 		</MainContainer>
 	);
 }
