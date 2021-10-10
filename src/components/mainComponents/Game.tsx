@@ -46,6 +46,8 @@ export default function Game() {
 					<EvaluationForm actualWord={actualWord} getNextCard={() => setActualIndex(actualIndex + 1)} />
 				</Fragment>
 			)}
+
+			{actualIndex >= words.length && <div>End of game</div>}
 		</Body>
 	);
 }

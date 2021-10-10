@@ -112,7 +112,7 @@ const HeaderIcon = styled.div`
 
 interface PlayingCardProps {
 	owner: Owner | undefined;
-	word: Word | undefined;
+	word: Word;
 }
 
 export default function PlayingCard({ owner, word }: PlayingCardProps) {
@@ -125,7 +125,7 @@ export default function PlayingCard({ owner, word }: PlayingCardProps) {
 
 			<CardBody>
 				<Title>
-					{word?.english}
+					{word.english}
 					<Icon>
 						<MdVolumeUp />
 					</Icon>
@@ -133,16 +133,16 @@ export default function PlayingCard({ owner, word }: PlayingCardProps) {
 
 				<ScrollContainer>
 					<TagContainer>
-						{word?.hungarian.map((meaning: string, i: number) => (
+						{word.hungarian.map((meaning: string, i: number) => (
 							<Tag key={i}>{meaning}</Tag>
 						))}
 					</TagContainer>
 					<Block>
-						{word?.sentences.map((sentence: string, i: number) => (
+						{word.sentences.map((sentence: string, i: number) => (
 							<SentenceCard key={i}>{sentence}</SentenceCard>
 						))}
 					</Block>
-					{word?.notes && <Block>{word?.notes}</Block>}
+					{word.notes && <Block>{word.notes}</Block>}
 				</ScrollContainer>
 			</CardBody>
 		</Card>
