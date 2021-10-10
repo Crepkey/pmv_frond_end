@@ -10,6 +10,10 @@ import { Word } from "../../../utils/interfaces";
 // Icons
 import { BsCheckCircleFill, BsDashCircle } from "react-icons/bs";
 
+// Utils
+import get from "lodash/get";
+import set from "lodash/set";
+
 // TODO general card component??
 const Card = styled.div`
 	border: 1px solid ${colors.border};
@@ -33,8 +37,16 @@ const CardHeader = styled.div`
 	min-height: 3rem;
 `;
 
-const ScrollContainer = styled.div`
+const CardBody = styled.div`
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	min-width: 0;
+	min-height: 0;
 	padding: 24px;
+`;
+
+const ScrollContainer = styled.div`
 	min-width: 0;
 	min-height: 0;
 	overflow: scroll;
@@ -42,8 +54,50 @@ const ScrollContainer = styled.div`
 	margin-bottom: 24px;
 `;
 
-const Requirement = styled.div`
+const ButtonContainer = styled.div`
 	display: flex;
+	justify-content: center;
+`;
+
+const Button = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	color: ${colors.buttonFont};
+	font-size: 1rem;
+	font-weight: bold;
+	padding: 6px 24px;
+	text-decoration: none;
+	border-radius: 16px;
+	border: none;
+	width: 30%;
+	background-color: ${colors.acceptButtonBackground};
+	:hover {
+		background: linear-gradient(to bottom, ${colors.acceptButtonGradientLight} 5%, ${colors.acceptButtonGradientDark} 100%);
+		background-color: ${colors.acceptButtonGradientLight};
+	}
+	:active {
+		position: relative;
+		top: 1px;
+	}
+`;
+
+const Block = styled.div`
+	display: flex;
+	background: ${colors.blockBackground};
+	border-radius: 24px;
+	padding: 24px;
+	margin-bottom: 24px;
+	font-weight: 300;
+	align-items: center;
+`;
+
+const CheckBox = styled.div`
+	margin-right: 16px;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
 `;
 
 interface EvaluationRowProps {
@@ -54,10 +108,10 @@ interface EvaluationRowProps {
 
 function EvaluationRow({ title, checked, toggleChecked }: EvaluationRowProps) {
 	return (
-		<Requirement>
-			<div onClick={toggleChecked}>{checked ? <BsCheckCircleFill /> : <BsDashCircle />}</div>
+		<Block>
+			<CheckBox onClick={toggleChecked}>{checked ? <BsCheckCircleFill size={20} /> : <BsDashCircle size={20} />}</CheckBox>
 			{title}
-		</Requirement>
+		</Block>
 	);
 }
 
@@ -68,24 +122,39 @@ interface EvaluationFormProps {
 export default function EvaluationForm({ actualWord }: EvaluationFormProps) {
 	// We only store the actual evaluation in the state and calculate the values (that we need in the database) while saving
 	const [statistics, setStatistics] = useState<{ english: boolean; hungarian: boolean[] }>({ english: false, hungarian: [] });
+	const [correctGrammar, setCorrectGrammar] = useState<boolean>(false);
 
 	return (
 		<Card>
 			<CardHeader>Evaluation Form</CardHeader>
 
-			<ScrollContainer>
-				<EvaluationRow
-					title={actualWord?.english}
-					checked={statistics.english}
-					toggleChecked={() => setStatistics({ ...statistics, english: !statistics.english })}
-				/>
-
-				{actualWord?.hungarian.map((meaning: string, i: number) => (
-					<Requirement key={i}>{meaning}</Requirement>
-				))}
-
-				<Requirement>Example sentence + grammatical structure</Requirement>
-			</ScrollContainer>
+			<CardBody>
+				<ScrollContainer>
+					<EvaluationRow
+						title={actualWord?.english}
+						checked={statistics.english}
+						toggleChecked={() => setStatistics({ ...statistics, english: !statistics.english })}
+					/>
+					{actualWord?.hungarian.map((meaning: string, i: number) => {
+						const checked = get(statistics, ["hungarian", i], false);
+						return (
+							<EvaluationRow
+								key={i}
+								title={meaning}
+								checked={checked}
+								toggleChecked={() => {
+									const evaluatedHungarian = set([...statistics.hungarian], i, !checked);
+									setStatistics({ ...statistics, hungarian: evaluatedHungarian });
+								}}
+							/>
+						);
+					})}
+					<EvaluationRow title="grammatical structure" checked={correctGrammar} toggleChecked={() => setCorrectGrammar(!correctGrammar)} />
+				</ScrollContainer>
+				<ButtonContainer>
+					<Button>Save</Button>
+				</ButtonContainer>
+			</CardBody>
 		</Card>
 	);
 }
