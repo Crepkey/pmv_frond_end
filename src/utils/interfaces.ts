@@ -13,3 +13,9 @@ export interface Word {
 	favourite?: boolean;
 	memoryLevel: number;
 }
+
+export interface ExtendedWord extends Word {
+	id: number;
+	active: boolean;
+	deletionDate?: Date;
+}

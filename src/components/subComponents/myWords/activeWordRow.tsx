@@ -1,13 +1,15 @@
 import React from "react";
 
 /* Interfaces */
-import { Word } from "../../../utils/interfaces";
+import { ExtendedWord } from "../../../utils/interfaces";
 
 /* Styles */
 import styled from "styled-components";
 import { colors } from "../../../utils/colors";
 import SpinnerBar from "../../generalComponents/SpinnerBar";
-import { BsPencil, BsSuitHeart, BsSuitHeartFill, BsTrash } from "react-icons/bs";
+
+/* Components */
+import WordHandler from "./wordHandler";
 
 const WordRow = styled.div<{ background: string }>`
 	display: flex;
@@ -44,19 +46,6 @@ const MemoryState = styled.div`
 	font-weight: 350;
 `;
 
-const WordHandler = styled.div`
-	display: flex;
-	flex: 1;
-	justify-content: space-between;
-	padding-right: 12px;
-`;
-
-interface ExtendedWord extends Word {
-	id: number;
-	active: boolean;
-	deletionDate?: Date;
-}
-
 interface ActiveWordRowProps {
 	words: ExtendedWord[];
 }
@@ -85,11 +74,7 @@ export default function ActiveWordRow({ words }: ActiveWordRowProps) {
 						<SpinnerBar size={24} status={word.memoryLevel} style={{ margin: "0 12px 0 0", background: calculateRowBackground(index) }} />
 						<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>
 					</MemoryLevel>
-					<WordHandler>
-						{word.favourite ? <BsSuitHeartFill size={25} /> : <BsSuitHeart size={25} />}
-						<BsPencil size={25} />
-						<BsTrash size={25} />
-					</WordHandler>
+					<WordHandler word={word} />
 				</WordRow>
 			))}
 		</React.Fragment>
