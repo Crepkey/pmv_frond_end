@@ -218,7 +218,7 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 	const [word, setWord] = useState<Word>(initialWord || newEmptyWord);
 	const [errors, setErrors] = useState<number[]>([]);
 
-	function onSave() {
+	function save() {
 		const checkedErrors: number[] = [];
 		if (word.english.length === 0) {
 			checkedErrors.push(1);
@@ -372,7 +372,7 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 				</ScrollContainer>
 
 				<Row>
-					<Button onClick={onSave}>Save</Button>
+					<Button onClick={save}>Save</Button>
 				</Row>
 			</CardBody>
 		</Card>

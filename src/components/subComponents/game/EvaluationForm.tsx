@@ -117,12 +117,17 @@ function EvaluationRow({ title, checked, toggleChecked }: EvaluationRowProps) {
 
 interface EvaluationFormProps {
 	actualWord: Word | undefined;
+	getNextCard: () => void;
 }
 
-export default function EvaluationForm({ actualWord }: EvaluationFormProps) {
+export default function EvaluationForm({ actualWord, getNextCard }: EvaluationFormProps) {
 	// We only store the actual evaluation in the state and calculate the values (that we need in the database) while saving
 	const [statistics, setStatistics] = useState<{ english: boolean; hungarian: boolean[] }>({ english: false, hungarian: [] });
 	const [correctGrammar, setCorrectGrammar] = useState<boolean>(false);
+
+	function save() {
+		getNextCard();
+	}
 
 	return (
 		<Card>
@@ -152,7 +157,7 @@ export default function EvaluationForm({ actualWord }: EvaluationFormProps) {
 					<EvaluationRow title="grammatical structure" checked={correctGrammar} toggleChecked={() => setCorrectGrammar(!correctGrammar)} />
 				</ScrollContainer>
 				<ButtonContainer>
-					<Button>Save</Button>
+					<Button onClick={save}>Save</Button>
 				</ButtonContainer>
 			</CardBody>
 		</Card>

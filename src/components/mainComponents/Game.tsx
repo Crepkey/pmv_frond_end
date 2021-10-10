@@ -41,7 +41,7 @@ export default function Game() {
 	return (
 		<Body>
 			<PlayingCard owner={owners?.find((o: Owner) => o.id === actualWord?.ownerId)} word={actualWord} />
-			<EvaluationForm actualWord={actualWord} />
+			<EvaluationForm actualWord={actualWord} getNextCard={() => setActualIndex(actualIndex + 1)} />
 		</Body>
 	);
 }
