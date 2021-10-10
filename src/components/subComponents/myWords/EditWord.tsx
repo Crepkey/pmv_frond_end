@@ -217,12 +217,11 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 		hungarian: [""],
 		sentences: [""],
 		type: "word",
-		ownerId: 0,
+		ownerId: 0, // TODO set the actul user's ID as ownerId
 		memoryLevel: 0,
 		actualScore: 0,
 		scoreToAchieve: 0,
 	};
-	// TODO set the actul user's ID as ownerId
 
 	const [word, setWord] = useState<Word>(initialWord || newEmptyWord);
 	const [errors, setErrors] = useState<number[]>([]);
@@ -254,8 +253,13 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 			hungarian: hungarianMeaning,
 			sentences,
 			scoreToAchieve: (1 + hungarianMeaning.length) * 10,
+			statistics: {
+				english: 0,
+				hungarian: hungarianMeaning.map(() => 0),
+			},
 		};
 
+		console.log(wordToSave);
 		// TODO save to database
 	}
 

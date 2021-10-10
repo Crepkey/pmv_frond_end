@@ -14,6 +14,7 @@ import { BsCheckCircleFill, BsDashCircle } from "react-icons/bs";
 import get from "lodash/get";
 import set from "lodash/set";
 import flatten from "lodash/flatten";
+import round from "lodash/round";
 
 // TODO general card component??
 const Card = styled.div`
@@ -128,17 +129,41 @@ export default function EvaluationForm({ actualWord, getNextCard }: EvaluationFo
 	const [correctGrammar, setCorrectGrammar] = useState<boolean>(false);
 
 	function save() {
-		// calculate the values that we need to save
+		// calculate the values that we need to save:
+
+		// actual score + memory level
 		const scoreBefore = actualWord.actualScore;
 		const scoreNow = flatten(Object.values(statistics)).filter((s: boolean) => s === true).length;
 		const actualScore = scoreBefore + scoreNow;
+		const memoryLevel = round((actualScore / actualWord.scoreToAchieve) * 100, 2);
 
-		// TODO set deleted property in word, if ActualScore >= ScoreToAchieve ---> you don't have to practice this word anymore
-		const wordToSave = { ...actualWord, actualScore, memoryLevel: (actualScore / actualWord.scoreToAchieve) * 100 };
+		// statistics
+		const statisticsToSave = actualWord.statistics || {};
+		if (statistics.english === true) {
+			const englishLevel = get(statisticsToSave, "english", 0);
+			set(statisticsToSave, "english", englishLevel + 1);
+		}
+		actualWord.hungarian.forEach((h: string, index: number) => {
+			const hunStatistics = get(statistics, ["hungarian", index], false);
+			if (hunStatistics === true) {
+				const hunLevel = get(statisticsToSave, ["hungarian", index], 0);
+				set(statisticsToSave, ["hungarian", index], hunLevel + 1);
+			}
+		});
+
+		// set deletionDate, if you don't have to practice this word anymore
+		let deletionDate = null;
+		if (actualScore > actualWord.scoreToAchieve) {
+			deletionDate = new Date();
+		}
+
+		// TODO save to database (it would be better, if we didn't need the whole word, just the modified columns)
+		const wordToSave = { ...actualWord, actualScore, memoryLevel, statistics: statisticsToSave, deletionDate };
 		console.log(wordToSave);
-		// TODO save to database
 
-		// clear statistics is state
+		// TODO save the grammatical knowledge (correctGrammar in state) to some grammatical statistics table
+
+		// clear statistics in the state
 		setStatistics(emptyStatistics);
 		setCorrectGrammar(false);
 		// show next card
