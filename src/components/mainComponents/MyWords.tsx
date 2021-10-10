@@ -22,6 +22,9 @@ import { colors } from "../../utils/colors";
 import styled from "styled-components";
 import SpinnerBar from "../generalComponents/SpinnerBar";
 
+/* Components */
+import ActiveWordRow from "../subComponents/myWords/activeWordRow";
+
 const MainContainer = styled.div`
 	display: flex;
 	flex: 1;
@@ -145,7 +148,7 @@ const WordContainer = styled.div`
 	background: ${colors.background};
 `;
 
-const WordRowWhite = styled.div<{ background: string }>`
+const WordRow = styled.div<{ background: string }>`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -378,28 +381,9 @@ export default function MyWords() {
 							Deleted Words
 						</Tab>
 					</TabContainer>
-					<WordContainer>
-						{(displayedWords === "active" ? activeWords : deletedWords).map((word: ExtendedWord, index: number) => (
-							<WordRowWhite key={`${index}_word`} background={calculateRowBackground(index)}>
-								<EnglishWord>{word.english}</EnglishWord>
-								<HungarianWords>{word.hungarian.map((hunWord: string) => `${hunWord} `)}</HungarianWords>
-								<MemoryLevel>
-									<SpinnerBar
-										size={24}
-										status={word.memoryLevel}
-										style={{ margin: "0 12px 0 0", background: calculateRowBackground(index) }}
-									/>
-									<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>
-								</MemoryLevel>
-								<WordHandler>
-									{word.favourite ? <BsSuitHeartFill size={25} /> : <BsSuitHeart size={25} />}
-									<BsPencil size={25} />
-									<BsTrash size={25} />
-								</WordHandler>
-							</WordRowWhite>
-						))}
 
-						{/* FIXME: Find a solution which is better than index using as a key */}
+					<WordContainer>
+						<ActiveWordRow words={activeWords} />
 					</WordContainer>
 				</TableBlock>
 			</TableContainer>
