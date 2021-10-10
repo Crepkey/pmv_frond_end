@@ -5,17 +5,7 @@ import { Route, Link } from "react-router-dom";
 import { Word } from "../../utils/interfaces";
 
 /* Icons */
-import {
-	BsSuitHeartFill,
-	BsSuitHeart,
-	BsTrash,
-	BsFilter,
-	BsChevronLeft,
-	BsChevronRight,
-	BsChevronDoubleLeft,
-	BsChevronDoubleRight,
-	BsPencil,
-} from "react-icons/bs";
+import { BsFilter, BsChevronLeft, BsChevronRight, BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
 
 /* Styles */
 import { colors } from "../../utils/colors";
@@ -146,48 +136,6 @@ const WordContainer = styled.div`
 	border-bottom: 1px solid ${colors.border};
 	border-radius: 0 0 16px 16px;
 	background: ${colors.background};
-`;
-
-const WordRow = styled.div<{ background: string }>`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	min-height: 2rem;
-	padding: 3px 12px 3px 12px;
-	background: ${({ background }) => background};
-	border-bottom: 1px ${colors.rowBorder} solid;
-`;
-
-const EnglishWord = styled.div`
-	display: flex;
-	flex: 2;
-	padding-right: 12px;
-	font-weight: 450;
-`;
-
-const HungarianWords = styled.div`
-	display: flex;
-	flex: 5;
-	padding-right: 12px;
-	font-weight: 300;
-`;
-
-const MemoryLevel = styled.div`
-	display: flex;
-	flex: 2;
-	align-items: center;
-	padding-right: 12px;
-`;
-
-const MemoryState = styled.div`
-	font-weight: 350;
-`;
-
-const WordHandler = styled.div`
-	display: flex;
-	flex: 1;
-	justify-content: space-between;
-	padding-right: 12px;
 `;
 
 const PaginationContainer = styled.div`
