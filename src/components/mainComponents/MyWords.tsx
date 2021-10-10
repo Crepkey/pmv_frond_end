@@ -317,7 +317,7 @@ export default function MyWords() {
 					</TabContainer>
 
 					<WordContainer>
-						<DeletedWordRow words={deletedWords} />
+						<DeletedWordRow words={activeWords} />
 					</WordContainer>
 				</TableBlock>
 			</TableContainer>
