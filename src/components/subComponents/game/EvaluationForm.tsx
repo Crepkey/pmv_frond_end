@@ -13,6 +13,7 @@ import { BsCheckCircleFill, BsDashCircle } from "react-icons/bs";
 // Utils
 import get from "lodash/get";
 import set from "lodash/set";
+import flatten from "lodash/flatten";
 
 // TODO general card component??
 const Card = styled.div`
@@ -116,16 +117,31 @@ function EvaluationRow({ title, checked, toggleChecked }: EvaluationRowProps) {
 }
 
 interface EvaluationFormProps {
-	actualWord: Word | undefined;
+	actualWord: Word;
 	getNextCard: () => void;
 }
 
 export default function EvaluationForm({ actualWord, getNextCard }: EvaluationFormProps) {
+	const emptyStatistics = { english: false, hungarian: [] };
 	// We only store the actual evaluation in the state and calculate the values (that we need in the database) while saving
-	const [statistics, setStatistics] = useState<{ english: boolean; hungarian: boolean[] }>({ english: false, hungarian: [] });
+	const [statistics, setStatistics] = useState<{ english: boolean; hungarian: boolean[] }>(emptyStatistics);
 	const [correctGrammar, setCorrectGrammar] = useState<boolean>(false);
 
 	function save() {
+		// calculate the values that we need to save
+		const scoreBefore = actualWord.actualScore;
+		const scoreNow = flatten(Object.values(statistics)).filter((s: boolean) => s === true).length;
+		const actualScore = scoreBefore + scoreNow;
+
+		// TODO set deleted property in word, if ActualScore >= ScoreToAchieve ---> you don't have to practice this word anymore
+		const wordToSave = { ...actualWord, actualScore, memoryLevel: (actualScore / actualWord.scoreToAchieve) * 100 };
+		console.log(wordToSave);
+		// TODO save to database
+
+		// clear statistics is state
+		setStatistics(emptyStatistics);
+		setCorrectGrammar(false);
+		// show next card
 		getNextCard();
 	}
 
@@ -136,11 +152,11 @@ export default function EvaluationForm({ actualWord, getNextCard }: EvaluationFo
 			<CardBody>
 				<ScrollContainer>
 					<EvaluationRow
-						title={actualWord?.english}
+						title={actualWord.english}
 						checked={statistics.english}
 						toggleChecked={() => setStatistics({ ...statistics, english: !statistics.english })}
 					/>
-					{actualWord?.hungarian.map((meaning: string, i: number) => {
+					{actualWord.hungarian.map((meaning: string, i: number) => {
 						const checked = get(statistics, ["hungarian", i], false);
 						return (
 							<EvaluationRow

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 // Styles
 import styled from "styled-components";
@@ -40,8 +40,12 @@ export default function Game() {
 
 	return (
 		<Body>
-			<PlayingCard owner={owners?.find((o: Owner) => o.id === actualWord?.ownerId)} word={actualWord} />
-			<EvaluationForm actualWord={actualWord} getNextCard={() => setActualIndex(actualIndex + 1)} />
+			{actualWord !== undefined && (
+				<Fragment>
+					<PlayingCard owner={owners?.find((o: Owner) => o.id === actualWord.ownerId)} word={actualWord} />
+					<EvaluationForm actualWord={actualWord} getNextCard={() => setActualIndex(actualIndex + 1)} />
+				</Fragment>
+			)}
 		</Body>
 	);
 }

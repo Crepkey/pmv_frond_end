@@ -18,9 +18,9 @@ export interface Word {
 	notes?: string;
 	type?: WordType;
 	favourite?: boolean;
-	memoryLevel?: number;
+	memoryLevel: number;
 
-	actualScore?: number;
-	scoreToAchieve?: number;
+	actualScore: number;
+	scoreToAchieve: number;
 	statistics?: WordStatistics;
 }
