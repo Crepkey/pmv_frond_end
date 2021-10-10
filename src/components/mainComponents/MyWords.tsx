@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Route, Link } from "react-router-dom";
 
 /* Interfaces */
 import { Word } from "../../utils/interfaces";
@@ -10,7 +9,6 @@ import { BsFilter, BsChevronLeft, BsChevronRight, BsChevronDoubleLeft, BsChevron
 /* Styles */
 import { colors } from "../../utils/colors";
 import styled from "styled-components";
-import SpinnerBar from "../generalComponents/SpinnerBar";
 
 /* Components */
 import ActiveWordRow from "../subComponents/myWords/activeWordRow";
@@ -287,19 +285,6 @@ export default function MyWords() {
 
 		setActiveWords(activeWords);
 		setDeletedWords(deletedWords);
-	}
-
-	function calculateRowBackground(index: number) {
-		if (index % 2 === 0) return colors.rowBackgroundLight;
-		return colors.rowBackgroundDark;
-	}
-
-	function convertMemoryLevelToText(memoryLevel: number) {
-		if (memoryLevel === 0) return "Unused word";
-		if (memoryLevel >= 1 && memoryLevel <= 25) return "New word";
-		if (memoryLevel >= 26 && memoryLevel <= 50) return "Short term memory";
-		if (memoryLevel >= 51 && memoryLevel <= 75) return "Medium term memory";
-		if (memoryLevel >= 76 && memoryLevel <= 100) return "Long term memory";
 	}
 
 	return (
