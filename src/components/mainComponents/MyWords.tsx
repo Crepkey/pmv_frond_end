@@ -278,17 +278,50 @@ const dummyData: ExtendedWord[] = [
 		memoryLevel: 98,
 		active: true,
 	},
+	{
+		english: "English6",
+		hungarian: ["hun1", "hun2", "hun3"],
+		sentences: ["sentence1", "sentence2", "sentence3"],
+		notes: "This is a notes",
+		type: "word",
+		favourite: true,
+		memoryLevel: 98,
+		active: false,
+	},
+	{
+		english: "English7",
+		hungarian: ["hun1", "hun2", "hun3"],
+		sentences: ["sentence1", "sentence2", "sentence3"],
+		notes: "This is a notes",
+		type: "word",
+		favourite: true,
+		memoryLevel: 98,
+		active: false,
+	},
 ];
 
 export default function MyWords() {
-	const [words, setWords] = useState<ExtendedWord[]>([]);
+	const [activeWords, setActiveWords] = useState<ExtendedWord[]>([]);
+	const [deletedWords, setDeletedWords] = useState<ExtendedWord[]>([]);
+	const [displayedWords, setDisplayedWords] = useState<"active" | "deleted">("active");
 
 	useEffect(() => {
 		load();
 	}, []);
 
 	function load() {
-		setWords(dummyData);
+		/* TODO: It's a question where we should separate the deleted and active words? back-end? front-end? */
+		const activeWords: ExtendedWord[] = [];
+		const deletedWords: ExtendedWord[] = [];
+
+		dummyData.forEach((word: ExtendedWord) => {
+			if (word.active === true) {
+				activeWords.push(word);
+			} else deletedWords.push(word);
+		});
+
+		setActiveWords(activeWords);
+		setDeletedWords(deletedWords);
 	}
 
 	function calculateRowBackground(index: number) {
@@ -318,17 +351,22 @@ export default function MyWords() {
 			<TableContainer>
 				<TableBlock>
 					<TabContainer>
-						<Tab>Active Words</Tab>
 						<Tab
 							onClick={() => {
-								console.log("THIS IS WORKING");
+								setDisplayedWords("active");
+							}}>
+							Active Words
+						</Tab>
+						<Tab
+							onClick={() => {
+								setDisplayedWords("deleted");
 							}}
 							style={{ backgroundColor: `${colors.inactiveBackground}`, color: `${colors.inactiveFont}` }}>
 							Deleted Words
 						</Tab>
 					</TabContainer>
 					<WordContainer>
-						{words.map((word: ExtendedWord, index: number) => (
+						{(displayedWords === "active" ? activeWords : deletedWords).map((word: ExtendedWord, index: number) => (
 							<WordRowWhite key={`${index}_word`} background={calculateRowBackground(index)}>
 								<EnglishWord>{word.english}</EnglishWord>
 								<HungarianWords>{word.hungarian.map((hunWord: string) => `${hunWord} `)}</HungarianWords>
@@ -370,3 +408,5 @@ export default function MyWords() {
 		</MainContainer>
 	);
 }
+
+/* TODO: Responsive layout */
