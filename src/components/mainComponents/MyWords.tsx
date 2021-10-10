@@ -14,6 +14,7 @@ import SpinnerBar from "../generalComponents/SpinnerBar";
 
 /* Components */
 import ActiveWordRow from "../subComponents/myWords/activeWordRow";
+import DeletedWordRow from "../subComponents/myWords/deletedWordRow";
 
 const MainContainer = styled.div`
 	display: flex;
@@ -331,7 +332,7 @@ export default function MyWords() {
 					</TabContainer>
 
 					<WordContainer>
-						<ActiveWordRow words={activeWords} />
+						<DeletedWordRow words={deletedWords} />
 					</WordContainer>
 				</TableBlock>
 			</TableContainer>
