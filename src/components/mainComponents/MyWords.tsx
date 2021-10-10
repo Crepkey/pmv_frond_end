@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Route, Link } from "react-router-dom";
 
 /* Interfaces */
 import { Word } from "../../utils/interfaces";
@@ -224,11 +225,14 @@ const PageNumber = styled.div`
 `;
 
 interface ExtendedWord extends Word {
+	id: number;
 	active: boolean;
+	deletionDate?: Date;
 }
 
 const dummyData: ExtendedWord[] = [
 	{
+		id: 1,
 		english: "English",
 		hungarian: ["hun1", "hun2", "hun3"],
 		sentences: ["sentence1", "sentence2", "sentence3"],
@@ -239,6 +243,7 @@ const dummyData: ExtendedWord[] = [
 		active: true,
 	},
 	{
+		id: 2,
 		english: "English2",
 		hungarian: ["hun1", "hun2", "hun3"],
 		sentences: ["sentence1", "sentence2", "sentence3"],
@@ -247,8 +252,10 @@ const dummyData: ExtendedWord[] = [
 		favourite: false,
 		memoryLevel: 18,
 		active: false,
+		deletionDate: new Date(2021, 10, 1),
 	},
 	{
+		id: 3,
 		english: "English3",
 		hungarian: ["hun1", "hun2", "hun3"],
 		sentences: ["sentence1", "sentence2", "sentence3"],
@@ -259,6 +266,7 @@ const dummyData: ExtendedWord[] = [
 		active: true,
 	},
 	{
+		id: 4,
 		english: "English4",
 		hungarian: ["hun1", "hun2", "hun3"],
 		sentences: ["sentence1", "sentence2", "sentence3"],
@@ -269,6 +277,7 @@ const dummyData: ExtendedWord[] = [
 		active: true,
 	},
 	{
+		id: 5,
 		english: "English5",
 		hungarian: ["hun1", "hun2", "hun3"],
 		sentences: ["sentence1", "sentence2", "sentence3"],
@@ -279,6 +288,7 @@ const dummyData: ExtendedWord[] = [
 		active: true,
 	},
 	{
+		id: 6,
 		english: "English6",
 		hungarian: ["hun1", "hun2", "hun3"],
 		sentences: ["sentence1", "sentence2", "sentence3"],
@@ -287,8 +297,10 @@ const dummyData: ExtendedWord[] = [
 		favourite: true,
 		memoryLevel: 98,
 		active: false,
+		deletionDate: new Date(2021, 8, 13),
 	},
 	{
+		id: 7,
 		english: "English7",
 		hungarian: ["hun1", "hun2", "hun3"],
 		sentences: ["sentence1", "sentence2", "sentence3"],
@@ -297,6 +309,7 @@ const dummyData: ExtendedWord[] = [
 		favourite: true,
 		memoryLevel: 98,
 		active: false,
+		deletionDate: new Date(2020, 6, 26),
 	},
 ];
 
