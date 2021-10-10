@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Route, Link } from "react-router-dom";
 
 /* Interfaces */
 import { Word } from "../../utils/interfaces";
@@ -108,12 +109,14 @@ const TabContainer = styled.div`
 	flex: 1;
 `;
 
-const Tab = styled.div`
+const Tab = styled(Link)`
 	display: flex;
 	flex: 1;
 	justify-content: center;
 	align-items: center;
+	color: gray; //TODO: I have to change the colors based on the active / inactive state of this tab (colors file)
 	font-weight: 550;
+	text-decoration: none;
 	border: 1px solid ${colors.border};
 	border-radius: 8px 8px 0 0;
 	background: ${colors.background};
@@ -266,7 +269,6 @@ const dummyData: ExtendedWord[] = [
 export default function MyWords() {
 	const [activeWords, setActiveWords] = useState<ExtendedWord[]>([]);
 	const [deletedWords, setDeletedWords] = useState<ExtendedWord[]>([]);
-	const [displayedWords, setDisplayedWords] = useState<"active" | "deleted">("active");
 
 	useEffect(() => {
 		load();
@@ -301,23 +303,17 @@ export default function MyWords() {
 			<TableContainer>
 				<TableBlock>
 					<TabContainer>
+						<Tab to="/my-words/active-words">Active Words</Tab>
 						<Tab
-							onClick={() => {
-								setDisplayedWords("active");
-							}}>
-							Active Words
-						</Tab>
-						<Tab
-							onClick={() => {
-								setDisplayedWords("deleted");
-							}}
+							to="/my-words/deleted-words"
 							style={{ backgroundColor: `${colors.inactiveBackground}`, color: `${colors.inactiveFont}` }}>
 							Deleted Words
 						</Tab>
 					</TabContainer>
 
 					<WordContainer>
-						<DeletedWordRow words={activeWords} />
+						<Route path="/my-words/active-words" component={() => <ActiveWordRow words={activeWords} />} />
+						<Route path="/my-words/deleted-words" component={() => <DeletedWordRow words={deletedWords} />} />
 					</WordContainer>
 				</TableBlock>
 			</TableContainer>
