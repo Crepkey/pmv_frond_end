@@ -239,7 +239,14 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 			return;
 		}
 
-		const wordToSave = { ...word, hungarian: hungarianMeaning, sentences }; // contains only the filtered arrays, without empty strings
+		// contains only the filtered arrays, without empty strings
+		const wordToSave: Word = {
+			...word,
+			hungarian: hungarianMeaning,
+			sentences,
+			scoreToAchieve: (1 + hungarianMeaning.length) * 10,
+			memoryLevel: initialWord?.memoryLevel || 0,
+		};
 
 		// TODO save to database
 	}
