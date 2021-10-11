@@ -160,6 +160,7 @@ export default function EvaluationForm({ actualWord, getNextCard, userPoints, se
 			deletionDate = new Date();
 		}
 
+		// REFACTOR we could move most of this logic to backend
 		// TODO save to database (it would be better, if we didn't need the whole word, just the modified columns)
 		const wordToSave = { ...actualWord, actualScore, memoryLevel, statistics: statisticsToSave, deletionDate };
 

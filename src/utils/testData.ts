@@ -33,12 +33,12 @@ export const testWords: Word[] = [
 		hungarian: ["őszinte", "nyílt", "pártatlan"],
 		sentences: ["His responses were remarkably candid.", "Candid is my new favourite word."],
 		ownerId: 2,
-		actualScore: 36,
+		actualScore: 0,
 		scoreToAchieve: 40,
-		memoryLevel: 90,
+		memoryLevel: 0,
 		statistics: {
-			english: 20,
-			hungarian: [6, 1, 9],
+			english: 0,
+			hungarian: [0, 0, 0],
 		},
 	},
 	{
@@ -47,9 +47,13 @@ export const testWords: Word[] = [
 		sentences: ["Make sure you have been given the correct information"],
 		notes: "Free from error.",
 		ownerId: 1,
-		actualScore: 0,
-		scoreToAchieve: 40,
-		memoryLevel: 0,
+		actualScore: 72,
+		scoreToAchieve: 80,
+		memoryLevel: 90,
+		statistics: {
+			english: 10,
+			hungarian: [12, 8, 6, 9, 5, 10, 12],
+		},
 	},
 	{
 		english: "achieve",

@@ -10,7 +10,7 @@ import { GiSwordwoman, GiSwordman } from "react-icons/gi";
 import { Owner, Word } from "../../../utils/interfaces";
 
 // Utils
-import { getColorsByKnowledge } from "./utils";
+import { getColorsByKnowledge, TagColor } from "./utils";
 
 // Components
 import SpinnerBar from "../../generalComponents/SpinnerBar";
@@ -92,14 +92,15 @@ const TagContainer = styled.div`
 	margin-bottom: 8px;
 `;
 
-const Tag = styled.div`
-	background: ${colors.tagBackground};
+const Tag = styled.div<{ background?: string }>`
+	background: ${({ background }: any) => (background ? background : colors.tagBackground)};
 	margin: 0 16px 16px 0;
 	padding: 4px 16px;
 	border-radius: 30px;
 	font-size: 1.25rem;
 	font-weight: 400;
 	border-bottom: 1px ${colors.border} solid;
+	color: ${({ background }: any) => (background ? colors.buttonFont : colors.inactiveFont)};
 `;
 
 const Block = styled.div`
@@ -127,8 +128,7 @@ interface PlayingCardProps {
 }
 
 export default function PlayingCard({ owner, word }: PlayingCardProps) {
-	console.log(word);
-	getColorsByKnowledge(word);
+	const tagColors: TagColor[] = getColorsByKnowledge(word);
 
 	return (
 		<Card>
@@ -150,9 +150,16 @@ export default function PlayingCard({ owner, word }: PlayingCardProps) {
 
 				<ScrollContainer>
 					<TagContainer>
-						{word.hungarian.map((meaning: string, i: number) => (
-							<Tag key={i}>{meaning}</Tag>
-						))}
+						{word.hungarian.map((meaning: string, i: number) => {
+							const tagColor = tagColors.find((tc: TagColor) => {
+								return tc.language === "hungarian" && tc.index === i;
+							});
+							return (
+								<Tag key={i} background={tagColor?.color}>
+									{meaning}
+								</Tag>
+							);
+						})}
 					</TagContainer>
 					<Block>
 						{word.sentences.map((sentence: string, i: number) => (

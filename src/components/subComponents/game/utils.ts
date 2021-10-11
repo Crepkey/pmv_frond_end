@@ -6,18 +6,25 @@ import get from "lodash/get";
 import minBy from "lodash/minBy";
 import sortBy from "lodash/sortBy";
 
+// Styles
+import { colors } from "../../../utils/colors";
+
 interface KnowledgeLevel {
 	language: "english" | "hungarian";
-	level: number;
+	point: number;
 	index?: number;
+}
+
+export interface TagColor extends KnowledgeLevel {
+	color: string;
 }
 
 export function calculateKnowledgeLevels(word: Word) {
 	const knowledgeLevels: KnowledgeLevel[] = [];
 
-	knowledgeLevels.push({ language: "english", level: get(word, "statistics.english", 0) });
+	knowledgeLevels.push({ language: "english", point: get(word, "statistics.english", 0) });
 	get(word, "statistics.hungarian", []).forEach((hunLevel: number, index: number) => {
-		knowledgeLevels.push({ language: "hungarian", level: hunLevel, index });
+		knowledgeLevels.push({ language: "hungarian", point: hunLevel, index });
 	});
 
 	return knowledgeLevels;
@@ -33,7 +40,23 @@ export function calculateWeakestKnowledge(word: Word) {
 3) The weakest will be red, the strongest will be green, everything else in the middle will be blue.
 4) If the weakest or strongest level contains more meanings, all of them will recieve that specific color
 */
-export function getColorsByKnowledge(word: Word) {
-	const sortedLevels = sortBy(calculateKnowledgeLevels(word), "level");
-	console.log(sortedLevels);
+export function getColorsByKnowledge(word: Word): TagColor[] {
+	const knowledgeLevels = calculateKnowledgeLevels(word);
+
+	if (word.memoryLevel === 0) {
+		return knowledgeLevels.map((level: KnowledgeLevel) => {
+			return { ...level, color: colors.progressBlue };
+		});
+	}
+
+	const sortedLevels = sortBy(knowledgeLevels, "point");
+	const weakestKnowledge = get(sortedLevels, [0, "point"], 0);
+	const strongestKnowledge = get(sortedLevels, [sortedLevels.length - 1, "point"], 0);
+
+	return sortedLevels.map((level: KnowledgeLevel) => {
+		let color = colors.progressBlue;
+		if (level.point === weakestKnowledge) color = colors.progressRed;
+		if (level.point === strongestKnowledge) color = colors.progressGreen;
+		return { ...level, color };
+	});
 }
