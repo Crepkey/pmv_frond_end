@@ -1,3 +1,5 @@
+import { Fragment } from "react";
+
 // Styles
 import styled from "styled-components";
 import { colors } from "../../../utils/colors";
@@ -11,13 +13,6 @@ import { Owner, Points } from "../../../utils/interfaces";
 // Utils
 import max from "lodash/max";
 import get from "lodash/get";
-
-const Main = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin: 24px;
-`;
 
 const Title = styled.div`
 	font-size: 2rem;
@@ -90,7 +85,7 @@ export default function FinalPoints({ owners, points }: FinalPointsProps) {
 	const winners = owners.filter((o: Owner) => get(points, o.id) === maxPoint);
 
 	return (
-		<Main>
+		<Fragment>
 			<Title>Final points</Title>
 			<FlexRow>
 				{owners.map((owner: Owner, i: number) => {
@@ -107,6 +102,6 @@ export default function FinalPoints({ owners, points }: FinalPointsProps) {
 			</FlexRow>
 			<Congrats>Congratulations {winners.map((winner: Owner) => winner.name).join(" and ")}!</Congrats>
 			{winners.length === 1 ? "You won." : "You had the same number of points."}
-		</Main>
+		</Fragment>
 	);
 }

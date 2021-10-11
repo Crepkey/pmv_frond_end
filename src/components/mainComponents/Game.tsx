@@ -17,6 +17,7 @@ import { testOwners, testWords } from "../../utils/testData";
 // Utils
 import set from "lodash/set";
 import get from "lodash/get";
+import { colors } from "../../utils/colors";
 
 const Body = styled.div`
 	display: flex;
@@ -24,6 +25,38 @@ const Body = styled.div`
 	justify-content: center;
 	min-width: 0;
 	min-height: 0;
+`;
+
+const FinalScreen = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 24px;
+`;
+
+const Button = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	color: ${colors.buttonFont};
+	font-size: 1rem;
+	font-weight: bold;
+	padding: 6px 24px;
+	margin-top: 28px;
+	text-decoration: none;
+	border-radius: 16px;
+	border: none;
+	width: fit-content;
+	background-color: ${colors.acceptButtonBackground};
+	:hover {
+		background: linear-gradient(to bottom, ${colors.acceptButtonGradientLight} 5%, ${colors.acceptButtonGradientDark} 100%);
+		background-color: ${colors.acceptButtonGradientLight};
+	}
+	:active {
+		position: relative;
+		top: 1px;
+	}
 `;
 
 export default function Game() {
@@ -63,7 +96,18 @@ export default function Game() {
 				</Fragment>
 			)}
 
-			{actualIndex >= words.length && <FinalPoints owners={owners} points={points} />}
+			{actualIndex >= words.length && (
+				<FinalScreen>
+					<FinalPoints owners={owners} points={points} />
+					<Button
+						onClick={() => {
+							setActualIndex(0);
+							load();
+						}}>
+						Play again
+					</Button>
+				</FinalScreen>
+			)}
 		</Body>
 	);
 }
