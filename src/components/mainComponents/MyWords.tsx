@@ -192,7 +192,7 @@ const deletedWords: ExtendedWord[] = [
 		favourite: false,
 		memoryLevel: 18,
 		active: false,
-		deletionDate: new Date(2021, 10, 1),
+		deletionDate: new Date("2021-08-13"),
 	},
 	{
 		id: 6,
@@ -204,7 +204,7 @@ const deletedWords: ExtendedWord[] = [
 		favourite: true,
 		memoryLevel: 98,
 		active: false,
-		deletionDate: new Date(2021, 8, 13),
+		deletionDate: new Date("2021-09-24"),
 	},
 	{
 		id: 7,
@@ -216,7 +216,7 @@ const deletedWords: ExtendedWord[] = [
 		favourite: true,
 		memoryLevel: 98,
 		active: false,
-		deletionDate: new Date(2020, 6, 26),
+		deletionDate: new Date("2021-10-10"),
 	},
 ];
 
