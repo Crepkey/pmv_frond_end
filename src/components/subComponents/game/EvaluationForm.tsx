@@ -120,13 +120,16 @@ function EvaluationRow({ title, checked, toggleChecked }: EvaluationRowProps) {
 interface EvaluationFormProps {
 	actualWord: Word;
 	getNextCard: () => void;
+	userPoints: number;
+	setUserPoints: (newPoints: number) => void;
 }
 
-export default function EvaluationForm({ actualWord, getNextCard }: EvaluationFormProps) {
+export default function EvaluationForm({ actualWord, getNextCard, userPoints, setUserPoints }: EvaluationFormProps) {
 	const emptyStatistics = { english: false, hungarian: [] };
 	// We only store the actual evaluation in the state and calculate the values (that we need in the database) while saving
 	const [statistics, setStatistics] = useState<{ english: boolean; hungarian: boolean[] }>(emptyStatistics);
 	const [correctGrammar, setCorrectGrammar] = useState<boolean>(false);
+	const [mainWordKnown, setMainWordKnown] = useState<boolean>(false);
 
 	function save() {
 		// calculate the values that we need to save:
@@ -163,9 +166,17 @@ export default function EvaluationForm({ actualWord, getNextCard }: EvaluationFo
 
 		// TODO save the grammatical knowledge (correctGrammar in state) to some grammatical statistics table
 
+		// calculate the game points
+		let earnedPoints = 0;
+		if (mainWordKnown) earnedPoints += 1;
+		if (scoreNow === actualWord.hungarian.length) earnedPoints += 1;
+		if (correctGrammar) earnedPoints += 1;
+		setUserPoints(userPoints + earnedPoints);
+
 		// clear statistics in the state
 		setStatistics(emptyStatistics);
 		setCorrectGrammar(false);
+		setMainWordKnown(false);
 		// show next card
 		getNextCard();
 	}
@@ -176,6 +187,8 @@ export default function EvaluationForm({ actualWord, getNextCard }: EvaluationFo
 
 			<CardBody>
 				<ScrollContainer>
+					<EvaluationRow title="main word" checked={mainWordKnown} toggleChecked={() => setMainWordKnown(!mainWordKnown)} />
+
 					<EvaluationRow
 						title={actualWord.english}
 						checked={statistics.english}
