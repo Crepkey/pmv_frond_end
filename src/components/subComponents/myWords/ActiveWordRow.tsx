@@ -7,7 +7,7 @@ import { colors } from "../../../utils/colors";
 import SpinnerBar from "../../generalComponents/SpinnerBar";
 
 /* Components */
-import WordHandler from "./WordHandler";
+import WordHandlerIcons from "./WordHandlerIcons";
 
 /* Utils */
 import { calculateRowBackground, convertMemoryLevelToText } from "./utils";
@@ -61,7 +61,7 @@ export default function ActiveWordRow({ word, rowNumber }: ActiveWordRowProps) {
 				<SpinnerBar size={24} status={word.memoryLevel} style={{ margin: "0 12px 0 0", background: calculateRowBackground(rowNumber) }} />
 				<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>
 			</MemoryLevel>
-			<WordHandler word={word} />
+			<WordHandlerIcons word={word} />
 		</WordRow>
 	);
 }

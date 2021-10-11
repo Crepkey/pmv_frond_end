@@ -7,7 +7,7 @@ import { colors } from "../../../utils/colors";
 import SpinnerBar from "../../generalComponents/SpinnerBar";
 
 /* Components */
-import WordHandler from "./WordHandler";
+import WordHandlerIcons from "./WordHandlerIcons";
 
 /* Utils */
 import { calculateRowBackground, convertMemoryLevelToText } from "./utils";
@@ -68,7 +68,7 @@ export default function DeletedWordRow({ word, rowNumber }: DeletedWordRowProps)
 				<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>
 			</MemoryLevel>
 			<DeletionCountdown>10 days left</DeletionCountdown>
-			<WordHandler word={word} />
+			<WordHandlerIcons word={word} />
 		</WordRow>
 	);
 }

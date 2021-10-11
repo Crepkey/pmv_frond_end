@@ -18,7 +18,7 @@ const MainContainer = styled.div`
 interface WordHandlerProps {
 	word: ExtendedWord;
 }
-export default function WordHandler({ word }: WordHandlerProps) {
+export default function WordHandlerIcons({ word }: WordHandlerProps) {
 	const [isRestoreIconHovered, setRestoreIconHover] = useState(false);
 	const [isTrashIconHovered, setTrashIconHover] = useState(false);
 	const [isFavoriteIconHovered, setFavoriteIconHover] = useState(false);
