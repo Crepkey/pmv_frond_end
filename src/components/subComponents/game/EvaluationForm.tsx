@@ -162,7 +162,6 @@ export default function EvaluationForm({ actualWord, getNextCard, userPoints, se
 
 		// TODO save to database (it would be better, if we didn't need the whole word, just the modified columns)
 		const wordToSave = { ...actualWord, actualScore, memoryLevel, statistics: statisticsToSave, deletionDate };
-		console.log(wordToSave);
 
 		// TODO save the grammatical knowledge (correctGrammar in state) to some grammatical statistics table
 

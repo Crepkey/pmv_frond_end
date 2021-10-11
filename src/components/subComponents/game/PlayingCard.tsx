@@ -9,6 +9,9 @@ import { GiSwordwoman, GiSwordman } from "react-icons/gi";
 // Interfaces
 import { Owner, Word } from "../../../utils/interfaces";
 
+// Utils
+import { getColorsByKnowledge } from "./utils";
+
 const Card = styled.div`
 	border: 1px solid ${colors.border};
 	border-radius: 8px;
@@ -116,6 +119,9 @@ interface PlayingCardProps {
 }
 
 export default function PlayingCard({ owner, word }: PlayingCardProps) {
+	console.log(word);
+	getColorsByKnowledge(word);
+
 	return (
 		<Card>
 			<CardHeader>

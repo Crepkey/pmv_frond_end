@@ -259,7 +259,6 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 			},
 		};
 
-		console.log(wordToSave);
 		// TODO save to database
 	}
 
