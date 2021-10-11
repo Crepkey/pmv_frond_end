@@ -19,7 +19,11 @@ export default function Words({ words, displayedWordsType }: WordsProps) {
 	return (
 		<Fragment>
 			{displayedWords.map((word: ExtendedWord, index: number) =>
-				displayedWordsType === "active" ? <ActiveWordRow word={word} rowNumber={index} /> : <DeletedWordRow word={word} rowNumber={index} />,
+				displayedWordsType === "active" ? (
+					<ActiveWordRow key={word.id} word={word} rowNumber={index} />
+				) : (
+					<DeletedWordRow key={word.id} word={word} rowNumber={index} />
+				),
 			)}
 		</Fragment>
 	);
