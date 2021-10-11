@@ -92,13 +92,13 @@ const Block = styled.div`
 `;
 
 const Label = styled.div<{ error?: boolean }>`
-	color: ${({ error }: any) => (error ? colors.error : colors.inactiveFont)};
+	color: ${({ error }: any) => (error ? colors.error : colors.inactiveFont)}; /* REFACTOR: Here we need another font type for the labels */
 	font-weight: ${({ error }: any) => (error ? "bold" : "auto")};
 	font-size: 0.75rem;
 	margin: 0 0 4px 12px;
 `;
 
-const String = styled.input<{ error?: boolean }>`
+const StringInput = styled.input<{ error?: boolean }>`
 	display: flex;
 	flex: 1;
 	font-size: 1rem;
@@ -161,7 +161,7 @@ const Select = styled.select`
 
 const Textarea = styled.textarea`
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-		sans-serif;
+		sans-serif; /* REFACTOR: Find another solution for that */
 	font-size: 1rem;
 	padding: 8px 12px;
 	margin-bottom: 24px;
@@ -209,7 +209,7 @@ const errorMessages: { [key: number]: string } = {
 	1: "English field is required.",
 	2: "At least one Hungarian meaning is required.",
 	3: "At least one example sentence is required.",
-};
+}; /* TODO: Later we can use an additional library for error handling if the project is getting bigger */
 
 export default function EditWord({ initialWord, title }: EditWordProps) {
 	const [word, setWord] = useState<Word>(initialWord || { english: "", hungarian: [""], sentences: [""], type: "word", memoryLevel: 0 });
@@ -217,16 +217,17 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 
 	function onSave() {
 		const checkedErrors: number[] = [];
+
 		if (word.english.length === 0) {
 			checkedErrors.push(1);
 		}
 
-		const hungarianMeaning = word.hungarian.filter((s: string) => s.length > 0);
-		if (hungarianMeaning.length === 0) {
+		const hungarianMeanings = word.hungarian.filter((meaning: string) => meaning.length > 0);
+		if (hungarianMeanings.length === 0) {
 			checkedErrors.push(2);
 		}
 
-		const sentences = word.sentences.filter((s: string) => s.length > 0);
+		const sentences = word.sentences.filter((sentence: string) => sentence.length > 0);
 		if (sentences.length === 0) {
 			checkedErrors.push(3);
 		}
@@ -236,7 +237,7 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 			return;
 		}
 
-		const wordToSave = { ...word, hungarian: hungarianMeaning, sentences }; // contains only the filtered arrays, without empty strings
+		const wordToSave = { ...word, hungarian: hungarianMeanings, sentences }; // contains only the filtered arrays, without empty strings
 
 		// TODO save to database
 	}
@@ -254,7 +255,7 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 					<Form>
 						{errors.includes(1) ? <Label error={true}>{errorMessages[1]}</Label> : <Label>English word or expression</Label>}
 						<Row>
-							<String
+							<StringInput
 								error={errors.includes(1)}
 								placeholder="Type your English word or expression here..."
 								value={word.english}
@@ -276,7 +277,9 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 						<Block>
 							{word.hungarian.map((meaning: string, i: number) => (
 								<Row key={i}>
-									<String
+									{" "}
+									{/* REFACTOR: A fake ID would be the best. Later we will solve this issue. */}
+									<StringInput
 										error={errors.includes(2) && i === 0}
 										placeholder="Type one Hungarian meaning here..."
 										value={meaning}
@@ -314,7 +317,7 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 							{word.sentences.map((sentence: string, i: number) => (
 								<Row key={i}>
 									{/* TODO we should use a textarea here which is automatically resized when the text is too long */}
-									<String
+									<StringInput
 										error={errors.includes(3) && i === 0}
 										placeholder="Type one example sentence here..."
 										value={sentence}

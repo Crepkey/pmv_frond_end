@@ -23,7 +23,7 @@ function App() {
 			<MenuBar />
 
 			<Switch>
-				<Route path="/test" component={EditWord} /> {/* Here you can pass any component that you want to test */}
+				<Route path="/test" component={() => <EditWord title="teszt" />} /> {/* Here you can pass any component that you want to test */}
 				<Route path="/my-words" component={MyWords} />
 				<Route path="/lets-play" component={Game} />
 				<Route path="/" exact component={Home} />
