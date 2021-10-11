@@ -4,15 +4,17 @@ import { useState, Fragment } from "react";
 import { ExtendedWord } from "../../../utils/interfaces";
 
 /* Styles */
-import { BsSuitHeart, BsSuitHeartFill, BsPencil, BsPencilFill, BsTrash, BsTrashFill } from "react-icons/bs";
-import { IoArrowUndoOutline, IoArrowUndo } from "react-icons/io5";
 import styled from "styled-components";
+import { colors } from "../../../utils/colors";
+import { IoArrowUndoOutline, IoArrowUndo } from "react-icons/io5";
+import { BsSuitHeart, BsSuitHeartFill, BsPencil, BsPencilFill, BsTrash, BsTrashFill } from "react-icons/bs";
 
 const MainContainer = styled.div`
 	display: flex;
 	flex: 1;
 	justify-content: flex-end;
 	padding-right: 12px;
+	color: ${colors.iconFill};
 `;
 
 interface WordHandlerProps {

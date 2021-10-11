@@ -120,7 +120,7 @@ const Tab = styled(Link)`
 	background: ${colors.background};
 	:hover {
 		color: ${colors.activeFont};
-		border-bottom: 3px ${colors.activeBorder} solid;
+		border-bottom: 3px ${colors.selectedBorder} solid;
 	}
 `;
 
