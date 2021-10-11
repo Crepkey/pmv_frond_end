@@ -14,6 +14,7 @@ import styled from "styled-components";
 /* Components */
 import ActiveWordRow from "../subComponents/myWords/ActiveWordRow";
 import DeletedWordRow from "../subComponents/myWords/DeletedWordRow";
+import Words from "../subComponents/myWords/Words";
 
 const MainContainer = styled.div`
 	display: flex;
@@ -313,8 +314,14 @@ export default function MyWords() {
 					</TabContainer>
 
 					<WordContainer>
-						<Route path="/my-words/active-words" component={() => <ActiveWordRow words={activeWords} />} />
-						<Route path="/my-words/deleted-words" component={() => <DeletedWordRow words={deletedWords} />} />
+						<Route
+							path="/my-words/active-words"
+							component={() => <Words activeWords={activeWords} deletedWords={deletedWords} displayedWordsType="active words" />}
+						/>
+						<Route
+							path="/my-words/deleted-words"
+							component={() => <Words deletedWords={deletedWords} activeWords={activeWords} displayedWordsType="deleted words" />}
+						/>
 					</WordContainer>
 				</TableBlock>
 			</TableContainer>

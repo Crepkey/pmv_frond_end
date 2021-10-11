@@ -1,5 +1,3 @@
-import { Fragment } from "react";
-
 /* Interfaces */
 import { ExtendedWord } from "../../../utils/interfaces";
 
@@ -47,10 +45,11 @@ const MemoryState = styled.div`
 `;
 
 interface ActiveWordRowProps {
-	words: ExtendedWord[];
+	word: ExtendedWord;
+	rowNumber: number;
 }
 
-export default function ActiveWordRow({ words }: ActiveWordRowProps) {
+export default function ActiveWordRow({ word, rowNumber }: ActiveWordRowProps) {
 	function calculateRowBackground(index: number) {
 		if (index % 2 === 0) return colors.rowBackgroundLight;
 		return colors.rowBackgroundDark;
@@ -65,18 +64,14 @@ export default function ActiveWordRow({ words }: ActiveWordRowProps) {
 	}
 
 	return (
-		<Fragment>
-			{words.map((word: ExtendedWord, index: number) => (
-				<WordRow key={word.id} background={calculateRowBackground(index)}>
-					<EnglishWord>{word.english}</EnglishWord>
-					<HungarianWords>{word.hungarian.map((hunWord: string) => `${hunWord} `)}</HungarianWords>
-					<MemoryLevel>
-						<SpinnerBar size={24} status={word.memoryLevel} style={{ margin: "0 12px 0 0", background: calculateRowBackground(index) }} />
-						<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>
-					</MemoryLevel>
-					<WordHandler word={word} />
-				</WordRow>
-			))}
-		</Fragment>
+		<WordRow key={word.id} background={calculateRowBackground(rowNumber)}>
+			<EnglishWord>{word.english}</EnglishWord>
+			<HungarianWords>{word.hungarian.map((hunWord: string) => `${hunWord} `)}</HungarianWords>
+			<MemoryLevel>
+				<SpinnerBar size={24} status={word.memoryLevel} style={{ margin: "0 12px 0 0", background: calculateRowBackground(rowNumber) }} />
+				<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>
+			</MemoryLevel>
+			<WordHandler word={word} />
+		</WordRow>
 	);
 }

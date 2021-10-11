@@ -1,5 +1,3 @@
-import { Fragment } from "react";
-
 /* Interfaces */
 import { ExtendedWord } from "../../../utils/interfaces";
 
@@ -53,13 +51,11 @@ const DeletionCountdown = styled.div`
 `;
 
 interface DeletedWordRowProps {
-	words: ExtendedWord[];
+	word: ExtendedWord;
+	rowNumber: number;
 }
 
-export default function DeletedWordRow({ words }: DeletedWordRowProps) {
-	/* TODO:  calculateRowBackground & convertMemoryLevelToText functions 
-    go to a util file in the MyWords folder 
-    because the activeWordsRow comp uses them as well.*/
+export default function DeletedWordRow({ word, rowNumber }: DeletedWordRowProps) {
 	function calculateRowBackground(index: number) {
 		if (index % 2 === 0) return colors.rowBackgroundLight;
 		return colors.rowBackgroundDark;
@@ -74,19 +70,15 @@ export default function DeletedWordRow({ words }: DeletedWordRowProps) {
 	}
 
 	return (
-		<Fragment>
-			{words.map((word: ExtendedWord, index: number) => (
-				<WordRow key={word.id} background={calculateRowBackground(index)}>
-					<EnglishWord>{word.english}</EnglishWord>
-					<HungarianWords>{word.hungarian.map((hunWord: string) => `${hunWord} `)}</HungarianWords>
-					<MemoryLevel>
-						<SpinnerBar size={24} status={word.memoryLevel} style={{ margin: "0 12px 0 0", background: calculateRowBackground(index) }} />
-						<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>
-					</MemoryLevel>
-					<DeletionCountdown>10 days left</DeletionCountdown>
-					<WordHandler word={word} />
-				</WordRow>
-			))}
-		</Fragment>
+		<WordRow key={word.id} background={calculateRowBackground(rowNumber)}>
+			<EnglishWord>{word.english}</EnglishWord>
+			<HungarianWords>{word.hungarian.map((hunWord: string) => `${hunWord} `)}</HungarianWords>
+			<MemoryLevel>
+				<SpinnerBar size={24} status={word.memoryLevel} style={{ margin: "0 12px 0 0", background: calculateRowBackground(rowNumber) }} />
+				<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>
+			</MemoryLevel>
+			<DeletionCountdown>10 days left</DeletionCountdown>
+			<WordHandler word={word} />
+		</WordRow>
 	);
 }
