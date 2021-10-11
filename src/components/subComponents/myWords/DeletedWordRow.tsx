@@ -1,4 +1,4 @@
-import React from "react";
+import { Fragment } from "react";
 
 /* Interfaces */
 import { ExtendedWord } from "../../../utils/interfaces";
@@ -74,7 +74,7 @@ export default function DeletedWordRow({ words }: DeletedWordRowProps) {
 	}
 
 	return (
-		<React.Fragment>
+		<Fragment>
 			{words.map((word: ExtendedWord, index: number) => (
 				<WordRow key={word.id} background={calculateRowBackground(index)}>
 					<EnglishWord>{word.english}</EnglishWord>
@@ -87,6 +87,6 @@ export default function DeletedWordRow({ words }: DeletedWordRowProps) {
 					<WordHandler word={word} />
 				</WordRow>
 			))}
-		</React.Fragment>
+		</Fragment>
 	);
 }

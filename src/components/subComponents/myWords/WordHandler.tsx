@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, Fragment } from "react";
 
 /* Interfaces */
 import { ExtendedWord } from "../../../utils/interfaces";
@@ -27,7 +27,7 @@ export default function WordHandler({ word }: WordHandlerProps) {
 	function calculateHandlerIcons() {
 		if (word.active === true) {
 			return (
-				<React.Fragment>
+				<Fragment>
 					{word.favourite ? (
 						<div onMouseEnter={() => setFavoriteIconHover(true)} onMouseLeave={() => setFavoriteIconHover(false)}>
 							{isFavoriteIconHovered ? (
@@ -55,11 +55,11 @@ export default function WordHandler({ word }: WordHandlerProps) {
 					<div onMouseEnter={() => setTrashIconHover(true)} onMouseLeave={() => setTrashIconHover(false)}>
 						{isTrashIconHovered ? <BsTrashFill size={25} /> : <BsTrash size={25} />}
 					</div>
-				</React.Fragment>
+				</Fragment>
 			);
 		} else {
 			return (
-				<React.Fragment>
+				<Fragment>
 					<div onMouseEnter={() => setRestoreIconHover(true)} onMouseLeave={() => setRestoreIconHover(false)}>
 						{isRestoreIconHovered ? (
 							<IoArrowUndo size={25} style={{ marginRight: 12 }} />
@@ -70,7 +70,7 @@ export default function WordHandler({ word }: WordHandlerProps) {
 					<div onMouseEnter={() => setTrashIconHover(true)} onMouseLeave={() => setTrashIconHover(false)}>
 						{isTrashIconHovered ? <BsTrashFill size={25} /> : <BsTrash size={25} />}
 					</div>
-				</React.Fragment>
+				</Fragment>
 			);
 		}
 	}
