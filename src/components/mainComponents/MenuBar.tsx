@@ -61,6 +61,9 @@ export default function MenuBar() {
 				PIMP MY VOCAB
 			</LogoContainer>
 			<Menu>
+				<MenuItem to="/test" style={{ color: colors.error }}>
+					Test your stuff
+				</MenuItem>
 				<MenuItem to="/my-words">My words</MenuItem>
 				<MenuItem to="/lets-play">Let's play</MenuItem>
 			</Menu>

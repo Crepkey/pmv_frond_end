@@ -5,6 +5,7 @@ import MenuBar from "./components/mainComponents/MenuBar";
 import MyWords from "./components/mainComponents/MyWords";
 import Home from "./components/mainComponents/Home";
 import Game from "./components/mainComponents/Game";
+import EditWord from "./components/subComponents/myWords/EditWord";
 
 // Styles
 import styled from "styled-components";
@@ -22,6 +23,7 @@ function App() {
 			<MenuBar />
 
 			<Switch>
+				<Route path="/test" component={EditWord} /> {/* Here you can pass any component that you want to test */}
 				<Route path="/my-words" component={MyWords} />
 				<Route path="/lets-play" component={Game} />
 				<Route path="/" exact component={Home} />
