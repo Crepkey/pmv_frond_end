@@ -4,11 +4,12 @@ import { Fragment, useEffect, useState } from "react";
 import styled from "styled-components";
 
 // Interfaces
-import { Owner, Word } from "../../utils/interfaces";
+import { Owner, Points, Word } from "../../utils/interfaces";
 
 // Components
 import PlayingCard from "../subComponents/game/PlayingCard";
 import EvaluationForm from "../subComponents/game/EvaluationForm";
+import FinalPoints from "../subComponents/game/FinalPoints";
 
 // Test data
 import { testOwners, testWords } from "../../utils/testData";
@@ -29,7 +30,7 @@ export default function Game() {
 	const [owners, setOwners] = useState<Owner[]>([]);
 	const [words, setWords] = useState<Word[]>([]);
 	const [actualIndex, setActualIndex] = useState<number>(0);
-	const [points, setPoints] = useState<{ [id: number]: number }>({});
+	const [points, setPoints] = useState<Points>({});
 
 	const actualWord = words[actualIndex];
 	const actualOwnerId = actualWord?.ownerId;
@@ -62,7 +63,7 @@ export default function Game() {
 				</Fragment>
 			)}
 
-			{actualIndex >= words.length && <div>End of game</div>}
+			{actualIndex >= words.length && <FinalPoints owners={owners} points={points} />}
 		</Body>
 	);
 }

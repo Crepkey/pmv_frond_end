@@ -24,3 +24,7 @@ export interface Word {
 	scoreToAchieve: number;
 	statistics?: WordStatistics;
 }
+
+export interface Points {
+	[ownerId: number]: number;
+}
