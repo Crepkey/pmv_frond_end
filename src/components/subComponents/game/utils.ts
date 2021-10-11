@@ -8,8 +8,9 @@ import sortBy from "lodash/sortBy";
 // Styles
 import { colors } from "../../../utils/colors";
 
+type LanguageType = "english" | "hungarian";
 interface KnowledgeLevel {
-	language: "english" | "hungarian";
+	language: LanguageType;
 	index?: number;
 	point: number;
 }
@@ -38,15 +39,15 @@ B) If one of the Hungarian meanings have your weakest knowledge point, the 'word
 
 Of course you can get 1 more point for the other Hungarian meanings and 1 more for a correct example sentence with the chosen grammatical structure
  */
-export function calculateWordToAsk(word: Word): { wordToAsk: string; wordToAnswer: string } {
+export function calculateWordToAsk(word: Word): { wordToAsk: string; wordToAnswer: string; mainWordType: LanguageType } {
 	const sortedLevels = sortBy(calculateKnowledgeLevels(word), "point");
 
 	if (sortedLevels[0]?.language === "english") {
 		const weakestHunIndex = get(sortedLevels, [1, "index"], 0);
-		return { wordToAsk: get(word, ["hungarian", weakestHunIndex], ""), wordToAnswer: word.english };
+		return { wordToAsk: get(word, ["hungarian", weakestHunIndex], ""), wordToAnswer: word.english, mainWordType: "english" };
 	} else {
 		const weakestHunIndex = get(sortedLevels, [0, "index"], 0);
-		return { wordToAsk: word.english, wordToAnswer: get(word, ["hungarian", weakestHunIndex], "") };
+		return { wordToAsk: word.english, wordToAnswer: get(word, ["hungarian", weakestHunIndex], ""), mainWordType: "hungarian" };
 	}
 }
 

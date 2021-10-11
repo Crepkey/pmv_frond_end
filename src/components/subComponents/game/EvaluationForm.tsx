@@ -148,14 +148,16 @@ export default function EvaluationForm({ actualWord, getNextCard, userPoints, se
 	const [correctGrammar, setCorrectGrammar] = useState<boolean>(false);
 	const [mainWordKnown, setMainWordKnown] = useState<boolean>(false);
 
-	const { wordToAsk, wordToAnswer } = calculateWordToAsk(actualWord);
+	const { wordToAsk, wordToAnswer, mainWordType } = calculateWordToAsk(actualWord);
 
 	function save() {
 		// calculate the values that we need to save:
 
 		// actual score + memory level
 		const scoreBefore = actualWord.actualScore;
-		const scoreNow = flatten(Object.values(statistics)).filter((s: boolean) => s === true).length;
+		const englishScore = statistics.english ? 1 : 0;
+		const hungarianScore = statistics.hungarian.filter((s: boolean) => s === true).length;
+		const scoreNow = englishScore + hungarianScore;
 		const actualScore = scoreBefore + scoreNow;
 		const memoryLevel = round((actualScore / actualWord.scoreToAchieve) * 100, 2);
 
@@ -187,9 +189,20 @@ export default function EvaluationForm({ actualWord, getNextCard, userPoints, se
 
 		// calculate the game points
 		let earnedPoints = 0;
+
+		// Player knew the main word
 		if (mainWordKnown) earnedPoints += 1;
-		if (scoreNow === actualWord.hungarian.length) earnedPoints += 1;
+
+		// Player knew all other Hungarian meanings
+		let scoreToCompare = actualWord.hungarian.length - 1;
+		if (mainWordType === "hungarian" && mainWordKnown) {
+			scoreToCompare += 1;
+		}
+		if (hungarianScore === scoreToCompare) earnedPoints += 1;
+
+		// Player used a correct grammatical structure in the example sentence
 		if (correctGrammar) earnedPoints += 1;
+
 		setUserPoints(userPoints + earnedPoints);
 
 		// clear statistics in the state
@@ -214,7 +227,12 @@ export default function EvaluationForm({ actualWord, getNextCard, userPoints, se
 							title={actualWord.english}
 							mainWord={wordToAnswer === actualWord.english}
 							checked={statistics.english}
-							toggleChecked={() => setStatistics({ ...statistics, english: !statistics.english })}
+							toggleChecked={() => {
+								setStatistics({ ...statistics, english: !statistics.english });
+								if (wordToAnswer === actualWord.english) {
+									setMainWordKnown(!mainWordKnown);
+								}
+							}}
 						/>
 					)}
 					{actualWord.hungarian.map((meaning: string, i: number) => {
@@ -229,6 +247,9 @@ export default function EvaluationForm({ actualWord, getNextCard, userPoints, se
 									toggleChecked={() => {
 										const evaluatedHungarian = set([...statistics.hungarian], i, !checked);
 										setStatistics({ ...statistics, hungarian: evaluatedHungarian });
+										if (wordToAnswer === meaning) {
+											setMainWordKnown(!mainWordKnown);
+										}
 									}}
 								/>
 							);
