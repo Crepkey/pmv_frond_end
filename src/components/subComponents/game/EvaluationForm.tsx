@@ -15,6 +15,8 @@ import get from "lodash/get";
 import set from "lodash/set";
 import flatten from "lodash/flatten";
 import round from "lodash/round";
+import capitalize from "lodash/capitalize";
+import { calculateWordToAsk } from "./utils";
 
 // TODO general card component??
 const Card = styled.div`
@@ -46,6 +48,14 @@ const CardBody = styled.div`
 	min-width: 0;
 	min-height: 0;
 	padding: 24px;
+`;
+
+const Title = styled.div`
+	display: flex;
+	justify-content: space-between;
+	font-size: 1.5rem;
+	margin-bottom: 24px;
+	font-weight: 550;
 `;
 
 const ScrollContainer = styled.div`
@@ -102,16 +112,23 @@ const CheckBox = styled.div`
 	cursor: pointer;
 `;
 
+const BoldText = styled.span`
+	font-weight: bold;
+	margin-right: 4px;
+`;
+
 interface EvaluationRowProps {
 	title?: string;
 	checked: boolean;
 	toggleChecked: () => void;
+	mainWord?: boolean;
 }
 
-function EvaluationRow({ title, checked, toggleChecked }: EvaluationRowProps) {
+function EvaluationRow({ title, checked, toggleChecked, mainWord }: EvaluationRowProps) {
 	return (
 		<Block>
 			<CheckBox onClick={toggleChecked}>{checked ? <BsCheckCircleFill size={20} /> : <BsDashCircle size={20} />}</CheckBox>
+			{mainWord && <BoldText>main word:</BoldText>}
 			{title}
 		</Block>
 	);
@@ -130,6 +147,8 @@ export default function EvaluationForm({ actualWord, getNextCard, userPoints, se
 	const [statistics, setStatistics] = useState<{ english: boolean; hungarian: boolean[] }>(emptyStatistics);
 	const [correctGrammar, setCorrectGrammar] = useState<boolean>(false);
 	const [mainWordKnown, setMainWordKnown] = useState<boolean>(false);
+
+	const { wordToAsk, wordToAnswer } = calculateWordToAsk(actualWord);
 
 	function save() {
 		// calculate the values that we need to save:
@@ -186,27 +205,35 @@ export default function EvaluationForm({ actualWord, getNextCard, userPoints, se
 			<CardHeader>Evaluation Form</CardHeader>
 
 			<CardBody>
+				<Title>
+					{capitalize(actualWord.type)} to ask: {wordToAsk}
+				</Title>
 				<ScrollContainer>
-					<EvaluationRow title="main word" checked={mainWordKnown} toggleChecked={() => setMainWordKnown(!mainWordKnown)} />
-
-					<EvaluationRow
-						title={actualWord.english}
-						checked={statistics.english}
-						toggleChecked={() => setStatistics({ ...statistics, english: !statistics.english })}
-					/>
+					{wordToAsk !== actualWord.english && (
+						<EvaluationRow
+							title={actualWord.english}
+							mainWord={wordToAnswer === actualWord.english}
+							checked={statistics.english}
+							toggleChecked={() => setStatistics({ ...statistics, english: !statistics.english })}
+						/>
+					)}
 					{actualWord.hungarian.map((meaning: string, i: number) => {
 						const checked = get(statistics, ["hungarian", i], false);
-						return (
-							<EvaluationRow
-								key={i}
-								title={meaning}
-								checked={checked}
-								toggleChecked={() => {
-									const evaluatedHungarian = set([...statistics.hungarian], i, !checked);
-									setStatistics({ ...statistics, hungarian: evaluatedHungarian });
-								}}
-							/>
-						);
+						if (wordToAsk !== meaning) {
+							return (
+								<EvaluationRow
+									key={i}
+									title={meaning}
+									mainWord={wordToAnswer === meaning}
+									checked={checked}
+									toggleChecked={() => {
+										const evaluatedHungarian = set([...statistics.hungarian], i, !checked);
+										setStatistics({ ...statistics, hungarian: evaluatedHungarian });
+									}}
+								/>
+							);
+						}
+						return null;
 					})}
 					<EvaluationRow title="grammatical structure" checked={correctGrammar} toggleChecked={() => setCorrectGrammar(!correctGrammar)} />
 				</ScrollContainer>

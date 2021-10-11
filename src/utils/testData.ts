@@ -15,6 +15,7 @@ export const testOwners: Owner[] = [
 
 export const testWords: Word[] = [
 	{
+		type: "word",
 		english: "ditch",
 		hungarian: ["árok", "csatorna", "körülárkol"],
 		sentences: ["Why do you have a ditch in front of your house?"],
@@ -29,6 +30,7 @@ export const testWords: Word[] = [
 		},
 	},
 	{
+		type: "word",
 		english: "candid",
 		hungarian: ["őszinte", "nyílt", "pártatlan"],
 		sentences: ["His responses were remarkably candid.", "Candid is my new favourite word."],
@@ -42,6 +44,7 @@ export const testWords: Word[] = [
 		},
 	},
 	{
+		type: "word",
 		english: "correct",
 		hungarian: ["helyes", "korrekt", "helytálló", "kijavít", "helyesbít", "korrigál", "javít"],
 		sentences: ["Make sure you have been given the correct information"],
@@ -56,6 +59,7 @@ export const testWords: Word[] = [
 		},
 	},
 	{
+		type: "word",
 		english: "achieve",
 		hungarian: ["elér", "megvalósít"],
 		sentences: ["He achieved his ambition to become a journalist"],

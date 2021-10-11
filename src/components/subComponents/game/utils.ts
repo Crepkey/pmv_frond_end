@@ -3,7 +3,6 @@ import { Word } from "../../../utils/interfaces";
 
 // Utils
 import get from "lodash/get";
-import minBy from "lodash/minBy";
 import sortBy from "lodash/sortBy";
 
 // Styles
@@ -11,8 +10,8 @@ import { colors } from "../../../utils/colors";
 
 interface KnowledgeLevel {
 	language: "english" | "hungarian";
-	point: number;
 	index?: number;
+	point: number;
 }
 
 export interface TagColor extends KnowledgeLevel {
@@ -30,8 +29,25 @@ export function calculateKnowledgeLevels(word: Word) {
 	return knowledgeLevels;
 }
 
-export function calculateWeakestKnowledge(word: Word) {
-	return minBy(calculateKnowledgeLevels(word), "level");
+/* Calculation:
+The word that the player will be asked is the opposite of the weakest word (which is the main word):
+A) If the English word contains your weakest knowledge point, the 'word to ask' will be your weakest Hungarian meaning 
+    (your opponent will ask that), and you will get 1 point, if you know the English word
+B) If one of the Hungarian meanings have your weakest knowledge point, the 'word to ask' will be the English translation
+    (your opponent will ask that), and you will get 1 point, if you know that specific Hungarian meaning which is your weakest point
+
+Of course you can get 1 more point for the other Hungarian meanings and 1 more for a correct example sentence with the chosen grammatical structure
+ */
+export function calculateWordToAsk(word: Word): { wordToAsk: string; wordToAnswer: string } {
+	const sortedLevels = sortBy(calculateKnowledgeLevels(word), "point");
+
+	if (sortedLevels[0]?.language === "english") {
+		const weakestHunIndex = get(sortedLevels, [1, "index"], 0);
+		return { wordToAsk: get(word, ["hungarian", weakestHunIndex], ""), wordToAnswer: word.english };
+	} else {
+		const weakestHunIndex = get(sortedLevels, [0, "index"], 0);
+		return { wordToAsk: word.english, wordToAnswer: get(word, ["hungarian", weakestHunIndex], "") };
+	}
 }
 
 /* Color calculation: 
