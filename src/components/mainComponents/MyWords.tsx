@@ -184,18 +184,7 @@ interface ExtendedWord extends Word {
 	deletionDate?: Date;
 }
 
-const dummyData: ExtendedWord[] = [
-	{
-		id: 1,
-		english: "English",
-		hungarian: ["hun1", "hun2", "hun3"],
-		sentences: ["sentence1", "sentence2", "sentence3"],
-		notes: "This is a notes",
-		type: "word",
-		favourite: true,
-		memoryLevel: 0,
-		active: true,
-	},
+const deletedWords: ExtendedWord[] = [
 	{
 		id: 2,
 		english: "English2",
@@ -207,6 +196,44 @@ const dummyData: ExtendedWord[] = [
 		memoryLevel: 18,
 		active: false,
 		deletionDate: new Date(2021, 10, 1),
+	},
+	{
+		id: 6,
+		english: "English6",
+		hungarian: ["hun1", "hun2", "hun3"],
+		sentences: ["sentence1", "sentence2", "sentence3"],
+		notes: "This is a notes",
+		type: "word",
+		favourite: true,
+		memoryLevel: 98,
+		active: false,
+		deletionDate: new Date(2021, 8, 13),
+	},
+	{
+		id: 7,
+		english: "English7",
+		hungarian: ["hun1", "hun2", "hun3"],
+		sentences: ["sentence1", "sentence2", "sentence3"],
+		notes: "This is a notes",
+		type: "word",
+		favourite: true,
+		memoryLevel: 98,
+		active: false,
+		deletionDate: new Date(2020, 6, 26),
+	},
+];
+
+const activeWords: ExtendedWord[] = [
+	{
+		id: 1,
+		english: "English",
+		hungarian: ["hun1", "hun2", "hun3"],
+		sentences: ["sentence1", "sentence2", "sentence3"],
+		notes: "This is a notes",
+		type: "word",
+		favourite: true,
+		memoryLevel: 0,
+		active: true,
 	},
 	{
 		id: 3,
@@ -241,35 +268,15 @@ const dummyData: ExtendedWord[] = [
 		memoryLevel: 98,
 		active: true,
 	},
-	{
-		id: 6,
-		english: "English6",
-		hungarian: ["hun1", "hun2", "hun3"],
-		sentences: ["sentence1", "sentence2", "sentence3"],
-		notes: "This is a notes",
-		type: "word",
-		favourite: true,
-		memoryLevel: 98,
-		active: false,
-		deletionDate: new Date(2021, 8, 13),
-	},
-	{
-		id: 7,
-		english: "English7",
-		hungarian: ["hun1", "hun2", "hun3"],
-		sentences: ["sentence1", "sentence2", "sentence3"],
-		notes: "This is a notes",
-		type: "word",
-		favourite: true,
-		memoryLevel: 98,
-		active: false,
-		deletionDate: new Date(2020, 6, 26),
-	},
 ];
 
+export interface APICallResult {
+	activeWords: ExtendedWord[];
+	deletedWords: ExtendedWord[];
+}
+
 export default function MyWords() {
-	const [activeWords, setActiveWords] = useState<ExtendedWord[]>([]);
-	const [deletedWords, setDeletedWords] = useState<ExtendedWord[]>([]);
+	const [words, setWords] = useState<APICallResult>({ activeWords: [], deletedWords: [] });
 	const [activeTab, setActiveTab] = useState<string>("active-words");
 
 	useEffect(() => {
@@ -277,18 +284,7 @@ export default function MyWords() {
 	}, []);
 
 	function load() {
-		/* TODO: It's a question where we should separate the deleted and active words? back-end? front-end? */
-		const activeWords: ExtendedWord[] = [];
-		const deletedWords: ExtendedWord[] = [];
-
-		dummyData.forEach((word: ExtendedWord) => {
-			if (word.active === true) {
-				activeWords.push(word);
-			} else deletedWords.push(word);
-		});
-
-		setActiveWords(activeWords);
-		setDeletedWords(deletedWords);
+		setWords({ activeWords, deletedWords });
 	}
 
 	return (
@@ -314,14 +310,8 @@ export default function MyWords() {
 					</TabContainer>
 
 					<WordContainer>
-						<Route
-							path="/my-words/active-words"
-							component={() => <Words activeWords={activeWords} deletedWords={deletedWords} displayedWordsType="active words" />}
-						/>
-						<Route
-							path="/my-words/deleted-words"
-							component={() => <Words deletedWords={deletedWords} activeWords={activeWords} displayedWordsType="deleted words" />}
-						/>
+						<Route path="/my-words/active-words" component={() => <Words words={words} displayedWordsType="active" />} />
+						<Route path="/my-words/deleted-words" component={() => <Words words={words} displayedWordsType="deleted" />} />
 					</WordContainer>
 				</TableBlock>
 			</TableContainer>

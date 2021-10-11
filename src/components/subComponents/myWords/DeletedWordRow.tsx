@@ -9,6 +9,9 @@ import SpinnerBar from "../../generalComponents/SpinnerBar";
 /* Components */
 import WordHandler from "./WordHandler";
 
+/* Utils */
+import { calculateRowBackground, convertMemoryLevelToText } from "./utils";
+
 const WordRow = styled.div<{ background: string }>`
 	display: flex;
 	justify-content: space-between;
@@ -56,19 +59,6 @@ interface DeletedWordRowProps {
 }
 
 export default function DeletedWordRow({ word, rowNumber }: DeletedWordRowProps) {
-	function calculateRowBackground(index: number) {
-		if (index % 2 === 0) return colors.rowBackgroundLight;
-		return colors.rowBackgroundDark;
-	}
-
-	function convertMemoryLevelToText(memoryLevel: number) {
-		if (memoryLevel === 0) return "Unused word";
-		if (memoryLevel >= 1 && memoryLevel <= 25) return "New word";
-		if (memoryLevel >= 26 && memoryLevel <= 50) return "Short term memory";
-		if (memoryLevel >= 51 && memoryLevel <= 75) return "Medium term memory";
-		if (memoryLevel >= 76 && memoryLevel <= 100) return "Long term memory";
-	}
-
 	return (
 		<WordRow key={word.id} background={calculateRowBackground(rowNumber)}>
 			<EnglishWord>{word.english}</EnglishWord>

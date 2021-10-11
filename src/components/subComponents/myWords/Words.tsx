@@ -1,25 +1,25 @@
 import { Fragment } from "react";
+
+/* Interafaces */
 import { ExtendedWord } from "../../../utils/interfaces";
+import { APICallResult } from "../../mainComponents/MyWords";
+
+/* Components */
 import ActiveWordRow from "./ActiveWordRow";
 import DeletedWordRow from "./DeletedWordRow";
 
 interface WordsProps {
-	activeWords: ExtendedWord[];
-	deletedWords: ExtendedWord[];
-	displayedWordsType: "active words" | "deleted words";
+	words: APICallResult;
+	displayedWordsType: "active" | "deleted";
 }
 
-export default function Words({ activeWords, deletedWords, displayedWordsType }: WordsProps) {
-	const displayedWords: ExtendedWord[] = displayedWordsType === "active words" ? activeWords : deletedWords;
+export default function Words({ words, displayedWordsType }: WordsProps) {
+	const displayedWords: ExtendedWord[] = displayedWordsType === "active" ? words.activeWords : words.deletedWords;
 
 	return (
 		<Fragment>
 			{displayedWords.map((word: ExtendedWord, index: number) =>
-				displayedWordsType === "active words" ? (
-					<ActiveWordRow word={word} rowNumber={index} />
-				) : (
-					<DeletedWordRow word={word} rowNumber={index} />
-				),
+				displayedWordsType === "active" ? <ActiveWordRow word={word} rowNumber={index} /> : <DeletedWordRow word={word} rowNumber={index} />,
 			)}
 		</Fragment>
 	);
