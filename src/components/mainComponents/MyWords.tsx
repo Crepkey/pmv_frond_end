@@ -12,8 +12,6 @@ import { colors } from "../../utils/colors";
 import styled from "styled-components";
 
 /* Components */
-import ActiveWordRow from "../subComponents/myWords/ActiveWordRow";
-import DeletedWordRow from "../subComponents/myWords/DeletedWordRow";
 import Words from "../subComponents/myWords/Words";
 
 const MainContainer = styled.div`
@@ -115,7 +113,6 @@ const Tab = styled(Link)`
 	flex: 1;
 	justify-content: center;
 	align-items: center;
-	color: gray; //TODO: I have to change the colors based on the active / inactive state of this tab (colors file)
 	font-weight: 550;
 	text-decoration: none;
 	border: 1px solid ${colors.border};
@@ -277,7 +274,7 @@ export interface APICallResult {
 
 export default function MyWords() {
 	const [words, setWords] = useState<APICallResult>({ activeWords: [], deletedWords: [] });
-	const [activeTab, setActiveTab] = useState<string>("active-words");
+	const [activeTab, setActiveTab] = useState<"active-words" | "deleted-words">("active-words");
 
 	useEffect(() => {
 		load();
@@ -285,6 +282,18 @@ export default function MyWords() {
 
 	function load() {
 		setWords({ activeWords, deletedWords });
+	}
+
+	function changeTabStyle() {
+		const activeTabStyle = {
+			backgroundColor: colors.activeBackground,
+			color: colors.activeFont,
+			borderBottom: `3px ${colors.activeBorder} solid`,
+		};
+		const inactiveTabStyle = { backgroundColor: colors.inactiveBackground, color: colors.inactiveFont };
+
+		if (activeTab === "active-words") return { activeWordsTab: activeTabStyle, deletedWordsTab: inactiveTabStyle };
+		else return { activeWordsTab: inactiveTabStyle, deletedWordsTab: activeTabStyle };
 	}
 
 	return (
@@ -301,10 +310,10 @@ export default function MyWords() {
 			<TableContainer>
 				<TableBlock>
 					<TabContainer>
-						<Tab to="/my-words/active-words">Active Words</Tab>
-						<Tab
-							to="/my-words/deleted-words"
-							style={{ backgroundColor: `${colors.inactiveBackground}`, color: `${colors.inactiveFont}` }}>
+						<Tab to="/my-words/active-words" onClick={() => setActiveTab("active-words")} style={changeTabStyle().activeWordsTab}>
+							Active Words
+						</Tab>
+						<Tab to="/my-words/deleted-words" onClick={() => setActiveTab("deleted-words")} style={changeTabStyle().deletedWordsTab}>
 							Deleted Words
 						</Tab>
 					</TabContainer>

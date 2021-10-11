@@ -21,6 +21,7 @@ export const colors = {
 	// BACKGROUNDS
 	background: "rgba(255, 255, 255, 1)",
 	blockBackground: "rgba(247, 246, 252, 1)",
+	activeBackground: "rgba(255, 255, 255, 1)",
 	inactiveBackground: "rgba(236, 235, 240, 1)",
 	tagBackground: "rgba(236, 235, 240, 1)",
 
