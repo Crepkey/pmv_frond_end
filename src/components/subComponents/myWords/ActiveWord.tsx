@@ -9,7 +9,7 @@ import { colors } from "../../../utils/colors";
 import SpinnerBar from "../../generalComponents/SpinnerBar";
 
 /* Components */
-import WordHandler from "./WordHandler";
+import WordHandler from "./WordHandlerIcons";
 
 const WordRow = styled.div<{ background: string }>`
 	display: flex;
@@ -46,20 +46,11 @@ const MemoryState = styled.div`
 	font-weight: 350;
 `;
 
-const DeletionCountdown = styled.div`
-	display: flex;
-	flex: 1;
-	color: ${colors.error};
-`;
-
-interface DeletedWordRowProps {
+interface ActiveWordRowProps {
 	words: ExtendedWord[];
 }
 
-export default function DeletedWordRow({ words }: DeletedWordRowProps) {
-	/* TODO:  calculateRowBackground & convertMemoryLevelToText functions 
-    go to a util file in the MyWords folder 
-    because the activeWordsRow comp uses them as well.*/
+export default function ActiveWordRow({ words }: ActiveWordRowProps) {
 	function calculateRowBackground(index: number) {
 		if (index % 2 === 0) return colors.rowBackgroundLight;
 		return colors.rowBackgroundDark;
@@ -83,7 +74,6 @@ export default function DeletedWordRow({ words }: DeletedWordRowProps) {
 						<SpinnerBar size={24} status={word.memoryLevel} style={{ margin: "0 12px 0 0", background: calculateRowBackground(index) }} />
 						<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>
 					</MemoryLevel>
-					<DeletionCountdown>10 days left</DeletionCountdown>
 					<WordHandler word={word} />
 				</WordRow>
 			))}

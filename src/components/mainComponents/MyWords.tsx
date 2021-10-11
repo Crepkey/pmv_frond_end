@@ -12,8 +12,8 @@ import { colors } from "../../utils/colors";
 import styled from "styled-components";
 
 /* Components */
-import ActiveWordRow from "../subComponents/myWords/ActiveWordRow";
-import DeletedWordRow from "../subComponents/myWords/DeletedWordRow";
+import ActiveWordRow from "../subComponents/myWords/ActiveWord";
+import DeletedWordRow from "../subComponents/myWords/DeletedWord";
 
 const MainContainer = styled.div`
 	display: flex;
