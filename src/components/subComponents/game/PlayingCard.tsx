@@ -12,6 +12,9 @@ import { Owner, Word } from "../../../utils/interfaces";
 // Utils
 import { getColorsByKnowledge } from "./utils";
 
+// Components
+import SpinnerBar from "../../generalComponents/SpinnerBar";
+
 const Card = styled.div`
 	border: 1px solid ${colors.border};
 	border-radius: 8px;
@@ -32,6 +35,23 @@ const CardHeader = styled.div`
 	border-bottom: 1px solid ${colors.border};
 	padding: 0 16px 0 16px;
 	min-height: 3rem;
+`;
+
+const HeaderIcon = styled.div`
+	border: 2px gray solid;
+	width: 30px;
+	height: 30px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 30px;
+	margin-right: 16px;
+`;
+
+const SpinnerBarContainer = styled.div`
+	display: flex;
+	justify-content: flex-end;
+	flex: 1;
 `;
 
 const CardBody = styled.div`
@@ -99,19 +119,7 @@ const SentenceCard = styled.div`
 	font-weight: 300;
 	border-bottom: 1px ${colors.border} solid;
 `;
-
 /* TODO: We should find a great solution for the margin problem above. The last element margin-bottom should be removed somehow*/
-
-const HeaderIcon = styled.div`
-	border: 2px gray solid;
-	width: 30px;
-	height: 30px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-radius: 30px;
-	margin-right: 16px;
-`;
 
 interface PlayingCardProps {
 	owner: Owner | undefined;
@@ -127,6 +135,9 @@ export default function PlayingCard({ owner, word }: PlayingCardProps) {
 			<CardHeader>
 				<HeaderIcon>{owner?.sex === "male" ? <GiSwordman size={28} /> : <GiSwordwoman size={28} />}</HeaderIcon>
 				This word belongs to {owner?.name}
+				<SpinnerBarContainer>
+					<SpinnerBar size={28} status={word.memoryLevel} style={{ background: colors.headerGradientDark }} />
+				</SpinnerBarContainer>
 			</CardHeader>
 
 			<CardBody>

@@ -83,6 +83,8 @@ interface SpinnerBarProps {
 }
 
 export default function SpinnerBar({ status, size, style }: SpinnerBarProps) {
+	// TODO show some different icon, if status === 0
+
 	const actualState: SpinnerBarState = (function () {
 		const result = {
 			red: "rgba(0, 0, 0, 0)",
