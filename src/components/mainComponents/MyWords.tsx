@@ -12,8 +12,8 @@ import { colors } from "../../utils/colors";
 import styled from "styled-components";
 
 /* Components */
-import ActiveWordRow from "../subComponents/myWords/activeWordRow";
-import DeletedWordRow from "../subComponents/myWords/deletedWordRow";
+import ActiveWordRow from "../subComponents/myWords/ActiveWordRow";
+import DeletedWordRow from "../subComponents/myWords/DeletedWordRow";
 
 const MainContainer = styled.div`
 	display: flex;
@@ -269,6 +269,7 @@ const dummyData: ExtendedWord[] = [
 export default function MyWords() {
 	const [activeWords, setActiveWords] = useState<ExtendedWord[]>([]);
 	const [deletedWords, setDeletedWords] = useState<ExtendedWord[]>([]);
+	const [activeTab, setActiveTab] = useState<string>("active-words");
 
 	useEffect(() => {
 		load();

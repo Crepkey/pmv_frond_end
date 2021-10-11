@@ -9,7 +9,7 @@ import { colors } from "../../../utils/colors";
 import SpinnerBar from "../../generalComponents/SpinnerBar";
 
 /* Components */
-import WordHandler from "./wordHandler";
+import WordHandler from "./WordHandler";
 
 const WordRow = styled.div<{ background: string }>`
 	display: flex;
