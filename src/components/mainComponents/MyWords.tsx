@@ -303,6 +303,10 @@ export default function MyWords() {
 		setIsModalOpen(false);
 	}
 
+	function openModal() {
+		setIsModalOpen(true);
+	}
+
 	return (
 		<MainContainer>
 			<Modal isOpen={isModalOpen}>
@@ -328,8 +332,15 @@ export default function MyWords() {
 						</Tab>
 					</TabContainer>
 					<WordContainer>
-						<Route path="/my-words/active-words" component={() => <Words words={words} displayedWordsType="active" />} />
-						<Route path="/my-words/deleted-words" component={() => <Words words={words} displayedWordsType="deleted" />} />
+						<Route
+							path="/my-words/active-words"
+							component={() => <Words words={words} displayedWordsType="active" openModal={openModal} />}
+						/>
+						<Route
+							path="/my-words/deleted-words"
+							component={() => <Words words={words} displayedWordsType="deleted" openModal={openModal} />}
+						/>
+						{/* REFACTOR: In this case the openModal func. is not used but it's necessary to pass it down as a prop*/}
 					</WordContainer>
 				</TableBlock>
 			</TableContainer>

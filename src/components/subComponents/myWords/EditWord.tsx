@@ -202,7 +202,7 @@ const Button = styled.div`
 interface EditWordProps {
 	initialWord?: Word;
 	title: string;
-	closeModal?: () => void;
+	closeModal(): void;
 }
 
 const errorMessages: { [key: number]: string } = {

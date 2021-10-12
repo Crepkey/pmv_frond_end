@@ -19,8 +19,9 @@ const MainContainer = styled.div`
 
 interface WordHandlerProps {
 	word: ExtendedWord;
+	openModal(): void;
 }
-export default function WordHandlerIcons({ word }: WordHandlerProps) {
+export default function WordHandlerIcons({ word, openModal }: WordHandlerProps) {
 	const [isRestoreIconHovered, setRestoreIconHover] = useState(false);
 	const [isTrashIconHovered, setTrashIconHover] = useState(false);
 	const [isFavoriteIconHovered, setFavoriteIconHover] = useState(false);
@@ -49,7 +50,7 @@ export default function WordHandlerIcons({ word }: WordHandlerProps) {
 					)}
 					<div onMouseEnter={() => setEditIconHover(true)} onMouseLeave={() => setEditIconHover(false)}>
 						{isEditIconHovered ? (
-							<BsPencilFill size={25} style={{ marginRight: 12 }} />
+							<BsPencilFill size={25} style={{ marginRight: 12 }} onClick={() => openModal()} />
 						) : (
 							<BsPencil size={25} style={{ marginRight: 12 }} />
 						)}
