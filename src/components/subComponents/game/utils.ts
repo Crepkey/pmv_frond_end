@@ -1,5 +1,6 @@
 // Interfaces
-import { Word } from "../../../utils/interfaces";
+import { LanguageType, Word } from "../../../utils/interfaces";
+import { KnowledgeLevel, TagColor } from "./interfaces";
 
 // Utils
 import get from "lodash/get";
@@ -8,18 +9,7 @@ import sortBy from "lodash/sortBy";
 // Styles
 import { colors } from "../../../utils/colors";
 
-type LanguageType = "english" | "hungarian";
-interface KnowledgeLevel {
-	language: LanguageType;
-	index?: number;
-	point: number;
-}
-
-export interface TagColor extends KnowledgeLevel {
-	color: string;
-}
-
-export function calculateKnowledgeLevels(word: Word) {
+function calculateKnowledgeLevels(word: Word) {
 	const knowledgeLevels: KnowledgeLevel[] = [];
 
 	knowledgeLevels.push({ language: "english", point: get(word, "statistics.english", 0) });

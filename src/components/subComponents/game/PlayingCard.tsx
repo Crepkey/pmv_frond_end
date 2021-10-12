@@ -8,9 +8,10 @@ import { GiSwordwoman, GiSwordman } from "react-icons/gi";
 
 // Interfaces
 import { Owner, Word } from "../../../utils/interfaces";
+import { TagColor } from "./interfaces";
 
 // Utils
-import { getColorsByKnowledge, TagColor } from "./utils";
+import { getColorsByKnowledge } from "./utils";
 
 // Components
 import SpinnerBar from "../../generalComponents/SpinnerBar";

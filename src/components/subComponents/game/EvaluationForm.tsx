@@ -6,6 +6,7 @@ import { colors } from "../../../utils/colors";
 
 // Interfaces
 import { Word } from "../../../utils/interfaces";
+import { GameStatistics } from "./interfaces";
 
 // Icons
 import { BsCheckCircleFill, BsDashCircle } from "react-icons/bs";
@@ -13,10 +14,11 @@ import { BsCheckCircleFill, BsDashCircle } from "react-icons/bs";
 // Utils
 import get from "lodash/get";
 import set from "lodash/set";
-import flatten from "lodash/flatten";
-import round from "lodash/round";
 import capitalize from "lodash/capitalize";
+
+// Helper functions
 import { calculateWordToAsk } from "./utils";
+import { calculateDataToSave, emptyStatistics } from "./calculateFinalResult";
 
 // TODO general card component??
 const Card = styled.div`
@@ -142,68 +144,38 @@ interface EvaluationFormProps {
 }
 
 export default function EvaluationForm({ actualWord, getNextCard, userPoints, setUserPoints }: EvaluationFormProps) {
-	const emptyStatistics = { english: false, hungarian: [] };
 	// We only store the actual evaluation in the state and calculate the values (that we need in the database) while saving
-	const [statistics, setStatistics] = useState<{ english: boolean; hungarian: boolean[] }>(emptyStatistics);
+	const [statistics, setStatistics] = useState<GameStatistics>(emptyStatistics);
 	const [correctGrammar, setCorrectGrammar] = useState<boolean>(false);
 	const [mainWordKnown, setMainWordKnown] = useState<boolean>(false);
 
 	const { wordToAsk, wordToAnswer, mainWordType } = calculateWordToAsk(actualWord);
 
+	console.log(actualWord);
+
 	function save() {
 		// calculate the values that we need to save:
-
-		// actual score + memory level
-		const scoreBefore = actualWord.actualScore;
-		const englishScore = statistics.english ? 1 : 0;
-		const hungarianScore = statistics.hungarian.filter((s: boolean) => s === true).length;
-		const scoreNow = englishScore + hungarianScore;
-		const actualScore = scoreBefore + scoreNow;
-		const memoryLevel = round((actualScore / actualWord.scoreToAchieve) * 100, 2);
-
-		// statistics
-		const statisticsToSave = actualWord.statistics || {};
-		if (statistics.english === true) {
-			const englishLevel = get(statisticsToSave, "english", 0);
-			set(statisticsToSave, "english", englishLevel + 1);
-		}
-		actualWord.hungarian.forEach((h: string, index: number) => {
-			const hunStatistics = get(statistics, ["hungarian", index], false);
-			if (hunStatistics === true) {
-				const hunLevel = get(statisticsToSave, ["hungarian", index], 0);
-				set(statisticsToSave, ["hungarian", index], hunLevel + 1);
-			}
-		});
-
-		// set deletionDate, if you don't have to practice this word anymore
-		let deletionDate = null;
-		if (actualScore > actualWord.scoreToAchieve) {
-			deletionDate = new Date();
-		}
-
-		// REFACTOR we could move most of this logic to backend
-		// TODO save to database (it would be better, if we didn't need the whole word, just the modified columns)
-		const wordToSave = { ...actualWord, actualScore, memoryLevel, statistics: statisticsToSave, deletionDate };
-
+		const wordToSave = calculateDataToSave(actualWord, statistics);
+		console.log(wordToSave);
 		// TODO save the grammatical knowledge (correctGrammar in state) to some grammatical statistics table
 
-		// calculate the game points
-		let earnedPoints = 0;
+		// // calculate the game points
+		// let earnedPoints = 0;
 
-		// Player knew the main word
-		if (mainWordKnown) earnedPoints += 1;
+		// // Player knew the main word
+		// if (mainWordKnown) earnedPoints += 1;
 
-		// Player knew all other Hungarian meanings
-		let scoreToCompare = actualWord.hungarian.length - 1;
-		if (mainWordType === "hungarian" && mainWordKnown) {
-			scoreToCompare += 1;
-		}
-		if (hungarianScore === scoreToCompare) earnedPoints += 1;
+		// // Player knew all other Hungarian meanings
+		// let scoreToCompare = actualWord.hungarian.length - 1;
+		// if (mainWordType === "hungarian" && mainWordKnown) {
+		// 	scoreToCompare += 1;
+		// }
+		// if (hungarianScore === scoreToCompare) earnedPoints += 1;
 
-		// Player used a correct grammatical structure in the example sentence
-		if (correctGrammar) earnedPoints += 1;
+		// // Player used a correct grammatical structure in the example sentence
+		// if (correctGrammar) earnedPoints += 1;
 
-		setUserPoints(userPoints + earnedPoints);
+		// setUserPoints(userPoints + earnedPoints);
 
 		// clear statistics in the state
 		setStatistics(emptyStatistics);

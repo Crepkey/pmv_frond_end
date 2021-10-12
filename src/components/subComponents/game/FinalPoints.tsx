@@ -20,7 +20,7 @@ const Title = styled.div`
 	font-weight: bold;
 `;
 
-const FlexRow = styled.div`
+const CardContainer = styled.div`
 	display: flex;
 `;
 
@@ -82,12 +82,13 @@ interface FinalPointsProps {
 
 export default function FinalPoints({ owners, points }: FinalPointsProps) {
 	const maxPoint: number = max(Object.values(points));
-	const winners = owners.filter((o: Owner) => get(points, o.id) === maxPoint);
+	const winners: Owner[] = owners.filter((o: Owner) => get(points, o.id) === maxPoint);
 
 	return (
 		<Fragment>
 			<Title>Final points</Title>
-			<FlexRow>
+
+			<CardContainer>
 				{owners.map((owner: Owner, i: number) => {
 					return (
 						<Card key={i}>
@@ -99,7 +100,8 @@ export default function FinalPoints({ owners, points }: FinalPointsProps) {
 						</Card>
 					);
 				})}
-			</FlexRow>
+			</CardContainer>
+
 			<Congrats>Congratulations {winners.map((winner: Owner) => winner.name).join(" and ")}!</Congrats>
 			{winners.length === 1 ? "You won." : "You had the same number of points."}
 		</Fragment>

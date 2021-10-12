@@ -5,6 +5,7 @@ export interface Owner {
 }
 
 export type WordType = "word" | "expression";
+export type LanguageType = "english" | "hungarian";
 
 export interface WordStatistics {
 	english: number;

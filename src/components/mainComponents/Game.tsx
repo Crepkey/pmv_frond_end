@@ -69,10 +69,10 @@ export default function Game() {
 	const actualOwnerId = actualWord?.ownerId;
 
 	useEffect(() => {
-		load();
+		initialize();
 	}, []);
 
-	function load() {
+	function initialize() {
 		// TODO load data from backend
 		setOwners(testOwners);
 		setWords(testWords);
@@ -102,7 +102,7 @@ export default function Game() {
 					<Button
 						onClick={() => {
 							setActualIndex(0);
-							load();
+							initialize();
 						}}>
 						Play again
 					</Button>
