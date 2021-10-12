@@ -12,12 +12,12 @@ export const ModalBackgroundCover = styled.div`
 	z-index: 1;
 `;
 
+/* TODO: Colors have to come from colors file */
 export const ModalContainer = styled.div`
 	background: white;
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	position: absolute;
-	top: 25%;
 	left: 50%;
 	transform: translate(-50%);
 	min-width: 30rem;
@@ -42,9 +42,10 @@ export const CloseButton = styled.button`
 interface ModalProps {
 	isOpen: boolean;
 	onCloseRequest(): void;
+	children: React.ReactNode;
 }
 
-export default function Modal({ isOpen, onCloseRequest }: ModalProps) {
+export default function Modal({ isOpen, onCloseRequest, children }: ModalProps) {
 	if (!isOpen) {
 		return null;
 	}
@@ -52,23 +53,7 @@ export default function Modal({ isOpen, onCloseRequest }: ModalProps) {
 	return (
 		<Fragment>
 			<ModalBackgroundCover />
-			<ModalContainer>
-				<CloseButton onClick={onCloseRequest}>X</CloseButton>
-				<div>
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque gravida nibh eget sapien rutrum, in mollis urna porta. Integer
-					convallis ex sed leo condimentum semper. Donec a ex sit amet urna elementum scelerisque at ut elit. Proin ac mauris fermentum,
-					aliquet nisi eu, maximus ante. Curabitur aliquam lacinia efficitur. Quisque mattis suscipit magna, at bibendum diam dictum
-					maximus. Sed egestas viverra laoreet. Maecenas semper metus et lectus pellentesque, nec dictum felis dignissim. Fusce iaculis
-					tincidunt vulputate. Vivamus ullamcorper mauris quis laoreet dignissim. Aliquam consequat mi dolor, vitae vulputate sapien varius
-					vel. Cras eget luctus elit. Phasellus condimentum eleifend diam, eget convallis odio sollicitudin eget. Sed fringilla orci
-					eleifend leo pulvinar, nec ultricies neque ornare. Praesent id risus eu turpis tempus tincidunt lobortis nec mauris. Ut feugiat,
-					odio in tempor vehicula, libero dui finibus orci, eu ultrices arcu augue ut mi. Phasellus posuere, elit eu rutrum ullamcorper,
-					risus velit lobortis ante, semper mollis nibh elit varius nisl. Mauris et lorem ac nunc lacinia volutpat sed quis velit. Orci
-					varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Mauris gravida lacus eget metus rutrum
-					convallis. Cras quis elit enim. Vestibulum eget finibus ligula, ac pretium magna. Aliquam suscipit tincidunt scelerisque.
-					Pellentesque cursus interdum arcu sodales fringilla. Aenean fermentum vitae libero non lacinia.
-				</div>
-			</ModalContainer>
+			<ModalContainer>{children}</ModalContainer>
 		</Fragment>
 	);
 }

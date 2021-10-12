@@ -14,6 +14,7 @@ import styled from "styled-components";
 /* Components */
 import Words from "../subComponents/myWords/Words";
 import Modal from "../generalComponents/Modal";
+import EditWord from "../subComponents/myWords/EditWord";
 
 const MainContainer = styled.div`
 	display: flex;
@@ -304,7 +305,9 @@ export default function MyWords() {
 
 	return (
 		<MainContainer>
-			<Modal isOpen={isModalOpen} onCloseRequest={closeModal} />
+			<Modal isOpen={isModalOpen} onCloseRequest={closeModal}>
+				<EditWord title="Edit word" />
+			</Modal>
 			<ControlBarContainer>
 				<AddNewWordButton>Add new word</AddNewWordButton>
 				<SearchContainer>
