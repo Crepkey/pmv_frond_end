@@ -13,6 +13,7 @@ import styled from "styled-components";
 
 /* Components */
 import Words from "../subComponents/myWords/Words";
+import Modal from "../generalComponents/Modal";
 
 const MainContainer = styled.div`
 	display: flex;
@@ -275,6 +276,7 @@ export interface APICallResult {
 export default function MyWords() {
 	const [words, setWords] = useState<APICallResult>({ activeWords: [], deletedWords: [] });
 	const [activeTab, setActiveTab] = useState<"active-words" | "deleted-words">("active-words");
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
 
 	useEffect(() => {
 		load();
@@ -296,8 +298,13 @@ export default function MyWords() {
 		else return { activeWordsTab: inactiveTabStyle, deletedWordsTab: activeTabStyle };
 	}
 
+	function closeModal() {
+		setIsModalOpen(false);
+	}
+
 	return (
 		<MainContainer>
+			<Modal isOpen={isModalOpen} onCloseRequest={closeModal} />
 			<ControlBarContainer>
 				<AddNewWordButton>Add new word</AddNewWordButton>
 				<SearchContainer>
@@ -317,7 +324,6 @@ export default function MyWords() {
 							Deleted Words
 						</Tab>
 					</TabContainer>
-
 					<WordContainer>
 						<Route path="/my-words/active-words" component={() => <Words words={words} displayedWordsType="active" />} />
 						<Route path="/my-words/deleted-words" component={() => <Words words={words} displayedWordsType="deleted" />} />

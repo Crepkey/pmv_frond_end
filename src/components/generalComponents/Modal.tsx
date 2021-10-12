@@ -39,12 +39,21 @@ export const CloseButton = styled.button`
 	}
 `;
 
-export default function Modal() {
+interface ModalProps {
+	isOpen: boolean;
+	onCloseRequest(): void;
+}
+
+export default function Modal({ isOpen, onCloseRequest }: ModalProps) {
+	if (!isOpen) {
+		return null;
+	}
+
 	return (
 		<Fragment>
 			<ModalBackgroundCover />
 			<ModalContainer>
-				<CloseButton>X</CloseButton>
+				<CloseButton onClick={onCloseRequest}>X</CloseButton>
 				<div>
 					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque gravida nibh eget sapien rutrum, in mollis urna porta. Integer
 					convallis ex sed leo condimentum semper. Donec a ex sit amet urna elementum scelerisque at ut elit. Proin ac mauris fermentum,
