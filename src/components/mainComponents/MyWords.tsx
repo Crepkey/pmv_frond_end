@@ -305,8 +305,8 @@ export default function MyWords() {
 
 	return (
 		<MainContainer>
-			<Modal isOpen={isModalOpen} onCloseRequest={closeModal}>
-				<EditWord title="Edit word" />
+			<Modal isOpen={isModalOpen}>
+				<EditWord title="Edit word" closeModal={closeModal} />
 			</Modal>
 			<ControlBarContainer>
 				<AddNewWordButton>Add new word</AddNewWordButton>

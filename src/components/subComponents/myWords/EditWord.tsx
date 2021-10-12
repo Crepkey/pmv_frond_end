@@ -16,7 +16,6 @@ import set from "lodash/set";
 const Card = styled.div`
 	border: 1px solid ${colors.border};
 	border-radius: 8px;
-	margin: 16px;
 	width: 40vw;
 	min-width: 20rem;
 	min-height: 0;
@@ -203,6 +202,7 @@ const Button = styled.div`
 interface EditWordProps {
 	initialWord?: Word;
 	title: string;
+	closeModal?: () => void;
 }
 
 const errorMessages: { [key: number]: string } = {
@@ -211,7 +211,7 @@ const errorMessages: { [key: number]: string } = {
 	3: "At least one example sentence is required.",
 }; /* TODO: Later we can use an additional library for error handling if the project is getting bigger */
 
-export default function EditWord({ initialWord, title }: EditWordProps) {
+export default function EditWord({ initialWord, title, closeModal }: EditWordProps) {
 	const [word, setWord] = useState<Word>(initialWord || { english: "", hungarian: [""], sentences: [""], type: "word", memoryLevel: 0 });
 	const [errors, setErrors] = useState<number[]>([]);
 
@@ -246,7 +246,7 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 		<Card>
 			<CardHeader>
 				{title}
-				<Icon>
+				<Icon onClick={closeModal}>
 					<BsX size={20} />
 				</Icon>
 			</CardHeader>
