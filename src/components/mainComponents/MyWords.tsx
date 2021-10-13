@@ -276,7 +276,10 @@ export interface APICallResult {
 }
 
 export default function MyWords() {
-	const [words, setWords] = useState<APICallResult>({ activeWords: [], deletedWords: [] });
+	const [words, setWords] = useState<APICallResult>({
+		activeWords: [],
+		deletedWords: [],
+	}); /* REFACTOR: Split this two separated entry active / deleted */
 	const [activeTab, setActiveTab] = useState<"active-words" | "deleted-words">("active-words");
 	const { wordForEditing } = useContext(AppContext);
 
@@ -301,7 +304,6 @@ export default function MyWords() {
 	}
 
 	function saveEditedWord(editedWord: Word) {
-		console.log("This has been invoked");
 		const currentActiveWords = words.activeWords.map((word: Word) => (editedWord.id === word.id ? editedWord : word));
 		setWords({ activeWords: currentActiveWords, deletedWords: words.deletedWords });
 	}

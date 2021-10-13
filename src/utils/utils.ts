@@ -1,7 +1,7 @@
 import { WordWithScores } from "./interfaces";
 
 export function generateID() {
-	return Date.now();
+	return Date.now() + Math.random();
 }
 
 export const emptyWord: WordWithScores = {
