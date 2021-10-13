@@ -1,5 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Route, Link } from "react-router-dom";
+
+/* Context */
+import { AppContext } from "../../AppContext";
 
 /* Interfaces */
 import { Word } from "../../utils/interfaces";
@@ -275,6 +278,7 @@ export interface APICallResult {
 export default function MyWords() {
 	const [words, setWords] = useState<APICallResult>({ activeWords: [], deletedWords: [] });
 	const [activeTab, setActiveTab] = useState<"active-words" | "deleted-words">("active-words");
+	const { wordForEditing } = useContext(AppContext);
 
 	useEffect(() => {
 		load();
@@ -299,7 +303,7 @@ export default function MyWords() {
 	return (
 		<MainContainer>
 			<Modal>
-				<EditWord title="Edit word" />
+				<EditWord title="Edit word" initialWord={wordForEditing} />
 			</Modal>
 			<ControlBarContainer>
 				<AddNewWordButton>Add new word</AddNewWordButton>
@@ -323,7 +327,6 @@ export default function MyWords() {
 					<WordContainer>
 						<Route path="/my-words/active-words" component={() => <Words words={words} displayedWordsType="active" />} />
 						<Route path="/my-words/deleted-words" component={() => <Words words={words} displayedWordsType="deleted" />} />
-						{/* REFACTOR: In this case the openModal func. is not used but it's necessary to pass it down as a prop*/}
 					</WordContainer>
 				</TableBlock>
 			</TableContainer>

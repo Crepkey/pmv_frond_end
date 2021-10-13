@@ -26,7 +26,7 @@ export default function WordHandlerIcons({ word }: WordHandlerProps) {
 	const [isTrashIconHovered, setTrashIconHover] = useState(false);
 	const [isFavoriteIconHovered, setFavoriteIconHover] = useState(false);
 	const [isEditIconHovered, setEditIconHover] = useState(false);
-	const { setIsModalOpen } = useContext(AppContext);
+	const { setIsModalOpen, setWordForEditing } = useContext(AppContext);
 
 	function calculateHandlerIcons() {
 		if (word.deletionDate === null) {
@@ -54,7 +54,14 @@ export default function WordHandlerIcons({ word }: WordHandlerProps) {
 
 					<div onMouseEnter={() => setEditIconHover(true)} onMouseLeave={() => setEditIconHover(false)}>
 						{isEditIconHovered ? (
-							<BsPencilFill size={25} style={{ marginRight: 12 }} onClick={() => setIsModalOpen(true)} />
+							<BsPencilFill
+								size={25}
+								style={{ marginRight: 12 }}
+								onClick={() => {
+									setWordForEditing(word);
+									setIsModalOpen(true);
+								}}
+							/>
 						) : (
 							<BsPencil size={25} style={{ marginRight: 12 }} />
 						)}
