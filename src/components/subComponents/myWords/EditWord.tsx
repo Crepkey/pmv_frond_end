@@ -203,8 +203,9 @@ const Button = styled.div`
 `;
 
 interface EditWordProps {
-	initialWord?: Word;
 	title: string;
+	initialWord?: Word;
+	save(editedWord: Word): void;
 }
 
 const errorMessages: { [key: number]: string } = {
@@ -213,7 +214,7 @@ const errorMessages: { [key: number]: string } = {
 	3: "At least one example sentence is required.",
 }; /* TODO: Later we can use an additional library for error handling if the project is getting bigger */
 
-export default function EditWord({ initialWord, title }: EditWordProps) {
+export default function EditWord({ initialWord, title, save }: EditWordProps) {
 	const newEmptyWord: WordWithScores = {
 		id: 0, // TODO generate fake id
 		english: "",
@@ -237,7 +238,7 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 	const [errors, setErrors] = useState<number[]>([]);
 	const { setIsModalOpen } = useContext(AppContext);
 
-	function save() {
+	function saveForm() {
 		const checkedErrors: number[] = [];
 
 		if (word.english.length === 0) {
@@ -272,7 +273,8 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 		// 	},
 		// };
 
-		// TODO save to database
+		save(word);
+		setIsModalOpen(false);
 	}
 
 	return (
@@ -408,7 +410,7 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 				</ScrollContainer>
 
 				<Row>
-					<Button onClick={save}>Save</Button>
+					<Button onClick={saveForm}>Save</Button>
 				</Row>
 			</CardBody>
 		</Card>

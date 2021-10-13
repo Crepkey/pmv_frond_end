@@ -300,10 +300,16 @@ export default function MyWords() {
 		else return { activeWordsTab: inactiveTabStyle, deletedWordsTab: activeTabStyle };
 	}
 
+	function saveEditedWord(editedWord: Word) {
+		console.log("This has been invoked");
+		const currentActiveWords = words.activeWords.map((word: Word) => (editedWord.id === word.id ? editedWord : word));
+		setWords({ activeWords: currentActiveWords, deletedWords: words.deletedWords });
+	}
+
 	return (
 		<MainContainer>
 			<Modal>
-				<EditWord title="Edit word" initialWord={wordForEditing} />
+				<EditWord title="Edit word" initialWord={wordForEditing} save={saveEditedWord} />
 			</Modal>
 			<ControlBarContainer>
 				<AddNewWordButton>Add new word</AddNewWordButton>
