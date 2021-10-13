@@ -180,7 +180,7 @@ const PageNumber = styled.div`
 	padding: 0 8px 0 8px;
 `;
 
-const deletedWords: Word[] = [
+const dummyDeletedWords: Word[] = [
 	{
 		id: 2,
 		ownerId: 1,
@@ -219,7 +219,7 @@ const deletedWords: Word[] = [
 	},
 ];
 
-const activeWords: Word[] = [
+const dummyActiveWords: Word[] = [
 	{
 		id: 1,
 		ownerId: 1,
@@ -281,8 +281,8 @@ export default function MyWords() {
 	}, []);
 
 	function load() {
-		setActiveWords(activeWords);
-		setDeletedWords(deletedWords);
+		setActiveWords(dummyActiveWords);
+		setDeletedWords(dummyDeletedWords);
 	}
 
 	function changeTabStyle() {
