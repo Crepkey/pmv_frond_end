@@ -11,19 +11,18 @@ import DeletedWordRow from "./DeletedWordRow";
 interface WordsProps {
 	words: APICallResult;
 	displayedWordsType: "active" | "deleted";
-	openModal(): void;
 }
 
-export default function Words({ words, displayedWordsType, openModal }: WordsProps) {
+export default function Words({ words, displayedWordsType }: WordsProps) {
 	const displayedWords: ExtendedWord[] = displayedWordsType === "active" ? words.activeWords : words.deletedWords;
 
 	return (
 		<Fragment>
 			{displayedWords.map((word: ExtendedWord, index: number) =>
 				displayedWordsType === "active" ? (
-					<ActiveWordRow key={word.id} word={word} rowNumber={index} openModal={openModal} />
+					<ActiveWordRow key={word.id} word={word} rowNumber={index} />
 				) : (
-					<DeletedWordRow key={word.id} word={word} rowNumber={index} openModal={openModal} />
+					<DeletedWordRow key={word.id} word={word} rowNumber={index} />
 				),
 			)}
 		</Fragment>

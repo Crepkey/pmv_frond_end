@@ -277,7 +277,6 @@ export interface APICallResult {
 export default function MyWords() {
 	const [words, setWords] = useState<APICallResult>({ activeWords: [], deletedWords: [] });
 	const [activeTab, setActiveTab] = useState<"active-words" | "deleted-words">("active-words");
-	const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
 
 	useEffect(() => {
 		load();
@@ -299,18 +298,10 @@ export default function MyWords() {
 		else return { activeWordsTab: inactiveTabStyle, deletedWordsTab: activeTabStyle };
 	}
 
-	function closeModal() {
-		setIsModalOpen(false);
-	}
-
-	function openModal() {
-		setIsModalOpen(true);
-	}
-
 	return (
 		<MainContainer>
-			<Modal isOpen={isModalOpen}>
-				<EditWord title="Edit word" closeModal={closeModal} />
+			<Modal>
+				<EditWord title="Edit word" />
 			</Modal>
 			<ControlBarContainer>
 				<AddNewWordButton>Add new word</AddNewWordButton>
@@ -332,14 +323,8 @@ export default function MyWords() {
 						</Tab>
 					</TabContainer>
 					<WordContainer>
-						<Route
-							path="/my-words/active-words"
-							component={() => <Words words={words} displayedWordsType="active" openModal={openModal} />}
-						/>
-						<Route
-							path="/my-words/deleted-words"
-							component={() => <Words words={words} displayedWordsType="deleted" openModal={openModal} />}
-						/>
+						<Route path="/my-words/active-words" component={() => <Words words={words} displayedWordsType="active" />} />
+						<Route path="/my-words/deleted-words" component={() => <Words words={words} displayedWordsType="deleted" />} />
 						{/* REFACTOR: In this case the openModal func. is not used but it's necessary to pass it down as a prop*/}
 					</WordContainer>
 				</TableBlock>

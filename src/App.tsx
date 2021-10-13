@@ -5,6 +5,7 @@ import MenuBar from "./components/mainComponents/MenuBar";
 import MyWords from "./components/mainComponents/MyWords";
 import Home from "./components/mainComponents/Home";
 import Game from "./components/mainComponents/Game";
+import { AppProvider } from "./AppContext";
 
 // Styles
 import styled from "styled-components";
@@ -18,17 +19,18 @@ const MainContainer = styled.div`
 
 function App() {
 	return (
-		<MainContainer>
-			<MenuBar />
-
-			<Switch>
-				{/* Here you can pass any component that you want to test */}
-				<Route path="/my-words" component={MyWords} />
-				<Route path="/lets-play" component={Game} />
-				<Route path="/" exact component={Home} />
-				<Redirect to="/" />
-			</Switch>
-		</MainContainer>
+		<AppProvider>
+			<MainContainer>
+				<MenuBar />
+				<Switch>
+					{/* Here you can pass any component that you want to test */}
+					<Route path="/my-words" component={MyWords} />
+					<Route path="/lets-play" component={Game} />
+					<Route path="/" exact component={Home} />
+					<Redirect to="/" />
+				</Switch>
+			</MainContainer>
+		</AppProvider>
 	);
 }
 

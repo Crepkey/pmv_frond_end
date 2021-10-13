@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+
+/* Context */
+import { AppContext } from "../../../AppContext";
 
 /* Styles */
 import styled from "styled-components";
@@ -202,7 +205,6 @@ const Button = styled.div`
 interface EditWordProps {
 	initialWord?: Word;
 	title: string;
-	closeModal(): void;
 }
 
 const errorMessages: { [key: number]: string } = {
@@ -211,9 +213,10 @@ const errorMessages: { [key: number]: string } = {
 	3: "At least one example sentence is required.",
 }; /* TODO: Later we can use an additional library for error handling if the project is getting bigger */
 
-export default function EditWord({ initialWord, title, closeModal }: EditWordProps) {
+export default function EditWord({ initialWord, title }: EditWordProps) {
 	const [word, setWord] = useState<Word>(initialWord || { english: "", hungarian: [""], sentences: [""], type: "word", memoryLevel: 0 });
 	const [errors, setErrors] = useState<number[]>([]);
+	const { setIsModalOpen } = useContext(AppContext);
 
 	function onSave() {
 		const checkedErrors: number[] = [];
@@ -237,7 +240,7 @@ export default function EditWord({ initialWord, title, closeModal }: EditWordPro
 			return;
 		}
 
-		const wordToSave = { ...word, hungarian: hungarianMeanings, sentences }; // contains only the filtered arrays, without empty strings
+		/* const wordToSave = { ...word, hungarian: hungarianMeanings, sentences }; */ // contains only the filtered arrays, without empty strings
 
 		// TODO save to database
 	}
@@ -246,7 +249,10 @@ export default function EditWord({ initialWord, title, closeModal }: EditWordPro
 		<Card>
 			<CardHeader>
 				{title}
-				<Icon onClick={closeModal}>
+				<Icon
+					onClick={() => {
+						setIsModalOpen(false);
+					}}>
 					<BsX size={20} />
 				</Icon>
 			</CardHeader>

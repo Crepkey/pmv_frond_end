@@ -1,4 +1,7 @@
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
+
+/* Context */
+import { AppContext } from "../../AppContext";
 
 /* Styles */
 import styled from "styled-components";
@@ -27,12 +30,13 @@ export const ModalContainer = styled.div`
 `;
 
 interface ModalProps {
-	isOpen: boolean;
 	children: React.ReactNode;
 }
 
-export default function Modal({ isOpen, children }: ModalProps) {
-	if (!isOpen) {
+export default function Modal({ children }: ModalProps) {
+	const { isModalOpen } = useContext(AppContext);
+
+	if (!isModalOpen) {
 		return null;
 	}
 
