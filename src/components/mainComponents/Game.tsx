@@ -1,8 +1,9 @@
+// React
 import { Fragment, useEffect, useState } from "react";
 
 // Styles
-import styled from "styled-components";
 import { GreenButton } from "../generalComponents/styles";
+import { GameMainContainer, FinalScreenContainer } from "../subComponents/game/styles";
 
 // Interfaces
 import { Owner, Points, Word } from "../../utils/interfaces";
@@ -18,20 +19,6 @@ import { testOwners, testWords } from "../../utils/testData";
 // Utils
 import set from "lodash/set";
 import get from "lodash/get";
-
-const Body = styled.div`
-	display: flex;
-	flex: 1;
-	justify-content: center;
-	min-width: 0;
-	min-height: 0;
-`;
-
-const FinalScreen = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-`;
 
 export default function Game() {
 	const [owners, setOwners] = useState<Owner[]>([]);
@@ -57,7 +44,7 @@ export default function Game() {
 	}
 
 	return (
-		<Body>
+		<GameMainContainer>
 			{actualWord !== undefined && (
 				<Fragment>
 					<PlayingCard owner={owners?.find((o: Owner) => o.id === actualOwnerId)} word={actualWord} />
@@ -71,7 +58,7 @@ export default function Game() {
 			)}
 
 			{actualIndex >= words.length && (
-				<FinalScreen>
+				<FinalScreenContainer>
 					<FinalPoints owners={owners} points={points} />
 					<GreenButton
 						onClick={() => {
@@ -80,8 +67,8 @@ export default function Game() {
 						}}>
 						Play again
 					</GreenButton>
-				</FinalScreen>
+				</FinalScreenContainer>
 			)}
-		</Body>
+		</GameMainContainer>
 	);
 }

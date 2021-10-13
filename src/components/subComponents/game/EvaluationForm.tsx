@@ -1,8 +1,9 @@
+//React
 import { useState } from "react";
 
 // Styles
-import styled from "styled-components";
 import { Card, CardHeader, CardBody, CardTitle, CardBodyScrollContainer, Block, GreenButton } from "../../generalComponents/styles";
+import { CheckBox, BoldText, ButtonContainer } from "./styles";
 
 // Interfaces
 import { Word } from "../../../utils/interfaces";
@@ -19,23 +20,6 @@ import capitalize from "lodash/capitalize";
 // Helper functions
 import { calculateWordToAsk } from "./calculateByKnowledgeLevels";
 import { calculateDataToSave, calculateGamePoints } from "./calculateFinalResult";
-
-const ButtonContainer = styled.div`
-	display: flex;
-	justify-content: center;
-`;
-
-const CheckBox = styled.div`
-	margin-right: 16px;
-	display: flex;
-	align-items: center;
-	cursor: pointer;
-`;
-
-const BoldText = styled.span`
-	font-weight: bold;
-	margin-right: 4px;
-`;
 
 interface EvaluationRowProps {
 	title: string;

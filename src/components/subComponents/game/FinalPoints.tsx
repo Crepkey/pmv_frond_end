@@ -1,6 +1,6 @@
 // Styles
-import styled from "styled-components";
 import { Card, CardHeader, CardBody } from "../../generalComponents/styles";
+import { MainContainer, ScreenTitle, CardContainer, HeaderIcon, PointsContainer, Congrats } from "./styles";
 
 // Icons
 import { GiSwordman, GiSwordwoman } from "react-icons/gi";
@@ -11,47 +11,6 @@ import { Owner, Points } from "../../../utils/interfaces";
 // Utils
 import max from "lodash/max";
 import get from "lodash/get";
-
-const MainContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin: 24px;
-`;
-
-const Title = styled.div`
-	font-size: 2rem;
-	margin: 24px 0 16px 0;
-	font-weight: bold;
-`;
-
-const CardContainer = styled.div`
-	display: flex;
-`;
-
-const PointsContainer = styled.div`
-	display: flex;
-	font-size: 3rem;
-	justify-content: center;
-	font-weight: bold;
-`;
-
-const HeaderIcon = styled.div`
-	border: 2px gray solid;
-	width: 30px;
-	height: 30px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-radius: 30px;
-	margin-right: 16px;
-`;
-
-const Congrats = styled.div`
-	font-size: 1.25rem;
-	font-weight: bolder;
-	margin: 16px;
-`;
 
 interface FinalPointsProps {
 	owners: Owner[];
@@ -64,7 +23,7 @@ export default function FinalPoints({ owners, points }: FinalPointsProps) {
 
 	return (
 		<MainContainer>
-			<Title>Final points</Title>
+			<ScreenTitle>Final points</ScreenTitle>
 
 			<CardContainer>
 				{owners.map((owner: Owner, i: number) => {
