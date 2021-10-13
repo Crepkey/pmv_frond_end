@@ -21,6 +21,7 @@ export interface Word {
 	favourite?: boolean;
 	memoryLevel: number;
 
+	deletionDate?: Date | null;
 	actualScore: number;
 	scoreToAchieve: number;
 	statistics?: WordStatistics;

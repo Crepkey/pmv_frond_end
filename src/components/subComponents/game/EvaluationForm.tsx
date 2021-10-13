@@ -18,7 +18,7 @@ import capitalize from "lodash/capitalize";
 
 // Helper functions
 import { calculateWordToAsk } from "./utils";
-import { calculateDataToSave, emptyStatistics } from "./calculateFinalResult";
+import { calculateDataToSave, calculateGamePoints } from "./calculateFinalResult";
 
 // TODO general card component??
 const Card = styled.div`
@@ -144,6 +144,7 @@ interface EvaluationFormProps {
 }
 
 export default function EvaluationForm({ actualWord, getNextCard, userPoints, setUserPoints }: EvaluationFormProps) {
+	const emptyStatistics: GameStatistics = { english: false, hungarian: [] };
 	// We only store the actual evaluation in the state and calculate the values (that we need in the database) while saving
 	const [statistics, setStatistics] = useState<GameStatistics>(emptyStatistics);
 	const [correctGrammar, setCorrectGrammar] = useState<boolean>(false);
@@ -151,31 +152,17 @@ export default function EvaluationForm({ actualWord, getNextCard, userPoints, se
 
 	const { wordToAsk, wordToAnswer, mainWordType } = calculateWordToAsk(actualWord);
 
-	console.log(actualWord);
-
 	function save() {
 		// calculate the values that we need to save:
 		const wordToSave = calculateDataToSave(actualWord, statistics);
-		console.log(wordToSave);
-		// TODO save the grammatical knowledge (correctGrammar in state) to some grammatical statistics table
+		/*  TODO 
+		1) save to database (it would be better, if we didn't need the whole word, just the modified columns)
+		2) save the grammatical knowledge (correctGrammar in state) to some grammatical statistics table
+ 		*/
 
-		// // calculate the game points
-		// let earnedPoints = 0;
-
-		// // Player knew the main word
-		// if (mainWordKnown) earnedPoints += 1;
-
-		// // Player knew all other Hungarian meanings
-		// let scoreToCompare = actualWord.hungarian.length - 1;
-		// if (mainWordType === "hungarian" && mainWordKnown) {
-		// 	scoreToCompare += 1;
-		// }
-		// if (hungarianScore === scoreToCompare) earnedPoints += 1;
-
-		// // Player used a correct grammatical structure in the example sentence
-		// if (correctGrammar) earnedPoints += 1;
-
-		// setUserPoints(userPoints + earnedPoints);
+		// calculate game points
+		const earnedPoints = calculateGamePoints(actualWord, statistics, mainWordKnown, mainWordType, correctGrammar);
+		setUserPoints(userPoints + earnedPoints);
 
 		// clear statistics in the state
 		setStatistics(emptyStatistics);
