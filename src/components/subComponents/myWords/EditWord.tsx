@@ -211,8 +211,8 @@ interface EditWordProps {
 
 const errorMessages: { [key: number]: string } = {
 	1: "English field is required.",
-	2: "At least one Hungarian meaning is required.",
-	3: "At least one example sentence is required.",
+	2: "At least one Hungarian meaning is required (in the first field).",
+	3: "At least one example sentence is required (in the first field).",
 };
 
 export default function EditWord({ initialWord, title, save }: EditWordProps) {
@@ -227,15 +227,13 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 			checkedErrors.push(1);
 		}
 
-		const hungarianMeanings = word.hungarian.filter((meaning: string) => meaning.length > 0);
-		if (hungarianMeanings.length === 0) {
-			checkedErrors.push(2);
-		}
+		word.hungarian.forEach((meaning: string) => {
+			if (meaning.length === 0) checkedErrors.push(2);
+		});
 
-		const sentences = word.sentences.filter((sentence: string) => sentence.length > 0);
-		if (sentences.length === 0) {
-			checkedErrors.push(3);
-		}
+		word.sentences.forEach((sentence: string) => {
+			if (sentence.length === 0) checkedErrors.push(3);
+		});
 
 		if (checkedErrors.length > 0) {
 			setErrors(checkedErrors);
