@@ -15,6 +15,7 @@ import { Word, WordType, WordWithScores } from "../../../utils/interfaces";
 
 // Utils
 import set from "lodash/set";
+import { generateID } from "../../../utils/utils";
 
 const Card = styled.div`
 	border: 1px solid ${colors.border};
@@ -214,26 +215,26 @@ const errorMessages: { [key: number]: string } = {
 	3: "At least one example sentence is required.",
 }; /* TODO: Later we can use an additional library for error handling if the project is getting bigger */
 
-export default function EditWord({ initialWord, title, save }: EditWordProps) {
-	const newEmptyWord: WordWithScores = {
-		id: 0, // TODO generate fake id
-		english: "",
-		hungarian: [""],
-		sentences: [""],
-		type: "word",
-		ownerId: 0, // TODO set the actul user's ID as ownerId
-		memoryLevel: 0,
-		actualScore: 0,
-		scoreToAchieve: 0,
-		favourite: false,
-		notes: null,
-		deletionDate: null,
-		statistics: {
-			english: 0,
-			hungarian: [],
-		},
-	};
+const newEmptyWord: WordWithScores = {
+	id: generateID(),
+	english: "",
+	hungarian: [""],
+	sentences: [""],
+	type: "word",
+	ownerId: 0, // TODO set the actul user's ID as ownerId
+	memoryLevel: 0,
+	actualScore: 0,
+	scoreToAchieve: 0,
+	favourite: false,
+	notes: null,
+	deletionDate: null,
+	statistics: {
+		english: 0,
+		hungarian: [],
+	},
+};
 
+export default function EditWord({ initialWord, title, save }: EditWordProps) {
 	const [word, setWord] = useState<Word>(initialWord || newEmptyWord);
 	const [errors, setErrors] = useState<number[]>([]);
 	const { setIsModalOpen } = useContext(AppContext);

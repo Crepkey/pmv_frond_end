@@ -1,3 +1,3 @@
 export function generateID() {
-	return Date.now().toString();
+	return Date.now();
 }
