@@ -11,7 +11,7 @@ import { Owner, Word } from "../../../utils/interfaces";
 import { TagColor } from "./interfaces";
 
 // Utils
-import { getColorsByKnowledge } from "./utils";
+import { getColorsByKnowledge } from "./calculateByKnowledgeLevels";
 
 // Components
 import SpinnerBar from "../../generalComponents/SpinnerBar";

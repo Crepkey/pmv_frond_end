@@ -17,7 +17,7 @@ import set from "lodash/set";
 import capitalize from "lodash/capitalize";
 
 // Helper functions
-import { calculateWordToAsk } from "./utils";
+import { calculateWordToAsk } from "./calculateByKnowledgeLevels";
 import { calculateDataToSave, calculateGamePoints } from "./calculateFinalResult";
 
 // TODO general card component??
@@ -120,10 +120,10 @@ const BoldText = styled.span`
 `;
 
 interface EvaluationRowProps {
-	title?: string;
+	title: string;
+	mainWord?: boolean;
 	checked: boolean;
 	toggleChecked: () => void;
-	mainWord?: boolean;
 }
 
 function EvaluationRow({ title, checked, toggleChecked, mainWord }: EvaluationRowProps) {
@@ -153,7 +153,7 @@ export default function EvaluationForm({ actualWord, getNextCard, userPoints, se
 	const { wordToAsk, wordToAnswer, mainWordType } = calculateWordToAsk(actualWord);
 
 	function save() {
-		// calculate the values that we need to save:
+		// calculate the values that we need to save
 		const wordToSave = calculateDataToSave(actualWord, statistics);
 		/*  TODO 
 		1) save to database (it would be better, if we didn't need the whole word, just the modified columns)
@@ -180,6 +180,7 @@ export default function EvaluationForm({ actualWord, getNextCard, userPoints, se
 				<Title>
 					{capitalize(actualWord.type)} to ask: {wordToAsk}
 				</Title>
+
 				<ScrollContainer>
 					{wordToAsk !== actualWord.english && (
 						<EvaluationRow
@@ -217,6 +218,7 @@ export default function EvaluationForm({ actualWord, getNextCard, userPoints, se
 					})}
 					<EvaluationRow title="grammatical structure" checked={correctGrammar} toggleChecked={() => setCorrectGrammar(!correctGrammar)} />
 				</ScrollContainer>
+
 				<ButtonContainer>
 					<Button onClick={save}>Save</Button>
 				</ButtonContainer>
