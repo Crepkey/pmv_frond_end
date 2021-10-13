@@ -13,6 +13,8 @@ import styled from "styled-components";
 
 /* Components */
 import Words from "../subComponents/myWords/Words";
+import Modal from "../generalComponents/Modal";
+import EditWord from "../subComponents/myWords/EditWord";
 
 const MainContainer = styled.div`
 	display: flex;
@@ -298,6 +300,9 @@ export default function MyWords() {
 
 	return (
 		<MainContainer>
+			<Modal>
+				<EditWord title="Edit word" />
+			</Modal>
 			<ControlBarContainer>
 				<AddNewWordButton>Add new word</AddNewWordButton>
 				<SearchContainer>
@@ -317,10 +322,10 @@ export default function MyWords() {
 							Deleted Words
 						</Tab>
 					</TabContainer>
-
 					<WordContainer>
 						<Route path="/my-words/active-words" component={() => <Words words={words} displayedWordsType="active" />} />
 						<Route path="/my-words/deleted-words" component={() => <Words words={words} displayedWordsType="deleted" />} />
+						{/* REFACTOR: In this case the openModal func. is not used but it's necessary to pass it down as a prop*/}
 					</WordContainer>
 				</TableBlock>
 			</TableContainer>

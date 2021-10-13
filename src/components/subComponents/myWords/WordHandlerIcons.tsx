@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import { useState, useContext, Fragment } from "react";
 
 /* Interfaces */
 import { ExtendedWord } from "../../../utils/interfaces";
@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { colors } from "../../../utils/colors";
 import { IoArrowUndoOutline, IoArrowUndo } from "react-icons/io5";
 import { BsSuitHeart, BsSuitHeartFill, BsPencil, BsPencilFill, BsTrash, BsTrashFill } from "react-icons/bs";
+import { AppContext } from "../../../AppContext";
 
 const MainContainer = styled.div`
 	display: flex;
@@ -25,6 +26,7 @@ export default function WordHandlerIcons({ word }: WordHandlerProps) {
 	const [isTrashIconHovered, setTrashIconHover] = useState(false);
 	const [isFavoriteIconHovered, setFavoriteIconHover] = useState(false);
 	const [isEditIconHovered, setEditIconHover] = useState(false);
+	const { setIsModalOpen } = useContext(AppContext);
 
 	function calculateHandlerIcons() {
 		if (word.active === true) {
@@ -47,9 +49,12 @@ export default function WordHandlerIcons({ word }: WordHandlerProps) {
 							)}
 						</div>
 					)}
+
+					{/* EDIT ICON */}
+
 					<div onMouseEnter={() => setEditIconHover(true)} onMouseLeave={() => setEditIconHover(false)}>
 						{isEditIconHovered ? (
-							<BsPencilFill size={25} style={{ marginRight: 12 }} />
+							<BsPencilFill size={25} style={{ marginRight: 12 }} onClick={() => setIsModalOpen(true)} />
 						) : (
 							<BsPencil size={25} style={{ marginRight: 12 }} />
 						)}
