@@ -1,5 +1,6 @@
 import { WordWithScores } from "./interfaces";
 
+/* TODO: We need a stable solution for ID generation for react keys */
 export function generateID() {
 	return Date.now() + Math.random();
 }

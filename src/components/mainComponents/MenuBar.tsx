@@ -64,7 +64,7 @@ export default function MenuBar() {
 				<MenuItem to="/test" style={{ color: colors.error }}>
 					Test your stuff
 				</MenuItem>
-				<MenuItem to="/my-words">My words</MenuItem>
+				<MenuItem to="/my-words/active-words">My words</MenuItem>
 				<MenuItem to="/lets-play">Let's play</MenuItem>
 			</Menu>
 			<UserAvatarContainer>
