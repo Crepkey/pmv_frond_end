@@ -177,15 +177,10 @@ const PageNumber = styled.div`
 	padding: 0 8px 0 8px;
 `;
 
-interface ExtendedWord extends Word {
-	id: number;
-	active: boolean;
-	deletionDate?: Date;
-}
-
-const deletedWords: ExtendedWord[] = [
+const deletedWords: Word[] = [
 	{
 		id: 2,
+		ownerId: 1,
 		english: "English2",
 		hungarian: ["hun1", "hun2", "hun3"],
 		sentences: ["sentence1", "sentence2", "sentence3"],
@@ -193,11 +188,11 @@ const deletedWords: ExtendedWord[] = [
 		type: "word",
 		favourite: false,
 		memoryLevel: 18,
-		active: false,
 		deletionDate: new Date("2021-08-13"),
 	},
 	{
 		id: 6,
+		ownerId: 1,
 		english: "English6",
 		hungarian: ["hun1", "hun2", "hun3"],
 		sentences: ["sentence1", "sentence2", "sentence3"],
@@ -205,11 +200,11 @@ const deletedWords: ExtendedWord[] = [
 		type: "word",
 		favourite: true,
 		memoryLevel: 98,
-		active: false,
 		deletionDate: new Date("2021-09-24"),
 	},
 	{
 		id: 7,
+		ownerId: 1,
 		english: "English7",
 		hungarian: ["hun1", "hun2", "hun3"],
 		sentences: ["sentence1", "sentence2", "sentence3"],
@@ -217,14 +212,14 @@ const deletedWords: ExtendedWord[] = [
 		type: "word",
 		favourite: true,
 		memoryLevel: 98,
-		active: false,
 		deletionDate: new Date("2021-10-10"),
 	},
 ];
 
-const activeWords: ExtendedWord[] = [
+const activeWords: Word[] = [
 	{
 		id: 1,
+		ownerId: 1,
 		english: "English",
 		hungarian: ["hun1", "hun2", "hun3"],
 		sentences: ["sentence1", "sentence2", "sentence3"],
@@ -232,10 +227,11 @@ const activeWords: ExtendedWord[] = [
 		type: "word",
 		favourite: true,
 		memoryLevel: 0,
-		active: true,
+		deletionDate: null,
 	},
 	{
 		id: 3,
+		ownerId: 1,
 		english: "English3",
 		hungarian: ["hun1", "hun2", "hun3"],
 		sentences: ["sentence1", "sentence2", "sentence3"],
@@ -243,10 +239,11 @@ const activeWords: ExtendedWord[] = [
 		type: "word",
 		favourite: false,
 		memoryLevel: 38,
-		active: true,
+		deletionDate: null,
 	},
 	{
 		id: 4,
+		ownerId: 1,
 		english: "English4",
 		hungarian: ["hun1", "hun2", "hun3"],
 		sentences: ["sentence1", "sentence2", "sentence3"],
@@ -254,10 +251,11 @@ const activeWords: ExtendedWord[] = [
 		type: "word",
 		favourite: true,
 		memoryLevel: 67,
-		active: true,
+		deletionDate: null,
 	},
 	{
 		id: 5,
+		ownerId: 1,
 		english: "English5",
 		hungarian: ["hun1", "hun2", "hun3"],
 		sentences: ["sentence1", "sentence2", "sentence3"],
@@ -265,13 +263,13 @@ const activeWords: ExtendedWord[] = [
 		type: "word",
 		favourite: true,
 		memoryLevel: 98,
-		active: true,
+		deletionDate: null,
 	},
 ];
 
 export interface APICallResult {
-	activeWords: ExtendedWord[];
-	deletedWords: ExtendedWord[];
+	activeWords: Word[];
+	deletedWords: Word[];
 }
 
 export default function MyWords() {

@@ -6,7 +6,7 @@ import { Card, CardHeader, CardBody, CardTitle, CardBodyScrollContainer, Block, 
 import { CheckBox, BoldText, ButtonContainer } from "./styles";
 
 // Interfaces
-import { Word } from "../../../utils/interfaces";
+import { WordWithScores } from "../../../utils/interfaces";
 import { GameStatistics } from "./interfaces";
 
 // Icons
@@ -41,7 +41,7 @@ function EvaluationRow({ title, checked, toggleChecked, mainWord }: EvaluationRo
 }
 
 interface EvaluationFormProps {
-	actualWord: Word;
+	actualWord: WordWithScores;
 	getNextCard: () => void;
 	userPoints: number;
 	setUserPoints: (newPoints: number) => void;

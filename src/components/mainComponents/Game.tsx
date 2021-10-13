@@ -6,7 +6,7 @@ import { GreenButton } from "../generalComponents/styles";
 import { GameMainContainer, FinalScreenContainer } from "../subComponents/game/styles";
 
 // Interfaces
-import { Owner, Points, Word } from "../../utils/interfaces";
+import { Owner, Points, WordWithScores } from "../../utils/interfaces";
 
 // Components
 import PlayingCard from "../subComponents/game/PlayingCard";
@@ -22,7 +22,7 @@ import get from "lodash/get";
 
 export default function Game() {
 	const [owners, setOwners] = useState<Owner[]>([]);
-	const [words, setWords] = useState<Word[]>([]);
+	const [words, setWords] = useState<WordWithScores[]>([]);
 	const [actualIndex, setActualIndex] = useState<number>(0);
 	const [points, setPoints] = useState<Points>({});
 

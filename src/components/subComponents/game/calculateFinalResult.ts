@@ -1,5 +1,5 @@
 // Interfaces
-import { LanguageType, Word, WordStatistics } from "../../../utils/interfaces";
+import { LanguageType, WordWithScores, WordStatistics } from "../../../utils/interfaces";
 import { GameStatistics } from "./interfaces";
 
 // Utils
@@ -8,7 +8,7 @@ import set from "lodash/set";
 import round from "lodash/round";
 import cloneDeep from "lodash/cloneDeep";
 
-function calculateScoresToSave(word: Word, gameStatistics: GameStatistics): { actualScore: number; memoryLevel: number } {
+function calculateScoresToSave(word: WordWithScores, gameStatistics: GameStatistics): { actualScore: number; memoryLevel: number } {
 	const englishScore = gameStatistics.english ? 1 : 0;
 	const hungarianScore = gameStatistics.hungarian.filter((s: boolean) => s === true).length;
 	const scoreNow = englishScore + hungarianScore;
@@ -17,7 +17,7 @@ function calculateScoresToSave(word: Word, gameStatistics: GameStatistics): { ac
 	return { actualScore, memoryLevel: round((actualScore / word.scoreToAchieve) * 100, 2) };
 }
 
-function calculateStatisticsToSave(word: Word, gameStatistics: GameStatistics): WordStatistics {
+function calculateStatisticsToSave(word: WordWithScores, gameStatistics: GameStatistics): WordStatistics {
 	const statisticsToSave = cloneDeep(word.statistics) || { english: 0, hungarian: word.hungarian.map(() => 0) };
 
 	function checkAndSetLanguageStatistics(path: any[]) {
@@ -36,7 +36,7 @@ function calculateStatisticsToSave(word: Word, gameStatistics: GameStatistics): 
 	return statisticsToSave;
 }
 
-function calculateDeletionDateToSave(word: Word, actualScore: number): Date | null {
+function calculateDeletionDateToSave(word: WordWithScores, actualScore: number): Date | null {
 	// set deletionDate, if you don't have to practice this word anymore
 	if (actualScore > word.scoreToAchieve) {
 		return new Date();
@@ -44,7 +44,7 @@ function calculateDeletionDateToSave(word: Word, actualScore: number): Date | nu
 	return null;
 }
 
-export function calculateDataToSave(word: Word, gameStatistics: GameStatistics): Word {
+export function calculateDataToSave(word: WordWithScores, gameStatistics: GameStatistics): WordWithScores {
 	const { actualScore, memoryLevel } = calculateScoresToSave(word, gameStatistics);
 	const statisticsToSave = calculateStatisticsToSave(word, gameStatistics);
 	const deletionDate = calculateDeletionDateToSave(word, actualScore);
@@ -54,7 +54,7 @@ export function calculateDataToSave(word: Word, gameStatistics: GameStatistics):
 }
 
 export function calculateGamePoints(
-	word: Word,
+	word: WordWithScores,
 	gameStatistics: GameStatistics,
 	mainWordKnown: boolean,
 	mainWordType: LanguageType,

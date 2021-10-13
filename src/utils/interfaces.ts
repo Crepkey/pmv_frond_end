@@ -12,27 +12,22 @@ export interface WordStatistics {
 	hungarian: number[];
 }
 export interface Word {
+	id: number;
 	ownerId: number;
 	english: string;
 	hungarian: string[];
 	sentences: string[];
-	notes?: string;
-	type?: WordType;
-	favourite?: boolean;
+	notes: string | null;
+	type: WordType;
+	favourite: boolean;
+	deletionDate: Date | null;
 	memoryLevel: number;
-
-	deletionDate?: Date | null;
+}
+export interface WordWithScores extends Word {
 	actualScore: number;
 	scoreToAchieve: number;
-	statistics?: WordStatistics;
+	statistics: WordStatistics;
 }
-
 export interface Points {
 	[ownerId: number]: number;
-}
-
-export interface ExtendedWord extends Word {
-	id: number;
-	active: boolean;
-	deletionDate?: Date;
 }

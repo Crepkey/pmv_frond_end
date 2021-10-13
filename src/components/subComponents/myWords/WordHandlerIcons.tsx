@@ -1,7 +1,7 @@
 import { useState, useContext, Fragment } from "react";
 
 /* Interfaces */
-import { ExtendedWord } from "../../../utils/interfaces";
+import { Word } from "../../../utils/interfaces";
 
 /* Styles */
 import styled from "styled-components";
@@ -19,7 +19,7 @@ const MainContainer = styled.div`
 `;
 
 interface WordHandlerProps {
-	word: ExtendedWord;
+	word: Word;
 }
 export default function WordHandlerIcons({ word }: WordHandlerProps) {
 	const [isRestoreIconHovered, setRestoreIconHover] = useState(false);
@@ -29,7 +29,7 @@ export default function WordHandlerIcons({ word }: WordHandlerProps) {
 	const { setIsModalOpen } = useContext(AppContext);
 
 	function calculateHandlerIcons() {
-		if (word.active === true) {
+		if (word.deletionDate === null) {
 			return (
 				<Fragment>
 					{word.favourite ? (

@@ -11,7 +11,7 @@ import { colors } from "../../../utils/colors";
 import { BsSuitHeart, BsSuitHeartFill, BsPlus, BsX, BsTrash } from "react-icons/bs";
 
 // Interfaces
-import { Word, WordType } from "../../../utils/interfaces";
+import { Word, WordType, WordWithScores } from "../../../utils/interfaces";
 
 // Utils
 import set from "lodash/set";
@@ -214,7 +214,8 @@ const errorMessages: { [key: number]: string } = {
 }; /* TODO: Later we can use an additional library for error handling if the project is getting bigger */
 
 export default function EditWord({ initialWord, title }: EditWordProps) {
-	const newEmptyWord: Word = {
+	const newEmptyWord: WordWithScores = {
+		id: 0, // TODO generate fake id
 		english: "",
 		hungarian: [""],
 		sentences: [""],
@@ -223,6 +224,13 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 		memoryLevel: 0,
 		actualScore: 0,
 		scoreToAchieve: 0,
+		favourite: false,
+		notes: null,
+		deletionDate: null,
+		statistics: {
+			english: 0,
+			hungarian: [],
+		},
 	};
 
 	const [word, setWord] = useState<Word>(initialWord || newEmptyWord);
@@ -252,12 +260,13 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 		}
 
 		// contains only the filtered arrays, without empty strings
-		// const wordToSave: Word = {
+		// const wordToSave = {
 		// 	...word,
 		// 	hungarian: hungarianMeanings,
 		// 	sentences,
 		// 	scoreToAchieve: (1 + hungarianMeanings.length) * 10,
 		// 	statistics: {
+		// 		// TODO: when you are editing a word, we have to use the original values
 		// 		english: 0,
 		// 		hungarian: hungarianMeanings.map(() => 0),
 		// 	},
@@ -394,7 +403,7 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 							onChange={(e) => {
 								setWord({ ...word, notes: e.target.value });
 							}}
-							value={word.notes}></Textarea>
+							value={word.notes === null ? "" : word.notes}></Textarea>
 					</Form>
 				</ScrollContainer>
 

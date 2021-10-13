@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 
 /* Interafaces */
-import { ExtendedWord } from "../../../utils/interfaces";
+import { Word } from "../../../utils/interfaces";
 import { APICallResult } from "../../mainComponents/MyWords";
 
 /* Components */
@@ -14,11 +14,11 @@ interface WordsProps {
 }
 
 export default function Words({ words, displayedWordsType }: WordsProps) {
-	const displayedWords: ExtendedWord[] = displayedWordsType === "active" ? words.activeWords : words.deletedWords;
+	const displayedWords: Word[] = displayedWordsType === "active" ? words.activeWords : words.deletedWords;
 
 	return (
 		<Fragment>
-			{displayedWords.map((word: ExtendedWord, index: number) =>
+			{displayedWords.map((word: Word, index: number) =>
 				displayedWordsType === "active" ? (
 					<ActiveWordRow key={word.id} word={word} rowNumber={index} />
 				) : (

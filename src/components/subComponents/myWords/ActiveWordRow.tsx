@@ -1,5 +1,5 @@
 /* Interfaces */
-import { ExtendedWord } from "../../../utils/interfaces";
+import { Word } from "../../../utils/interfaces";
 
 /* Styles */
 import styled from "styled-components";
@@ -48,7 +48,7 @@ const MemoryState = styled.div`
 `;
 
 interface ActiveWordRowProps {
-	word: ExtendedWord;
+	word: Word;
 	rowNumber: number;
 }
 

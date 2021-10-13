@@ -1,5 +1,5 @@
 /* Interfaces */
-import { ExtendedWord } from "../../../utils/interfaces";
+import { Word } from "../../../utils/interfaces";
 
 /* Styles */
 import styled from "styled-components";
@@ -55,7 +55,7 @@ const DeletionCountdown = styled.div`
 `;
 
 interface DeletedWordRowProps {
-	word: ExtendedWord;
+	word: Word;
 	rowNumber: number;
 }
 
