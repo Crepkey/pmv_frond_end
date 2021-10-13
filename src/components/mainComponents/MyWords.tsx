@@ -1,20 +1,18 @@
+import { useState, useEffect } from "react";
+import { Route, Link } from "react-router-dom";
+
+/* Interfaces */
+import { Word } from "../../utils/interfaces";
+
 /* Icons */
-import {
-	BsSuitHeartFill,
-	BsSuitHeart,
-	BsTrash,
-	BsFilter,
-	BsChevronLeft,
-	BsChevronRight,
-	BsChevronDoubleLeft,
-	BsChevronDoubleRight,
-	BsPencil,
-} from "react-icons/bs";
+import { BsFilter, BsChevronLeft, BsChevronRight, BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
 
 /* Styles */
 import { colors } from "../../utils/colors";
 import styled from "styled-components";
-import SpinnerBar from "../generalComponents/SpinnerBar";
+
+/* Components */
+import Words from "../subComponents/myWords/Words";
 
 const MainContainer = styled.div`
 	display: flex;
@@ -110,18 +108,19 @@ const TabContainer = styled.div`
 	flex: 1;
 `;
 
-const Tab = styled.div`
+const Tab = styled(Link)`
 	display: flex;
 	flex: 1;
 	justify-content: center;
 	align-items: center;
 	font-weight: 550;
+	text-decoration: none;
 	border: 1px solid ${colors.border};
 	border-radius: 8px 8px 0 0;
 	background: ${colors.background};
 	:hover {
 		color: ${colors.activeFont};
-		border-bottom: 3px ${colors.activeBorder} solid;
+		border-bottom: 3px ${colors.selectedBorder} solid;
 	}
 `;
 
@@ -137,57 +136,6 @@ const WordContainer = styled.div`
 	border-bottom: 1px solid ${colors.border};
 	border-radius: 0 0 16px 16px;
 	background: ${colors.background};
-`;
-
-const WordRowWhite = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	min-height: 2rem;
-	padding: 3px 12px 3px 12px;
-	background: ${colors.rowBackgroundLight};
-	border-bottom: 1px ${colors.rowBorder} solid;
-`;
-const WordRowGray = styled.div`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	min-height: 2rem;
-	padding: 3px 12px 3px 12px;
-	background: ${colors.rowBackgroundDark};
-	border-bottom: 1px ${colors.rowBorder} solid;
-`;
-
-const EnglishWord = styled.div`
-	display: flex;
-	flex: 2;
-	padding-right: 12px;
-	font-weight: 450;
-`;
-
-const HungarianWords = styled.div`
-	display: flex;
-	flex: 5;
-	padding-right: 12px;
-	font-weight: 300;
-`;
-
-const MemoryLevel = styled.div`
-	display: flex;
-	flex: 2;
-	align-items: center;
-	padding-right: 12px;
-`;
-
-const MemoryState = styled.div`
-	font-weight: 350;
-`;
-
-const WordHandler = styled.div`
-	display: flex;
-	flex: 1;
-	justify-content: space-between;
-	padding-right: 12px;
 `;
 
 const PaginationContainer = styled.div`
@@ -227,7 +175,127 @@ const PageNumber = styled.div`
 	padding: 0 8px 0 8px;
 `;
 
+interface ExtendedWord extends Word {
+	id: number;
+	active: boolean;
+	deletionDate?: Date;
+}
+
+const deletedWords: ExtendedWord[] = [
+	{
+		id: 2,
+		english: "English2",
+		hungarian: ["hun1", "hun2", "hun3"],
+		sentences: ["sentence1", "sentence2", "sentence3"],
+		notes: "This is a notes",
+		type: "word",
+		favourite: false,
+		memoryLevel: 18,
+		active: false,
+		deletionDate: new Date("2021-08-13"),
+	},
+	{
+		id: 6,
+		english: "English6",
+		hungarian: ["hun1", "hun2", "hun3"],
+		sentences: ["sentence1", "sentence2", "sentence3"],
+		notes: "This is a notes",
+		type: "word",
+		favourite: true,
+		memoryLevel: 98,
+		active: false,
+		deletionDate: new Date("2021-09-24"),
+	},
+	{
+		id: 7,
+		english: "English7",
+		hungarian: ["hun1", "hun2", "hun3"],
+		sentences: ["sentence1", "sentence2", "sentence3"],
+		notes: "This is a notes",
+		type: "word",
+		favourite: true,
+		memoryLevel: 98,
+		active: false,
+		deletionDate: new Date("2021-10-10"),
+	},
+];
+
+const activeWords: ExtendedWord[] = [
+	{
+		id: 1,
+		english: "English",
+		hungarian: ["hun1", "hun2", "hun3"],
+		sentences: ["sentence1", "sentence2", "sentence3"],
+		notes: "This is a notes",
+		type: "word",
+		favourite: true,
+		memoryLevel: 0,
+		active: true,
+	},
+	{
+		id: 3,
+		english: "English3",
+		hungarian: ["hun1", "hun2", "hun3"],
+		sentences: ["sentence1", "sentence2", "sentence3"],
+		notes: "This is a notes",
+		type: "word",
+		favourite: false,
+		memoryLevel: 38,
+		active: true,
+	},
+	{
+		id: 4,
+		english: "English4",
+		hungarian: ["hun1", "hun2", "hun3"],
+		sentences: ["sentence1", "sentence2", "sentence3"],
+		notes: "This is a notes",
+		type: "word",
+		favourite: true,
+		memoryLevel: 67,
+		active: true,
+	},
+	{
+		id: 5,
+		english: "English5",
+		hungarian: ["hun1", "hun2", "hun3"],
+		sentences: ["sentence1", "sentence2", "sentence3"],
+		notes: "This is a notes",
+		type: "word",
+		favourite: true,
+		memoryLevel: 98,
+		active: true,
+	},
+];
+
+export interface APICallResult {
+	activeWords: ExtendedWord[];
+	deletedWords: ExtendedWord[];
+}
+
 export default function MyWords() {
+	const [words, setWords] = useState<APICallResult>({ activeWords: [], deletedWords: [] });
+	const [activeTab, setActiveTab] = useState<"active-words" | "deleted-words">("active-words");
+
+	useEffect(() => {
+		load();
+	}, []);
+
+	function load() {
+		setWords({ activeWords, deletedWords });
+	}
+
+	function changeTabStyle() {
+		const activeTabStyle = {
+			backgroundColor: colors.activeBackground,
+			color: colors.activeFont,
+			borderBottom: `3px ${colors.activeBorder} solid`,
+		};
+		const inactiveTabStyle = { backgroundColor: colors.inactiveBackground, color: colors.inactiveFont };
+
+		if (activeTab === "active-words") return { activeWordsTab: activeTabStyle, deletedWordsTab: inactiveTabStyle };
+		else return { activeWordsTab: inactiveTabStyle, deletedWordsTab: activeTabStyle };
+	}
+
 	return (
 		<MainContainer>
 			<ControlBarContainer>
@@ -242,36 +310,17 @@ export default function MyWords() {
 			<TableContainer>
 				<TableBlock>
 					<TabContainer>
-						<Tab>Active Words</Tab>
-						<Tab style={{ backgroundColor: `${colors.inactiveBackground}`, color: `${colors.inactiveFont}` }}>Deleted Words</Tab>
+						<Tab to="/my-words/active-words" onClick={() => setActiveTab("active-words")} style={changeTabStyle().activeWordsTab}>
+							Active Words
+						</Tab>
+						<Tab to="/my-words/deleted-words" onClick={() => setActiveTab("deleted-words")} style={changeTabStyle().deletedWordsTab}>
+							Deleted Words
+						</Tab>
 					</TabContainer>
+
 					<WordContainer>
-						<WordRowWhite>
-							<EnglishWord>English Word 1</EnglishWord>
-							<HungarianWords>Magyar szó 1, Magyar szó 2</HungarianWords>
-							<MemoryLevel>
-								<SpinnerBar size={24} status={34} style={{ margin: "0 12px 0 0" }} />
-								<MemoryState>Long Term Memory</MemoryState>
-							</MemoryLevel>
-							<WordHandler>
-								<BsSuitHeartFill size={25} />
-								<BsPencil size={25} />
-								<BsTrash size={25} />
-							</WordHandler>
-						</WordRowWhite>
-						<WordRowGray>
-							<EnglishWord>Longer English Word about...</EnglishWord>
-							<HungarianWords>Bélapátfalva, Budapest, Ugod, Pápa, Harci majom, Elkelkáposztástalanítottátok</HungarianWords>
-							<MemoryLevel>
-								<SpinnerBar size={24} status={96} style={{ margin: "0 12px 0 0", background: `${colors.rowBackgroundDark}` }} />
-								<MemoryState>Long Term Memory</MemoryState>
-							</MemoryLevel>
-							<WordHandler>
-								<BsSuitHeart size={25} />
-								<BsPencil size={25} />
-								<BsTrash size={25} />
-							</WordHandler>
-						</WordRowGray>
+						<Route path="/my-words/active-words" component={() => <Words words={words} displayedWordsType="active" />} />
+						<Route path="/my-words/deleted-words" component={() => <Words words={words} displayedWordsType="deleted" />} />
 					</WordContainer>
 				</TableBlock>
 			</TableContainer>
@@ -293,3 +342,5 @@ export default function MyWords() {
 		</MainContainer>
 	);
 }
+
+/* TODO: Responsive layout */

@@ -30,3 +30,9 @@ export interface Word {
 export interface Points {
 	[ownerId: number]: number;
 }
+
+export interface ExtendedWord extends Word {
+	id: number;
+	active: boolean;
+	deletionDate?: Date;
+}
