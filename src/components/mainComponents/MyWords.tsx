@@ -270,16 +270,9 @@ const activeWords: Word[] = [
 	},
 ];
 
-export interface APICallResult {
-	activeWords: Word[];
-	deletedWords: Word[];
-}
-
 export default function MyWords() {
-	const [words, setWords] = useState<APICallResult>({
-		activeWords: [],
-		deletedWords: [],
-	}); /* REFACTOR: Split this two separated entry active / deleted */
+	const [activeWords, setActiveWords] = useState<Word[]>([]);
+	const [deletedWords, setDeletedWords] = useState<Word[]>([]);
 	const [activeTab, setActiveTab] = useState<"active-words" | "deleted-words">("active-words");
 	const { wordForEditing } = useContext(AppContext);
 
@@ -288,7 +281,8 @@ export default function MyWords() {
 	}, []);
 
 	function load() {
-		setWords({ activeWords, deletedWords });
+		setActiveWords(activeWords);
+		setDeletedWords(deletedWords);
 	}
 
 	function changeTabStyle() {
@@ -304,8 +298,8 @@ export default function MyWords() {
 	}
 
 	function saveEditedWord(editedWord: Word) {
-		const currentActiveWords = words.activeWords.map((word: Word) => (editedWord.id === word.id ? editedWord : word));
-		setWords({ activeWords: currentActiveWords, deletedWords: words.deletedWords });
+		const currentActiveWords = activeWords.map((word: Word) => (editedWord.id === word.id ? editedWord : word));
+		setActiveWords(currentActiveWords);
 	}
 
 	return (
@@ -333,8 +327,8 @@ export default function MyWords() {
 						</Tab>
 					</TabContainer>
 					<WordContainer>
-						<Route path="/my-words/active-words" component={() => <Words words={words} displayedWordsType="active" />} />
-						<Route path="/my-words/deleted-words" component={() => <Words words={words} displayedWordsType="deleted" />} />
+						<Route path="/my-words/active-words" component={() => <Words activeWords={activeWords} />} />
+						<Route path="/my-words/deleted-words" component={() => <Words deletedWords={deletedWords} />} />
 					</WordContainer>
 				</TableBlock>
 			</TableContainer>
