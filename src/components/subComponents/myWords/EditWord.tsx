@@ -288,7 +288,7 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 						{errors.includes(2) ? <Label error={true}>{errorMessages[2]}</Label> : <Label>Hungarian meanings</Label>}
 						<Block>
 							{word.hungarian.map((meaning: string, i: number) => (
-								<Row key={generateID()}>
+								<Row key={`${i}_hunMean`}>
 									<StringInput
 										error={errors.includes(2) && i === 0}
 										placeholder="Type one Hungarian meaning here..."
@@ -325,7 +325,7 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 						{errors.includes(3) ? <Label error={true}>{errorMessages[3]}</Label> : <Label>Example sentences</Label>}
 						<Block>
 							{word.sentences.map((sentence: string, i: number) => (
-								<Row key={generateID()}>
+								<Row key={`${i}_sentence`}>
 									{/* TODO we should use a textarea here which is automatically resized when the text is too long */}
 									<StringInput
 										error={errors.includes(3) && i === 0}
