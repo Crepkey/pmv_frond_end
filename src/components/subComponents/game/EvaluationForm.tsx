@@ -78,7 +78,7 @@ export default function EvaluationForm({ actualWord, getNextCard, userPoints, se
 
 	return (
 		<Card>
-			<CardHeader>Evaluation Form</CardHeader>
+			<CardHeader>Evaluation form</CardHeader>
 
 			<CardBody>
 				<CardTitle>

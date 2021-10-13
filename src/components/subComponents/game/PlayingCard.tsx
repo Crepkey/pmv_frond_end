@@ -1,7 +1,7 @@
 // Styles
 import { colors } from "../../../utils/colors";
 import { Card, CardHeader, CardBody, CardTitle, CardBodyScrollContainer, Block } from "../../generalComponents/styles";
-import { HeaderIcon, SpinnerBarContainer, TagContainer, Tag, SentenceCard, VolumeIcon } from "./styles";
+import { HeaderIcon, SpinnerBarContainer, TagContainer, Tag, SentenceCard, VolumeIcon, TitleContainer } from "./styles";
 
 // Icons
 import { MdVolumeUp } from "react-icons/md";
@@ -29,19 +29,19 @@ export default function PlayingCard({ owner, word }: PlayingCardProps) {
 		<Card>
 			<CardHeader>
 				<HeaderIcon>{owner?.sex === "male" ? <GiSwordman size={28} /> : <GiSwordwoman size={28} />}</HeaderIcon>
-				This word belongs to {owner?.name}
+				{owner?.name}'s word
 				<SpinnerBarContainer>
 					<SpinnerBar size={28} status={word.memoryLevel} style={{ background: colors.headerGradientDark }} />
 				</SpinnerBarContainer>
 			</CardHeader>
 
 			<CardBody>
-				<CardTitle>
-					{word.english}
+				<TitleContainer>
+					<CardTitle>{word.english}</CardTitle>
 					<VolumeIcon>
-						<MdVolumeUp />
+						<MdVolumeUp size={32} />
 					</VolumeIcon>
-				</CardTitle>
+				</TitleContainer>
 
 				<CardBodyScrollContainer>
 					<TagContainer>

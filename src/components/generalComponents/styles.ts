@@ -36,7 +36,7 @@ export const CardBody = styled.div`
 
 export const CardTitle = styled.div`
 	display: flex;
-	justify-content: space-between;
+	flex-direction: column;
 	font-size: 2rem;
 	margin-bottom: 24px;
 	font-weight: 550;

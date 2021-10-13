@@ -31,3 +31,17 @@ export interface WordWithScores extends Word {
 export interface Points {
 	[ownerId: number]: number;
 }
+
+export interface Usage {
+	description: string;
+	example: string;
+}
+export interface GrammaticalStructure {
+	id: number;
+	title: string;
+	subTitle: string;
+	forming: string;
+	notes: string | null;
+	basicSentences: string[];
+	realLifeUsages: Usage[];
+}

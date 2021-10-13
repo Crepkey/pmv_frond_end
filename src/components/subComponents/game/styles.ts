@@ -14,6 +14,16 @@ export const HeaderIcon = styled.div`
 	margin-right: 16px;
 `;
 
+export const SentenceCard = styled.div<{ lastElement: boolean }>`
+	background: ${colors.background};
+	margin-bottom: ${({ lastElement }: any) => (lastElement ? 0 : "8px")};
+	font-size: 1.15rem;
+	padding: 8px;
+	border-radius: 8px;
+	font-weight: 300;
+	border-bottom: 1px ${colors.border} solid;
+`;
+
 // GAME COMPONENT
 export const GameMainContainer = styled.div`
 	display: flex;
@@ -36,9 +46,12 @@ export const SpinnerBarContainer = styled.div`
 	flex: 1;
 `;
 
-export const VolumeIcon = styled.div`
+export const TitleContainer = styled.div`
 	display: flex;
-	align-items: center;
+	justify-content: space-between;
+`;
+
+export const VolumeIcon = styled.div`
 	color: gray;
 	padding-left: 16px;
 `;
@@ -58,16 +71,6 @@ export const Tag = styled.div<{ background?: string }>`
 	font-weight: 400;
 	border-bottom: 1px ${colors.border} solid;
 	color: ${({ background }: any) => (background ? colors.buttonFont : colors.inactiveFont)};
-`;
-
-export const SentenceCard = styled.div<{ lastElement: boolean }>`
-	background: ${colors.background};
-	margin-bottom: ${({ lastElement }: any) => (lastElement ? 0 : "8px")};
-	font-size: 1.15rem;
-	padding: 8px;
-	border-radius: 8px;
-	font-weight: 300;
-	border-bottom: 1px ${colors.border} solid;
 `;
 
 // EVALUATIONFORM COMPONENT
@@ -117,4 +120,29 @@ export const Congrats = styled.div`
 	font-size: 1.25rem;
 	font-weight: bolder;
 	margin: 16px;
+`;
+
+// GRAMMARCARD COMPONENT
+export const SubTitle = styled.div`
+	font-weight: normal;
+	font-style: italic;
+	font-size: 1rem;
+	margin-left: 32px;
+`;
+
+export const FormingSentence = styled.div`
+	font-weight: bold;
+	margin-bottom: 24px;
+	font-size: 1.1rem;
+`;
+
+export const UsageDescription = styled.div<{ firstElement: boolean }>`
+	font-weight: 600;
+	font-size: 0.9rem;
+	margin-top: ${({ firstElement }: any) => (firstElement ? 0 : "12px")};
+`;
+
+export const UsageSentence = styled.div`
+	padding: 8px 0 12px 16px;
+	border-bottom: 1px ${colors.border} solid;
 `;
