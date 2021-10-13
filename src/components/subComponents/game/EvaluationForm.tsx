@@ -2,7 +2,7 @@ import { useState } from "react";
 
 // Styles
 import styled from "styled-components";
-import { colors } from "../../../utils/colors";
+import { Card, CardHeader, CardBody, CardTitle, CardBodyScrollContainer, Block, GreenButton } from "../../generalComponents/styles";
 
 // Interfaces
 import { Word } from "../../../utils/interfaces";
@@ -20,91 +20,9 @@ import capitalize from "lodash/capitalize";
 import { calculateWordToAsk } from "./calculateByKnowledgeLevels";
 import { calculateDataToSave, calculateGamePoints } from "./calculateFinalResult";
 
-// TODO general card component??
-const Card = styled.div`
-	border: 1px solid ${colors.border};
-	border-radius: 8px;
-	margin: 16px;
-	width: 32%;
-	min-width: 20rem;
-	min-height: 0;
-	display: flex;
-	flex-direction: column;
-	overflow: hidden;
-`;
-
-const CardHeader = styled.div`
-	display: flex;
-	align-items: center;
-	font-weight: 450;
-	background-image: linear-gradient(to top, ${colors.headerGradientDarker}, ${colors.headerGradientDark}, ${colors.headerGradientLight});
-	border-bottom: 1px solid ${colors.border};
-	padding: 0 16px 0 16px;
-	min-height: 3rem;
-`;
-
-const CardBody = styled.div`
-	display: flex;
-	flex-direction: column;
-	flex: 1;
-	min-width: 0;
-	min-height: 0;
-	padding: 24px;
-`;
-
-const Title = styled.div`
-	display: flex;
-	justify-content: space-between;
-	font-size: 1.5rem;
-	margin-bottom: 24px;
-	font-weight: 550;
-`;
-
-const ScrollContainer = styled.div`
-	min-width: 0;
-	min-height: 0;
-	overflow: scroll;
-	flex: 1;
-	margin-bottom: 24px;
-`;
-
 const ButtonContainer = styled.div`
 	display: flex;
 	justify-content: center;
-`;
-
-const Button = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	cursor: pointer;
-	color: ${colors.buttonFont};
-	font-size: 1rem;
-	font-weight: bold;
-	padding: 6px 24px;
-	text-decoration: none;
-	border-radius: 16px;
-	border: none;
-	width: 30%;
-	background-color: ${colors.acceptButtonBackground};
-	:hover {
-		background: linear-gradient(to bottom, ${colors.acceptButtonGradientLight} 5%, ${colors.acceptButtonGradientDark} 100%);
-		background-color: ${colors.acceptButtonGradientLight};
-	}
-	:active {
-		position: relative;
-		top: 1px;
-	}
-`;
-
-const Block = styled.div`
-	display: flex;
-	background: ${colors.blockBackground};
-	border-radius: 24px;
-	padding: 24px;
-	margin-bottom: 24px;
-	font-weight: 300;
-	align-items: center;
 `;
 
 const CheckBox = styled.div`
@@ -129,9 +47,11 @@ interface EvaluationRowProps {
 function EvaluationRow({ title, checked, toggleChecked, mainWord }: EvaluationRowProps) {
 	return (
 		<Block>
-			<CheckBox onClick={toggleChecked}>{checked ? <BsCheckCircleFill size={20} /> : <BsDashCircle size={20} />}</CheckBox>
-			{mainWord && <BoldText>main word:</BoldText>}
-			{title}
+			<div style={{ display: "flex", alignItems: "center" }}>
+				<CheckBox onClick={toggleChecked}>{checked ? <BsCheckCircleFill size={20} /> : <BsDashCircle size={20} />}</CheckBox>
+				{mainWord && <BoldText>main word:</BoldText>}
+				{title}
+			</div>
 		</Block>
 	);
 }
@@ -177,11 +97,11 @@ export default function EvaluationForm({ actualWord, getNextCard, userPoints, se
 			<CardHeader>Evaluation Form</CardHeader>
 
 			<CardBody>
-				<Title>
+				<CardTitle>
 					{capitalize(actualWord.type)} to ask: {wordToAsk}
-				</Title>
+				</CardTitle>
 
-				<ScrollContainer>
+				<CardBodyScrollContainer>
 					{wordToAsk !== actualWord.english && (
 						<EvaluationRow
 							title={actualWord.english}
@@ -217,10 +137,10 @@ export default function EvaluationForm({ actualWord, getNextCard, userPoints, se
 						return null;
 					})}
 					<EvaluationRow title="grammatical structure" checked={correctGrammar} toggleChecked={() => setCorrectGrammar(!correctGrammar)} />
-				</ScrollContainer>
+				</CardBodyScrollContainer>
 
 				<ButtonContainer>
-					<Button onClick={save}>Save</Button>
+					<GreenButton onClick={save}>Save</GreenButton>
 				</ButtonContainer>
 			</CardBody>
 		</Card>

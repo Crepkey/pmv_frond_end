@@ -2,6 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 
 // Styles
 import styled from "styled-components";
+import { GreenButton } from "../generalComponents/styles";
 
 // Interfaces
 import { Owner, Points, Word } from "../../utils/interfaces";
@@ -17,7 +18,6 @@ import { testOwners, testWords } from "../../utils/testData";
 // Utils
 import set from "lodash/set";
 import get from "lodash/get";
-import { colors } from "../../utils/colors";
 
 const Body = styled.div`
 	display: flex;
@@ -31,32 +31,6 @@ const FinalScreen = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin: 24px;
-`;
-
-const Button = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	cursor: pointer;
-	color: ${colors.buttonFont};
-	font-size: 1rem;
-	font-weight: bold;
-	padding: 6px 24px;
-	margin-top: 28px;
-	text-decoration: none;
-	border-radius: 16px;
-	border: none;
-	width: fit-content;
-	background-color: ${colors.acceptButtonBackground};
-	:hover {
-		background: linear-gradient(to bottom, ${colors.acceptButtonGradientLight} 5%, ${colors.acceptButtonGradientDark} 100%);
-		background-color: ${colors.acceptButtonGradientLight};
-	}
-	:active {
-		position: relative;
-		top: 1px;
-	}
 `;
 
 export default function Game() {
@@ -99,13 +73,13 @@ export default function Game() {
 			{actualIndex >= words.length && (
 				<FinalScreen>
 					<FinalPoints owners={owners} points={points} />
-					<Button
+					<GreenButton
 						onClick={() => {
 							setActualIndex(0);
 							initialize();
 						}}>
 						Play again
-					</Button>
+					</GreenButton>
 				</FinalScreen>
 			)}
 		</Body>

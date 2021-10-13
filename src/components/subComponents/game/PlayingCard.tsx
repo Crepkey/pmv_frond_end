@@ -1,6 +1,7 @@
 /* Styles */
 import styled from "styled-components";
 import { colors } from "../../../utils/colors";
+import { Card, CardHeader, CardBody, CardTitle, CardBodyScrollContainer, Block } from "../../generalComponents/styles";
 
 // Icons
 import { MdVolumeUp } from "react-icons/md";
@@ -10,33 +11,11 @@ import { GiSwordwoman, GiSwordman } from "react-icons/gi";
 import { Owner, Word } from "../../../utils/interfaces";
 import { TagColor } from "./interfaces";
 
-// Utils
+// Helper functions
 import { getColorsByKnowledge } from "./calculateByKnowledgeLevels";
 
 // Components
 import SpinnerBar from "../../generalComponents/SpinnerBar";
-
-const Card = styled.div`
-	border: 1px solid ${colors.border};
-	border-radius: 8px;
-	margin: 16px;
-	width: 32%;
-	min-width: 20rem;
-	min-height: 0;
-	display: flex;
-	flex-direction: column;
-	overflow: hidden;
-`;
-
-const CardHeader = styled.div`
-	display: flex;
-	align-items: center;
-	font-weight: 450;
-	background-image: linear-gradient(to top, ${colors.headerGradientDarker}, ${colors.headerGradientDark}, ${colors.headerGradientLight});
-	border-bottom: 1px solid ${colors.border};
-	padding: 0 16px 0 16px;
-	min-height: 3rem;
-`;
 
 const HeaderIcon = styled.div`
 	border: 2px gray solid;
@@ -55,36 +34,11 @@ const SpinnerBarContainer = styled.div`
 	flex: 1;
 `;
 
-const CardBody = styled.div`
-	display: flex;
-	flex-direction: column;
-	flex: 1;
-	min-width: 0;
-	min-height: 0;
-	padding: 24px;
-`;
-
-const Title = styled.div`
-	display: flex;
-	justify-content: space-between;
-	font-size: 2rem;
-	margin-bottom: 24px;
-	font-weight: 550;
-`;
-
 const Icon = styled.div`
 	display: flex;
 	align-items: center;
 	color: gray;
 	padding-left: 16px;
-`;
-
-const ScrollContainer = styled.div`
-	min-width: 0;
-	min-height: 0;
-	overflow: scroll;
-	flex: 1;
-	margin-bottom: 24px;
 `;
 
 const TagContainer = styled.div`
@@ -102,14 +56,6 @@ const Tag = styled.div<{ background?: string }>`
 	font-weight: 400;
 	border-bottom: 1px ${colors.border} solid;
 	color: ${({ background }: any) => (background ? colors.buttonFont : colors.inactiveFont)};
-`;
-
-const Block = styled.div`
-	background: ${colors.blockBackground};
-	border-radius: 24px;
-	padding: 24px;
-	margin-bottom: 24px;
-	font-weight: 300;
 `;
 
 const SentenceCard = styled.div`
@@ -142,14 +88,14 @@ export default function PlayingCard({ owner, word }: PlayingCardProps) {
 			</CardHeader>
 
 			<CardBody>
-				<Title>
+				<CardTitle>
 					{word.english}
 					<Icon>
 						<MdVolumeUp />
 					</Icon>
-				</Title>
+				</CardTitle>
 
-				<ScrollContainer>
+				<CardBodyScrollContainer>
 					<TagContainer>
 						{word.hungarian.map((meaning: string, i: number) => {
 							const tagColor = tagColors.find((tc: TagColor) => {
@@ -168,7 +114,7 @@ export default function PlayingCard({ owner, word }: PlayingCardProps) {
 						))}
 					</Block>
 					{word.notes && <Block>{word.notes}</Block>}
-				</ScrollContainer>
+				</CardBodyScrollContainer>
 			</CardBody>
 		</Card>
 	);

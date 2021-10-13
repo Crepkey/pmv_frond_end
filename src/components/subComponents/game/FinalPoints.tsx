@@ -1,8 +1,6 @@
-import { Fragment } from "react";
-
 // Styles
 import styled from "styled-components";
-import { colors } from "../../../utils/colors";
+import { Card, CardHeader, CardBody } from "../../generalComponents/styles";
 
 // Icons
 import { GiSwordman, GiSwordwoman } from "react-icons/gi";
@@ -14,6 +12,13 @@ import { Owner, Points } from "../../../utils/interfaces";
 import max from "lodash/max";
 import get from "lodash/get";
 
+const MainContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 24px;
+`;
+
 const Title = styled.div`
 	font-size: 2rem;
 	margin: 24px 0 16px 0;
@@ -24,26 +29,11 @@ const CardContainer = styled.div`
 	display: flex;
 `;
 
-const Card = styled.div`
-	border: 1px solid ${colors.border};
-	border-radius: 8px;
-	margin: 16px;
-	width: 20%;
-	min-width: 20rem;
-	min-height: 0;
+const PointsContainer = styled.div`
 	display: flex;
-	flex-direction: column;
-	overflow: hidden;
-`;
-
-const CardHeader = styled.div`
-	display: flex;
-	align-items: center;
-	font-weight: 450;
-	background-image: linear-gradient(to top, ${colors.headerGradientDarker}, ${colors.headerGradientDark}, ${colors.headerGradientLight});
-	border-bottom: 1px solid ${colors.border};
-	padding: 0 16px 0 16px;
-	min-height: 3rem;
+	font-size: 3rem;
+	justify-content: center;
+	font-weight: bold;
 `;
 
 const HeaderIcon = styled.div`
@@ -55,18 +45,6 @@ const HeaderIcon = styled.div`
 	align-items: center;
 	border-radius: 30px;
 	margin-right: 16px;
-`;
-
-const CardBody = styled.div`
-	display: flex;
-	flex-direction: column;
-	flex: 1;
-	min-width: 0;
-	min-height: 0;
-	padding: 24px;
-	font-size: 3rem;
-	align-items: center;
-	font-weight: bold;
 `;
 
 const Congrats = styled.div`
@@ -85,7 +63,7 @@ export default function FinalPoints({ owners, points }: FinalPointsProps) {
 	const winners: Owner[] = owners.filter((o: Owner) => get(points, o.id) === maxPoint);
 
 	return (
-		<Fragment>
+		<MainContainer>
 			<Title>Final points</Title>
 
 			<CardContainer>
@@ -96,7 +74,9 @@ export default function FinalPoints({ owners, points }: FinalPointsProps) {
 								<HeaderIcon>{owner.sex === "male" ? <GiSwordman size={28} /> : <GiSwordwoman size={28} />}</HeaderIcon>
 								{owner.name}
 							</CardHeader>
-							<CardBody>{get(points, owner.id, "No points")}</CardBody>
+							<CardBody>
+								<PointsContainer>{get(points, owner.id, "No points")}</PointsContainer>
+							</CardBody>
 						</Card>
 					);
 				})}
@@ -104,6 +84,6 @@ export default function FinalPoints({ owners, points }: FinalPointsProps) {
 
 			<Congrats>Congratulations {winners.map((winner: Owner) => winner.name).join(" and ")}!</Congrats>
 			{winners.length === 1 ? "You won." : "You had the same number of points."}
-		</Fragment>
+		</MainContainer>
 	);
 }
