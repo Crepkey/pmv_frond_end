@@ -20,20 +20,30 @@ const MainContainer = styled.div`
 
 interface WordHandlerProps {
 	word: Word;
+	save(word: Word): void;
 }
-export default function WordHandlerIcons({ word }: WordHandlerProps) {
+export default function WordHandlerIcons({ word, save }: WordHandlerProps) {
 	const [isRestoreIconHovered, setRestoreIconHover] = useState(false);
 	const [isTrashIconHovered, setTrashIconHover] = useState(false);
 	const [isFavoriteIconHovered, setFavoriteIconHover] = useState(false);
 	const [isEditIconHovered, setEditIconHover] = useState(false);
 	const { setActiveModal: setIsModalOpen, setWordForEditing } = useContext(AppContext);
 
+	function toggleWordFavorite() {
+		word.favourite = !word.favourite;
+		save(word);
+	}
+
 	function calculateHandlerIcons() {
 		if (word.deletionDate === null) {
 			return (
 				<Fragment>
+					{/* FAVORITE */}
 					{word.favourite ? (
-						<div onMouseEnter={() => setFavoriteIconHover(true)} onMouseLeave={() => setFavoriteIconHover(false)}>
+						<div
+							onMouseEnter={() => setFavoriteIconHover(true)}
+							onMouseLeave={() => setFavoriteIconHover(false)}
+							onClick={() => toggleWordFavorite()}>
 							{isFavoriteIconHovered ? (
 								<BsSuitHeartFill size={25} style={{ marginRight: 12 }} />
 							) : (
@@ -41,7 +51,10 @@ export default function WordHandlerIcons({ word }: WordHandlerProps) {
 							)}
 						</div>
 					) : (
-						<div onMouseEnter={() => setFavoriteIconHover(true)} onMouseLeave={() => setFavoriteIconHover(false)}>
+						<div
+							onMouseEnter={() => setFavoriteIconHover(true)}
+							onMouseLeave={() => setFavoriteIconHover(false)}
+							onClick={() => toggleWordFavorite()}>
 							{isFavoriteIconHovered ? (
 								<BsSuitHeart size={25} style={{ marginRight: 12 }} />
 							) : (

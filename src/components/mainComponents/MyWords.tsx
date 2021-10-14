@@ -337,8 +337,8 @@ export default function MyWords() {
 						</Tab>
 					</TabContainer>
 					<WordContainer>
-						<Route path="/my-words/active-words" component={() => <Words activeWords={activeWords} />} />
-						<Route path="/my-words/deleted-words" component={() => <Words deletedWords={deletedWords} />} />
+						<Route path="/my-words/active-words" component={() => <Words activeWords={activeWords} save={saveEditedWord} />} />
+						<Route path="/my-words/deleted-words" component={() => <Words deletedWords={deletedWords} save={saveEditedWord} />} />
 					</WordContainer>
 				</TableBlock>
 			</TableContainer>

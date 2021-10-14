@@ -57,9 +57,10 @@ const DeletionCountdown = styled.div`
 interface DeletedWordRowProps {
 	word: Word;
 	rowNumber: number;
+	save(word: Word): void;
 }
 
-export default function DeletedWordRow({ word, rowNumber }: DeletedWordRowProps) {
+export default function DeletedWordRow({ word, rowNumber, save }: DeletedWordRowProps) {
 	function calcDiffBetweenDates() {
 		const today: Dayjs = dayjs();
 		const deletionDate: Dayjs = dayjs(word.deletionDate);
@@ -77,7 +78,7 @@ export default function DeletedWordRow({ word, rowNumber }: DeletedWordRowProps)
 				<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>
 			</MemoryLevel>
 			<DeletionCountdown>{calcDiffBetweenDates()}</DeletionCountdown>
-			<WordHandlerIcons word={word} />
+			<WordHandlerIcons word={word} save={save} />
 		</WordRow>
 	);
 }
