@@ -10,19 +10,20 @@ import DeletedWordRow from "./DeletedWordRow";
 interface WordsProps {
 	activeWords?: Word[];
 	deletedWords?: Word[];
-	save(word: Word): void;
+	saveWord(word: Word): void;
+	deleteWord(word: Word): void;
 }
 
-export default function Words({ activeWords, deletedWords, save }: WordsProps) {
+export default function Words({ activeWords, deletedWords, saveWord, deleteWord }: WordsProps) {
 	const displayedWords = activeWords ? activeWords : deletedWords;
 
 	return (
 		<Fragment>
 			{displayedWords?.map((word: Word, index: number) =>
 				activeWords ? (
-					<ActiveWordRow key={word.id} word={word} rowNumber={index} save={save} />
+					<ActiveWordRow key={word.id} word={word} rowNumber={index} saveWord={saveWord} deleteWord={deleteWord} />
 				) : (
-					<DeletedWordRow key={word.id} word={word} rowNumber={index} save={save} />
+					<DeletedWordRow key={word.id} word={word} rowNumber={index} saveWord={saveWord} deleteWord={deleteWord} />
 				),
 			)}
 		</Fragment>

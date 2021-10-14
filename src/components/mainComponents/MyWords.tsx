@@ -275,6 +275,7 @@ export default function MyWords() {
 	const [deletedWords, setDeletedWords] = useState<Word[]>([]);
 	const [activeTab, setActiveTab] = useState<"active-words" | "deleted-words">("active-words");
 	const { wordForEditing, setActiveModal } = useContext(AppContext);
+	/* REFACTOR: wordForEditing doesn't use the context for lift up  */
 
 	useEffect(() => {
 		load();
@@ -309,6 +310,14 @@ export default function MyWords() {
 		// API request to back-end
 	}
 
+	function deleteWord(deletedWord: Word) {
+		if (deletedWord.deletionDate === null) {
+			setActiveWords(activeWords.filter((word: Word) => deletedWord.id !== word.id));
+		} else {
+			setDeletedWords(deletedWords.filter((word: Word) => deletedWord.id !== word.id));
+		}
+	}
+
 	return (
 		<MainContainer>
 			<Modal>
@@ -337,8 +346,14 @@ export default function MyWords() {
 						</Tab>
 					</TabContainer>
 					<WordContainer>
-						<Route path="/my-words/active-words" component={() => <Words activeWords={activeWords} save={saveEditedWord} />} />
-						<Route path="/my-words/deleted-words" component={() => <Words deletedWords={deletedWords} save={saveEditedWord} />} />
+						<Route
+							path="/my-words/active-words"
+							component={() => <Words activeWords={activeWords} saveWord={saveEditedWord} deleteWord={deleteWord} />}
+						/>
+						<Route
+							path="/my-words/deleted-words"
+							component={() => <Words deletedWords={deletedWords} saveWord={saveEditedWord} deleteWord={deleteWord} />}
+						/>
 					</WordContainer>
 				</TableBlock>
 			</TableContainer>

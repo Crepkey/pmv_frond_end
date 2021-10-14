@@ -20,9 +20,10 @@ const MainContainer = styled.div`
 
 interface WordHandlerProps {
 	word: Word;
-	save(word: Word): void;
+	saveWord(word: Word): void;
+	deleteWord(word: Word): void;
 }
-export default function WordHandlerIcons({ word, save }: WordHandlerProps) {
+export default function WordHandlerIcons({ word, saveWord, deleteWord }: WordHandlerProps) {
 	const [isRestoreIconHovered, setRestoreIconHover] = useState(false);
 	const [isTrashIconHovered, setTrashIconHover] = useState(false);
 	const [isFavoriteIconHovered, setFavoriteIconHover] = useState(false);
@@ -31,7 +32,7 @@ export default function WordHandlerIcons({ word, save }: WordHandlerProps) {
 
 	function toggleWordFavorite() {
 		word.favourite = !word.favourite;
-		save(word);
+		saveWord(word);
 	}
 
 	function calculateHandlerIcons() {
@@ -79,7 +80,10 @@ export default function WordHandlerIcons({ word, save }: WordHandlerProps) {
 							<BsPencil size={25} style={{ marginRight: 12 }} />
 						)}
 					</div>
-					<div onMouseEnter={() => setTrashIconHover(true)} onMouseLeave={() => setTrashIconHover(false)}>
+
+					{/* DELETE ICON */}
+
+					<div onMouseEnter={() => setTrashIconHover(true)} onMouseLeave={() => setTrashIconHover(false)} onClick={() => deleteWord(word)}>
 						{isTrashIconHovered ? <BsTrashFill size={25} /> : <BsTrash size={25} />}
 					</div>
 				</Fragment>
@@ -87,6 +91,8 @@ export default function WordHandlerIcons({ word, save }: WordHandlerProps) {
 		} else {
 			return (
 				<Fragment>
+					{/* DELETED WORDS */}
+
 					<div onMouseEnter={() => setRestoreIconHover(true)} onMouseLeave={() => setRestoreIconHover(false)}>
 						{isRestoreIconHovered ? (
 							<IoArrowUndo size={25} style={{ marginRight: 12 }} />
@@ -94,7 +100,12 @@ export default function WordHandlerIcons({ word, save }: WordHandlerProps) {
 							<IoArrowUndoOutline size={25} style={{ marginRight: 12 }} />
 						)}
 					</div>
-					<div onMouseEnter={() => setTrashIconHover(true)} onMouseLeave={() => setTrashIconHover(false)}>
+					<div
+						onMouseEnter={() => setTrashIconHover(true)}
+						onMouseLeave={() => setTrashIconHover(false)}
+						onClick={() => {
+							deleteWord(word);
+						}}>
 						{isTrashIconHovered ? <BsTrashFill size={25} /> : <BsTrash size={25} />}
 					</div>
 				</Fragment>
