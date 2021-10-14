@@ -3,6 +3,9 @@ import { Fragment, useContext } from "react";
 /* Context */
 import { AppContext } from "../../AppContext";
 
+/* Utils */
+import get from "lodash/get";
+
 /* Styles */
 import styled from "styled-components";
 import { colors } from "../../utils/colors";
@@ -34,9 +37,11 @@ interface ModalProps {
 }
 
 export default function Modal({ children }: ModalProps) {
-	const { isModalOpen } = useContext(AppContext);
+	const { activeModal } = useContext(AppContext);
 
-	if (!isModalOpen) {
+	const childrenTitle = get(children, "props.title", "");
+
+	if (activeModal !== childrenTitle) {
 		return null;
 	}
 

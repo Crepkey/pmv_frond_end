@@ -2,15 +2,15 @@ import { useState, createContext, ReactNode } from "react";
 import { Word } from "./utils/interfaces";
 
 interface AppContextProps {
-	isModalOpen: boolean;
-	setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	activeModal: string;
+	setActiveModal: React.Dispatch<React.SetStateAction<string>>;
 	wordForEditing: Word;
 	setWordForEditing: React.Dispatch<React.SetStateAction<Word>>;
 }
 
 const defaultValues: AppContextProps = {
-	isModalOpen: false,
-	setIsModalOpen: () => {},
+	activeModal: "none",
+	setActiveModal: () => {},
 	wordForEditing: {
 		id: 1,
 		favourite: true,
@@ -29,8 +29,8 @@ const defaultValues: AppContextProps = {
 export const AppContext = createContext<AppContextProps>({ ...defaultValues });
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
-	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+	const [activeModal, setActiveModal] = useState<string>("");
 	const [wordForEditing, setWordForEditing] = useState<Word>(defaultValues.wordForEditing);
 
-	return <AppContext.Provider value={{ isModalOpen, setIsModalOpen, wordForEditing, setWordForEditing }}>{children}</AppContext.Provider>;
+	return <AppContext.Provider value={{ activeModal, setActiveModal, wordForEditing, setWordForEditing }}>{children}</AppContext.Provider>;
 };

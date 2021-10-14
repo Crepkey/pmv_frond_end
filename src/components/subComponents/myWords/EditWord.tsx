@@ -15,7 +15,7 @@ import { Word, WordType } from "../../../utils/interfaces";
 
 // Utils
 import set from "lodash/set";
-import { emptyWord, generateID } from "../../../utils/utils";
+import { emptyWord } from "../../../utils/utils";
 
 const Card = styled.div`
 	border: 1px solid ${colors.border};
@@ -218,7 +218,7 @@ const errorMessages: { [key: number]: string } = {
 export default function EditWord({ initialWord, title, save }: EditWordProps) {
 	const [word, setWord] = useState<Word>(initialWord || emptyWord);
 	const [errors, setErrors] = useState<number[]>([]);
-	const { setIsModalOpen } = useContext(AppContext);
+	const { setActiveModal } = useContext(AppContext);
 
 	function formValidation() {
 		const checkedErrors: number[] = [];
@@ -246,7 +246,7 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 	function saveForm() {
 		if (!formValidation()) return;
 		save(word);
-		setIsModalOpen(false);
+		setActiveModal("none");
 	}
 
 	return (
@@ -255,7 +255,7 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 				{title}
 				<Icon
 					onClick={() => {
-						setIsModalOpen(false);
+						setActiveModal("none");
 					}}>
 					<BsX size={20} />
 				</Icon>
