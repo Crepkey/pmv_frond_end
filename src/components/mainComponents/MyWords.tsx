@@ -1,5 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Route, Link } from "react-router-dom";
+
+/* Context */
+import { AppContext } from "../../AppContext";
 
 /* Interfaces */
 import { Word } from "../../utils/interfaces";
@@ -177,7 +180,7 @@ const PageNumber = styled.div`
 	padding: 0 8px 0 8px;
 `;
 
-const deletedWords: Word[] = [
+const dummyDeletedWords: Word[] = [
 	{
 		id: 2,
 		ownerId: 1,
@@ -216,7 +219,7 @@ const deletedWords: Word[] = [
 	},
 ];
 
-const activeWords: Word[] = [
+const dummyActiveWords: Word[] = [
 	{
 		id: 1,
 		ownerId: 1,
@@ -267,21 +270,20 @@ const activeWords: Word[] = [
 	},
 ];
 
-export interface APICallResult {
-	activeWords: Word[];
-	deletedWords: Word[];
-}
-
 export default function MyWords() {
-	const [words, setWords] = useState<APICallResult>({ activeWords: [], deletedWords: [] });
+	const [activeWords, setActiveWords] = useState<Word[]>([]);
+	const [deletedWords, setDeletedWords] = useState<Word[]>([]);
 	const [activeTab, setActiveTab] = useState<"active-words" | "deleted-words">("active-words");
+	const { wordForEditing, setActiveModal } = useContext(AppContext);
+	/* REFACTOR: wordForEditing doesn't use the context for lift up  */
 
 	useEffect(() => {
 		load();
 	}, []);
 
 	function load() {
-		setWords({ activeWords, deletedWords });
+		setActiveWords(dummyActiveWords);
+		setDeletedWords(dummyDeletedWords);
 	}
 
 	function changeTabStyle() {
@@ -296,13 +298,36 @@ export default function MyWords() {
 		else return { activeWordsTab: inactiveTabStyle, deletedWordsTab: activeTabStyle };
 	}
 
+	function saveEditedWord(editedWord: Word) {
+		const currentActiveWords = activeWords.map((word: Word) => (editedWord.id === word.id ? editedWord : word));
+		setActiveWords(currentActiveWords);
+		// API request to back-end
+	}
+
+	function saveNewWord(newWord: Word) {
+		const currentActiveWords = [...activeWords, newWord];
+		setActiveWords(currentActiveWords);
+		// API request to back-end
+	}
+
+	function deleteWord(deletedWord: Word) {
+		if (deletedWord.deletionDate === null) {
+			setActiveWords(activeWords.filter((word: Word) => deletedWord.id !== word.id));
+		} else {
+			setDeletedWords(deletedWords.filter((word: Word) => deletedWord.id !== word.id));
+		}
+	}
+
 	return (
 		<MainContainer>
 			<Modal>
-				<EditWord title="Edit word" />
+				<EditWord title="Edit word" initialWord={wordForEditing} save={saveEditedWord} />
+			</Modal>
+			<Modal>
+				<EditWord title="Add new word" save={saveNewWord} />
 			</Modal>
 			<ControlBarContainer>
-				<AddNewWordButton>Add new word</AddNewWordButton>
+				<AddNewWordButton onClick={() => setActiveModal("Add new word")}>Add new word</AddNewWordButton>
 				<SearchContainer>
 					<SearchBar type="search" id="lname" name="lname" placeholder="Type here for searching" />
 					<FilterButton>
@@ -321,9 +346,14 @@ export default function MyWords() {
 						</Tab>
 					</TabContainer>
 					<WordContainer>
-						<Route path="/my-words/active-words" component={() => <Words words={words} displayedWordsType="active" />} />
-						<Route path="/my-words/deleted-words" component={() => <Words words={words} displayedWordsType="deleted" />} />
-						{/* REFACTOR: In this case the openModal func. is not used but it's necessary to pass it down as a prop*/}
+						<Route
+							path="/my-words/active-words"
+							component={() => <Words activeWords={activeWords} saveWord={saveEditedWord} deleteWord={deleteWord} />}
+						/>
+						<Route
+							path="/my-words/deleted-words"
+							component={() => <Words deletedWords={deletedWords} saveWord={saveEditedWord} deleteWord={deleteWord} />}
+						/>
 					</WordContainer>
 				</TableBlock>
 			</TableContainer>

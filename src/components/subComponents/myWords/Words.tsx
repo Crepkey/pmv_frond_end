@@ -2,27 +2,28 @@ import { Fragment } from "react";
 
 /* Interafaces */
 import { Word } from "../../../utils/interfaces";
-import { APICallResult } from "../../mainComponents/MyWords";
 
 /* Components */
 import ActiveWordRow from "./ActiveWordRow";
 import DeletedWordRow from "./DeletedWordRow";
 
 interface WordsProps {
-	words: APICallResult;
-	displayedWordsType: "active" | "deleted";
+	activeWords?: Word[];
+	deletedWords?: Word[];
+	saveWord(word: Word): void;
+	deleteWord(word: Word): void;
 }
 
-export default function Words({ words, displayedWordsType }: WordsProps) {
-	const displayedWords: Word[] = displayedWordsType === "active" ? words.activeWords : words.deletedWords;
+export default function Words({ activeWords, deletedWords, saveWord, deleteWord }: WordsProps) {
+	const displayedWords = activeWords ? activeWords : deletedWords;
 
 	return (
 		<Fragment>
-			{displayedWords.map((word: Word, index: number) =>
-				displayedWordsType === "active" ? (
-					<ActiveWordRow key={word.id} word={word} rowNumber={index} />
+			{displayedWords?.map((word: Word, index: number) =>
+				activeWords ? (
+					<ActiveWordRow key={word.id} word={word} rowNumber={index} saveWord={saveWord} deleteWord={deleteWord} />
 				) : (
-					<DeletedWordRow key={word.id} word={word} rowNumber={index} />
+					<DeletedWordRow key={word.id} word={word} rowNumber={index} saveWord={saveWord} deleteWord={deleteWord} />
 				),
 			)}
 		</Fragment>

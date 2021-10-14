@@ -11,10 +11,11 @@ import { colors } from "../../../utils/colors";
 import { BsSuitHeart, BsSuitHeartFill, BsPlus, BsX, BsTrash } from "react-icons/bs";
 
 // Interfaces
-import { Word, WordType, WordWithScores } from "../../../utils/interfaces";
+import { Word, WordType } from "../../../utils/interfaces";
 
 // Utils
 import set from "lodash/set";
+import { emptyWord } from "../../../utils/utils";
 
 const Card = styled.div`
 	border: 1px solid ${colors.border};
@@ -203,76 +204,49 @@ const Button = styled.div`
 `;
 
 interface EditWordProps {
-	initialWord?: Word;
 	title: string;
+	initialWord?: Word;
+	save(editedWord: Word): void;
 }
 
 const errorMessages: { [key: number]: string } = {
 	1: "English field is required.",
-	2: "At least one Hungarian meaning is required.",
-	3: "At least one example sentence is required.",
-}; /* TODO: Later we can use an additional library for error handling if the project is getting bigger */
+	2: "At least one Hungarian meaning is required (in the first field).",
+	3: "At least one example sentence is required (in the first field).",
+};
 
-export default function EditWord({ initialWord, title }: EditWordProps) {
-	const newEmptyWord: WordWithScores = {
-		id: 0, // TODO generate fake id
-		english: "",
-		hungarian: [""],
-		sentences: [""],
-		type: "word",
-		ownerId: 0, // TODO set the actul user's ID as ownerId
-		memoryLevel: 0,
-		actualScore: 0,
-		scoreToAchieve: 0,
-		favourite: false,
-		notes: null,
-		deletionDate: null,
-		statistics: {
-			english: 0,
-			hungarian: [],
-		},
-	};
-
-	const [word, setWord] = useState<Word>(initialWord || newEmptyWord);
+export default function EditWord({ initialWord, title, save }: EditWordProps) {
+	const [word, setWord] = useState<Word>(initialWord || emptyWord);
 	const [errors, setErrors] = useState<number[]>([]);
-	const { setIsModalOpen } = useContext(AppContext);
+	const { setActiveModal } = useContext(AppContext);
 
-	function save() {
+	function formValidation() {
 		const checkedErrors: number[] = [];
 
 		if (word.english.length === 0) {
 			checkedErrors.push(1);
 		}
 
-		const hungarianMeanings = word.hungarian.filter((meaning: string) => meaning.length > 0);
-		if (hungarianMeanings.length === 0) {
-			checkedErrors.push(2);
-		}
+		word.hungarian.forEach((meaning: string) => {
+			if (meaning.length === 0) checkedErrors.push(2);
+		});
 
-		const sentences = word.sentences.filter((sentence: string) => sentence.length > 0);
-		if (sentences.length === 0) {
-			checkedErrors.push(3);
-		}
+		word.sentences.forEach((sentence: string) => {
+			if (sentence.length === 0) checkedErrors.push(3);
+		});
 
 		if (checkedErrors.length > 0) {
 			setErrors(checkedErrors);
-			return;
+			return false;
 		}
 
-		// contains only the filtered arrays, without empty strings
-		// const wordToSave = {
-		// 	...word,
-		// 	hungarian: hungarianMeanings,
-		// 	sentences,
-		// 	scoreToAchieve: (1 + hungarianMeanings.length) * 10,
-		// 	statistics: {
-		// 		// TODO: when you are editing a word, we have to use the original values
-		// 		english: 0,
-		// 		hungarian: hungarianMeanings.map(() => 0),
-		// 	},
-		// };
+		return true;
+	}
 
-		// TODO save to database
+	function saveForm() {
+		if (!formValidation()) return;
+		save(word);
+		setActiveModal("none");
 	}
 
 	return (
@@ -281,7 +255,7 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 				{title}
 				<Icon
 					onClick={() => {
-						setIsModalOpen(false);
+						setActiveModal("none");
 					}}>
 					<BsX size={20} />
 				</Icon>
@@ -312,9 +286,7 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 						{errors.includes(2) ? <Label error={true}>{errorMessages[2]}</Label> : <Label>Hungarian meanings</Label>}
 						<Block>
 							{word.hungarian.map((meaning: string, i: number) => (
-								<Row key={i}>
-									{" "}
-									{/* REFACTOR: A fake ID would be the best. Later we will solve this issue. */}
+								<Row key={`${i}_hunMean`}>
 									<StringInput
 										error={errors.includes(2) && i === 0}
 										placeholder="Type one Hungarian meaning here..."
@@ -351,7 +323,7 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 						{errors.includes(3) ? <Label error={true}>{errorMessages[3]}</Label> : <Label>Example sentences</Label>}
 						<Block>
 							{word.sentences.map((sentence: string, i: number) => (
-								<Row key={i}>
+								<Row key={`${i}_sentence`}>
 									{/* TODO we should use a textarea here which is automatically resized when the text is too long */}
 									<StringInput
 										error={errors.includes(3) && i === 0}
@@ -408,9 +380,22 @@ export default function EditWord({ initialWord, title }: EditWordProps) {
 				</ScrollContainer>
 
 				<Row>
-					<Button onClick={save}>Save</Button>
+					<Button onClick={saveForm}>Save</Button>
 				</Row>
 			</CardBody>
 		</Card>
 	);
 }
+
+// contains only the filtered arrays, without empty strings
+// const wordToSave = {
+// 	...word,
+// 	hungarian: hungarianMeanings,
+// 	sentences,
+// 	scoreToAchieve: (1 + hungarianMeanings.length) * 10,
+// 	statistics: {
+// 		// TODO: when you are editing a word, we have to use the original values
+// 		english: 0,
+// 		hungarian: hungarianMeanings.map(() => 0),
+// 	},
+// };
