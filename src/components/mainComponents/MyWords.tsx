@@ -274,7 +274,7 @@ export default function MyWords() {
 	const [activeWords, setActiveWords] = useState<Word[]>([]);
 	const [deletedWords, setDeletedWords] = useState<Word[]>([]);
 	const [activeTab, setActiveTab] = useState<"active-words" | "deleted-words">("active-words");
-	const { wordForEditing } = useContext(AppContext);
+	const { wordForEditing, setActiveModal } = useContext(AppContext);
 
 	useEffect(() => {
 		load();
@@ -300,6 +300,13 @@ export default function MyWords() {
 	function saveEditedWord(editedWord: Word) {
 		const currentActiveWords = activeWords.map((word: Word) => (editedWord.id === word.id ? editedWord : word));
 		setActiveWords(currentActiveWords);
+		// API request to back-end
+	}
+
+	function saveNewWord(newWord: Word) {
+		const currentActiveWords = [...activeWords, newWord];
+		setActiveWords(currentActiveWords);
+		// API request to back-end
 	}
 
 	return (
@@ -307,8 +314,11 @@ export default function MyWords() {
 			<Modal>
 				<EditWord title="Edit word" initialWord={wordForEditing} save={saveEditedWord} />
 			</Modal>
+			<Modal>
+				<EditWord title="Add new word" save={saveNewWord} />
+			</Modal>
 			<ControlBarContainer>
-				<AddNewWordButton>Add new word</AddNewWordButton>
+				<AddNewWordButton onClick={() => setActiveModal("Add new word")}>Add new word</AddNewWordButton>
 				<SearchContainer>
 					<SearchBar type="search" id="lname" name="lname" placeholder="Type here for searching" />
 					<FilterButton>
