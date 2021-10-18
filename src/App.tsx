@@ -18,6 +18,13 @@ const MainContainer = styled.div`
 `;
 
 function App() {
+	async function apiTest() {
+		const result = await fetch("http://127.0.0.1:9000/");
+		console.log(await result.json());
+	}
+
+	apiTest();
+
 	return (
 		<AppProvider>
 			<MainContainer>
