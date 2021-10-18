@@ -20,20 +20,31 @@ const MainContainer = styled.div`
 
 interface WordHandlerProps {
 	word: Word;
+	saveWord(word: Word): void;
+	deleteWord(word: Word): void;
 }
-export default function WordHandlerIcons({ word }: WordHandlerProps) {
+export default function WordHandlerIcons({ word, saveWord, deleteWord }: WordHandlerProps) {
 	const [isRestoreIconHovered, setRestoreIconHover] = useState(false);
 	const [isTrashIconHovered, setTrashIconHover] = useState(false);
 	const [isFavoriteIconHovered, setFavoriteIconHover] = useState(false);
 	const [isEditIconHovered, setEditIconHover] = useState(false);
-	const { setIsModalOpen } = useContext(AppContext);
+	const { setActiveModal: setIsModalOpen, setWordForEditing } = useContext(AppContext);
+
+	function toggleWordFavorite() {
+		word.favourite = !word.favourite;
+		saveWord(word);
+	}
 
 	function calculateHandlerIcons() {
 		if (word.deletionDate === null) {
 			return (
 				<Fragment>
+					{/* FAVORITE */}
 					{word.favourite ? (
-						<div onMouseEnter={() => setFavoriteIconHover(true)} onMouseLeave={() => setFavoriteIconHover(false)}>
+						<div
+							onMouseEnter={() => setFavoriteIconHover(true)}
+							onMouseLeave={() => setFavoriteIconHover(false)}
+							onClick={() => toggleWordFavorite()}>
 							{isFavoriteIconHovered ? (
 								<BsSuitHeartFill size={25} style={{ marginRight: 12 }} />
 							) : (
@@ -41,7 +52,10 @@ export default function WordHandlerIcons({ word }: WordHandlerProps) {
 							)}
 						</div>
 					) : (
-						<div onMouseEnter={() => setFavoriteIconHover(true)} onMouseLeave={() => setFavoriteIconHover(false)}>
+						<div
+							onMouseEnter={() => setFavoriteIconHover(true)}
+							onMouseLeave={() => setFavoriteIconHover(false)}
+							onClick={() => toggleWordFavorite()}>
 							{isFavoriteIconHovered ? (
 								<BsSuitHeart size={25} style={{ marginRight: 12 }} />
 							) : (
@@ -54,12 +68,22 @@ export default function WordHandlerIcons({ word }: WordHandlerProps) {
 
 					<div onMouseEnter={() => setEditIconHover(true)} onMouseLeave={() => setEditIconHover(false)}>
 						{isEditIconHovered ? (
-							<BsPencilFill size={25} style={{ marginRight: 12 }} onClick={() => setIsModalOpen(true)} />
+							<BsPencilFill
+								size={25}
+								style={{ marginRight: 12 }}
+								onClick={() => {
+									setWordForEditing(word);
+									setIsModalOpen("Edit word");
+								}}
+							/>
 						) : (
 							<BsPencil size={25} style={{ marginRight: 12 }} />
 						)}
 					</div>
-					<div onMouseEnter={() => setTrashIconHover(true)} onMouseLeave={() => setTrashIconHover(false)}>
+
+					{/* DELETE ICON */}
+
+					<div onMouseEnter={() => setTrashIconHover(true)} onMouseLeave={() => setTrashIconHover(false)} onClick={() => deleteWord(word)}>
 						{isTrashIconHovered ? <BsTrashFill size={25} /> : <BsTrash size={25} />}
 					</div>
 				</Fragment>
@@ -67,6 +91,8 @@ export default function WordHandlerIcons({ word }: WordHandlerProps) {
 		} else {
 			return (
 				<Fragment>
+					{/* DELETED WORDS */}
+
 					<div onMouseEnter={() => setRestoreIconHover(true)} onMouseLeave={() => setRestoreIconHover(false)}>
 						{isRestoreIconHovered ? (
 							<IoArrowUndo size={25} style={{ marginRight: 12 }} />
@@ -74,7 +100,12 @@ export default function WordHandlerIcons({ word }: WordHandlerProps) {
 							<IoArrowUndoOutline size={25} style={{ marginRight: 12 }} />
 						)}
 					</div>
-					<div onMouseEnter={() => setTrashIconHover(true)} onMouseLeave={() => setTrashIconHover(false)}>
+					<div
+						onMouseEnter={() => setTrashIconHover(true)}
+						onMouseLeave={() => setTrashIconHover(false)}
+						onClick={() => {
+							deleteWord(word);
+						}}>
 						{isTrashIconHovered ? <BsTrashFill size={25} /> : <BsTrash size={25} />}
 					</div>
 				</Fragment>
