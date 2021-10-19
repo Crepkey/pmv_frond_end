@@ -18,18 +18,6 @@ const MainContainer = styled.div`
 `;
 
 function App() {
-	async function apiTest() {
-		const response = await fetch("/13", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ test: "React POST Request Example" }),
-		});
-		const data = await response.json();
-		console.log(data);
-	}
-
-	apiTest();
-
 	return (
 		<AppProvider>
 			<MainContainer>

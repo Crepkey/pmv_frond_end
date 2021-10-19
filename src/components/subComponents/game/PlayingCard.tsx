@@ -8,7 +8,7 @@ import { MdVolumeUp } from "react-icons/md";
 import { GiSwordwoman, GiSwordman } from "react-icons/gi";
 
 // Interfaces
-import { Owner, Word } from "../../../utils/interfaces";
+import { User, Word } from "../../../utils/interfaces";
 import { TagColor } from "./interfaces";
 
 // Helper functions
@@ -18,7 +18,7 @@ import { getColorsByKnowledge } from "./calculateByKnowledgeLevels";
 import SpinnerBar from "../../generalComponents/SpinnerBar";
 
 interface PlayingCardProps {
-	owner: Owner | undefined;
+	owner: User | undefined;
 	word: Word;
 }
 
@@ -28,7 +28,7 @@ export default function PlayingCard({ owner, word }: PlayingCardProps) {
 	return (
 		<Card>
 			<CardHeader>
-				<HeaderIcon>{owner?.sex === "male" ? <GiSwordman size={28} /> : <GiSwordwoman size={28} />}</HeaderIcon>
+				<HeaderIcon>{owner?.gender === "male" ? <GiSwordman size={28} /> : <GiSwordwoman size={28} />}</HeaderIcon>
 				{owner?.name}'s word
 				<SpinnerBarContainer>
 					<SpinnerBar size={28} status={word.memoryLevel} style={{ background: colors.headerGradientDark }} />
@@ -57,8 +57,8 @@ export default function PlayingCard({ owner, word }: PlayingCardProps) {
 						})}
 					</TagContainer>
 					<Block>
-						{word.sentences.map((sentence: string, i: number) => (
-							<SentenceCard key={i} lastElement={i === word.sentences.length - 1}>
+						{word.exampleSentences.map((sentence: string, i: number) => (
+							<SentenceCard key={i} lastElement={i === word.exampleSentences.length - 1}>
 								{sentence}
 							</SentenceCard>
 						))}

@@ -18,7 +18,7 @@ const defaultValues: AppContextProps = {
 		type: "word",
 		english: "Dummy Data",
 		hungarian: ["Teszt adat"],
-		sentences: ["This is a dummy data. If you see this and you are not in test. You screwed up! :)"],
+		exampleSentences: ["This is a dummy data. If you see this and you are not in test. You screwed up! :)"],
 		notes: "Test or you did something wrong? Which one is correct? :P",
 		ownerId: 1,
 		memoryLevel: 100,

@@ -14,7 +14,7 @@ function calculateScoresToSave(word: WordWithScores, gameStatistics: GameStatist
 	const scoreNow = englishScore + hungarianScore;
 	const actualScore = word.actualScore + scoreNow;
 
-	return { actualScore, memoryLevel: round((actualScore / word.scoreToAchieve) * 100, 2) };
+	return { actualScore, memoryLevel: round((actualScore / word.finalScore) * 100, 2) };
 }
 
 function calculateStatisticsToSave(word: WordWithScores, gameStatistics: GameStatistics): WordStatistics {
@@ -38,7 +38,7 @@ function calculateStatisticsToSave(word: WordWithScores, gameStatistics: GameSta
 
 function calculateDeletionDateToSave(word: WordWithScores, actualScore: number): Date | null {
 	// set deletionDate, if you don't have to practice this word anymore
-	if (actualScore > word.scoreToAchieve) {
+	if (actualScore > word.finalScore) {
 		return new Date();
 	}
 	return null;

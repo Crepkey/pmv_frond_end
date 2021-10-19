@@ -231,7 +231,7 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 			if (meaning.length === 0) checkedErrors.push(2);
 		});
 
-		word.sentences.forEach((sentence: string) => {
+		word.exampleSentences.forEach((sentence: string) => {
 			if (sentence.length === 0) checkedErrors.push(3);
 		});
 
@@ -322,7 +322,7 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 
 						{errors.includes(3) ? <Label error={true}>{errorMessages[3]}</Label> : <Label>Example sentences</Label>}
 						<Block>
-							{word.sentences.map((sentence: string, i: number) => (
+							{word.exampleSentences.map((sentence: string, i: number) => (
 								<Row key={`${i}_sentence`}>
 									{/* TODO we should use a textarea here which is automatically resized when the text is too long */}
 									<StringInput
@@ -340,8 +340,8 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 										<DeleteIcon>
 											<BsTrash
 												onClick={(e) => {
-													const newArray = word.sentences.filter((s: string, index: number) => index !== i);
-													setWord({ ...word, sentences: newArray });
+													const newArray = word.exampleSentences.filter((s: string, index: number) => index !== i);
+													setWord({ ...word, exampleSentences: newArray });
 												}}
 											/>
 										</DeleteIcon>
@@ -351,7 +351,7 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 							<AddNewRow>
 								<CircleButton
 									onClick={() => {
-										setWord({ ...word, sentences: [...word.sentences, ""] });
+										setWord({ ...word, exampleSentences: [...word.exampleSentences, ""] });
 									}}>
 									<BsPlus />
 								</CircleButton>
