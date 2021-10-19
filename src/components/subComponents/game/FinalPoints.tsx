@@ -6,31 +6,31 @@ import { MainContainer, ScreenTitle, CardContainer, HeaderIcon, PointsContainer,
 import { GiSwordman, GiSwordwoman } from "react-icons/gi";
 
 // Interfaces
-import { Owner, Points } from "../../../utils/interfaces";
+import { User, Points } from "../../../utils/interfaces";
 
 // Utils
 import max from "lodash/max";
 import get from "lodash/get";
 
 interface FinalPointsProps {
-	owners: Owner[];
+	owners: User[];
 	points: Points;
 }
 
 export default function FinalPoints({ owners, points }: FinalPointsProps) {
 	const maxPoint: number = max(Object.values(points));
-	const winners: Owner[] = owners.filter((o: Owner) => get(points, o.id) === maxPoint);
+	const winners: User[] = owners.filter((o: User) => get(points, o.id) === maxPoint);
 
 	return (
 		<MainContainer>
 			<ScreenTitle>Final points</ScreenTitle>
 
 			<CardContainer>
-				{owners.map((owner: Owner, i: number) => {
+				{owners.map((owner: User, i: number) => {
 					return (
 						<Card key={i}>
 							<CardHeader>
-								<HeaderIcon>{owner.sex === "male" ? <GiSwordman size={28} /> : <GiSwordwoman size={28} />}</HeaderIcon>
+								<HeaderIcon>{owner.gender === "male" ? <GiSwordman size={28} /> : <GiSwordwoman size={28} />}</HeaderIcon>
 								{owner.name}
 							</CardHeader>
 							<CardBody>
@@ -41,7 +41,7 @@ export default function FinalPoints({ owners, points }: FinalPointsProps) {
 				})}
 			</CardContainer>
 
-			<Congrats>Congratulations {winners.map((winner: Owner) => winner.name).join(" and ")}!</Congrats>
+			<Congrats>Congratulations {winners.map((winner: User) => winner.name).join(" and ")}!</Congrats>
 			{winners.length === 1 ? "You won." : "You had the same number of points."}
 		</MainContainer>
 	);

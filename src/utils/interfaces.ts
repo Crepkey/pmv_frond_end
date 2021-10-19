@@ -1,6 +1,6 @@
-export interface Owner {
+export interface User {
 	name: string;
-	sex: "male" | "female";
+	gender: "male" | "female";
 	id: number;
 }
 
@@ -16,7 +16,7 @@ export interface Word {
 	ownerId: number;
 	english: string;
 	hungarian: string[];
-	sentences: string[];
+	exampleSentences: string[];
 	notes: string | null;
 	type: WordType;
 	favourite: boolean;
@@ -25,7 +25,7 @@ export interface Word {
 }
 export interface WordWithScores extends Word {
 	actualScore: number;
-	scoreToAchieve: number;
+	finalScore: number;
 	statistics: WordStatistics;
 }
 export interface Points {

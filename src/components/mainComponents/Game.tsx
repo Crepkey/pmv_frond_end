@@ -6,7 +6,7 @@ import { GreenButton } from "../generalComponents/styles";
 import { GameMainContainer, FinalScreenContainer } from "../subComponents/game/styles";
 
 // Interfaces
-import { GrammaticalStructure, Owner, Points, WordWithScores } from "../../utils/interfaces";
+import { GrammaticalStructure, User, Points, WordWithScores } from "../../utils/interfaces";
 
 // Components
 import PlayingCard from "../subComponents/game/PlayingCard";
@@ -15,14 +15,15 @@ import FinalPoints from "../subComponents/game/FinalPoints";
 import GrammarCard from "../subComponents/game/GrammarCard";
 
 // Test data
-import { testGrammar, testOwners, testWords } from "../../utils/testData";
+import { testOwners } from "../../utils/testData";
 
 // Utils
 import set from "lodash/set";
 import get from "lodash/get";
 
 export default function Game() {
-	const [owners, setOwners] = useState<Owner[]>([]);
+	const playerIds = [1, 2];
+	const [owners, setOwners] = useState<User[]>([]);
 	const [words, setWords] = useState<WordWithScores[]>([]);
 	const [grammaticalStructures, setGrammaticalStructures] = useState<GrammaticalStructure[]>([]);
 
@@ -36,14 +37,18 @@ export default function Game() {
 		initialize();
 	}, []);
 
-	function initialize() {
-		// TODO load data from backend: we need as many grammatical structures as words
+	async function initialize() {
+		const response = await fetch(`/lets-play?players=${playerIds[0]}&players=${playerIds[1]}`);
+		const data = await response.json();
+
+		console.log(data);
+
 		setOwners(testOwners);
-		setWords(testWords);
-		setGrammaticalStructures(testGrammar);
+		setGrammaticalStructures(get(data, "grammaticalStructures", []));
+		setWords(get(data, "words", []));
 
 		const initialPoints = {};
-		testOwners.forEach((o: Owner) => set(initialPoints, [o.id], 0));
+		testOwners.forEach((o: User) => set(initialPoints, [o.id], 0));
 		setPoints(initialPoints);
 	}
 
@@ -52,7 +57,7 @@ export default function Game() {
 			{actualWord !== undefined && (
 				<Fragment>
 					<GrammarCard actualStructure={grammaticalStructures[actualIndex]} />
-					<PlayingCard owner={owners?.find((o: Owner) => o.id === actualOwnerId)} word={actualWord} />
+					<PlayingCard owner={owners?.find((o: User) => o.id === actualOwnerId)} word={actualWord} />
 					<EvaluationForm
 						actualWord={actualWord}
 						getNextCard={() => setActualIndex(actualIndex + 1)}
