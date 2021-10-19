@@ -270,6 +270,11 @@ const dummyActiveWords: Word[] = [
 	},
 ];
 
+interface ServerResponse {
+	activeWords: Word[];
+	deletedWords: Word[];
+}
+
 export default function MyWords() {
 	const [activeWords, setActiveWords] = useState<Word[]>([]);
 	const [deletedWords, setDeletedWords] = useState<Word[]>([]);
@@ -281,9 +286,11 @@ export default function MyWords() {
 		load();
 	}, []);
 
-	function load() {
-		setActiveWords(dummyActiveWords);
-		setDeletedWords(dummyDeletedWords);
+	async function load() {
+		const rawData = await fetch("/my-words/2?numberOfDisplayedRows=50");
+		const parsedData: ServerResponse = await rawData.json();
+		setActiveWords(parsedData.activeWords);
+		setDeletedWords(parsedData.deletedWords);
 	}
 
 	function changeTabStyle() {
