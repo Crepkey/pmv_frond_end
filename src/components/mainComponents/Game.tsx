@@ -14,9 +14,6 @@ import EvaluationForm from "../subComponents/game/EvaluationForm";
 import FinalPoints from "../subComponents/game/FinalPoints";
 import GrammarCard from "../subComponents/game/GrammarCard";
 
-// Test data
-import { testOwners } from "../../utils/testData";
-
 // Utils
 import set from "lodash/set";
 import get from "lodash/get";
@@ -33,22 +30,25 @@ export default function Game() {
 	const actualWord = words[actualIndex];
 	const actualOwnerId = actualWord?.ownerId;
 
-	useEffect(() => {
-		initialize();
-	}, []);
+	useEffect(
+		() => {
+			initialize();
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[],
+	);
 
 	async function initialize() {
 		const response = await fetch(`/lets-play?players=${playerIds[0]}&players=${playerIds[1]}`);
 		const data = await response.json();
 
-		console.log(data);
-
-		setOwners(testOwners);
+		const owners = get(data, "owners", []);
+		setOwners(owners);
 		setGrammaticalStructures(get(data, "grammaticalStructures", []));
 		setWords(get(data, "words", []));
 
 		const initialPoints = {};
-		testOwners.forEach((o: User) => set(initialPoints, [o.id], 0));
+		owners.forEach((o: User) => set(initialPoints, [o.id], 0));
 		setPoints(initialPoints);
 	}
 
