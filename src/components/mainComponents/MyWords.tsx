@@ -267,22 +267,22 @@ export default function MyWords() {
 			updatedWord.deletionDate = null;
 		}
 
-		const response = await fetch("/my-words", {
+		const response: Response = await fetch("/my-words", {
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(updatedWord),
 		});
 
-		const parsedResponse = await response.json();
+		const parsedResponse: Word | ServerError = await response.json();
 
-		if (parsedResponse.error) {
+		if ("error" in parsedResponse) {
 			window.alert(parsedResponse.message);
 			return;
 		}
 
 		switch (operation) {
 			case "edit":
-				setActiveWords(activeWords.map((word: Word) => (updatedWord.id === word.id ? updatedWord : word)));
+				setActiveWords(activeWords.map((word: Word) => (word.id === updatedWord.id ? updatedWord : word)));
 				break;
 			case "delete":
 				setActiveWords(activeWords.filter((word: Word) => word.id !== updatedWord.id));
