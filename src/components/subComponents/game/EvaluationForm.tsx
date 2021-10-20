@@ -17,7 +17,7 @@ import set from "lodash/set";
 import capitalize from "lodash/capitalize";
 
 // Helper functions
-import { calculateDataToSave, calculateGamePoints } from "./calculateFinalResult";
+import { calculateGamePoints } from "./calculateFinalResult";
 
 interface EvaluationRowProps {
 	title: string;
@@ -40,12 +40,13 @@ function EvaluationRow({ title, checked, toggleChecked, mainWord }: EvaluationRo
 
 interface EvaluationFormProps {
 	actualWord: WordInGame;
+	grammaticalStructureId: number;
 	getNextCard: () => void;
 	userPoints: number;
 	setUserPoints: (newPoints: number) => void;
 }
 
-export default function EvaluationForm({ actualWord, getNextCard, userPoints, setUserPoints }: EvaluationFormProps) {
+export default function EvaluationForm({ actualWord, grammaticalStructureId, getNextCard, userPoints, setUserPoints }: EvaluationFormProps) {
 	const emptyStatistics: GameStatistics = { english: false, hungarian: [] };
 	// We only store the actual evaluation in the state and calculate the values (that we need in the database) while saving
 	const [gameStatistics, setGameStatistics] = useState<GameStatistics>(emptyStatistics);
@@ -53,13 +54,14 @@ export default function EvaluationForm({ actualWord, getNextCard, userPoints, se
 
 	const { wordToAsk, wordToAnswer } = actualWord;
 
-	function save() {
-		// calculate the values that we need to save
-		const wordToSave = calculateDataToSave(actualWord, gameStatistics);
-		/*  TODO 
-		1) save to database (it would be better, if we didn't need the whole word, just the modified columns)
-		2) save the grammatical knowledge (correctGrammar in state) to some grammatical statistics table
- 		*/
+	async function save() {
+		// save updated word and grammatical knowledge on backend
+		const response = await fetch(`/lets-play/${actualWord.id}`, {
+			method: "PUT",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ word: actualWord, gameStatistics, grammaticalStructure: { id: grammaticalStructureId, known: correctGrammar } }),
+		});
+		const data = await response.json();
 
 		// calculate game points
 		const earnedPoints = calculateGamePoints(actualWord, gameStatistics, correctGrammar);

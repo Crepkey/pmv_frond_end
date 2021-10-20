@@ -35,6 +35,7 @@ export default function Game() {
 	const playerIds = [1, 2];
 	const actualWord = words[actualIndex];
 	const actualOwnerId = actualWord?.ownerId;
+	const actualGrammaticalStructure = grammaticalStructures[actualIndex];
 
 	useEffect(
 		() => {
@@ -102,13 +103,14 @@ export default function Game() {
 	}
 	return (
 		<GameMainContainer>
-			<GrammarCard actualStructure={grammaticalStructures[actualIndex]} />
+			<GrammarCard actualStructure={actualGrammaticalStructure} />
 			<PlayingCard owner={owners?.find((o: User) => o.id === actualOwnerId)} word={actualWord} />
 			<EvaluationForm
 				actualWord={actualWord}
 				getNextCard={() => setActualIndex(actualIndex + 1)}
 				userPoints={get(points, actualOwnerId, 0)}
 				setUserPoints={(newPoints: number) => setPoints({ ...points, [actualOwnerId]: newPoints })}
+				grammaticalStructureId={actualGrammaticalStructure.id}
 			/>
 		</GameMainContainer>
 	);
