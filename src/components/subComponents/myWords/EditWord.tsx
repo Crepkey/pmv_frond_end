@@ -331,7 +331,7 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 										value={sentence}
 										onChange={(e) => {
 											setErrors(errors.filter((e: number) => e !== 3));
-											const newWord = set({ ...word }, ["sentences", i], e.target.value);
+											const newWord = set({ ...word }, ["exampleSentences", i], e.target.value);
 											setWord(newWord);
 										}}
 									/>

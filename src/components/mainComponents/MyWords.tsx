@@ -1,6 +1,9 @@
 import { useState, useEffect, useContext } from "react";
 import { Route, Link } from "react-router-dom";
 
+/* Utils */
+import omit from "lodash/omit";
+
 /* Context */
 import { AppContext } from "../../AppContext";
 
@@ -218,13 +221,21 @@ export default function MyWords() {
 	function saveEditedWord(editedWord: Word) {
 		const currentActiveWords = activeWords.map((word: Word) => (editedWord.id === word.id ? editedWord : word));
 		setActiveWords(currentActiveWords);
-		// API request to back-end
 	}
 
-	function saveNewWord(newWord: Word) {
-		const currentActiveWords = [...activeWords, newWord];
+	async function saveNewWord(newWord: Word) {
+		/* FIXME: Owner ID is not handled */
+		const newWordWithoutID = omit(newWord, "id");
+
+		const serverResp = await fetch("/my-word", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(newWordWithoutID),
+		});
+
+		const savedWord = await serverResp.json();
+		const currentActiveWords = [...activeWords, savedWord];
 		setActiveWords(currentActiveWords);
-		// API request to back-end
 	}
 
 	function deleteWord(deletedWord: Word) {
