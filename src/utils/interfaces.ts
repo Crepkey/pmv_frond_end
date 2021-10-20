@@ -39,7 +39,7 @@ export interface Usage {
 export interface GrammaticalStructure {
 	id: number;
 	title: string;
-	subTitle: string;
+	subtitle: string;
 	forming: string;
 	notes: string | null;
 	basicSentences: string[];

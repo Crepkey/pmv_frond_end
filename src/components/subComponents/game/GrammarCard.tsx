@@ -20,7 +20,7 @@ export default function GrammarCard({ actualStructure }: GrammarCardProps) {
 			<CardBody>
 				<CardTitle>
 					{actualStructure.title}
-					<SubTitle>{actualStructure.subTitle}</SubTitle>
+					<SubTitle>{actualStructure.subtitle}</SubTitle>
 				</CardTitle>
 
 				<CardBodyScrollContainer>
