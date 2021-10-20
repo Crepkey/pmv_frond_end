@@ -11,7 +11,7 @@ import { colors } from "../../../utils/colors";
 import { BsSuitHeart, BsSuitHeartFill, BsPlus, BsX, BsTrash } from "react-icons/bs";
 
 // Interfaces
-import { Word, WordType } from "../../../utils/interfaces";
+import { Word, WordOperationType, WordType } from "../../../utils/interfaces";
 
 // Utils
 import set from "lodash/set";
@@ -206,7 +206,7 @@ const Button = styled.div`
 interface EditWordProps {
 	title: string;
 	initialWord?: Word;
-	save(editedWord: Word): void;
+	updateWord(editedWord: Word, operation: WordOperationType): void;
 }
 
 const errorMessages: { [key: number]: string } = {
@@ -215,7 +215,7 @@ const errorMessages: { [key: number]: string } = {
 	3: "At least one example sentence is required (in the first field).",
 };
 
-export default function EditWord({ initialWord, title, save }: EditWordProps) {
+export default function EditWord({ initialWord, title, updateWord }: EditWordProps) {
 	const [word, setWord] = useState<Word>(initialWord || emptyWord);
 	const [errors, setErrors] = useState<number[]>([]);
 	const { setActiveModal } = useContext(AppContext);
@@ -245,7 +245,7 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 
 	function saveForm() {
 		if (!formValidation()) return;
-		save(word);
+		updateWord(word, "edit");
 		setActiveModal("none");
 	}
 

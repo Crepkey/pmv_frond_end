@@ -1,5 +1,5 @@
 /* Interfaces */
-import { Word } from "../../../utils/interfaces";
+import { Word, WordOperationType } from "../../../utils/interfaces";
 
 /* Styles */
 import styled from "styled-components";
@@ -58,12 +58,11 @@ const DeletionCountdown = styled.div`
 interface DeletedWordRowProps {
 	word: Word;
 	rowNumber: number;
-	saveWord(word: Word): void;
+	updateWord(word: Word, operation: WordOperationType): void;
 	deleteWord(word: Word): void;
-	restoreWord(word: Word): void;
 }
 
-export default function DeletedWordRow({ word, rowNumber, saveWord, deleteWord, restoreWord }: DeletedWordRowProps) {
+export default function DeletedWordRow({ word, rowNumber, updateWord, deleteWord }: DeletedWordRowProps) {
 	function calcDiffBetweenDates() {
 		const today: Dayjs = dayjs();
 		const permanentlyDeletionDate: Dayjs = dayjs(word.deletionDate).add(30, "day");
@@ -83,7 +82,7 @@ export default function DeletedWordRow({ word, rowNumber, saveWord, deleteWord, 
 				<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>
 			</MemoryLevel>
 			<DeletionCountdown>{calcDiffBetweenDates()}</DeletionCountdown>
-			<DeletedWordIcons word={word} deleteWord={deleteWord} restoreWord={restoreWord} />
+			<DeletedWordIcons word={word} deleteWord={deleteWord} updateWord={updateWord} />
 		</WordRow>
 	);
 }

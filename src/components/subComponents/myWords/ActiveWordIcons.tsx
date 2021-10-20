@@ -1,7 +1,7 @@
 import { useState, useContext, Fragment } from "react";
 
 /* Interfaces */
-import { Word } from "../../../utils/interfaces";
+import { Word, WordOperationType } from "../../../utils/interfaces";
 
 /* Styles */
 import styled from "styled-components";
@@ -19,11 +19,10 @@ const MainContainer = styled.div`
 
 interface WordHandlerProps {
 	word: Word;
-	saveWord(word: Word): void;
-	deleteWord(word: Word): void;
+	updateWord(updatedWord: Word, operation: WordOperationType): void;
 }
 
-export default function ActiveWordIcons({ word, saveWord, deleteWord }: WordHandlerProps) {
+export default function ActiveWordIcons({ word, updateWord }: WordHandlerProps) {
 	const [isTrashIconHovered, setTrashIconHover] = useState(false);
 	const [isFavoriteIconHovered, setFavoriteIconHover] = useState(false);
 	const [isEditIconHovered, setEditIconHover] = useState(false);
@@ -31,7 +30,7 @@ export default function ActiveWordIcons({ word, saveWord, deleteWord }: WordHand
 
 	function toggleWordFavorite() {
 		word.favourite = !word.favourite;
-		saveWord(word);
+		updateWord(word, "edit");
 	}
 
 	return (
@@ -81,7 +80,10 @@ export default function ActiveWordIcons({ word, saveWord, deleteWord }: WordHand
 
 			{/* DELETE ICON */}
 
-			<div onMouseEnter={() => setTrashIconHover(true)} onMouseLeave={() => setTrashIconHover(false)} onClick={() => deleteWord(word)}>
+			<div
+				onMouseEnter={() => setTrashIconHover(true)}
+				onMouseLeave={() => setTrashIconHover(false)}
+				onClick={() => updateWord(word, "delete")}>
 				{isTrashIconHovered ? <BsTrashFill size={25} /> : <BsTrash size={25} />}
 			</div>
 		</MainContainer>

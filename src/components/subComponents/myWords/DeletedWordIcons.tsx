@@ -1,7 +1,7 @@
 import { useState, useContext, Fragment } from "react";
 
 /* Interfaces */
-import { Word } from "../../../utils/interfaces";
+import { Word, WordOperationType } from "../../../utils/interfaces";
 
 /* Styles */
 import styled from "styled-components";
@@ -21,16 +21,19 @@ const MainContainer = styled.div`
 interface DeletedWordIconsProps {
 	word: Word;
 	deleteWord(word: Word): void;
-	restoreWord(word: Word): void;
+	updateWord(word: Word, operation: WordOperationType): void;
 }
 
-export default function DeletedWordIcons({ word, deleteWord, restoreWord }: DeletedWordIconsProps) {
+export default function DeletedWordIcons({ word, deleteWord, updateWord }: DeletedWordIconsProps) {
 	const [isRestoreIconHovered, setRestoreIconHover] = useState(false);
 	const [isTrashIconHovered, setTrashIconHover] = useState(false);
 
 	return (
 		<MainContainer>
-			<div onMouseEnter={() => setRestoreIconHover(true)} onMouseLeave={() => setRestoreIconHover(false)} onClick={() => restoreWord(word)}>
+			<div
+				onMouseEnter={() => setRestoreIconHover(true)}
+				onMouseLeave={() => setRestoreIconHover(false)}
+				onClick={() => updateWord(word, "restore")}>
 				{isRestoreIconHovered ? (
 					<IoArrowUndo size={25} style={{ marginRight: 12 }} />
 				) : (

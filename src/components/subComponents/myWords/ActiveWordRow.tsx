@@ -1,5 +1,5 @@
 /* Interfaces */
-import { Word } from "../../../utils/interfaces";
+import { Word, WordOperationType } from "../../../utils/interfaces";
 
 /* Styles */
 import styled from "styled-components";
@@ -50,11 +50,10 @@ const MemoryState = styled.div`
 interface ActiveWordRowProps {
 	word: Word;
 	rowNumber: number;
-	saveWord(word: Word): void;
-	deleteWord(word: Word): void;
+	updateWord(word: Word, operation: WordOperationType): void;
 }
 
-export default function ActiveWordRow({ word, rowNumber, saveWord, deleteWord }: ActiveWordRowProps) {
+export default function ActiveWordRow({ word, rowNumber, updateWord }: ActiveWordRowProps) {
 	return (
 		<WordRow key={word.id} background={calculateRowBackground(rowNumber)}>
 			<EnglishWord>{word.english}</EnglishWord>
@@ -63,7 +62,7 @@ export default function ActiveWordRow({ word, rowNumber, saveWord, deleteWord }:
 				<SpinnerBar size={24} status={word.memoryLevel} style={{ margin: "0 12px 0 0", background: calculateRowBackground(rowNumber) }} />
 				<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>
 			</MemoryLevel>
-			<ActiveWordIcons word={word} saveWord={saveWord} deleteWord={deleteWord} />
+			<ActiveWordIcons word={word} updateWord={updateWord} />
 		</WordRow>
 	);
 }

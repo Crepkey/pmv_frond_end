@@ -8,7 +8,7 @@ import omit from "lodash/omit";
 import { AppContext } from "../../AppContext";
 
 /* Interfaces */
-import { Word } from "../../utils/interfaces";
+import { Word, WordOperationType } from "../../utils/interfaces";
 
 /* Icons */
 import { BsFilter, BsChevronLeft, BsChevronRight, BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
@@ -263,7 +263,7 @@ export default function MyWords() {
 		}
 	}
 
-	async function updateWord(updatedWord: Word, operation: "edit" | "delete" | "restore") {
+	async function updateWord(updatedWord: Word, operation: WordOperationType) {
 		if (operation === "delete") {
 			updatedWord.deletionDate = new Date();
 		}
@@ -298,73 +298,13 @@ export default function MyWords() {
 		}
 	}
 
-	async function saveEditedWord(editedWord: Word) {
-		const response = await fetch("/my-words", {
-			method: "PUT",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(editedWord),
-		});
-
-		const parsedResponse = await response.json();
-
-		if (parsedResponse.error) {
-			window.alert(parsedResponse.message);
-			return;
-		}
-
-		const currentActiveWords = activeWords.map((word: Word) => (editedWord.id === word.id ? editedWord : word));
-		setActiveWords(currentActiveWords);
-	}
-
-	async function deleteWord(deletedWord: Word) {
-		deletedWord.deletionDate = new Date();
-
-		const response = await fetch("/my-words", {
-			method: "PUT",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(deletedWord),
-		});
-
-		const parsedResponse = await response.json();
-
-		if (parsedResponse.error) {
-			window.alert(parsedResponse.message);
-			return;
-		}
-
-		const currentActiveWords = activeWords.filter((word: Word) => word.id !== deletedWord.id);
-		setActiveWords(currentActiveWords);
-		setDeletedWords([...deletedWords, deletedWord]);
-	}
-
-	async function restoreWord(restoredWord: Word) {
-		restoredWord.deletionDate = null;
-
-		const response = await fetch("/my-words", {
-			method: "PUT",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(restoredWord),
-		});
-
-		const parsedResponse = await response.json();
-
-		if (parsedResponse.error) {
-			window.alert(parsedResponse.message);
-			return;
-		}
-
-		const currentDeletedWords = deletedWords.filter((word: Word) => word.id !== restoredWord.id);
-		setDeletedWords(currentDeletedWords);
-		setActiveWords([...activeWords, restoredWord]);
-	}
-
 	return (
 		<MainContainer>
 			<Modal>
-				<EditWord title="Edit word" initialWord={wordForEditing} save={saveEditedWord} />
+				<EditWord title="Edit word" initialWord={wordForEditing} updateWord={updateWord} />
 			</Modal>
 			<Modal>
-				<EditWord title="Add new word" save={saveNewWord} />
+				<EditWord title="Add new word" updateWord={saveNewWord} />
 			</Modal>
 			<ControlBarContainer>
 				<AddNewWordButton onClick={() => setActiveModal("Add new word")}>Add new word</AddNewWordButton>
@@ -388,20 +328,11 @@ export default function MyWords() {
 					<WordContainer>
 						<Route
 							path="/my-words/active-words"
-							component={() => (
-								<Words activeWords={activeWords} saveWord={saveEditedWord} deleteWord={deleteWord} restoreWord={restoreWord} />
-							)}
+							component={() => <Words activeWords={activeWords} updateWord={updateWord} deleteWord={deleteWordPermanently} />}
 						/>
 						<Route
 							path="/my-words/deleted-words"
-							component={() => (
-								<Words
-									deletedWords={deletedWords}
-									saveWord={saveEditedWord}
-									deleteWord={deleteWordPermanently}
-									restoreWord={restoreWord}
-								/>
-							)}
+							component={() => <Words deletedWords={deletedWords} updateWord={updateWord} deleteWord={deleteWordPermanently} />}
 						/>
 					</WordContainer>
 				</TableBlock>

@@ -6,6 +6,7 @@ export interface User {
 
 export type WordType = "word" | "expression";
 export type LanguageType = "english" | "hungarian";
+export type WordOperationType = "edit" | "delete" | "restore";
 
 export interface WordStatistics {
 	english: number;

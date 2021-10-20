@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 
 /* Interafaces */
-import { Word } from "../../../utils/interfaces";
+import { Word, WordOperationType } from "../../../utils/interfaces";
 
 /* Components */
 import ActiveWordRow from "./ActiveWordRow";
@@ -10,28 +10,20 @@ import DeletedWordRow from "./DeletedWordRow";
 interface WordsProps {
 	activeWords?: Word[];
 	deletedWords?: Word[];
-	saveWord(word: Word): void;
+	updateWord(word: Word, operation: WordOperationType): void;
 	deleteWord(word: Word): void;
-	restoreWord(word: Word): void;
 }
 
-export default function Words({ activeWords, deletedWords, saveWord, deleteWord, restoreWord }: WordsProps) {
+export default function Words({ activeWords, deletedWords, updateWord, deleteWord }: WordsProps) {
 	const displayedWords = activeWords ? activeWords : deletedWords;
 
 	return (
 		<Fragment>
 			{displayedWords?.map((word: Word, index: number) =>
 				activeWords ? (
-					<ActiveWordRow key={word.id} word={word} rowNumber={index} saveWord={saveWord} deleteWord={deleteWord} />
+					<ActiveWordRow key={word.id} word={word} rowNumber={index} updateWord={updateWord} />
 				) : (
-					<DeletedWordRow
-						key={word.id}
-						word={word}
-						rowNumber={index}
-						saveWord={saveWord}
-						deleteWord={deleteWord}
-						restoreWord={restoreWord}
-					/>
+					<DeletedWordRow key={word.id} word={word} rowNumber={index} updateWord={updateWord} deleteWord={deleteWord} />
 				),
 			)}
 		</Fragment>
