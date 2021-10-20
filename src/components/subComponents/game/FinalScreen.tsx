@@ -1,6 +1,6 @@
 // Styles
 import { Card, CardHeader, CardBody, GreenButton } from "../../generalComponents/styles";
-import { MainContainer, ScreenTitle, CardContainer, HeaderIcon, PointsContainer, Congrats, ResultDescription } from "./styles";
+import { MainContainer, ScreenTitle, CardContainer, HeaderIcon, PointsContainer, BoldLargeMessage, ResultDescription } from "./styles";
 
 // Icons
 import { GiSwordman, GiSwordwoman } from "react-icons/gi";
@@ -42,7 +42,7 @@ export default function FinalScreen({ owners, points, restartGame }: FinalScreen
 				})}
 			</CardContainer>
 
-			<Congrats>Congratulations {winners.map((winner: User) => winner.name).join(" and ")}!</Congrats>
+			<BoldLargeMessage>Congratulations {winners.map((winner: User) => winner.name).join(" and ")}!</BoldLargeMessage>
 			<ResultDescription>{winners.length === 1 ? "You won." : "You had the same number of points."}</ResultDescription>
 
 			<GreenButton onClick={restartGame}>Play again</GreenButton>

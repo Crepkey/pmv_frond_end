@@ -24,6 +24,12 @@ export const SentenceCard = styled.div<{ lastElement: boolean }>`
 	border-bottom: 1px ${colors.border} solid;
 `;
 
+export const BoldLargeMessage = styled.div`
+	font-size: 1.25rem;
+	font-weight: bolder;
+	margin: 16px;
+`;
+
 // GAME COMPONENT
 export const GameMainContainer = styled.div`
 	display: flex;
@@ -31,6 +37,14 @@ export const GameMainContainer = styled.div`
 	justify-content: center;
 	min-width: 0;
 	min-height: 0;
+`;
+
+// ERROR SCREEN
+export const ErrorContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 40px;
 `;
 
 // PLAYINGCARD COMPONENT
@@ -107,12 +121,6 @@ export const PointsContainer = styled.div`
 	font-size: 3rem;
 	justify-content: center;
 	font-weight: bold;
-`;
-
-export const Congrats = styled.div`
-	font-size: 1.25rem;
-	font-weight: bolder;
-	margin: 16px;
 `;
 
 export const ResultDescription = styled.div`

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 // Styles
-import { GameMainContainer } from "../subComponents/game/styles";
+import { BoldLargeMessage, ErrorContainer, GameMainContainer } from "../subComponents/game/styles";
 
 // Interfaces
 import { GrammaticalStructure, User, Points, WordWithScores } from "../../utils/interfaces";
@@ -17,10 +17,13 @@ import GrammarCard from "../subComponents/game/GrammarCard";
 import set from "lodash/set";
 import get from "lodash/get";
 
+// Icons
+import { IoSadOutline } from "react-icons/io5";
+
 export default function Game() {
 	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
 
-	const playerIds = [1, 2];
 	const [owners, setOwners] = useState<User[]>([]);
 	const [words, setWords] = useState<WordWithScores[]>([]);
 	const [grammaticalStructures, setGrammaticalStructures] = useState<GrammaticalStructure[]>([]);
@@ -28,8 +31,7 @@ export default function Game() {
 	const [actualIndex, setActualIndex] = useState<number>(0);
 	const [points, setPoints] = useState<Points>({});
 
-	// const [error, setError] = useState<string>(undefined);
-
+	const playerIds = [1, 2];
 	const actualWord = words[actualIndex];
 	const actualOwnerId = actualWord?.ownerId;
 
@@ -44,7 +46,13 @@ export default function Game() {
 	async function initialize() {
 		const response = await fetch(`/lets-play?players=${playerIds[0]}&players=${playerIds[1]}`);
 		const parsedResponse = await response.json();
-		console.log(parsedResponse);
+
+		setLoading(false);
+
+		if (parsedResponse.error) {
+			setError(parsedResponse.error);
+			return;
+		}
 
 		const owners = get(parsedResponse, "owners", []);
 		setOwners(owners);
@@ -54,13 +62,23 @@ export default function Game() {
 		const initialPoints = {};
 		owners.forEach((o: User) => set(initialPoints, [o.id], 0));
 		setPoints(initialPoints);
-		setLoading(false);
 	}
 
 	/* LOADING */
 	if (loading === true) {
 		// TODO nice load screen
 		return <div>LOADING</div>;
+	}
+
+	/* ERROR */
+	if (error !== null) {
+		return (
+			<ErrorContainer>
+				<IoSadOutline size={44} />
+				<BoldLargeMessage>Sorry, you can't play!</BoldLargeMessage>
+				{error}
+			</ErrorContainer>
+		);
 	}
 
 	/* END OF GAME */
