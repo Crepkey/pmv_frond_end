@@ -62,6 +62,7 @@ interface DeletedWordRowProps {
 }
 
 export default function DeletedWordRow({ word, rowNumber, saveWord, deleteWord }: DeletedWordRowProps) {
+	/* FIXME: This calculation results wrong remaining days */
 	function calcDiffBetweenDates() {
 		const today: Dayjs = dayjs();
 		const deletionDate: Dayjs = dayjs(word.deletionDate);

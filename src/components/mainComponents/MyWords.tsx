@@ -188,6 +188,9 @@ interface ServerResponse {
 	deletedWords: Word[];
 }
 
+/* FIXME: There is a bug which occurs when you are on the deleted words page and refresh the browser. 
+In that case the url refers to deleted words' page the table shows the active words tab as an active tab */
+
 export default function MyWords() {
 	const [activeWords, setActiveWords] = useState<Word[]>([]);
 	const [deletedWords, setDeletedWords] = useState<Word[]>([]);
@@ -278,6 +281,26 @@ export default function MyWords() {
 		}
 	}
 
+	async function deleteWord(deletedWord: Word) {
+		deletedWord.deletionDate = new Date();
+
+		const response = await fetch("/my-words", {
+			method: "PUT",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(deletedWord),
+		});
+
+		const parsedResponse = await response.json();
+
+		if (parsedResponse.error) {
+			window.alert(parsedResponse.message);
+			return;
+		}
+
+		const currentActiveWords = activeWords.map((word: Word) => (deletedWord.id === word.id ? deletedWord : word));
+		setActiveWords(currentActiveWords);
+	}
+
 	return (
 		<MainContainer>
 			<Modal>
@@ -308,7 +331,7 @@ export default function MyWords() {
 					<WordContainer>
 						<Route
 							path="/my-words/active-words"
-							component={() => <Words activeWords={activeWords} saveWord={saveEditedWord} deleteWord={deleteWordPermanently} />}
+							component={() => <Words activeWords={activeWords} saveWord={saveEditedWord} deleteWord={deleteWord} />}
 						/>
 						<Route
 							path="/my-words/deleted-words"
