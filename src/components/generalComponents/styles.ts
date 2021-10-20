@@ -72,7 +72,6 @@ export const GreenButton = styled.div`
 	text-decoration: none;
 	border-radius: 16px;
 	border: none;
-	width: 30%;
 	background-color: ${colors.acceptButtonBackground};
 	:hover {
 		background: linear-gradient(to bottom, ${colors.acceptButtonGradientLight} 5%, ${colors.acceptButtonGradientDark} 100%);

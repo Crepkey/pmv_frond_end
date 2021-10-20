@@ -1,6 +1,6 @@
 // Styles
-import { Card, CardHeader, CardBody } from "../../generalComponents/styles";
-import { MainContainer, ScreenTitle, CardContainer, HeaderIcon, PointsContainer, Congrats } from "./styles";
+import { Card, CardHeader, CardBody, GreenButton } from "../../generalComponents/styles";
+import { MainContainer, ScreenTitle, CardContainer, HeaderIcon, PointsContainer, Congrats, ResultDescription } from "./styles";
 
 // Icons
 import { GiSwordman, GiSwordwoman } from "react-icons/gi";
@@ -12,12 +12,13 @@ import { User, Points } from "../../../utils/interfaces";
 import max from "lodash/max";
 import get from "lodash/get";
 
-interface FinalPointsProps {
+interface FinalScreenProps {
 	owners: User[];
 	points: Points;
+	restartGame: () => void;
 }
 
-export default function FinalPoints({ owners, points }: FinalPointsProps) {
+export default function FinalScreen({ owners, points, restartGame }: FinalScreenProps) {
 	const maxPoint: number = max(Object.values(points));
 	const winners: User[] = owners.filter((o: User) => get(points, o.id) === maxPoint);
 
@@ -42,7 +43,9 @@ export default function FinalPoints({ owners, points }: FinalPointsProps) {
 			</CardContainer>
 
 			<Congrats>Congratulations {winners.map((winner: User) => winner.name).join(" and ")}!</Congrats>
-			{winners.length === 1 ? "You won." : "You had the same number of points."}
+			<ResultDescription>{winners.length === 1 ? "You won." : "You had the same number of points."}</ResultDescription>
+
+			<GreenButton onClick={restartGame}>Play again</GreenButton>
 		</MainContainer>
 	);
 }

@@ -33,12 +33,6 @@ export const GameMainContainer = styled.div`
 	min-height: 0;
 `;
 
-export const FinalScreenContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-`;
-
 // PLAYINGCARD COMPONENT
 export const SpinnerBarContainer = styled.div`
 	display: flex;
@@ -91,12 +85,11 @@ export const BoldText = styled.span`
 	margin-right: 4px;
 `;
 
-// FINALPOINTS COMPONENT
+// FINALSCREEN COMPONENT
 export const MainContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin: 24px;
 `;
 
 export const ScreenTitle = styled.div`
@@ -120,6 +113,10 @@ export const Congrats = styled.div`
 	font-size: 1.25rem;
 	font-weight: bolder;
 	margin: 16px;
+`;
+
+export const ResultDescription = styled.div`
+	margin-bottom: 24px;
 `;
 
 // GRAMMARCARD COMPONENT
