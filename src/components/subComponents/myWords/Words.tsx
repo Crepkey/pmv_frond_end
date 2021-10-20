@@ -12,9 +12,10 @@ interface WordsProps {
 	deletedWords?: Word[];
 	saveWord(word: Word): void;
 	deleteWord(word: Word): void;
+	restoreWord?(word: Word): void;
 }
 
-export default function Words({ activeWords, deletedWords, saveWord, deleteWord }: WordsProps) {
+export default function Words({ activeWords, deletedWords, saveWord, deleteWord, restoreWord }: WordsProps) {
 	const displayedWords = activeWords ? activeWords : deletedWords;
 
 	return (
@@ -23,7 +24,14 @@ export default function Words({ activeWords, deletedWords, saveWord, deleteWord 
 				activeWords ? (
 					<ActiveWordRow key={word.id} word={word} rowNumber={index} saveWord={saveWord} deleteWord={deleteWord} />
 				) : (
-					<DeletedWordRow key={word.id} word={word} rowNumber={index} saveWord={saveWord} deleteWord={deleteWord} />
+					<DeletedWordRow
+						key={word.id}
+						word={word}
+						rowNumber={index}
+						saveWord={saveWord}
+						deleteWord={deleteWord}
+						restoreWord={restoreWord}
+					/>
 				),
 			)}
 		</Fragment>

@@ -22,8 +22,9 @@ interface WordHandlerProps {
 	word: Word;
 	saveWord(word: Word): void;
 	deleteWord(word: Word): void;
+	restoreWord?(word: Word): void;
 }
-export default function WordHandlerIcons({ word, saveWord, deleteWord }: WordHandlerProps) {
+export default function WordHandlerIcons({ word, saveWord, deleteWord, restoreWord }: WordHandlerProps) {
 	const [isRestoreIconHovered, setRestoreIconHover] = useState(false);
 	const [isTrashIconHovered, setTrashIconHover] = useState(false);
 	const [isFavoriteIconHovered, setFavoriteIconHover] = useState(false);
@@ -93,7 +94,12 @@ export default function WordHandlerIcons({ word, saveWord, deleteWord }: WordHan
 				<Fragment>
 					{/* DELETED WORDS */}
 
-					<div onMouseEnter={() => setRestoreIconHover(true)} onMouseLeave={() => setRestoreIconHover(false)}>
+					<div
+						onMouseEnter={() => setRestoreIconHover(true)}
+						onMouseLeave={() => setRestoreIconHover(false)}
+						onClick={() => {
+							return restoreWord ? restoreWord(word) : () => {};
+						}}>
 						{isRestoreIconHovered ? (
 							<IoArrowUndo size={25} style={{ marginRight: 12 }} />
 						) : (

@@ -59,9 +59,10 @@ interface DeletedWordRowProps {
 	rowNumber: number;
 	saveWord(word: Word): void;
 	deleteWord(word: Word): void;
+	restoreWord?(word: Word): void;
 }
 
-export default function DeletedWordRow({ word, rowNumber, saveWord, deleteWord }: DeletedWordRowProps) {
+export default function DeletedWordRow({ word, rowNumber, saveWord, deleteWord, restoreWord }: DeletedWordRowProps) {
 	function calcDiffBetweenDates() {
 		const today: Dayjs = dayjs();
 		const permanentlyDeletionDate: Dayjs = dayjs(word.deletionDate).add(30, "day");
@@ -81,7 +82,7 @@ export default function DeletedWordRow({ word, rowNumber, saveWord, deleteWord }
 				<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>
 			</MemoryLevel>
 			<DeletionCountdown>{calcDiffBetweenDates()}</DeletionCountdown>
-			<WordHandlerIcons word={word} saveWord={saveWord} deleteWord={deleteWord} />
+			<WordHandlerIcons word={word} saveWord={saveWord} deleteWord={deleteWord} restoreWord={restoreWord} />
 		</WordRow>
 	);
 }

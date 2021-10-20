@@ -301,6 +301,27 @@ export default function MyWords() {
 		setActiveWords(currentActiveWords);
 	}
 
+	async function restoreWord(restoredWord: Word) {
+		restoredWord.deletionDate = null;
+
+		const response = await fetch("/my-words", {
+			method: "PUT",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(restoredWord),
+		});
+
+		const parsedResponse = await response.json();
+
+		if (parsedResponse.error) {
+			window.alert(parsedResponse.message);
+			return;
+		}
+
+		const currentDeletedWords = deletedWords.filter((word: Word) => word.id !== restoredWord.id);
+		setDeletedWords(currentDeletedWords);
+		setActiveWords([...activeWords, restoredWord]);
+	}
+
 	return (
 		<MainContainer>
 			<Modal>
@@ -335,7 +356,14 @@ export default function MyWords() {
 						/>
 						<Route
 							path="/my-words/deleted-words"
-							component={() => <Words deletedWords={deletedWords} saveWord={saveEditedWord} deleteWord={deleteWordPermanently} />}
+							component={() => (
+								<Words
+									deletedWords={deletedWords}
+									saveWord={saveEditedWord}
+									deleteWord={deleteWordPermanently}
+									restoreWord={restoreWord}
+								/>
+							)}
 						/>
 					</WordContainer>
 				</TableBlock>
