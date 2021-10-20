@@ -7,7 +7,7 @@ import { colors } from "../../../utils/colors";
 import SpinnerBar from "../../generalComponents/SpinnerBar";
 
 /* Components */
-import WordHandlerIcons from "./WordHandlerIcons";
+import ActiveWordIcons from "./ActiveWordIcons";
 
 /* Utils */
 import { calculateRowBackground, convertMemoryLevelToText } from "./utils";
