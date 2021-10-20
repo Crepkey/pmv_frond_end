@@ -206,7 +206,7 @@ const Button = styled.div`
 interface EditWordProps {
 	title: string;
 	initialWord?: Word;
-	updateWord(editedWord: Word, operation: WordOperationType): void;
+	save(word: Word, operation: WordOperationType): void;
 }
 
 const errorMessages: { [key: number]: string } = {
@@ -215,7 +215,7 @@ const errorMessages: { [key: number]: string } = {
 	3: "At least one example sentence is required (in the first field).",
 };
 
-export default function EditWord({ initialWord, title, updateWord }: EditWordProps) {
+export default function EditWord({ initialWord, title, save }: EditWordProps) {
 	const [word, setWord] = useState<Word>(initialWord || emptyWord);
 	const [errors, setErrors] = useState<number[]>([]);
 	const { setActiveModal } = useContext(AppContext);
@@ -245,7 +245,7 @@ export default function EditWord({ initialWord, title, updateWord }: EditWordPro
 
 	function saveForm() {
 		if (!formValidation()) return;
-		updateWord(word, "edit");
+		save(word, "edit");
 		setActiveModal("none");
 	}
 

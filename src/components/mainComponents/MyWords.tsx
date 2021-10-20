@@ -297,10 +297,10 @@ export default function MyWords() {
 	return (
 		<MainContainer>
 			<Modal>
-				<EditWord title="Edit word" initialWord={wordForEditing} updateWord={updateWord} />
+				<EditWord title="Edit word" initialWord={wordForEditing} save={updateWord} />
 			</Modal>
 			<Modal>
-				<EditWord title="Add new word" updateWord={saveNewWord} />
+				<EditWord title="Add new word" save={saveNewWord} />
 			</Modal>
 			<ControlBarContainer>
 				<AddNewWordButton onClick={() => setActiveModal("Add new word")}>Add new word</AddNewWordButton>
