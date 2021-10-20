@@ -8,22 +8,22 @@ import { MdVolumeUp } from "react-icons/md";
 import { GiSwordwoman, GiSwordman } from "react-icons/gi";
 
 // Interfaces
-import { User, Word } from "../../../utils/interfaces";
-import { TagColor } from "./interfaces";
-
-// Helper functions
-import { getColorsByKnowledge } from "./calculateByKnowledgeLevels";
+import { User } from "../../../utils/interfaces";
+import { TagColor, WordInGame } from "./interfaces";
 
 // Components
 import SpinnerBar from "../../generalComponents/SpinnerBar";
 
+// Utils
+import get from "lodash/get";
+
 interface PlayingCardProps {
 	owner: User | undefined;
-	word: Word;
+	word: WordInGame;
 }
 
 export default function PlayingCard({ owner, word }: PlayingCardProps) {
-	const tagColors: TagColor[] = getColorsByKnowledge(word);
+	const { tagColors } = word;
 
 	return (
 		<Card>
@@ -50,7 +50,7 @@ export default function PlayingCard({ owner, word }: PlayingCardProps) {
 								return tc.language === "hungarian" && tc.index === i;
 							});
 							return (
-								<Tag key={i} background={tagColor?.color}>
+								<Tag key={i} background={get(colors, tagColor?.color || "progressBlue")}>
 									{meaning}
 								</Tag>
 							);

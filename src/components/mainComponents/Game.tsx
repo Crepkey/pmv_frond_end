@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import { BoldLargeMessage, ErrorContainer, GameMainContainer } from "../subComponents/game/styles";
 
 // Interfaces
-import { GrammaticalStructure, User, Points, WordWithScores } from "../../utils/interfaces";
+import { GrammaticalStructure, User, Points } from "../../utils/interfaces";
+import { WordInGame } from "../subComponents/game/interfaces";
 
 // Components
 import PlayingCard from "../subComponents/game/PlayingCard";
@@ -25,7 +26,7 @@ export default function Game() {
 	const [error, setError] = useState<string | null>(null);
 
 	const [owners, setOwners] = useState<User[]>([]);
-	const [words, setWords] = useState<WordWithScores[]>([]);
+	const [words, setWords] = useState<WordInGame[]>([]);
 	const [grammaticalStructures, setGrammaticalStructures] = useState<GrammaticalStructure[]>([]);
 
 	const [actualIndex, setActualIndex] = useState<number>(0);

@@ -6,8 +6,7 @@ import { Card, CardHeader, CardBody, CardTitle, CardBodyScrollContainer, Block, 
 import { CheckBox, BoldText, ButtonContainer } from "./styles";
 
 // Interfaces
-import { WordWithScores } from "../../../utils/interfaces";
-import { GameStatistics } from "./interfaces";
+import { GameStatistics, WordInGame } from "./interfaces";
 
 // Icons
 import { BsCheckCircleFill, BsDashCircle } from "react-icons/bs";
@@ -18,7 +17,6 @@ import set from "lodash/set";
 import capitalize from "lodash/capitalize";
 
 // Helper functions
-import { calculateWordToAsk } from "./calculateByKnowledgeLevels";
 import { calculateDataToSave, calculateGamePoints } from "./calculateFinalResult";
 
 interface EvaluationRowProps {
@@ -41,7 +39,7 @@ function EvaluationRow({ title, checked, toggleChecked, mainWord }: EvaluationRo
 }
 
 interface EvaluationFormProps {
-	actualWord: WordWithScores;
+	actualWord: WordInGame;
 	getNextCard: () => void;
 	userPoints: number;
 	setUserPoints: (newPoints: number) => void;
@@ -54,7 +52,7 @@ export default function EvaluationForm({ actualWord, getNextCard, userPoints, se
 	const [correctGrammar, setCorrectGrammar] = useState<boolean>(false);
 	const [mainWordKnown, setMainWordKnown] = useState<boolean>(false);
 
-	const { wordToAsk, wordToAnswer, mainWordType } = calculateWordToAsk(actualWord);
+	const { wordToAsk, wordToAnswer, mainWordType } = actualWord;
 
 	function save() {
 		// calculate the values that we need to save
