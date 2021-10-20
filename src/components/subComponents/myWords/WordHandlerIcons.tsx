@@ -45,24 +45,24 @@ export default function WordHandlerIcons({ word, saveWord, deleteWord, restoreWo
 					{/* FAVORITE */}
 					{word.favourite ? (
 						<div
+							onClick={() => toggleWordFavorite()}
 							onMouseEnter={() => setFavoriteIconHover(true)}
-							onMouseLeave={() => setFavoriteIconHover(false)}
-							onClick={() => toggleWordFavorite()}>
+							onMouseLeave={() => setFavoriteIconHover(false)}>
 							{isFavoriteIconHovered ? (
-								<BsSuitHeartFill size={25} style={{ marginRight: 12 }} />
-							) : (
 								<BsSuitHeart size={25} style={{ marginRight: 12 }} />
+							) : (
+								<BsSuitHeartFill size={25} style={{ marginRight: 12 }} />
 							)}
 						</div>
 					) : (
 						<div
+							onClick={() => toggleWordFavorite()}
 							onMouseEnter={() => setFavoriteIconHover(true)}
-							onMouseLeave={() => setFavoriteIconHover(false)}
-							onClick={() => toggleWordFavorite()}>
+							onMouseLeave={() => setFavoriteIconHover(false)}>
 							{isFavoriteIconHovered ? (
-								<BsSuitHeart size={25} style={{ marginRight: 12 }} />
-							) : (
 								<BsSuitHeartFill size={25} style={{ marginRight: 12 }} />
+							) : (
+								<BsSuitHeart size={25} style={{ marginRight: 12 }} />
 							)}
 						</div>
 					)}
