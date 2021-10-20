@@ -218,7 +218,13 @@ export default function MyWords() {
 		else return { activeWordsTab: inactiveTabStyle, deletedWordsTab: activeTabStyle };
 	}
 
-	function saveEditedWord(editedWord: Word) {
+	async function saveEditedWord(editedWord: Word) {
+		/* TODO: Error handling is missing */
+		const serverResp = await fetch("/my-words", {
+			method: "PUT",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(editedWord),
+		});
 		const currentActiveWords = activeWords.map((word: Word) => (editedWord.id === word.id ? editedWord : word));
 		setActiveWords(currentActiveWords);
 	}
@@ -227,14 +233,20 @@ export default function MyWords() {
 		/* FIXME: Owner ID is not handled */
 		const newWordWithoutID = omit(newWord, "id");
 
-		const serverResp = await fetch("/my-word", {
+		const response = await fetch("/my-words", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(newWordWithoutID),
 		});
 
-		const savedWord = await serverResp.json();
-		const currentActiveWords = [...activeWords, savedWord];
+		const parsedResponse = await response.json();
+
+		if (parsedResponse.error) {
+			window.alert(parsedResponse.message); //TODO: A personal alert window would be better :)
+			return;
+		}
+
+		const currentActiveWords = [...activeWords, parsedResponse];
 		setActiveWords(currentActiveWords);
 	}
 
