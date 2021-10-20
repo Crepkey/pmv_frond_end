@@ -83,6 +83,7 @@ export const Tag = styled.div<{ background?: string }>`
 
 // EVALUATIONFORM COMPONENT
 export const ButtonContainer = styled.div`
+	margin-top: 24px;
 	display: flex;
 	justify-content: center;
 `;

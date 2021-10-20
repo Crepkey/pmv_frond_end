@@ -47,7 +47,6 @@ export const CardBodyScrollContainer = styled.div`
 	min-height: 0;
 	overflow: scroll;
 	flex: 1;
-	margin-bottom: 24px;
 `;
 
 // BLOCK
