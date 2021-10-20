@@ -1,6 +1,6 @@
 // Interfaces
-import { LanguageType, WordWithScores, WordStatistics } from "../../../utils/interfaces";
-import { GameStatistics } from "./interfaces";
+import { WordWithScores, WordStatistics } from "../../../utils/interfaces";
+import { GameStatistics, WordInGame } from "./interfaces";
 
 // Utils
 import get from "lodash/get";
@@ -53,14 +53,19 @@ export function calculateDataToSave(word: WordWithScores, gameStatistics: GameSt
 	return { ...word, actualScore, memoryLevel, statistics: statisticsToSave, deletionDate };
 }
 
-export function calculateGamePoints(
-	word: WordWithScores,
-	gameStatistics: GameStatistics,
-	mainWordKnown: boolean,
-	mainWordType: LanguageType,
-	correctGrammar: boolean,
-): number {
+function getMainWordKnown(word: WordInGame, gameStatistics: GameStatistics) {
+	if (word.wordToAnswer === word.english) {
+		if (gameStatistics.english === true) return true;
+	} else {
+		const indexOfWordToAnswer = word.hungarian.findIndex((meaning: string) => meaning === word.wordToAnswer);
+		if (get(gameStatistics, ["hungarian", indexOfWordToAnswer]) === true) return true;
+	}
+	return false;
+}
+
+export function calculateGamePoints(word: WordInGame, gameStatistics: GameStatistics, correctGrammar: boolean): number {
 	let earnedPoints = 0;
+	const mainWordKnown = getMainWordKnown(word, gameStatistics);
 	const hungarianScore = gameStatistics.hungarian.filter((s: boolean) => s === true).length;
 
 	// Player knew the main word
@@ -68,7 +73,7 @@ export function calculateGamePoints(
 
 	// Player knew all other Hungarian meanings
 	let scoreToCompare = word.hungarian.length - 1;
-	if (mainWordType === "hungarian" && mainWordKnown) {
+	if (word.mainWordType === "hungarian" && mainWordKnown) {
 		scoreToCompare += 1;
 	}
 	if (hungarianScore === scoreToCompare) earnedPoints += 1;

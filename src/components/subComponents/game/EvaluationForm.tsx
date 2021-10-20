@@ -48,28 +48,26 @@ interface EvaluationFormProps {
 export default function EvaluationForm({ actualWord, getNextCard, userPoints, setUserPoints }: EvaluationFormProps) {
 	const emptyStatistics: GameStatistics = { english: false, hungarian: [] };
 	// We only store the actual evaluation in the state and calculate the values (that we need in the database) while saving
-	const [statistics, setStatistics] = useState<GameStatistics>(emptyStatistics);
+	const [gameStatistics, setGameStatistics] = useState<GameStatistics>(emptyStatistics);
 	const [correctGrammar, setCorrectGrammar] = useState<boolean>(false);
-	const [mainWordKnown, setMainWordKnown] = useState<boolean>(false);
 
-	const { wordToAsk, wordToAnswer, mainWordType } = actualWord;
+	const { wordToAsk, wordToAnswer } = actualWord;
 
 	function save() {
 		// calculate the values that we need to save
-		const wordToSave = calculateDataToSave(actualWord, statistics);
+		const wordToSave = calculateDataToSave(actualWord, gameStatistics);
 		/*  TODO 
 		1) save to database (it would be better, if we didn't need the whole word, just the modified columns)
 		2) save the grammatical knowledge (correctGrammar in state) to some grammatical statistics table
  		*/
 
 		// calculate game points
-		const earnedPoints = calculateGamePoints(actualWord, statistics, mainWordKnown, mainWordType, correctGrammar);
+		const earnedPoints = calculateGamePoints(actualWord, gameStatistics, correctGrammar);
 		setUserPoints(userPoints + earnedPoints);
 
 		// clear statistics in the state
-		setStatistics(emptyStatistics);
+		setGameStatistics(emptyStatistics);
 		setCorrectGrammar(false);
-		setMainWordKnown(false);
 		// show next card
 		getNextCard();
 	}
@@ -88,17 +86,14 @@ export default function EvaluationForm({ actualWord, getNextCard, userPoints, se
 						<EvaluationRow
 							title={actualWord.english}
 							mainWord={wordToAnswer === actualWord.english}
-							checked={statistics.english}
+							checked={gameStatistics.english}
 							toggleChecked={() => {
-								setStatistics({ ...statistics, english: !statistics.english });
-								if (wordToAnswer === actualWord.english) {
-									setMainWordKnown(!mainWordKnown);
-								}
+								setGameStatistics({ ...gameStatistics, english: !gameStatistics.english });
 							}}
 						/>
 					)}
 					{actualWord.hungarian.map((meaning: string, i: number) => {
-						const checked = get(statistics, ["hungarian", i], false);
+						const checked = get(gameStatistics, ["hungarian", i], false);
 						if (wordToAsk !== meaning) {
 							return (
 								<EvaluationRow
@@ -107,11 +102,8 @@ export default function EvaluationForm({ actualWord, getNextCard, userPoints, se
 									mainWord={wordToAnswer === meaning}
 									checked={checked}
 									toggleChecked={() => {
-										const evaluatedHungarian = set([...statistics.hungarian], i, !checked);
-										setStatistics({ ...statistics, hungarian: evaluatedHungarian });
-										if (wordToAnswer === meaning) {
-											setMainWordKnown(!mainWordKnown);
-										}
+										const evaluatedHungarian = set([...gameStatistics.hungarian], i, !checked);
+										setGameStatistics({ ...gameStatistics, hungarian: evaluatedHungarian });
 									}}
 								/>
 							);
