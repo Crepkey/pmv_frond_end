@@ -24,6 +24,8 @@ interface WordHandlerProps {
 	deleteWord(word: Word): void;
 	restoreWord?(word: Word): void;
 }
+
+/* REFACTOR: I have to split this compenent in two */
 export default function WordHandlerIcons({ word, saveWord, deleteWord, restoreWord }: WordHandlerProps) {
 	const [isRestoreIconHovered, setRestoreIconHover] = useState(false);
 	const [isTrashIconHovered, setTrashIconHover] = useState(false);

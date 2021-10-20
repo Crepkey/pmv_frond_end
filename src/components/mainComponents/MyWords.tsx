@@ -299,6 +299,7 @@ export default function MyWords() {
 
 		const currentActiveWords = activeWords.filter((word: Word) => word.id !== deletedWord.id);
 		setActiveWords(currentActiveWords);
+		setDeletedWords([...deletedWords, deletedWord]);
 	}
 
 	async function restoreWord(restoredWord: Word) {
