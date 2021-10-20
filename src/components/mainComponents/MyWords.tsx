@@ -221,24 +221,6 @@ export default function MyWords() {
 		else return { activeWordsTab: inactiveTabStyle, deletedWordsTab: activeTabStyle };
 	}
 
-	async function saveEditedWord(editedWord: Word) {
-		const response = await fetch("/my-words", {
-			method: "PUT",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(editedWord),
-		});
-
-		const parsedResponse = await response.json();
-
-		if (parsedResponse.error) {
-			window.alert(parsedResponse.message);
-			return;
-		}
-
-		const currentActiveWords = activeWords.map((word: Word) => (editedWord.id === word.id ? editedWord : word));
-		setActiveWords(currentActiveWords);
-	}
-
 	async function saveNewWord(newWord: Word) {
 		/* FIXME: Owner ID is not handled */
 		const newWordWithoutID = omit(newWord, "id");
@@ -279,6 +261,59 @@ export default function MyWords() {
 		} else {
 			setDeletedWords(deletedWords.filter((word: Word) => deletedWord.id !== word.id));
 		}
+	}
+
+	async function updateWord(updatedWord: Word, operation: "edit" | "delete" | "restore") {
+		if (operation === "delete") {
+			updatedWord.deletionDate = new Date();
+		}
+		if (operation === "restore") {
+			updatedWord.deletionDate = null;
+		}
+
+		const response = await fetch("/my-words", {
+			method: "PUT",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(updatedWord),
+		});
+
+		const parsedResponse = await response.json();
+
+		if (parsedResponse.error) {
+			window.alert(parsedResponse.message);
+			return;
+		}
+
+		switch (operation) {
+			case "edit":
+				setActiveWords(activeWords.map((word: Word) => (updatedWord.id === word.id ? updatedWord : word)));
+				break;
+			case "delete":
+				setActiveWords(activeWords.filter((word: Word) => word.id !== updatedWord.id));
+				setDeletedWords([...deletedWords, updatedWord]);
+				break;
+			case "restore":
+				setDeletedWords(deletedWords.filter((word: Word) => word.id !== updatedWord.id));
+				setActiveWords([...activeWords, updatedWord]);
+		}
+	}
+
+	async function saveEditedWord(editedWord: Word) {
+		const response = await fetch("/my-words", {
+			method: "PUT",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(editedWord),
+		});
+
+		const parsedResponse = await response.json();
+
+		if (parsedResponse.error) {
+			window.alert(parsedResponse.message);
+			return;
+		}
+
+		const currentActiveWords = activeWords.map((word: Word) => (editedWord.id === word.id ? editedWord : word));
+		setActiveWords(currentActiveWords);
 	}
 
 	async function deleteWord(deletedWord: Word) {
