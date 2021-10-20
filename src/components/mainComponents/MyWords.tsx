@@ -8,7 +8,7 @@ import omit from "lodash/omit";
 import { AppContext } from "../../AppContext";
 
 /* Interfaces */
-import { Word, WordOperationType } from "../../utils/interfaces";
+import { ServerError, Word, WordOperationType } from "../../utils/interfaces";
 
 /* Icons */
 import { BsFilter, BsChevronLeft, BsChevronRight, BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
@@ -183,7 +183,7 @@ const PageNumber = styled.div`
 	padding: 0 8px 0 8px;
 `;
 
-interface ServerResponse {
+interface ParsedResponse {
 	activeWords: Word[];
 	deletedWords: Word[];
 }
@@ -203,8 +203,8 @@ export default function MyWords() {
 	}, []);
 
 	async function load() {
-		const rawData = await fetch("/my-words/2?numberOfDisplayedRows=50");
-		const parsedData: ServerResponse = await rawData.json();
+		const rawData: Response = await fetch("/my-words/2?numberOfDisplayedRows=50");
+		const parsedData: ParsedResponse = await rawData.json();
 		setActiveWords(parsedData.activeWords);
 		setDeletedWords(parsedData.deletedWords);
 	}
@@ -225,15 +225,15 @@ export default function MyWords() {
 		/* FIXME: Owner ID is not handled */
 		const newWordWithoutID = omit(newWord, "id");
 
-		const response = await fetch("/my-words", {
+		const response: Response = await fetch("/my-words", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(newWordWithoutID),
 		});
 
-		const parsedResponse = await response.json();
+		const parsedResponse: Word | ServerError = await response.json();
 
-		if (parsedResponse.error) {
+		if ("error" in parsedResponse) {
 			window.alert(parsedResponse.message); //TODO: A personal alert window would be better :)
 			return;
 		}

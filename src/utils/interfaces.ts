@@ -46,3 +46,11 @@ export interface GrammaticalStructure {
 	basicSentences: string[];
 	realLifeUsages: Usage[];
 }
+
+export interface ServerError {
+	error: string;
+	message: string;
+	stack: string;
+	detail: string;
+	table: string;
+}
