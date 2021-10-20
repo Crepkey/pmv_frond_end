@@ -243,24 +243,20 @@ export default function MyWords() {
 	}
 
 	async function deleteWordPermanently(deletedWord: Word) {
-		const response = await fetch("/my-words", {
+		const response: Response = await fetch("/my-words", {
 			method: "DELETE",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(deletedWord),
 		});
 
-		const parsedResponse = await response.json();
+		const parsedResponse: Word | ServerError = await response.json();
 
-		if (parsedResponse.error) {
+		if ("error" in parsedResponse) {
 			window.alert(parsedResponse.message);
 			return;
 		}
 
-		if (deletedWord.deletionDate === null) {
-			setActiveWords(activeWords.filter((word: Word) => deletedWord.id !== word.id));
-		} else {
-			setDeletedWords(deletedWords.filter((word: Word) => deletedWord.id !== word.id));
-		}
+		setDeletedWords(deletedWords.filter((word: Word) => deletedWord.id !== word.id));
 	}
 
 	async function updateWord(updatedWord: Word, operation: WordOperationType) {
