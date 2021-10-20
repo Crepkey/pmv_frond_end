@@ -257,7 +257,20 @@ export default function MyWords() {
 		setActiveWords(currentActiveWords);
 	}
 
-	function deleteWord(deletedWord: Word) {
+	async function deleteWordPermanently(deletedWord: Word) {
+		const response = await fetch("/my-words", {
+			method: "DELETE",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(deletedWord),
+		});
+
+		const parsedResponse = await response.json();
+
+		if (parsedResponse.error) {
+			window.alert(parsedResponse.message);
+			return;
+		}
+
 		if (deletedWord.deletionDate === null) {
 			setActiveWords(activeWords.filter((word: Word) => deletedWord.id !== word.id));
 		} else {
@@ -295,11 +308,11 @@ export default function MyWords() {
 					<WordContainer>
 						<Route
 							path="/my-words/active-words"
-							component={() => <Words activeWords={activeWords} saveWord={saveEditedWord} deleteWord={deleteWord} />}
+							component={() => <Words activeWords={activeWords} saveWord={saveEditedWord} deleteWord={deleteWordPermanently} />}
 						/>
 						<Route
 							path="/my-words/deleted-words"
-							component={() => <Words deletedWords={deletedWords} saveWord={saveEditedWord} deleteWord={deleteWord} />}
+							component={() => <Words deletedWords={deletedWords} saveWord={saveEditedWord} deleteWord={deleteWordPermanently} />}
 						/>
 					</WordContainer>
 				</TableBlock>
