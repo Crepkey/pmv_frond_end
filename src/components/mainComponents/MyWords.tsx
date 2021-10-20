@@ -219,12 +219,19 @@ export default function MyWords() {
 	}
 
 	async function saveEditedWord(editedWord: Word) {
-		/* TODO: Error handling is missing */
-		const serverResp = await fetch("/my-words", {
+		const response = await fetch("/my-words", {
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(editedWord),
 		});
+
+		const parsedResponse = await response.json();
+
+		if (parsedResponse.error) {
+			window.alert(parsedResponse.message);
+			return;
+		}
+
 		const currentActiveWords = activeWords.map((word: Word) => (editedWord.id === word.id ? editedWord : word));
 		setActiveWords(currentActiveWords);
 	}
