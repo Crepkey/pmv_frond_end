@@ -297,7 +297,7 @@ export default function MyWords() {
 			return;
 		}
 
-		const currentActiveWords = activeWords.map((word: Word) => (deletedWord.id === word.id ? deletedWord : word));
+		const currentActiveWords = activeWords.filter((word: Word) => word.id !== deletedWord.id);
 		setActiveWords(currentActiveWords);
 	}
 
