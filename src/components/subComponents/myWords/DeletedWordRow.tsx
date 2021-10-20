@@ -62,7 +62,6 @@ interface DeletedWordRowProps {
 }
 
 export default function DeletedWordRow({ word, rowNumber, saveWord, deleteWord }: DeletedWordRowProps) {
-	/* FIXME: This calculation results wrong remaining days */
 	function calcDiffBetweenDates() {
 		const today: Dayjs = dayjs();
 		const deletionDate: Dayjs = dayjs(word.deletionDate);
@@ -71,12 +70,14 @@ export default function DeletedWordRow({ word, rowNumber, saveWord, deleteWord }
 		return result + text;
 	}
 
+	const background: string = calculateRowBackground(rowNumber);
+
 	return (
-		<WordRow key={word.id} background={calculateRowBackground(rowNumber)}>
+		<WordRow key={word.id} background={background}>
 			<EnglishWord>{word.english}</EnglishWord>
 			<HungarianWords>{word.hungarian.map((hunWord: string) => `${hunWord} `)}</HungarianWords>
 			<MemoryLevel>
-				<SpinnerBar size={24} status={word.memoryLevel} style={{ margin: "0 12px 0 0", background: calculateRowBackground(rowNumber) }} />
+				<SpinnerBar size={24} status={word.memoryLevel} style={{ margin: "0 12px 0 0", background }} />
 				<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>
 			</MemoryLevel>
 			<DeletionCountdown>{calcDiffBetweenDates()}</DeletionCountdown>
