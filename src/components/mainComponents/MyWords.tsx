@@ -353,7 +353,9 @@ export default function MyWords() {
 					<WordContainer>
 						<Route
 							path="/my-words/active-words"
-							component={() => <Words activeWords={activeWords} saveWord={saveEditedWord} deleteWord={deleteWord} />}
+							component={() => (
+								<Words activeWords={activeWords} saveWord={saveEditedWord} deleteWord={deleteWord} restoreWord={restoreWord} />
+							)}
 						/>
 						<Route
 							path="/my-words/deleted-words"

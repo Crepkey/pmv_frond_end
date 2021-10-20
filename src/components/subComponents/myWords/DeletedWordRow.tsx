@@ -12,6 +12,7 @@ import WordHandlerIcons from "./WordHandlerIcons";
 /* Utils */
 import { calculateRowBackground, convertMemoryLevelToText } from "./utils";
 import dayjs, { Dayjs } from "dayjs";
+import DeletedWordIcons from "./DeletedWordIcons";
 
 const WordRow = styled.div<{ background: string }>`
 	display: flex;
@@ -59,7 +60,7 @@ interface DeletedWordRowProps {
 	rowNumber: number;
 	saveWord(word: Word): void;
 	deleteWord(word: Word): void;
-	restoreWord?(word: Word): void;
+	restoreWord(word: Word): void;
 }
 
 export default function DeletedWordRow({ word, rowNumber, saveWord, deleteWord, restoreWord }: DeletedWordRowProps) {
@@ -82,7 +83,7 @@ export default function DeletedWordRow({ word, rowNumber, saveWord, deleteWord, 
 				<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>
 			</MemoryLevel>
 			<DeletionCountdown>{calcDiffBetweenDates()}</DeletionCountdown>
-			<WordHandlerIcons word={word} saveWord={saveWord} deleteWord={deleteWord} restoreWord={restoreWord} />
+			<DeletedWordIcons word={word} deleteWord={deleteWord} restoreWord={restoreWord} />
 		</WordRow>
 	);
 }

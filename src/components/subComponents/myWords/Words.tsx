@@ -12,7 +12,7 @@ interface WordsProps {
 	deletedWords?: Word[];
 	saveWord(word: Word): void;
 	deleteWord(word: Word): void;
-	restoreWord?(word: Word): void;
+	restoreWord(word: Word): void;
 }
 
 export default function Words({ activeWords, deletedWords, saveWord, deleteWord, restoreWord }: WordsProps) {
