@@ -122,22 +122,3 @@ export default function EvaluationForm({ actualWord, grammaticalStructureId, get
 		</Card>
 	);
 }
-
-/* Petra TODO
- In the database:
-
-Words table:
-ActualScore: number --- after the evaluation and calculation, we will store the new score in this column
-ScoreToAchieve: number --- the final score, if ActualScore >= ScoreToAchieve, you don't have to practice this word anymore
-MemoryLevel: number --- ActualScore / ScoreToAchieve : shows in percentage, where you are now in the learning phase
-Statistics: object: 
-        {
-            english: number;
-            hungarian: number[]; // numbers have the same indices as words in the 'hungarian' column
-        }
-        We store your knowledge levels in this object, which is needed for the statistics of the words.
-        The sum of the object's values should be the ActualScore
-
-Users + Grammatical structures table:
-We have to store, if the user knew the chosen grammatical structure or not
- */
