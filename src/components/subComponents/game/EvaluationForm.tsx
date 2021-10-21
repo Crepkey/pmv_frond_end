@@ -71,9 +71,6 @@ export default function EvaluationForm({ actualWord, grammaticalStructureId, get
 		const earnedPoints = calculateGamePoints(actualWord, gameStatistics, correctGrammar);
 		setUserPoints(userPoints + earnedPoints);
 
-		// clear statistics in the state
-		setGameStatistics(emptyStatistics);
-		setCorrectGrammar(false);
 		// show next card
 		getNextCard();
 	}
