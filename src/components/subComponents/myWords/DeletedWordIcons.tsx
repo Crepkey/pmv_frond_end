@@ -7,8 +7,7 @@ import { Word, WordOperationType } from "../../../utils/interfaces";
 import styled from "styled-components";
 import { colors } from "../../../utils/colors";
 import { IoArrowUndoOutline, IoArrowUndo } from "react-icons/io5";
-import { BsSuitHeart, BsSuitHeartFill, BsPencil, BsPencilFill, BsTrash, BsTrashFill } from "react-icons/bs";
-import { AppContext } from "../../../AppContext";
+import { BsTrash, BsTrashFill } from "react-icons/bs";
 
 const MainContainer = styled.div`
 	display: flex;
