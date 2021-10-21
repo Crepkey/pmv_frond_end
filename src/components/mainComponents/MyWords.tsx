@@ -188,14 +188,17 @@ interface ParsedResponse {
 	deletedWords: Word[];
 }
 
-/* Attila FIXME: There is a bug which occurs when you are on the deleted words page and refresh the browser. 
-In that case the url refers to deleted words' page the table shows the active words tab as an active tab */
+type PathNames = "/my-words/active-words" | "/my-words/deleted-words";
 
 export default function MyWords() {
 	const [activeWords, setActiveWords] = useState<Word[]>([]);
 	const [deletedWords, setDeletedWords] = useState<Word[]>([]);
-	const [activeTab, setActiveTab] = useState<"active-words" | "deleted-words">("active-words");
+	const [activeTab, setActiveTab] = useState<PathNames>(window.location.pathname as PathNames);
+
 	const { wordForEditing, setActiveModal } = useContext(AppContext);
+
+	const activeWordsPath: PathNames = "/my-words/active-words";
+	const deletedWordsPath: PathNames = "/my-words/deleted-words";
 
 	useEffect(() => {
 		load();
@@ -216,7 +219,7 @@ export default function MyWords() {
 		};
 		const inactiveTabStyle = { backgroundColor: colors.inactiveBackground, color: colors.inactiveFont };
 
-		if (activeTab === "active-words") return { activeWordsTab: activeTabStyle, deletedWordsTab: inactiveTabStyle };
+		if (activeTab === "/my-words/active-words") return { activeWordsTab: activeTabStyle, deletedWordsTab: inactiveTabStyle };
 		else return { activeWordsTab: inactiveTabStyle, deletedWordsTab: activeTabStyle };
 	}
 
@@ -313,10 +316,10 @@ export default function MyWords() {
 			<TableContainer>
 				<TableBlock>
 					<TabContainer>
-						<Tab to="/my-words/active-words" onClick={() => setActiveTab("active-words")} style={changeTabStyle().activeWordsTab}>
+						<Tab to={activeWordsPath} onClick={() => setActiveTab(activeWordsPath)} style={changeTabStyle().activeWordsTab}>
 							Active Words
 						</Tab>
-						<Tab to="/my-words/deleted-words" onClick={() => setActiveTab("deleted-words")} style={changeTabStyle().deletedWordsTab}>
+						<Tab to={deletedWordsPath} onClick={() => setActiveTab(deletedWordsPath)} style={changeTabStyle().deletedWordsTab}>
 							Deleted Words
 						</Tab>
 					</TabContainer>
