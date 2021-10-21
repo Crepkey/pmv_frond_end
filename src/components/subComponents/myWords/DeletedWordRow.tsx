@@ -1,5 +1,5 @@
 /* Interfaces */
-import { Word, WordOperationType } from "../../../utils/interfaces";
+import { ColorCodeType, Word, WordOperationType } from "../../../utils/interfaces";
 
 /* Styles */
 import styled from "styled-components";
@@ -7,12 +7,11 @@ import { colors } from "../../../utils/colors";
 import SpinnerBar from "../../generalComponents/SpinnerBar";
 
 /* Components */
-import ActiveWordIcons from "./ActiveWordIcons";
+import DeletedWordIcons from "./DeletedWordIcons";
 
 /* Utils */
 import { calculateRowBackground, convertMemoryLevelToText } from "./utils";
 import dayjs, { Dayjs } from "dayjs";
-import DeletedWordIcons from "./DeletedWordIcons";
 
 const WordRow = styled.div<{ background: string }>`
 	display: flex;
@@ -65,13 +64,13 @@ interface DeletedWordRowProps {
 export default function DeletedWordRow({ word, rowNumber, updateWord, deleteWord }: DeletedWordRowProps) {
 	function calcDiffBetweenDates() {
 		const today: Dayjs = dayjs();
-		const permanentlyDeletionDate: Dayjs = dayjs(word.deletionDate).add(30, "day");
-		const result: number = permanentlyDeletionDate.diff(today, "day");
+		const permanentDeletionDate: Dayjs = dayjs(word.deletionDate).add(30, "day");
+		const result: number = permanentDeletionDate.diff(today, "day");
 		const text: string = result === 1 ? " day left" : " days left";
 		return result + text;
 	}
 
-	const background: string = calculateRowBackground(rowNumber);
+	const background: ColorCodeType = calculateRowBackground(rowNumber);
 
 	return (
 		<WordRow key={word.id} background={background}>

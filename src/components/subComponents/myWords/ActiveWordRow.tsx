@@ -1,5 +1,5 @@
 /* Interfaces */
-import { Word, WordOperationType } from "../../../utils/interfaces";
+import { ColorCodeType, Word, WordOperationType } from "../../../utils/interfaces";
 
 /* Styles */
 import styled from "styled-components";
@@ -54,7 +54,7 @@ interface ActiveWordRowProps {
 }
 
 export default function ActiveWordRow({ word, rowNumber, updateWord }: ActiveWordRowProps) {
-	const background: string = calculateRowBackground(rowNumber);
+	const background: ColorCodeType = calculateRowBackground(rowNumber);
 	return (
 		<WordRow key={word.id} background={background}>
 			<EnglishWord>{word.english}</EnglishWord>

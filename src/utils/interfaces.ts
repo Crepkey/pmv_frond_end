@@ -54,3 +54,5 @@ export interface ServerError {
 	detail: string;
 	table: string;
 }
+
+export type ColorCodeType = `rgba(${number}, ${number}, ${number}, ${number})`;
