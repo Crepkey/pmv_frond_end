@@ -188,7 +188,7 @@ interface ParsedResponse {
 	deletedWords: Word[];
 }
 
-/* FIXME: There is a bug which occurs when you are on the deleted words page and refresh the browser. 
+/* Attila FIXME: There is a bug which occurs when you are on the deleted words page and refresh the browser. 
 In that case the url refers to deleted words' page the table shows the active words tab as an active tab */
 
 export default function MyWords() {
@@ -196,7 +196,6 @@ export default function MyWords() {
 	const [deletedWords, setDeletedWords] = useState<Word[]>([]);
 	const [activeTab, setActiveTab] = useState<"active-words" | "deleted-words">("active-words");
 	const { wordForEditing, setActiveModal } = useContext(AppContext);
-	/* REFACTOR: wordForEditing doesn't use the context for lift up  */
 
 	useEffect(() => {
 		load();
@@ -222,7 +221,7 @@ export default function MyWords() {
 	}
 
 	async function saveNewWord(newWord: Word) {
-		/* FIXME: Owner ID is not handled */
+		/* Attila FIXME: Owner ID is not handled - please store it in the context and make a selector and use it everywhere */
 		const newWordWithoutID = omit(newWord, "id");
 
 		const response: Response = await fetch("/my-words", {
@@ -234,7 +233,7 @@ export default function MyWords() {
 		const parsedResponse: Word | ServerError = await response.json();
 
 		if ("error" in parsedResponse) {
-			window.alert(parsedResponse.message); //TODO: A personal alert window would be better :)
+			window.alert(parsedResponse.message);
 			return;
 		}
 
@@ -348,5 +347,3 @@ export default function MyWords() {
 		</MainContainer>
 	);
 }
-
-/* TODO: Responsive layout */

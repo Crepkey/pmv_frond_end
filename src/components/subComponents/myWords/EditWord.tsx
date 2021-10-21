@@ -95,7 +95,7 @@ const Block = styled.div`
 `;
 
 const Label = styled.div<{ error?: boolean }>`
-	color: ${({ error }: any) => (error ? colors.error : colors.inactiveFont)}; /* REFACTOR: Here we need another font type for the labels */
+	color: ${({ error }: any) => (error ? colors.error : colors.inactiveFont)}; /* Attila REFACTOR: Here we need another font color for the labels */
 	font-weight: ${({ error }: any) => (error ? "bold" : "auto")};
 	font-size: 0.75rem;
 	margin: 0 0 4px 12px;
@@ -164,7 +164,7 @@ const Select = styled.select`
 
 const Textarea = styled.textarea`
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-		sans-serif; /* REFACTOR: Find another solution for that */
+		sans-serif;
 	font-size: 1rem;
 	padding: 8px 12px;
 	margin-bottom: 24px;
@@ -270,7 +270,6 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 								placeholder="Type your English word or expression here..."
 								value={word.english}
 								onChange={(e) => {
-									// REFACTOR optimization: setErrors only has to run, if there was an error, and we should use a general component for handling inputs and error labels ---> we only have to check once, if there was an error or not
 									setErrors(errors.filter((e: number) => e !== 1));
 									setWord({ ...word, english: e.target.value });
 								}}
@@ -324,7 +323,6 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 						<Block>
 							{word.exampleSentences.map((sentence: string, i: number) => (
 								<Row key={`${i}_sentence`}>
-									{/* TODO we should use a textarea here which is automatically resized when the text is too long */}
 									<StringInput
 										error={errors.includes(3) && i === 0}
 										placeholder="Type one example sentence here..."
@@ -394,7 +392,7 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 // 	sentences,
 // 	scoreToAchieve: (1 + hungarianMeanings.length) * 10,
 // 	statistics: {
-// 		// TODO: when you are editing a word, we have to use the original values
+// 		// Petra TODO: when you are editing a word, we have to use the original values
 // 		english: 0,
 // 		hungarian: hungarianMeanings.map(() => 0),
 // 	},

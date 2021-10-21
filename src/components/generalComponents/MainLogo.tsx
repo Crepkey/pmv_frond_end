@@ -70,5 +70,3 @@ export default function MainLogo({ size = 50, backgroundColor = "rgba(255, 255, 
 		</MainContainer>
 	);
 }
-
-/* TODO: It's worth to copy the custom style handling of SpinnerBar */

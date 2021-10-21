@@ -123,7 +123,8 @@ export default function EvaluationForm({ actualWord, grammaticalStructureId, get
 	);
 }
 
-/*  In the database:
+/* Petra TODO
+ In the database:
 
 Words table:
 ActualScore: number --- after the evaluation and calculation, we will store the new score in this column

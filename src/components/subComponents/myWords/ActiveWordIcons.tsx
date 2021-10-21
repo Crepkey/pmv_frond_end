@@ -89,4 +89,3 @@ export default function ActiveWordIcons({ word, updateWord }: WordHandlerProps) 
 		</MainContainer>
 	);
 }
-/* REFACTOR: Icons --> their standalone comps */

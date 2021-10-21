@@ -68,7 +68,6 @@ export default function Game() {
 
 	/* LOADING */
 	if (loading === true) {
-		// TODO nice load screen
 		return <div>LOADING</div>;
 	}
 

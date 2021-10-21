@@ -4,6 +4,7 @@ import get from "lodash/get";
 /* Styles */
 import styled from "styled-components";
 import { colors } from "../../utils/colors";
+import { ColorCodeType } from "../../utils/interfaces";
 
 const MainContainer = styled.div<SpinnerBarStyle>`
 	display: flex;
@@ -70,12 +71,11 @@ interface SpinnerBarStyle {
 }
 
 interface SpinnerBarState {
-	red: string; //RGBa only
-	orange: string; //RGBa only
-	blue: string; //RGBa only
-	green: string; //RGBa only
+	red: ColorCodeType; //RGBa only
+	orange: ColorCodeType; //RGBa only
+	blue: ColorCodeType; //RGBa only
+	green: ColorCodeType; //RGBa only
 }
-/* TODO: ColorCodeType should be used here */
 
 interface SpinnerBarProps {
 	status: number; // This number can be between 0 and 100
@@ -84,10 +84,10 @@ interface SpinnerBarProps {
 }
 
 export default function SpinnerBar({ status, size, style }: SpinnerBarProps) {
-	// TODO show some different icon, if status === 0
+	// Attila TODO: show some different icon, if status === 0
 
 	const actualState: SpinnerBarState = (function () {
-		const result = {
+		const result: SpinnerBarState = {
 			red: "rgba(0, 0, 0, 0)",
 			orange: "rgba(0, 0, 0, 0)",
 			blue: "rgba(0, 0, 0, 0)",
