@@ -10,7 +10,7 @@ export const emptyWord: WordWithScores = {
 	hungarian: [""],
 	exampleSentences: [""],
 	type: "word",
-	ownerId: 2,
+	ownerId: 0,
 	memoryLevel: 0,
 	actualScore: 0,
 	finalScore: 0,

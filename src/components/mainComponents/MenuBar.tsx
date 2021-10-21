@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 /* Icons */
@@ -7,6 +8,7 @@ import MainLogo from "../generalComponents/MainLogo";
 /* Styles */
 import styled from "styled-components";
 import { colors } from "../../utils/colors";
+import { AppContext } from "../../AppContext";
 
 const MainContainer = styled.div`
 	background-image: linear-gradient(to top, ${colors.headerGradientDarker}, ${colors.headerGradientDark}, ${colors.headerGradientLight});
@@ -51,6 +53,19 @@ const UserAvatarContainer = styled.div`
 `;
 
 export default function MenuBar() {
+	const { activeUser, setActiveUser } = useContext(AppContext);
+
+	function toggleActiveUser() {
+		const Petra = 1;
+		const Attila = 2;
+		if (activeUser === Petra) {
+			setActiveUser(Attila);
+			window.alert(`The active user has been set to Attila`);
+			return;
+		} else setActiveUser(Petra);
+		window.alert(`The active user has been set to Petra`);
+	}
+
 	return (
 		<MainContainer>
 			<LogoContainer to="/">
@@ -65,7 +80,7 @@ export default function MenuBar() {
 				<MenuItem to="/lets-play">Let's play</MenuItem>
 			</Menu>
 			<UserAvatarContainer>
-				<BsPersonCircle size={28} />
+				<BsPersonCircle onClick={toggleActiveUser} size={28} />
 			</UserAvatarContainer>
 		</MainContainer>
 	);

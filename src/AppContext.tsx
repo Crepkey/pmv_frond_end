@@ -4,6 +4,8 @@ import { Word } from "./utils/interfaces";
 interface AppContextProps {
 	activeModal: string;
 	setActiveModal: React.Dispatch<React.SetStateAction<string>>;
+	activeUser: number;
+	setActiveUser: React.Dispatch<React.SetStateAction<1 | 2>>;
 	wordForEditing: Word;
 	setWordForEditing: React.Dispatch<React.SetStateAction<Word>>;
 }
@@ -11,6 +13,8 @@ interface AppContextProps {
 const defaultValues: AppContextProps = {
 	activeModal: "none",
 	setActiveModal: () => {},
+	activeUser: 1,
+	setActiveUser: () => {},
 	wordForEditing: {
 		id: 1,
 		favourite: true,
@@ -30,7 +34,12 @@ export const AppContext = createContext<AppContextProps>({ ...defaultValues });
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
 	const [activeModal, setActiveModal] = useState<string>("");
+	const [activeUser, setActiveUser] = useState<1 | 2>(1);
 	const [wordForEditing, setWordForEditing] = useState<Word>(defaultValues.wordForEditing);
 
-	return <AppContext.Provider value={{ activeModal, setActiveModal, wordForEditing, setWordForEditing }}>{children}</AppContext.Provider>;
+	return (
+		<AppContext.Provider value={{ activeModal, setActiveModal, activeUser, setActiveUser, wordForEditing, setWordForEditing }}>
+			{children}
+		</AppContext.Provider>
+	);
 };

@@ -196,16 +196,17 @@ export default function MyWords() {
 	const [activeTab, setActiveTab] = useState<PathNames>(window.location.pathname as PathNames);
 
 	const { wordForEditing, setActiveModal } = useContext(AppContext);
+	const { activeUser } = useContext(AppContext);
 
 	const activeWordsPath: PathNames = "/my-words/active-words";
 	const deletedWordsPath: PathNames = "/my-words/deleted-words";
 
 	useEffect(() => {
 		load();
-	}, []);
+	}, [activeUser]);
 
 	async function load() {
-		const rawData: Response = await fetch("/my-words/2?numberOfDisplayedRows=50");
+		const rawData: Response = await fetch(`/my-words/${activeUser}?numberOfDisplayedRows=50`);
 		const parsedData: ParsedResponse = await rawData.json();
 		setActiveWords(parsedData.activeWords);
 		setDeletedWords(parsedData.deletedWords);
@@ -224,13 +225,12 @@ export default function MyWords() {
 	}
 
 	async function saveNewWord(newWord: Word) {
-		/* Attila FIXME: Owner ID is not handled - please store it in the context and make a selector and use it everywhere */
-		const newWordWithoutID = omit(newWord, "id");
+		newWord.ownerId = activeUser;
 
 		const response: Response = await fetch("/my-words", {
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify(newWordWithoutID),
+			body: JSON.stringify(newWord),
 		});
 
 		const parsedResponse: Word | ServerError = await response.json();
