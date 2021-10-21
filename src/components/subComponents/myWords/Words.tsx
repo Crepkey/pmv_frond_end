@@ -11,7 +11,7 @@ interface WordsProps {
 	activeWords?: Word[];
 	deletedWords?: Word[];
 	updateWord(word: Word, operation: WordOperationType): void;
-	deleteWord(word: Word): void;
+	deleteWord?(word: Word): void;
 }
 
 export default function Words({ activeWords, deletedWords, updateWord, deleteWord }: WordsProps) {
@@ -23,7 +23,13 @@ export default function Words({ activeWords, deletedWords, updateWord, deleteWor
 				activeWords ? (
 					<ActiveWordRow key={word.id} word={word} rowNumber={index} updateWord={updateWord} />
 				) : (
-					<DeletedWordRow key={word.id} word={word} rowNumber={index} updateWord={updateWord} deleteWord={deleteWord} />
+					<DeletedWordRow
+						key={word.id}
+						word={word}
+						rowNumber={index}
+						updateWord={updateWord}
+						deleteWord={deleteWord ? deleteWord : () => {}}
+					/>
 				),
 			)}
 		</Fragment>
