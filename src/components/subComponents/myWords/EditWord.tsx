@@ -95,7 +95,7 @@ const Block = styled.div`
 `;
 
 const Label = styled.div<{ error?: boolean }>`
-	color: ${({ error }: any) => (error ? colors.error : colors.inactiveFont)}; /* Attila REFACTOR: Here we need another font color for the labels */
+	color: ${({ error }: any) => (error ? colors.error : colors.labelFont)};
 	font-weight: ${({ error }: any) => (error ? "bold" : "auto")};
 	font-size: 0.75rem;
 	margin: 0 0 4px 12px;

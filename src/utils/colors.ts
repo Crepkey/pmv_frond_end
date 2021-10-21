@@ -10,6 +10,7 @@ export const colors: Colors = {
 	activeFont: "rgba(80, 80, 80, 1)",
 	inactiveFont: "rgba(150, 150, 150, 1)",
 	placeholderFont: "rgba(225, 225, 225, 1)",
+	labelFont: "rgba(135, 135, 135, 1)",
 
 	// BUTTONS & ICONS
 	acceptButtonBackground: "rgba(81, 203, 51, 1)",
