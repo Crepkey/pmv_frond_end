@@ -1,5 +1,5 @@
 /* Interfaces */
-import { Word } from "../../../utils/interfaces";
+import { ColorCodeType, Word, WordOperationType } from "../../../utils/interfaces";
 
 /* Styles */
 import styled from "styled-components";
@@ -7,7 +7,7 @@ import { colors } from "../../../utils/colors";
 import SpinnerBar from "../../generalComponents/SpinnerBar";
 
 /* Components */
-import WordHandlerIcons from "./WordHandlerIcons";
+import DeletedWordIcons from "./DeletedWordIcons";
 
 /* Utils */
 import { calculateRowBackground, convertMemoryLevelToText } from "./utils";
@@ -57,29 +57,31 @@ const DeletionCountdown = styled.div`
 interface DeletedWordRowProps {
 	word: Word;
 	rowNumber: number;
-	saveWord(word: Word): void;
+	updateWord(word: Word, operation: WordOperationType): void;
 	deleteWord(word: Word): void;
 }
 
-export default function DeletedWordRow({ word, rowNumber, saveWord, deleteWord }: DeletedWordRowProps) {
+export default function DeletedWordRow({ word, rowNumber, updateWord, deleteWord }: DeletedWordRowProps) {
 	function calcDiffBetweenDates() {
 		const today: Dayjs = dayjs();
-		const deletionDate: Dayjs = dayjs(word.deletionDate);
-		const result = today.diff(deletionDate, "day");
-		const text = result === 1 ? " day left" : " days left";
+		const permanentDeletionDate: Dayjs = dayjs(word.deletionDate).add(30, "day");
+		const result: number = permanentDeletionDate.diff(today, "day");
+		const text: string = result === 1 ? " day left" : " days left";
 		return result + text;
 	}
 
+	const background: ColorCodeType = calculateRowBackground(rowNumber);
+
 	return (
-		<WordRow key={word.id} background={calculateRowBackground(rowNumber)}>
+		<WordRow key={word.id} background={background}>
 			<EnglishWord>{word.english}</EnglishWord>
 			<HungarianWords>{word.hungarian.map((hunWord: string) => `${hunWord} `)}</HungarianWords>
 			<MemoryLevel>
-				<SpinnerBar size={24} status={word.memoryLevel} style={{ margin: "0 12px 0 0", background: calculateRowBackground(rowNumber) }} />
+				<SpinnerBar size={24} status={word.memoryLevel} style={{ margin: "0 12px 0 0", background }} />
 				<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>
 			</MemoryLevel>
 			<DeletionCountdown>{calcDiffBetweenDates()}</DeletionCountdown>
-			<WordHandlerIcons word={word} saveWord={saveWord} deleteWord={deleteWord} />
+			<DeletedWordIcons word={word} deleteWord={deleteWord} updateWord={updateWord} />
 		</WordRow>
 	);
 }

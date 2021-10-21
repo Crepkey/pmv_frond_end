@@ -6,6 +6,7 @@ export interface User {
 
 export type WordType = "word" | "expression";
 export type LanguageType = "english" | "hungarian";
+export type WordOperationType = "edit" | "delete" | "restore";
 
 export interface WordStatistics {
 	english: number;
@@ -45,3 +46,13 @@ export interface GrammaticalStructure {
 	basicSentences: string[];
 	realLifeUsages: Usage[];
 }
+
+export interface ServerError {
+	error: string;
+	message: string;
+	stack: string;
+	detail: string;
+	table: string;
+}
+
+export type ColorCodeType = `rgba(${number}, ${number}, ${number}, ${number})`;

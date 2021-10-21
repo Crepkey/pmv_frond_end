@@ -75,6 +75,7 @@ interface SpinnerBarState {
 	blue: string; //RGBa only
 	green: string; //RGBa only
 }
+/* TODO: ColorCodeType should be used here */
 
 interface SpinnerBarProps {
 	status: number; // This number can be between 0 and 100

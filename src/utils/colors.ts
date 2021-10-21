@@ -1,7 +1,13 @@
-export const colors = {
+import { ColorCodeType } from "./interfaces";
+
+interface Colors {
+	[name: string]: ColorCodeType;
+}
+
+export const colors: Colors = {
 	//FONTS
 	buttonFont: "rgba(255, 255, 255, 1)",
-	activeFont: " rgba(80, 80, 80, 1)",
+	activeFont: "rgba(80, 80, 80, 1)",
 	inactiveFont: "rgba(150, 150, 150, 1)",
 	placeholderFont: "rgba(225, 225, 225, 1)",
 

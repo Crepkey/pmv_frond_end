@@ -1,11 +1,14 @@
 import { useState, useEffect, useContext } from "react";
 import { Route, Link } from "react-router-dom";
 
+/* Utils */
+import omit from "lodash/omit";
+
 /* Context */
 import { AppContext } from "../../AppContext";
 
 /* Interfaces */
-import { Word } from "../../utils/interfaces";
+import { ServerError, Word, WordOperationType } from "../../utils/interfaces";
 
 /* Icons */
 import { BsFilter, BsChevronLeft, BsChevronRight, BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
@@ -180,95 +183,13 @@ const PageNumber = styled.div`
 	padding: 0 8px 0 8px;
 `;
 
-const dummyDeletedWords: Word[] = [
-	{
-		id: 2,
-		ownerId: 1,
-		english: "English2",
-		hungarian: ["hun1", "hun2", "hun3"],
-		exampleSentences: ["sentence1", "sentence2", "sentence3"],
-		notes: "This is a notes",
-		type: "word",
-		favourite: false,
-		memoryLevel: 18,
-		deletionDate: new Date("2021-08-13"),
-	},
-	{
-		id: 6,
-		ownerId: 1,
-		english: "English6",
-		hungarian: ["hun1", "hun2", "hun3"],
-		exampleSentences: ["sentence1", "sentence2", "sentence3"],
-		notes: "This is a notes",
-		type: "word",
-		favourite: true,
-		memoryLevel: 98,
-		deletionDate: new Date("2021-09-24"),
-	},
-	{
-		id: 7,
-		ownerId: 1,
-		english: "English7",
-		hungarian: ["hun1", "hun2", "hun3"],
-		exampleSentences: ["sentence1", "sentence2", "sentence3"],
-		notes: "This is a notes",
-		type: "word",
-		favourite: true,
-		memoryLevel: 98,
-		deletionDate: new Date("2021-10-10"),
-	},
-];
+interface ParsedResponse {
+	activeWords: Word[];
+	deletedWords: Word[];
+}
 
-const dummyActiveWords: Word[] = [
-	{
-		id: 1,
-		ownerId: 1,
-		english: "English",
-		hungarian: ["hun1", "hun2", "hun3"],
-		exampleSentences: ["sentence1", "sentence2", "sentence3"],
-		notes: "This is a notes",
-		type: "word",
-		favourite: true,
-		memoryLevel: 0,
-		deletionDate: null,
-	},
-	{
-		id: 3,
-		ownerId: 1,
-		english: "English3",
-		hungarian: ["hun1", "hun2", "hun3"],
-		exampleSentences: ["sentence1", "sentence2", "sentence3"],
-		notes: "This is a notes",
-		type: "word",
-		favourite: false,
-		memoryLevel: 38,
-		deletionDate: null,
-	},
-	{
-		id: 4,
-		ownerId: 1,
-		english: "English4",
-		hungarian: ["hun1", "hun2", "hun3"],
-		exampleSentences: ["sentence1", "sentence2", "sentence3"],
-		notes: "This is a notes",
-		type: "word",
-		favourite: true,
-		memoryLevel: 67,
-		deletionDate: null,
-	},
-	{
-		id: 5,
-		ownerId: 1,
-		english: "English5",
-		hungarian: ["hun1", "hun2", "hun3"],
-		exampleSentences: ["sentence1", "sentence2", "sentence3"],
-		notes: "This is a notes",
-		type: "word",
-		favourite: true,
-		memoryLevel: 98,
-		deletionDate: null,
-	},
-];
+/* FIXME: There is a bug which occurs when you are on the deleted words page and refresh the browser. 
+In that case the url refers to deleted words' page the table shows the active words tab as an active tab */
 
 export default function MyWords() {
 	const [activeWords, setActiveWords] = useState<Word[]>([]);
@@ -281,9 +202,11 @@ export default function MyWords() {
 		load();
 	}, []);
 
-	function load() {
-		setActiveWords(dummyActiveWords);
-		setDeletedWords(dummyDeletedWords);
+	async function load() {
+		const rawData: Response = await fetch("/my-words/2?numberOfDisplayedRows=50");
+		const parsedData: ParsedResponse = await rawData.json();
+		setActiveWords(parsedData.activeWords);
+		setDeletedWords(parsedData.deletedWords);
 	}
 
 	function changeTabStyle() {
@@ -298,30 +221,83 @@ export default function MyWords() {
 		else return { activeWordsTab: inactiveTabStyle, deletedWordsTab: activeTabStyle };
 	}
 
-	function saveEditedWord(editedWord: Word) {
-		const currentActiveWords = activeWords.map((word: Word) => (editedWord.id === word.id ? editedWord : word));
+	async function saveNewWord(newWord: Word) {
+		/* FIXME: Owner ID is not handled */
+		const newWordWithoutID = omit(newWord, "id");
+
+		const response: Response = await fetch("/my-words", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(newWordWithoutID),
+		});
+
+		const parsedResponse: Word | ServerError = await response.json();
+
+		if ("error" in parsedResponse) {
+			window.alert(parsedResponse.message); //TODO: A personal alert window would be better :)
+			return;
+		}
+
+		const currentActiveWords = [...activeWords, parsedResponse];
 		setActiveWords(currentActiveWords);
-		// API request to back-end
 	}
 
-	function saveNewWord(newWord: Word) {
-		const currentActiveWords = [...activeWords, newWord];
-		setActiveWords(currentActiveWords);
-		// API request to back-end
+	async function deleteWordPermanently(deletedWord: Word) {
+		const response: Response = await fetch("/my-words", {
+			method: "DELETE",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(deletedWord),
+		});
+
+		const parsedResponse: Word | ServerError = await response.json();
+
+		if ("error" in parsedResponse) {
+			window.alert(parsedResponse.message);
+			return;
+		}
+
+		setDeletedWords(deletedWords.filter((word: Word) => deletedWord.id !== word.id));
 	}
 
-	function deleteWord(deletedWord: Word) {
-		if (deletedWord.deletionDate === null) {
-			setActiveWords(activeWords.filter((word: Word) => deletedWord.id !== word.id));
-		} else {
-			setDeletedWords(deletedWords.filter((word: Word) => deletedWord.id !== word.id));
+	async function updateWord(updatedWord: Word, operation: WordOperationType) {
+		if (operation === "delete") {
+			updatedWord.deletionDate = new Date();
+		}
+		if (operation === "restore") {
+			updatedWord.deletionDate = null;
+		}
+
+		const response: Response = await fetch("/my-words", {
+			method: "PUT",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(updatedWord),
+		});
+
+		const parsedResponse: Word | ServerError = await response.json();
+
+		if ("error" in parsedResponse) {
+			window.alert(parsedResponse.message);
+			return;
+		}
+
+		switch (operation) {
+			case "edit":
+				setActiveWords(activeWords.map((word: Word) => (word.id === updatedWord.id ? updatedWord : word)));
+				break;
+			case "delete":
+				setActiveWords(activeWords.filter((word: Word) => word.id !== updatedWord.id));
+				setDeletedWords([...deletedWords, updatedWord]);
+				break;
+			case "restore":
+				setDeletedWords(deletedWords.filter((word: Word) => word.id !== updatedWord.id));
+				setActiveWords([...activeWords, updatedWord]);
 		}
 	}
 
 	return (
 		<MainContainer>
 			<Modal>
-				<EditWord title="Edit word" initialWord={wordForEditing} save={saveEditedWord} />
+				<EditWord title="Edit word" initialWord={wordForEditing} save={updateWord} />
 			</Modal>
 			<Modal>
 				<EditWord title="Add new word" save={saveNewWord} />
@@ -346,13 +322,10 @@ export default function MyWords() {
 						</Tab>
 					</TabContainer>
 					<WordContainer>
-						<Route
-							path="/my-words/active-words"
-							component={() => <Words activeWords={activeWords} saveWord={saveEditedWord} deleteWord={deleteWord} />}
-						/>
+						<Route path="/my-words/active-words" component={() => <Words activeWords={activeWords} updateWord={updateWord} />} />
 						<Route
 							path="/my-words/deleted-words"
-							component={() => <Words deletedWords={deletedWords} saveWord={saveEditedWord} deleteWord={deleteWord} />}
+							component={() => <Words deletedWords={deletedWords} updateWord={updateWord} deleteWord={deleteWordPermanently} />}
 						/>
 					</WordContainer>
 				</TableBlock>

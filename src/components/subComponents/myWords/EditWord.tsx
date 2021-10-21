@@ -11,7 +11,7 @@ import { colors } from "../../../utils/colors";
 import { BsSuitHeart, BsSuitHeartFill, BsPlus, BsX, BsTrash } from "react-icons/bs";
 
 // Interfaces
-import { Word, WordType } from "../../../utils/interfaces";
+import { Word, WordOperationType, WordType } from "../../../utils/interfaces";
 
 // Utils
 import set from "lodash/set";
@@ -206,7 +206,7 @@ const Button = styled.div`
 interface EditWordProps {
 	title: string;
 	initialWord?: Word;
-	save(editedWord: Word): void;
+	save(word: Word, operation: WordOperationType): void;
 }
 
 const errorMessages: { [key: number]: string } = {
@@ -245,7 +245,7 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 
 	function saveForm() {
 		if (!formValidation()) return;
-		save(word);
+		save(word, "edit");
 		setActiveModal("none");
 	}
 
@@ -331,7 +331,7 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 										value={sentence}
 										onChange={(e) => {
 											setErrors(errors.filter((e: number) => e !== 3));
-											const newWord = set({ ...word }, ["sentences", i], e.target.value);
+											const newWord = set({ ...word }, ["exampleSentences", i], e.target.value);
 											setWord(newWord);
 										}}
 									/>

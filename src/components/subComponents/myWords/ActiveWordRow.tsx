@@ -1,5 +1,5 @@
 /* Interfaces */
-import { Word } from "../../../utils/interfaces";
+import { ColorCodeType, Word, WordOperationType } from "../../../utils/interfaces";
 
 /* Styles */
 import styled from "styled-components";
@@ -7,7 +7,7 @@ import { colors } from "../../../utils/colors";
 import SpinnerBar from "../../generalComponents/SpinnerBar";
 
 /* Components */
-import WordHandlerIcons from "./WordHandlerIcons";
+import ActiveWordIcons from "./ActiveWordIcons";
 
 /* Utils */
 import { calculateRowBackground, convertMemoryLevelToText } from "./utils";
@@ -50,20 +50,20 @@ const MemoryState = styled.div`
 interface ActiveWordRowProps {
 	word: Word;
 	rowNumber: number;
-	saveWord(word: Word): void;
-	deleteWord(word: Word): void;
+	updateWord(word: Word, operation: WordOperationType): void;
 }
 
-export default function ActiveWordRow({ word, rowNumber, saveWord, deleteWord }: ActiveWordRowProps) {
+export default function ActiveWordRow({ word, rowNumber, updateWord }: ActiveWordRowProps) {
+	const background: ColorCodeType = calculateRowBackground(rowNumber);
 	return (
-		<WordRow key={word.id} background={calculateRowBackground(rowNumber)}>
+		<WordRow key={word.id} background={background}>
 			<EnglishWord>{word.english}</EnglishWord>
 			<HungarianWords>{word.hungarian.map((hunWord: string) => `${hunWord} `)}</HungarianWords>
 			<MemoryLevel>
-				<SpinnerBar size={24} status={word.memoryLevel} style={{ margin: "0 12px 0 0", background: calculateRowBackground(rowNumber) }} />
+				<SpinnerBar size={24} status={word.memoryLevel} style={{ margin: "0 12px 0 0", background }} />
 				<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>
 			</MemoryLevel>
-			<WordHandlerIcons word={word} saveWord={saveWord} deleteWord={deleteWord} />
+			<ActiveWordIcons word={word} updateWord={updateWord} />
 		</WordRow>
 	);
 }
