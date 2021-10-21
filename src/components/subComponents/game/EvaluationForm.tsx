@@ -7,6 +7,7 @@ import { CheckBox, BoldText, ButtonContainer } from "./styles";
 
 // Interfaces
 import { GameStatistics, WordInGame } from "./interfaces";
+import { ServerError } from "../../../utils/interfaces";
 
 // Icons
 import { BsCheckCircleFill, BsDashCircle } from "react-icons/bs";
@@ -61,7 +62,10 @@ export default function EvaluationForm({ actualWord, grammaticalStructureId, get
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ word: actualWord, gameStatistics, grammaticalStructure: { id: grammaticalStructureId, known: correctGrammar } }),
 		});
-		const data = await response.json();
+		const parsedResponse: WordInGame | ServerError = await response.json();
+		if ("error" in parsedResponse) {
+			window.alert("Error in saving the evaluation result: " + parsedResponse.message);
+		}
 
 		// calculate game points
 		const earnedPoints = calculateGamePoints(actualWord, gameStatistics, correctGrammar);
