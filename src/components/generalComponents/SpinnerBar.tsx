@@ -1,6 +1,9 @@
 /* Util */
 import get from "lodash/get";
 
+/* Icons */
+import { FcHighPriority } from "react-icons/fc";
+
 /* Styles */
 import styled from "styled-components";
 import { colors } from "../../utils/colors";
@@ -84,7 +87,9 @@ interface SpinnerBarProps {
 }
 
 export default function SpinnerBar({ status, size, style }: SpinnerBarProps) {
-	// Attila TODO: show some different icon, if status === 0
+	if (status === 0) {
+		return <FcHighPriority size={size} style={{ ...style }} />;
+	}
 
 	const actualState: SpinnerBarState = (function () {
 		const result: SpinnerBarState = {
