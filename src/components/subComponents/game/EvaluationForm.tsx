@@ -7,6 +7,7 @@ import { CheckBox, BoldText, ButtonContainer } from "./styles";
 
 // Interfaces
 import { GameStatistics, WordInGame } from "./interfaces";
+import { ServerError } from "../../../utils/interfaces";
 
 // Icons
 import { BsCheckCircleFill, BsDashCircle } from "react-icons/bs";
@@ -61,15 +62,15 @@ export default function EvaluationForm({ actualWord, grammaticalStructureId, get
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ word: actualWord, gameStatistics, grammaticalStructure: { id: grammaticalStructureId, known: correctGrammar } }),
 		});
-		const data = await response.json();
+		const parsedResponse: WordInGame | ServerError = await response.json();
+		if ("error" in parsedResponse) {
+			window.alert("Error in saving the evaluation result: " + parsedResponse.message);
+		}
 
 		// calculate game points
 		const earnedPoints = calculateGamePoints(actualWord, gameStatistics, correctGrammar);
 		setUserPoints(userPoints + earnedPoints);
 
-		// clear statistics in the state
-		setGameStatistics(emptyStatistics);
-		setCorrectGrammar(false);
 		// show next card
 		getNextCard();
 	}
@@ -122,22 +123,3 @@ export default function EvaluationForm({ actualWord, grammaticalStructureId, get
 		</Card>
 	);
 }
-
-/* Petra TODO
- In the database:
-
-Words table:
-ActualScore: number --- after the evaluation and calculation, we will store the new score in this column
-ScoreToAchieve: number --- the final score, if ActualScore >= ScoreToAchieve, you don't have to practice this word anymore
-MemoryLevel: number --- ActualScore / ScoreToAchieve : shows in percentage, where you are now in the learning phase
-Statistics: object: 
-        {
-            english: number;
-            hungarian: number[]; // numbers have the same indices as words in the 'hungarian' column
-        }
-        We store your knowledge levels in this object, which is needed for the statistics of the words.
-        The sum of the object's values should be the ActualScore
-
-Users + Grammatical structures table:
-We have to store, if the user knew the chosen grammatical structure or not
- */
