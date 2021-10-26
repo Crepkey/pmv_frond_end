@@ -20,11 +20,11 @@ export default function GrammarCard({ actualStructure }: GrammarCardProps) {
 			<CardBody>
 				<CardTitle>
 					{actualStructure.title}
-					<SubTitle>{actualStructure.subtitle}</SubTitle>
+					{actualStructure.subtitle && <SubTitle>{actualStructure.subtitle}</SubTitle>}
 				</CardTitle>
 
 				<CardBodyScrollContainer>
-					<FormingSentence>{actualStructure.forming}</FormingSentence>
+					{actualStructure.forming && <FormingSentence>{actualStructure.forming}</FormingSentence>}
 
 					<Block>
 						{actualStructure.realLifeUsages.map((usage: Usage, i: number) => (
