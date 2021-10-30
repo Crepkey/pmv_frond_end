@@ -105,6 +105,7 @@ export default function Game() {
 			<GrammarCard actualStructure={actualGrammaticalStructure} />
 			<PlayingCard owner={owners?.find((o: User) => o.id === actualOwnerId)} word={actualWord} />
 			<EvaluationForm
+				key={actualIndex}
 				actualWord={actualWord}
 				getNextCard={() => setActualIndex(actualIndex + 1)}
 				userPoints={get(points, actualOwnerId, 0)}
