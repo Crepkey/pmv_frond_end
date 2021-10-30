@@ -1,7 +1,8 @@
 import { useState, useContext, Fragment } from "react";
 
 /* Interfaces */
-import { Word, WordOperationType } from "../../../utils/interfaces";
+import { WordOperationType } from "../../../utils/interfaces";
+import { Word } from "sharedInterfaces";
 
 /* Styles */
 import styled from "styled-components";

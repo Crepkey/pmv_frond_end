@@ -6,7 +6,8 @@ import { Card, CardHeader, CardBody, CardTitle, CardBodyScrollContainer, Block, 
 import { CheckBox, BoldText, ButtonContainer } from "./styles";
 
 // Interfaces
-import { GameStatistics, WordInGame } from "./interfaces";
+import { WordInGame } from "./interfaces";
+import {GameStatistics} from "sharedInterfaces"
 
 // Icons
 import { BsCheckCircleFill, BsDashCircle } from "react-icons/bs";

@@ -9,7 +9,8 @@ import { GiSwordwoman, GiSwordman } from "react-icons/gi";
 
 // Interfaces
 import { User } from "../../../utils/interfaces";
-import { TagColor, WordInGame } from "./interfaces";
+import { WordInGame } from "./interfaces";
+import { TagColor } from "sharedInterfaces";
 
 // Components
 import SpinnerBar from "../../generalComponents/SpinnerBar";

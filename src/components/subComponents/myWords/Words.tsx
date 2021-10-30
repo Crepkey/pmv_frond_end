@@ -1,7 +1,8 @@
 import { Fragment } from "react";
 
 /* Interafaces */
-import { Word, WordOperationType } from "../../../utils/interfaces";
+import { WordOperationType } from "../../../utils/interfaces";
+import { Word } from "sharedInterfaces";
 
 /* Components */
 import ActiveWordRow from "./ActiveWordRow";

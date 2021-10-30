@@ -1,5 +1,6 @@
 /* Interfaces */
-import { ColorCodeType, Word, WordOperationType } from "../../../utils/interfaces";
+import { ColorCodeType, WordOperationType } from "../../../utils/interfaces";
+import { Word } from "sharedInterfaces";
 
 /* Styles */
 import styled from "styled-components";

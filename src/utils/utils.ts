@@ -1,4 +1,4 @@
-import { WordWithScores } from "./interfaces";
+import { WordWithScores } from "sharedInterfaces";
 
 export function generateID() {
 	return Date.now() + Math.random();

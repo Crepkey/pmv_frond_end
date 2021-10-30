@@ -1,5 +1,6 @@
 // Interfaces
-import { GameStatistics, WordInGame } from "./interfaces";
+import { WordInGame } from "./interfaces";
+import { GameStatistics } from "sharedInterfaces";
 
 // Utils
 import get from "lodash/get";

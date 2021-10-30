@@ -11,7 +11,8 @@ import { colors } from "../../../utils/colors";
 import { BsSuitHeart, BsSuitHeartFill, BsPlus, BsX, BsTrash } from "react-icons/bs";
 
 // Interfaces
-import { Word, WordOperationType, WordType } from "../../../utils/interfaces";
+import { WordOperationType } from "../../../utils/interfaces";
+import { Word, WordType } from "sharedInterfaces";
 
 // Utils
 import set from "lodash/set";

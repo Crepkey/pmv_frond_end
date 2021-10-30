@@ -1,5 +1,5 @@
 import { useState, createContext, ReactNode } from "react";
-import { Word } from "./utils/interfaces";
+import { Word } from "sharedInterfaces";
 
 interface AppContextProps {
 	activeModal: string;

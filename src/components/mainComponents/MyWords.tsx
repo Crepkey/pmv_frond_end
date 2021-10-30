@@ -8,7 +8,8 @@ import omit from "lodash/omit";
 import { AppContext } from "../../AppContext";
 
 /* Interfaces */
-import { ServerError, Word, WordOperationType } from "../../utils/interfaces";
+import { ServerError, WordOperationType } from "../../utils/interfaces";
+import { Word } from "sharedInterfaces";
 
 /* Icons */
 import { BsFilter, BsChevronLeft, BsChevronRight, BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
