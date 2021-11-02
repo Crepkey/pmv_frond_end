@@ -1,0 +1,8 @@
+{
+	"compilerOptions": {
+		"baseUrl": "./",
+		"paths": {
+			"sharedInterfaces": ["../pmv_shared/interfaces"]
+		}
+	}
+}
