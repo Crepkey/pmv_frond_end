@@ -1,9 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { Route, Link } from "react-router-dom";
 
-/* Utils */
-import omit from "lodash/omit";
-
 /* Context */
 import { AppContext } from "../../AppContext";
 
@@ -203,15 +200,14 @@ export default function MyWords() {
 	const deletedWordsPath: PathNames = "/my-words/deleted-words";
 
 	useEffect(() => {
+		async function load() {
+			const rawData: Response = await fetch(`/my-words/${activeUser}?numberOfDisplayedRows=50`);
+			const parsedData: ParsedResponse = await rawData.json();
+			setActiveWords(parsedData.activeWords);
+			setDeletedWords(parsedData.deletedWords);
+		}
 		load();
 	}, [activeUser]);
-
-	async function load() {
-		const rawData: Response = await fetch(`/my-words/${activeUser}?numberOfDisplayedRows=50`);
-		const parsedData: ParsedResponse = await rawData.json();
-		setActiveWords(parsedData.activeWords);
-		setDeletedWords(parsedData.deletedWords);
-	}
 
 	function changeTabStyle() {
 		const activeTabStyle = {
