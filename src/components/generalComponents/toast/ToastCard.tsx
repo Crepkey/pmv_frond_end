@@ -54,11 +54,11 @@ const IconContainer = styled.div`
 	align-items: center;
 `;
 
-interface ToastCard extends Toast {
+interface ToastCardType extends Toast {
 	position: `${number}px`;
 }
 
-export default function ToastCard({ title, details, type, position }: ToastCard) {
+export default function ToastCard({ title, details, type, position }: ToastCardType) {
 	return (
 		<MainContainer position={position}>
 			<IconContainer>

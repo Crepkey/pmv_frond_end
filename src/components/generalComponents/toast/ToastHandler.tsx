@@ -8,7 +8,9 @@ export default function ToastHandler() {
 	const { toast } = useContext(AppContext);
 
 	useEffect(() => {
+		if (toast.type === "init") return;
 		setToasts([...toasts, toast]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [toast]);
 
 	if (toasts === []) {
