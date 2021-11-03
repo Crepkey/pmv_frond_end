@@ -8,11 +8,11 @@ import styled from "styled-components";
 /* Intefaces */
 import { Toast } from "src/utils/interfaces";
 
-const MainContainer = styled.div`
+const MainContainer = styled.div<{ position: `${number}px` }>`
 	display: flex;
 	position: absolute;
 	right: 8px;
-	bottom: 8px;
+	bottom: ${({ position }) => position};
 	z-index: 1000;
 	height: 150px;
 	width: 400px;
@@ -54,9 +54,13 @@ const IconContainer = styled.div`
 	align-items: center;
 `;
 
-export default function ToastCard({ title, details, type }: Toast) {
+interface ToastCard extends Toast {
+	position: `${number}px`;
+}
+
+export default function ToastCard({ title, details, type, position }: ToastCard) {
 	return (
-		<MainContainer>
+		<MainContainer position={position}>
 			<IconContainer>
 				<BiErrorAlt size={48} color={colors.error} />
 			</IconContainer>
