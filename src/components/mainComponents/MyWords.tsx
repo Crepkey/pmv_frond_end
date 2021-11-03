@@ -193,7 +193,7 @@ export default function MyWords() {
 	const [deletedWords, setDeletedWords] = useState<Word[]>([]);
 	const [activeTab, setActiveTab] = useState<PathNames>(window.location.pathname as PathNames);
 
-	const { wordForEditing, setActiveModal } = useContext(AppContext);
+	const { wordForEditing, setActiveModal, setToast } = useContext(AppContext);
 	const { activeUser } = useContext(AppContext);
 
 	const activeWordsPath: PathNames = "/my-words/active-words";
@@ -306,7 +306,16 @@ export default function MyWords() {
 				<SearchContainer>
 					<SearchBar type="search" id="lname" name="lname" placeholder="Type here for searching" />
 					<FilterButton>
-						<BsFilter size={24} />
+						<BsFilter
+							size={24}
+							onClick={() =>
+								setToast({
+									type: "error",
+									title: "This is my first toast",
+									details: "This is a simple text which represents the details",
+								})
+							}
+						/>
 					</FilterButton>
 				</SearchContainer>
 			</ControlBarContainer>
