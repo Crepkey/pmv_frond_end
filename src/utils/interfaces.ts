@@ -32,3 +32,9 @@ export interface ServerError {
 }
 
 export type ColorCodeType = `rgba(${number}, ${number}, ${number}, ${number})`;
+
+export interface Toast {
+	type: "init" | "info" | "warning" | "error";
+	title: string;
+	details: string;
+}

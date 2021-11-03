@@ -1,10 +1,13 @@
-import styled from "styled-components";
+/* Context */
+import { useContext } from "react";
+import { AppContext } from "src/AppContext";
 
 /* Icons */
 import { BiErrorAlt } from "react-icons/bi";
 
 /* Styles */
 import { colors } from "src/utils/colors";
+import styled from "styled-components";
 
 const MainContainer = styled.div`
 	display: flex;
@@ -53,16 +56,20 @@ const IconContainer = styled.div`
 `;
 
 export default function Toast() {
+	const { toast, setToast } = useContext(AppContext);
+
+	if (toast.type === "init") {
+		return null;
+	}
+
 	return (
 		<MainContainer>
 			<IconContainer>
 				<BiErrorAlt size={48} color={colors.error} />
 			</IconContainer>
 			<TextContainer>
-				<Title>An error occured</Title>
-				<Details>
-					This is a sample text which represents the details of an error message. It's funny because this can be longer than the holy bible
-				</Details>
+				<Title>{toast.title}</Title>
+				<Details>{toast.details}</Details>
 			</TextContainer>
 		</MainContainer>
 	);

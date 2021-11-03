@@ -1,11 +1,14 @@
 import { useState, createContext, ReactNode } from "react";
 import { Word } from "sharedInterfaces";
+import { Toast } from "./utils/interfaces";
 
 interface AppContextProps {
 	activeModal: string;
 	setActiveModal: React.Dispatch<React.SetStateAction<string>>;
 	activeUser: number;
 	setActiveUser: React.Dispatch<React.SetStateAction<1 | 2>>;
+	toast: Toast;
+	setToast: React.Dispatch<React.SetStateAction<Toast>>;
 	wordForEditing: Word;
 	setWordForEditing: React.Dispatch<React.SetStateAction<Word>>;
 }
@@ -15,6 +18,8 @@ const defaultValues: AppContextProps = {
 	setActiveModal: () => {},
 	activeUser: 1,
 	setActiveUser: () => {},
+	toast: { title: "title", details: "details", type: "init" },
+	setToast: () => {},
 	wordForEditing: {
 		id: 1,
 		favourite: true,
@@ -30,15 +35,16 @@ const defaultValues: AppContextProps = {
 	setWordForEditing: () => {},
 };
 
-export const AppContext = createContext<AppContextProps>({ ...defaultValues });
+export const AppContext = createContext<AppContextProps>(defaultValues);
 
 export const AppProvider = ({ children }: { children: ReactNode }) => {
 	const [activeModal, setActiveModal] = useState<string>("");
 	const [activeUser, setActiveUser] = useState<1 | 2>(1);
+	const [toast, setToast] = useState<Toast>(defaultValues.toast);
 	const [wordForEditing, setWordForEditing] = useState<Word>(defaultValues.wordForEditing);
 
 	return (
-		<AppContext.Provider value={{ activeModal, setActiveModal, activeUser, setActiveUser, wordForEditing, setWordForEditing }}>
+		<AppContext.Provider value={{ activeModal, setActiveModal, activeUser, setActiveUser, toast, setToast, wordForEditing, setWordForEditing }}>
 			{children}
 		</AppContext.Provider>
 	);
