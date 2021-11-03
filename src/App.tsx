@@ -5,7 +5,7 @@ import MenuBar from "./components/mainComponents/MenuBar";
 import MyWords from "./components/mainComponents/MyWords";
 import Home from "./components/mainComponents/Home";
 import Game from "./components/mainComponents/Game";
-import Toast from "./components/generalComponents/Toast";
+import ToastHandler from "./components/generalComponents/toast/ToastHandler";
 import { AppProvider } from "./AppContext";
 
 // Styles
@@ -30,7 +30,7 @@ function App() {
 					<Route path="/" exact component={Home} />
 					<Redirect to="/" />
 				</Switch>
-				<Toast />
+				<ToastHandler />
 			</MainContainer>
 		</AppProvider>
 	);

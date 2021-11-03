@@ -1,15 +1,12 @@
-import { useEffect } from "react";
-
-/* Context */
-import { useContext } from "react";
-import { AppContext } from "src/AppContext";
-
 /* Icons */
 import { BiErrorAlt } from "react-icons/bi";
 
 /* Styles */
 import { colors } from "src/utils/colors";
 import styled from "styled-components";
+
+/* Intefaces */
+import { Toast } from "src/utils/interfaces";
 
 const MainContainer = styled.div`
 	display: flex;
@@ -57,23 +54,15 @@ const IconContainer = styled.div`
 	align-items: center;
 `;
 
-export default function Toast() {
-	const { toast, setToast } = useContext(AppContext);
-
-	/* useEffect(() => {}, [toast]); */
-
-	if (toast.type === "init") {
-		return null;
-	}
-
+export default function ToastCard({ title, details, type }: Toast) {
 	return (
 		<MainContainer>
 			<IconContainer>
 				<BiErrorAlt size={48} color={colors.error} />
 			</IconContainer>
 			<TextContainer>
-				<Title>{toast.title}</Title>
-				<Details>{toast.details}</Details>
+				<Title>{title}</Title>
+				<Details>{details}</Details>
 			</TextContainer>
 		</MainContainer>
 	);
