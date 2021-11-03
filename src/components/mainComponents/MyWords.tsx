@@ -340,7 +340,7 @@ export default function MyWords() {
 			</TableContainer>
 			<PaginationContainer>
 				<PaginationButton>
-					<BsChevronDoubleLeft />
+					<BsChevronDoubleLeft onClick={() => setToast({ type: "warning", title: "WARNING", details: "details" })} />
 				</PaginationButton>
 				<PaginationButton>
 					<BsChevronLeft />

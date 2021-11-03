@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 /* Context */
 import { useContext } from "react";
 import { AppContext } from "src/AppContext";
@@ -57,6 +59,8 @@ const IconContainer = styled.div`
 
 export default function Toast() {
 	const { toast, setToast } = useContext(AppContext);
+
+	/* useEffect(() => {}, [toast]); */
 
 	if (toast.type === "init") {
 		return null;
