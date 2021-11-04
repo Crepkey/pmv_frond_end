@@ -7,6 +7,7 @@ import styled from "styled-components";
 
 /* Intefaces */
 import { Toast } from "src/utils/interfaces";
+import { useState } from "react";
 
 const MainContainer = styled.div<{ position: `${number}px` }>`
 	display: flex;
@@ -59,6 +60,16 @@ interface ToastCardType extends Toast {
 }
 
 export default function ToastCard({ title, details, type, position }: ToastCardType) {
+	const [isDisplayed, setDisplayed] = useState<boolean>(false);
+
+	setTimeout(() => {
+		setDisplayed(true);
+	}, 3000);
+
+	if (isDisplayed) {
+		return null;
+	}
+
 	return (
 		<MainContainer position={position}>
 			<IconContainer>
