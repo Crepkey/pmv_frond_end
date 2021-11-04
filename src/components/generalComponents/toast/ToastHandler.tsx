@@ -1,7 +1,15 @@
-import { Fragment, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "src/AppContext";
 import { Toast } from "src/utils/interfaces";
+import styled from "styled-components";
 import ToastCard from "./ToastCard";
+
+const MainContainer = styled.div`
+	position: absolute;
+	right: 8px;
+	bottom: 8px;
+	z-index: 1000;
+`;
 
 export default function ToastHandler() {
 	const [toasts, setToasts] = useState<Toast[]>([]);
@@ -18,10 +26,10 @@ export default function ToastHandler() {
 	}
 
 	return (
-		<Fragment>
+		<MainContainer>
 			{toasts.map((toast: Toast, index: number) => (
-				<ToastCard key={`${index}_toast`} title={toast.title} details={toast.title} type={toast.type} position={`${150 * index}px`} />
+				<ToastCard key={`${index}_toast`} title={toast.title} details={toast.title} type={toast.type} />
 			))}
-		</Fragment>
+		</MainContainer>
 	);
 }

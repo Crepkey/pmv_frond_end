@@ -9,15 +9,12 @@ import styled from "styled-components";
 import { Toast } from "src/utils/interfaces";
 import { useState } from "react";
 
-const MainContainer = styled.div<{ position: `${number}px` }>`
+const MainContainer = styled.div`
 	display: flex;
-	position: absolute;
-	right: 8px;
-	bottom: ${({ position }) => position};
-	z-index: 1000;
 	height: 150px;
 	width: 400px;
 	padding: 16px;
+	margin-bottom: 8px;
 	box-sizing: border-box;
 	border-radius: 8px;
 	background: white;
@@ -55,11 +52,7 @@ const IconContainer = styled.div`
 	align-items: center;
 `;
 
-interface ToastCardType extends Toast {
-	position: `${number}px`;
-}
-
-export default function ToastCard({ title, details, type, position }: ToastCardType) {
+export default function ToastCard({ title, details, type }: Toast) {
 	const [isDisplayed, setDisplayed] = useState<boolean>(false);
 
 	setTimeout(() => {
@@ -71,7 +64,7 @@ export default function ToastCard({ title, details, type, position }: ToastCardT
 	}
 
 	return (
-		<MainContainer position={position}>
+		<MainContainer>
 			<IconContainer>
 				<BiErrorAlt size={48} color={colors.error} />
 			</IconContainer>
