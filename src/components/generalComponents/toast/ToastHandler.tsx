@@ -15,9 +15,15 @@ export default function ToastHandler() {
 	const [toasts, setToasts] = useState<Toast[]>([]);
 	const { toast } = useContext(AppContext);
 
+	console.log(toasts);
+
 	useEffect(() => {
 		if (toast.type === "init") return;
-		setToasts([...toasts, toast]);
+		if (toasts.length >= 10) {
+			setToasts([toast]);
+		} else {
+			setToasts([...toasts, toast]);
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [toast]);
 
@@ -27,9 +33,9 @@ export default function ToastHandler() {
 
 	return (
 		<MainContainer>
-			{toasts.map((toast: Toast, index: number) => (
-				<ToastCard key={`${index}_toast`} title={toast.title} details={toast.title} type={toast.type} />
-			))}
+			{toasts.map((toast: Toast, index: number) => {
+				return <ToastCard key={toast.id} id={toast.id} title={toast.title} details={toast.title} type={toast.type} />;
+			})}
 		</MainContainer>
 	);
 }

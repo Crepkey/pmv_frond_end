@@ -18,7 +18,7 @@ const defaultValues: AppContextProps = {
 	setActiveModal: () => {},
 	activeUser: 1,
 	setActiveUser: () => {},
-	toast: { title: "title", details: "details", type: "init" },
+	toast: { id: 1, title: "title", details: "details", type: "init" },
 	setToast: () => {},
 	wordForEditing: {
 		id: 1,

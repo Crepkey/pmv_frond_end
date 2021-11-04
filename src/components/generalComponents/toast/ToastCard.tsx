@@ -52,14 +52,18 @@ const IconContainer = styled.div`
 	align-items: center;
 `;
 
+interface ToastType extends Toast {
+	delete(toast: Toast): void;
+}
+
 export default function ToastCard({ title, details, type }: Toast) {
-	const [isDisplayed, setDisplayed] = useState<boolean>(false);
+	const [wasDisplayed, setDisplayed] = useState<boolean>(false);
 
 	setTimeout(() => {
 		setDisplayed(true);
 	}, 3000);
 
-	if (isDisplayed) {
+	if (wasDisplayed) {
 		return null;
 	}
 

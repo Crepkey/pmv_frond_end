@@ -19,6 +19,7 @@ import styled from "styled-components";
 import Words from "../subComponents/myWords/Words";
 import Modal from "../generalComponents/Modal";
 import EditWord from "../subComponents/myWords/EditWord";
+import { generateID } from "src/utils/utils";
 
 const MainContainer = styled.div`
 	display: flex;
@@ -310,6 +311,7 @@ export default function MyWords() {
 							size={24}
 							onClick={() =>
 								setToast({
+									id: generateID(),
 									type: "error",
 									title: "This is my first toast",
 									details: "This is a simple text which represents the details",
@@ -340,7 +342,7 @@ export default function MyWords() {
 			</TableContainer>
 			<PaginationContainer>
 				<PaginationButton>
-					<BsChevronDoubleLeft onClick={() => setToast({ type: "warning", title: "WARNING", details: "details" })} />
+					<BsChevronDoubleLeft onClick={() => setToast({ id: generateID(), type: "warning", title: "WARNING", details: "details" })} />
 				</PaginationButton>
 				<PaginationButton>
 					<BsChevronLeft />
