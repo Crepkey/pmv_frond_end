@@ -49,10 +49,12 @@ export const colors: Colors = {
 	inputBorder: "rgba(216, 215, 221, 1)",
 
 	//STANDARD COLORS
+	info: "rgba(86, 171, 227, 1)",
+	success: "rgba(11, 201, 0, 1)",
+	warning: "rgba(255, 143, 35, 1)",
 	error: "rgba(243, 78, 123, 1)",
 
 	// PROGRESS
-
 	progressRed: "rgba(222, 89, 86, 1)",
 	progressOrange: "rgba(255, 143, 35, 1)",
 	progressBlue: "rgba(86, 171, 227, 1)",

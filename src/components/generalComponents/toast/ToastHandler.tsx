@@ -28,7 +28,7 @@ export default function ToastHandler() {
 	return (
 		<MainContainer>
 			{toasts.map((toast: Toast) => {
-				return <ToastCard key={toast.id} id={toast.id} title={toast.title} details={toast.title} type={toast.type} />;
+				return <ToastCard key={toast.id} id={toast.id} title={toast.title} details={toast.details} type={toast.type} />;
 			})}
 		</MainContainer>
 	);

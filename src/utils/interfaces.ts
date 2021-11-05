@@ -35,7 +35,7 @@ export type ColorCodeType = `rgba(${number}, ${number}, ${number}, ${number})`;
 
 export interface Toast {
 	id: number;
-	type: "info" | "warning" | "error";
+	type: "info" | "success" | "warning" | "error";
 	title: string;
 	details: string;
 }

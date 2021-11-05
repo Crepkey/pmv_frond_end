@@ -1,5 +1,5 @@
 /* Icons */
-import { BiErrorAlt } from "react-icons/bi";
+import { BiErrorAlt, BiFlag, BiInfoSquare, BiCheckSquare } from "react-icons/bi";
 
 /* Styles */
 import { colors } from "src/utils/colors";
@@ -73,8 +73,23 @@ const IconContainer = styled.div`
 	align-items: center;
 `;
 
+/* TODO: generalSettings for the app */
+
 export default function ToastCard({ title, details, type }: Toast) {
 	const [wasDisplayed, setDisplayed] = useState<boolean>(false);
+
+	function getIcon() {
+		switch (type) {
+			case "info":
+				return <BiInfoSquare size={48} color={colors.info} />;
+			case "success":
+				return <BiCheckSquare size={48} color={colors.success} />;
+			case "warning":
+				return <BiFlag size={48} color={colors.warning} />;
+			case "error":
+				return <BiErrorAlt size={48} color={colors.error} />;
+		}
+	}
 
 	setTimeout(() => {
 		setDisplayed(true);
@@ -86,9 +101,7 @@ export default function ToastCard({ title, details, type }: Toast) {
 
 	return (
 		<MainContainer>
-			<IconContainer>
-				<BiErrorAlt size={48} color={colors.error} />
-			</IconContainer>
+			<IconContainer>{getIcon()}</IconContainer>
 			<TextContainer>
 				<Title>{title}</Title>
 				<Details>{details}</Details>

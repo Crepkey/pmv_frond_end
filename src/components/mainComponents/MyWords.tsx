@@ -312,7 +312,7 @@ export default function MyWords() {
 							onClick={() =>
 								createToast({
 									id: generateID(),
-									type: "error",
+									type: "info",
 									title: "This is my first toast",
 									details: "This is a simple text which represents the details",
 								})
@@ -341,17 +341,53 @@ export default function MyWords() {
 				</TableBlock>
 			</TableContainer>
 			<PaginationContainer>
-				<PaginationButton>
-					<BsChevronDoubleLeft onClick={() => createToast({ id: generateID(), type: "warning", title: "WARNING", details: "details" })} />
+				<PaginationButton
+					onClick={() =>
+						createToast({
+							id: generateID(),
+							type: "info",
+							title: "INFO",
+							details:
+								"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non leo vehicula, varius nulla eget, placerat est. Duis ultricies, lacus sit amet posuere facilisis, neque ligula vestibulum nulla, sed placerat enim mauris vitae arcu. Maecenas non sapien orci.",
+						})
+					}>
+					<BsChevronDoubleLeft />
 				</PaginationButton>
-				<PaginationButton>
+				<PaginationButton
+					onClick={() =>
+						createToast({
+							id: generateID(),
+							type: "success",
+							title: "SUCCESS",
+							details:
+								"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non leo vehicula, varius nulla eget, placerat est. Duis ultricies, lacus sit amet posuere facilisis, neque ligula vestibulum nulla, sed placerat enim mauris vitae arcu. Maecenas non sapien orci.",
+						})
+					}>
 					<BsChevronLeft />
 				</PaginationButton>
 				<PageNumber>2</PageNumber>
-				<PaginationButton>
+				<PaginationButton
+					onClick={() =>
+						createToast({
+							id: generateID(),
+							type: "warning",
+							title: "WARNING",
+							details:
+								"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non leo vehicula, varius nulla eget, placerat est. Duis ultricies, lacus sit amet posuere facilisis, neque ligula vestibulum nulla, sed placerat enim mauris vitae arcu. Maecenas non sapien orci.",
+						})
+					}>
 					<BsChevronRight />
 				</PaginationButton>
-				<PaginationButton>
+				<PaginationButton
+					onClick={() =>
+						createToast({
+							id: generateID(),
+							type: "error",
+							title: "ERROR",
+							details:
+								"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non leo vehicula, varius nulla eget, placerat est. Duis ultricies, lacus sit amet posuere facilisis, neque ligula vestibulum nulla, sed placerat enim mauris vitae arcu. Maecenas non sapien orci.",
+						})
+					}>
 					<BsChevronDoubleRight />
 				</PaginationButton>
 			</PaginationContainer>
