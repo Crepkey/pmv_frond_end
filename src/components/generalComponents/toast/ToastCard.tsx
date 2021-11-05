@@ -3,14 +3,31 @@ import { BiErrorAlt } from "react-icons/bi";
 
 /* Styles */
 import { colors } from "src/utils/colors";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 /* Intefaces */
 import { Toast } from "src/utils/interfaces";
 import { useState } from "react";
 
+const MainContainerAnim = keyframes`
+    0% {
+      height: 75px;
+      width: 30px;
+    }
+    50% {
+      height: 75px;
+      width: 400px;
+      
+    }
+    100% {
+      height: 150px;
+      width: 400px;
+    } 
+`;
+
 const MainContainer = styled.div`
 	display: flex;
+	flex-wrap: nowrap;
 	height: 150px;
 	width: 400px;
 	padding: 16px;
@@ -19,6 +36,10 @@ const MainContainer = styled.div`
 	border-radius: 8px;
 	background: white;
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+	animation-name: ${MainContainerAnim};
+	animation-duration: 1s;
+	animation-fill-mode: none;
 `;
 
 const TextContainer = styled.div`

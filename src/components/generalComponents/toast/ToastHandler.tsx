@@ -6,6 +6,9 @@ import ToastCard from "./ToastCard";
 
 const MainContainer = styled.div`
 	position: absolute;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
 	right: 8px;
 	bottom: 8px;
 	z-index: 1000;
@@ -13,8 +16,6 @@ const MainContainer = styled.div`
 
 export default function ToastHandler() {
 	const { toasts } = useContext(AppContext);
-
-	console.log(toasts);
 
 	useEffect(() => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
