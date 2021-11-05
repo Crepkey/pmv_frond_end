@@ -194,7 +194,7 @@ export default function MyWords() {
 	const [deletedWords, setDeletedWords] = useState<Word[]>([]);
 	const [activeTab, setActiveTab] = useState<PathNames>(window.location.pathname as PathNames);
 
-	const { wordForEditing, setActiveModal, setToast } = useContext(AppContext);
+	const { wordForEditing, setActiveModal, createToast } = useContext(AppContext);
 	const { activeUser } = useContext(AppContext);
 
 	const activeWordsPath: PathNames = "/my-words/active-words";
@@ -310,7 +310,7 @@ export default function MyWords() {
 						<BsFilter
 							size={24}
 							onClick={() =>
-								setToast({
+								createToast({
 									id: generateID(),
 									type: "error",
 									title: "This is my first toast",
@@ -342,7 +342,7 @@ export default function MyWords() {
 			</TableContainer>
 			<PaginationContainer>
 				<PaginationButton>
-					<BsChevronDoubleLeft onClick={() => setToast({ id: generateID(), type: "warning", title: "WARNING", details: "details" })} />
+					<BsChevronDoubleLeft onClick={() => createToast({ id: generateID(), type: "warning", title: "WARNING", details: "details" })} />
 				</PaginationButton>
 				<PaginationButton>
 					<BsChevronLeft />

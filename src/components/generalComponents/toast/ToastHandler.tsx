@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "src/AppContext";
 import { Toast } from "src/utils/interfaces";
 import styled from "styled-components";
@@ -12,20 +12,13 @@ const MainContainer = styled.div`
 `;
 
 export default function ToastHandler() {
-	const [toasts, setToasts] = useState<Toast[]>([]);
-	const { toast } = useContext(AppContext);
+	const { toasts } = useContext(AppContext);
 
 	console.log(toasts);
 
 	useEffect(() => {
-		if (toast.type === "init") return;
-		if (toasts.length >= 10) {
-			setToasts([toast]);
-		} else {
-			setToasts([...toasts, toast]);
-		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [toast]);
+	}, [toasts]);
 
 	if (toasts === []) {
 		return null;
@@ -33,7 +26,7 @@ export default function ToastHandler() {
 
 	return (
 		<MainContainer>
-			{toasts.map((toast: Toast, index: number) => {
+			{toasts.map((toast: Toast) => {
 				return <ToastCard key={toast.id} id={toast.id} title={toast.title} details={toast.title} type={toast.type} />;
 			})}
 		</MainContainer>

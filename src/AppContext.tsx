@@ -7,8 +7,8 @@ interface AppContextProps {
 	setActiveModal: React.Dispatch<React.SetStateAction<string>>;
 	activeUser: number;
 	setActiveUser: React.Dispatch<React.SetStateAction<1 | 2>>;
-	toast: Toast;
-	setToast: React.Dispatch<React.SetStateAction<Toast>>;
+	toasts: Toast[];
+	createToast(newToast: Toast): void;
 	wordForEditing: Word;
 	setWordForEditing: React.Dispatch<React.SetStateAction<Word>>;
 }
@@ -18,8 +18,8 @@ const defaultValues: AppContextProps = {
 	setActiveModal: () => {},
 	activeUser: 1,
 	setActiveUser: () => {},
-	toast: { id: 1, title: "title", details: "details", type: "init" },
-	setToast: () => {},
+	toasts: [],
+	createToast: () => {},
 	wordForEditing: {
 		id: 1,
 		favourite: true,
@@ -40,11 +40,20 @@ export const AppContext = createContext<AppContextProps>(defaultValues);
 export const AppProvider = ({ children }: { children: ReactNode }) => {
 	const [activeModal, setActiveModal] = useState<string>("");
 	const [activeUser, setActiveUser] = useState<1 | 2>(1);
-	const [toast, setToast] = useState<Toast>(defaultValues.toast);
+	const [toasts, setToasts] = useState<Toast[]>([]);
 	const [wordForEditing, setWordForEditing] = useState<Word>(defaultValues.wordForEditing);
 
+	function createToast(newToast: Toast) {
+		if (toasts.length >= 10) {
+			setToasts([newToast]);
+		} else {
+			setToasts([...toasts, newToast]);
+		}
+	}
+
 	return (
-		<AppContext.Provider value={{ activeModal, setActiveModal, activeUser, setActiveUser, toast, setToast, wordForEditing, setWordForEditing }}>
+		<AppContext.Provider
+			value={{ activeModal, setActiveModal, activeUser, setActiveUser, toasts, createToast, wordForEditing, setWordForEditing }}>
 			{children}
 		</AppContext.Provider>
 	);

@@ -52,10 +52,6 @@ const IconContainer = styled.div`
 	align-items: center;
 `;
 
-interface ToastType extends Toast {
-	delete(toast: Toast): void;
-}
-
 export default function ToastCard({ title, details, type }: Toast) {
 	const [wasDisplayed, setDisplayed] = useState<boolean>(false);
 
