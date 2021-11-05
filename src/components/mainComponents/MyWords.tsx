@@ -307,17 +307,7 @@ export default function MyWords() {
 				<SearchContainer>
 					<SearchBar type="search" id="lname" name="lname" placeholder="Type here for searching" />
 					<FilterButton>
-						<BsFilter
-							size={24}
-							onClick={() =>
-								createToast({
-									id: generateID(),
-									type: "info",
-									title: "This is my first toast",
-									details: "This is a simple text which represents the details",
-								})
-							}
-						/>
+						<BsFilter size={24} />
 					</FilterButton>
 				</SearchContainer>
 			</ControlBarContainer>

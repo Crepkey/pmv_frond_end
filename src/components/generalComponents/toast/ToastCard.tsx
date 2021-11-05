@@ -8,11 +8,11 @@ import { colors } from "src/utils/colors";
 import styled, { keyframes } from "styled-components";
 
 /* Intefaces */
-import { Toast } from "src/utils/interfaces";
+import { ColorCodeType, Toast } from "src/utils/interfaces";
 
 import { TOAST_DISPLAY_TIME } from "../../../utils/generalSettings.json"; //TODO: Why does not the path of this JSON work?
 
-const MainContainerAnim = keyframes`
+const MainAnimation = keyframes`
     0% {
       height: 75px;
       width: 30px;
@@ -28,6 +28,30 @@ const MainContainerAnim = keyframes`
     } 
 `;
 
+const DetailsAnimation = keyframes`
+	0% {
+		opacity: 0%
+	}
+	50% {
+		opacity: 0%
+	}
+	100% {
+		opacity: 100%
+	}
+`;
+
+const TitleAnimation = keyframes`
+	0% {
+		font-size: 175%
+	}
+	50% {
+		font-size: 150%
+	}
+	100% {
+		font-size: 100%
+	}
+`;
+
 const MainContainer = styled.div`
 	display: flex;
 	flex-wrap: nowrap;
@@ -40,7 +64,7 @@ const MainContainer = styled.div`
 	background: white;
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
-	animation-name: ${MainContainerAnim};
+	animation-name: ${MainAnimation};
 	animation-duration: 1s;
 	animation-fill-mode: none;
 `;
@@ -52,13 +76,17 @@ const TextContainer = styled.div`
 	min-width: 0;
 	min-height: 0;
 `;
-const Title = styled.div`
-	color: ${colors.error};
+const Title = styled.div<{ color: ColorCodeType }>`
+	color: ${({ color }) => color};
 	display: flex;
 	flex: 1;
 	justify-content: space-evenly;
 	align-items: center;
 	font-weight: bold;
+
+	animation-name: ${TitleAnimation};
+	animation-duration: 1s;
+	animation-fill-mode: none;
 `;
 
 const Details = styled.div`
@@ -67,6 +95,10 @@ const Details = styled.div`
 	justify-content: space-evenly;
 	align-items: center;
 	font-weight: 300;
+
+	animation-name: ${DetailsAnimation};
+	animation-duration: 1s;
+	animation-fill-mode: none;
 `;
 
 const IconContainer = styled.div`
@@ -76,22 +108,40 @@ const IconContainer = styled.div`
 	align-items: center;
 `;
 
-/* TODO: generalSettings for the app */
-
 export default function ToastCard({ title, details, type }: Toast) {
 	const [wasDisplayed, setDisplayed] = useState<boolean>(false);
 
 	function getIcon() {
 		switch (type) {
 			case "info":
-				return <BiInfoSquare size={48} color={colors.info} />;
+				return <BiInfoSquare size={40} color={colors.info} />;
 			case "success":
-				return <BiCheckSquare size={48} color={colors.success} />;
+				return <BiCheckSquare size={40} color={colors.success} />;
 			case "warning":
-				return <BiFlag size={48} color={colors.warning} />;
+				return <BiFlag size={40} color={colors.warning} />;
 			case "error":
-				return <BiErrorAlt size={48} color={colors.error} />;
+				return <BiErrorAlt size={40} color={colors.error} />;
 		}
+	}
+
+	function setTitleColor() {
+		switch (type) {
+			case "info":
+				return colors.info;
+			case "success":
+				return colors.success;
+			case "warning":
+				return colors.warning;
+			case "error":
+				return colors.error;
+		}
+	}
+
+	function resizeDetails() {
+		if (details.length >= 150) {
+			return details.substr(0, 150) + "...";
+		}
+		return details;
 	}
 
 	setTimeout(() => {
@@ -106,8 +156,8 @@ export default function ToastCard({ title, details, type }: Toast) {
 		<MainContainer>
 			<IconContainer>{getIcon()}</IconContainer>
 			<TextContainer>
-				<Title>{title}</Title>
-				<Details>{details}</Details>
+				<Title color={setTitleColor()}>{title}</Title>
+				<Details>{resizeDetails()}</Details>
 			</TextContainer>
 		</MainContainer>
 	);
