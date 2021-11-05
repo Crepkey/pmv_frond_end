@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 /* Icons */
 import { BiErrorAlt, BiFlag, BiInfoSquare, BiCheckSquare } from "react-icons/bi";
 
@@ -7,7 +9,8 @@ import styled, { keyframes } from "styled-components";
 
 /* Intefaces */
 import { Toast } from "src/utils/interfaces";
-import { useState } from "react";
+
+import { TOAST_DISPLAY_TIME } from "../../../utils/generalSettings.json"; //TODO: Why does not the path of this JSON work?
 
 const MainContainerAnim = keyframes`
     0% {
@@ -93,7 +96,7 @@ export default function ToastCard({ title, details, type }: Toast) {
 
 	setTimeout(() => {
 		setDisplayed(true);
-	}, 3000);
+	}, TOAST_DISPLAY_TIME);
 
 	if (wasDisplayed) {
 		return null;
