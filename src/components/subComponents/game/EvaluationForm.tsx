@@ -7,8 +7,7 @@ import { CheckBox, BoldText, ButtonContainer } from "./styles";
 
 // Interfaces
 import { WordInGame } from "./interfaces";
-import { GameStatistics } from "sharedInterfaces";
-import { ServerError } from "../../../utils/interfaces";
+import { GameStatistics, ServerError } from "sharedInterfaces";
 
 // Icons
 import { BsCheckCircleFill, BsDashCircle } from "react-icons/bs";

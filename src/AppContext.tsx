@@ -1,6 +1,7 @@
 import { useState, createContext, ReactNode } from "react";
 import { Word } from "sharedInterfaces";
 import { Toast } from "./utils/interfaces";
+import { TOAST_CACHE_SIZE } from "./utils/generalSettings.json";
 
 interface AppContextProps {
 	activeModal: string;
@@ -44,7 +45,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 	const [wordForEditing, setWordForEditing] = useState<Word>(defaultValues.wordForEditing);
 
 	function createToast(newToast: Toast) {
-		if (toasts.length >= 10) {
+		if (toasts.length >= TOAST_CACHE_SIZE) {
 			setToasts([newToast]);
 		} else {
 			setToasts([...toasts, newToast]);

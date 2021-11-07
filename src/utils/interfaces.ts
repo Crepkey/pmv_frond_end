@@ -23,14 +23,6 @@ export interface GrammaticalStructure {
 	realLifeUsages: Usage[];
 }
 
-export interface ServerError {
-	error: string;
-	message: string;
-	stack: string;
-	detail: string;
-	table: string;
-}
-
 export type ColorCodeType = `rgba(${number}, ${number}, ${number}, ${number})`;
 
 export interface Toast {

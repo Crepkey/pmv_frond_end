@@ -5,8 +5,8 @@ import { Route, Link } from "react-router-dom";
 import { AppContext } from "../../AppContext";
 
 /* Interfaces */
-import { ServerError, WordOperationType } from "../../utils/interfaces";
-import { Word } from "sharedInterfaces";
+import { WordOperationType } from "../../utils/interfaces";
+import { Word, ServerError } from "sharedInterfaces";
 
 /* Icons */
 import { BsFilter, BsChevronLeft, BsChevronRight, BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
@@ -182,7 +182,7 @@ const PageNumber = styled.div`
 	padding: 0 8px 0 8px;
 `;
 
-interface ParsedResponse {
+interface GroupedWords {
 	activeWords: Word[];
 	deletedWords: Word[];
 }
@@ -203,11 +203,23 @@ export default function MyWords() {
 	useEffect(() => {
 		async function load() {
 			const rawData: Response = await fetch(`/my-words/${activeUser}?numberOfDisplayedRows=50`);
-			const parsedData: ParsedResponse = await rawData.json();
-			setActiveWords(parsedData.activeWords);
-			setDeletedWords(parsedData.deletedWords);
+			const parsedResponse: GroupedWords | ServerError = await rawData.json();
+
+			if ("error" in parsedResponse) {
+				createToast({
+					id: generateID(),
+					type: "error",
+					title: "Server Error",
+					details: `An error occurred while processing the request: ${parsedResponse.message}`,
+				});
+				return;
+			}
+
+			setActiveWords(parsedResponse.activeWords);
+			setDeletedWords(parsedResponse.deletedWords);
 		}
 		load();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [activeUser]);
 
 	function changeTabStyle() {
@@ -234,12 +246,23 @@ export default function MyWords() {
 		const parsedResponse: Word | ServerError = await response.json();
 
 		if ("error" in parsedResponse) {
-			window.alert(parsedResponse.message);
+			createToast({
+				id: generateID(),
+				type: "error",
+				title: "Error saving new word",
+				details: `An error occurred while saving the new word: ${parsedResponse.message}. Please try again.`,
+			});
 			return;
 		}
 
 		const currentActiveWords = [...activeWords, parsedResponse];
 		setActiveWords(currentActiveWords);
+		createToast({
+			id: generateID(),
+			type: "success",
+			title: "Success",
+			details: `The recently added word (${newWord.english}) has been saved successfully.`,
+		});
 	}
 
 	async function deleteWordPermanently(deletedWord: Word) {
@@ -257,6 +280,12 @@ export default function MyWords() {
 		}
 
 		setDeletedWords(deletedWords.filter((word: Word) => deletedWord.id !== word.id));
+		createToast({
+			id: generateID(),
+			type: "info",
+			title: "Deletion",
+			details: `The word (${deletedWord.english}) has been deleted permanently.`,
+		});
 	}
 
 	async function updateWord(updatedWord: Word, operation: WordOperationType) {
@@ -283,14 +312,32 @@ export default function MyWords() {
 		switch (operation) {
 			case "edit":
 				setActiveWords(activeWords.map((word: Word) => (word.id === updatedWord.id ? updatedWord : word)));
+				createToast({
+					id: generateID(),
+					type: "success",
+					title: "Success",
+					details: `The word (${updatedWord.english}) has been modified successfully.`,
+				});
 				break;
 			case "delete":
 				setActiveWords(activeWords.filter((word: Word) => word.id !== updatedWord.id));
 				setDeletedWords([...deletedWords, updatedWord]);
+				createToast({
+					id: generateID(),
+					type: "warning",
+					title: "Warning",
+					details: `The word (${updatedWord.english}) has been set to deletable word. It will be permanently deleted 30 days later.`,
+				});
 				break;
 			case "restore":
 				setDeletedWords(deletedWords.filter((word: Word) => word.id !== updatedWord.id));
 				setActiveWords([...activeWords, updatedWord]);
+				createToast({
+					id: generateID(),
+					type: "info",
+					title: "Restore",
+					details: `The word (${updatedWord.english}) has been restores. Now it is available in the active words.`,
+				});
 		}
 	}
 
