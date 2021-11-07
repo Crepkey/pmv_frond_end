@@ -331,53 +331,17 @@ export default function MyWords() {
 				</TableBlock>
 			</TableContainer>
 			<PaginationContainer>
-				<PaginationButton
-					onClick={() =>
-						createToast({
-							id: generateID(),
-							type: "info",
-							title: "INFO",
-							details:
-								"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non leo vehicula, varius nulla eget, placerat est. Duis ultricies, lacus sit amet posuere facilisis, neque ligula vestibulum nulla, sed placerat enim mauris vitae arcu. Maecenas non sapien orci.",
-						})
-					}>
+				<PaginationButton>
 					<BsChevronDoubleLeft />
 				</PaginationButton>
-				<PaginationButton
-					onClick={() =>
-						createToast({
-							id: generateID(),
-							type: "success",
-							title: "SUCCESS",
-							details:
-								"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non leo vehicula, varius nulla eget, placerat est. Duis ultricies, lacus sit amet posuere facilisis, neque ligula vestibulum nulla, sed placerat enim mauris vitae arcu. Maecenas non sapien orci.",
-						})
-					}>
+				<PaginationButton>
 					<BsChevronLeft />
 				</PaginationButton>
 				<PageNumber>2</PageNumber>
-				<PaginationButton
-					onClick={() =>
-						createToast({
-							id: generateID(),
-							type: "warning",
-							title: "WARNING",
-							details:
-								"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non leo vehicula, varius nulla eget, placerat est. Duis ultricies, lacus sit amet posuere facilisis, neque ligula vestibulum nulla, sed placerat enim mauris vitae arcu. Maecenas non sapien orci.",
-						})
-					}>
+				<PaginationButton>
 					<BsChevronRight />
 				</PaginationButton>
-				<PaginationButton
-					onClick={() =>
-						createToast({
-							id: generateID(),
-							type: "error",
-							title: "ERROR",
-							details:
-								"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non leo vehicula, varius nulla eget, placerat est. Duis ultricies, lacus sit amet posuere facilisis, neque ligula vestibulum nulla, sed placerat enim mauris vitae arcu. Maecenas non sapien orci.",
-						})
-					}>
+				<PaginationButton>
 					<BsChevronDoubleRight />
 				</PaginationButton>
 			</PaginationContainer>
