@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AppContext } from "src/AppContext";
 import { Toast } from "src/utils/interfaces";
 import styled from "styled-components";
@@ -16,10 +16,6 @@ const MainContainer = styled.div`
 
 export default function ToastHandler() {
 	const { toasts } = useContext(AppContext);
-
-	useEffect(() => {
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [toasts]);
 
 	if (toasts === []) {
 		return null;
