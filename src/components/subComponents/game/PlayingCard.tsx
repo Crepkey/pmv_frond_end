@@ -17,6 +17,7 @@ import SpinnerBar from "../../generalComponents/SpinnerBar";
 
 // Utils
 import get from "lodash/get";
+import { getFirstKey } from "src/utils/utils";
 
 interface PlayingCardProps {
 	owner: User | undefined;
@@ -38,7 +39,7 @@ export default function PlayingCard({ owner, word }: PlayingCardProps) {
 
 			<CardBody>
 				<TitleContainer>
-					<CardTitle>{word.english}</CardTitle>
+					<CardTitle>{getFirstKey(word.english)}</CardTitle>
 					<VolumeIcon>
 						<MdVolumeUp size={32} />
 					</VolumeIcon>
@@ -46,9 +47,9 @@ export default function PlayingCard({ owner, word }: PlayingCardProps) {
 
 				<CardBodyScrollContainer>
 					<TagContainer>
-						{word.hungarian.map((meaning: string, i: number) => {
+						{Object.keys(word.hungarian).map((meaning: string, i: number) => {
 							const tagColor = tagColors.find((tc: TagColor) => {
-								return tc.language === "hungarian" && tc.index === i;
+								return tc.meaning === meaning;
 							});
 							return (
 								<Tag key={i} background={get(colors, tagColor?.color || "progressBlue")}>

@@ -16,7 +16,7 @@ import { Word, WordType } from "sharedInterfaces";
 
 // Utils
 import set from "lodash/set";
-import { emptyWord } from "../../../utils/utils";
+import { emptyWord, getFirstKey } from "../../../utils/utils";
 
 const Card = styled.div`
 	border: 1px solid ${colors.border};
@@ -228,9 +228,9 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 			checkedErrors.push(1);
 		}
 
-		word.hungarian.forEach((meaning: string) => {
-			if (meaning.length === 0) checkedErrors.push(2);
-		});
+		// word.hungarian.forEach((meaning: string) => {
+		// 	if (meaning.length === 0) checkedErrors.push(2);
+		// });
 
 		word.exampleSentences.forEach((sentence: string) => {
 			if (sentence.length === 0) checkedErrors.push(3);
@@ -269,10 +269,10 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 							<StringInput
 								error={errors.includes(1)}
 								placeholder="Type your English word or expression here..."
-								value={word.english}
+								value={getFirstKey(word.english)}
 								onChange={(e) => {
 									setErrors(errors.filter((e: number) => e !== 1));
-									setWord({ ...word, english: e.target.value });
+									// setWord({ ...word, english: e.target.value });
 								}}
 							/>
 							<HeartIcon
@@ -285,7 +285,7 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 
 						{errors.includes(2) ? <Label error={true}>{errorMessages[2]}</Label> : <Label>Hungarian meanings</Label>}
 						<Block>
-							{word.hungarian.map((meaning: string, i: number) => (
+							{Object.keys(word.hungarian).map((meaning: string, i: number) => (
 								<Row key={`${i}_hunMean`}>
 									<StringInput
 										error={errors.includes(2) && i === 0}
@@ -301,8 +301,8 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 										<DeleteIcon>
 											<BsTrash
 												onClick={(e) => {
-													const newArray = word.hungarian.filter((s: string, index: number) => index !== i);
-													setWord({ ...word, hungarian: newArray });
+													// const newArray = word.hungarian.filter((s: string, index: number) => index !== i);
+													// setWord({ ...word, hungarian: newArray });
 												}}
 											/>
 										</DeleteIcon>
@@ -312,7 +312,7 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 							<AddNewRow>
 								<CircleButton
 									onClick={() => {
-										setWord({ ...word, hungarian: [...word.hungarian, ""] });
+										// setWord({ ...word, hungarian: [...word.hungarian, ""] });
 									}}>
 									<BsPlus />
 								</CircleButton>
@@ -385,16 +385,3 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 		</Card>
 	);
 }
-
-// contains only the filtered arrays, without empty strings
-// const wordToSave = {
-// 	...word,
-// 	hungarian: hungarianMeanings,
-// 	sentences,
-// 	scoreToAchieve: (1 + hungarianMeanings.length) * 10,
-// 	statistics: {
-// 		// Petra TODO: when you are editing a word, we have to use the original values
-// 		english: 0,
-// 		hungarian: hungarianMeanings.map(() => 0),
-// 	},
-// };

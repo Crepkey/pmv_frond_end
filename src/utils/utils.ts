@@ -4,10 +4,14 @@ export function generateID() {
 	return Date.now() + Math.random();
 }
 
+export function getFirstKey(object: { [meaning: string]: number }): string {
+	return Object.keys(object)[0];
+}
+
 export const emptyWord: WordWithScores = {
 	id: generateID(),
-	english: "",
-	hungarian: [""],
+	english: { "": 0 },
+	hungarian: { "": 0 },
 	exampleSentences: [""],
 	type: "word",
 	ownerId: 0,
@@ -17,8 +21,4 @@ export const emptyWord: WordWithScores = {
 	favourite: false,
 	notes: null,
 	deletionDate: null,
-	statistics: {
-		english: 0,
-		hungarian: [],
-	},
 };

@@ -12,6 +12,7 @@ import ActiveWordIcons from "./ActiveWordIcons";
 
 /* Utils */
 import { calculateRowBackground, convertMemoryLevelToText } from "./utils";
+import { getFirstKey } from "src/utils/utils";
 
 const WordRow = styled.div<{ background: string }>`
 	display: flex;
@@ -58,8 +59,8 @@ export default function ActiveWordRow({ word, rowNumber, updateWord }: ActiveWor
 	const background: ColorCodeType = calculateRowBackground(rowNumber);
 	return (
 		<WordRow key={word.id} background={background}>
-			<EnglishWord>{word.english}</EnglishWord>
-			<HungarianWords>{word.hungarian.map((hunWord: string) => `${hunWord} `)}</HungarianWords>
+			<EnglishWord>{getFirstKey(word.english)}</EnglishWord>
+			<HungarianWords>{Object.keys(word.hungarian).map((hunWord: string) => `${hunWord} `)}</HungarianWords>
 			<MemoryLevel>
 				<SpinnerBar size={24} status={word.memoryLevel} style={{ margin: "0 12px 0 0", background }} />
 				<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>

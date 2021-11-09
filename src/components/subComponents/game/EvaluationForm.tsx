@@ -16,6 +16,7 @@ import { BsCheckCircleFill, BsDashCircle } from "react-icons/bs";
 import get from "lodash/get";
 import set from "lodash/set";
 import capitalize from "lodash/capitalize";
+import { getFirstKey } from "src/utils/utils";
 
 // Helper functions
 import { calculateGamePoints } from "./calculateFinalResult";
@@ -48,12 +49,15 @@ interface EvaluationFormProps {
 }
 
 export default function EvaluationForm({ actualWord, grammaticalStructureId, getNextCard, userPoints, setUserPoints }: EvaluationFormProps) {
-	const emptyStatistics: GameStatistics = { english: false, hungarian: [] };
+	const hungarianStatistics = {};
+	Object.keys(actualWord.hungarian).forEach((meaning: string) => set(hungarianStatistics, meaning, false));
+	const emptyStatistics: GameStatistics = { english: false, hungarian: hungarianStatistics };
 	// We only store the actual evaluation in the state and calculate the values (that we need in the database) while saving
 	const [gameStatistics, setGameStatistics] = useState<GameStatistics>(emptyStatistics);
 	const [correctGrammar, setCorrectGrammar] = useState<boolean>(false);
 
 	const { wordToAsk, wordToAnswer } = actualWord;
+	const english = getFirstKey(actualWord.english);
 
 	async function save() {
 		// save updated word and grammatical knowledge on backend
@@ -85,18 +89,18 @@ export default function EvaluationForm({ actualWord, grammaticalStructureId, get
 				</CardTitle>
 
 				<CardBodyScrollContainer>
-					{wordToAsk !== actualWord.english && (
+					{wordToAsk !== english && (
 						<EvaluationRow
-							title={actualWord.english}
-							mainWord={wordToAnswer === actualWord.english}
+							title={english}
+							mainWord={wordToAnswer === english}
 							checked={gameStatistics.english}
 							toggleChecked={() => {
 								setGameStatistics({ ...gameStatistics, english: !gameStatistics.english });
 							}}
 						/>
 					)}
-					{actualWord.hungarian.map((meaning: string, i: number) => {
-						const checked = get(gameStatistics, ["hungarian", i], false);
+					{Object.keys(actualWord.hungarian).map((meaning: string, i: number) => {
+						const checked = get(gameStatistics, ["hungarian", meaning], false);
 						if (wordToAsk !== meaning) {
 							return (
 								<EvaluationRow
@@ -105,7 +109,7 @@ export default function EvaluationForm({ actualWord, grammaticalStructureId, get
 									mainWord={wordToAnswer === meaning}
 									checked={checked}
 									toggleChecked={() => {
-										const evaluatedHungarian = set([...gameStatistics.hungarian], i, !checked);
+										const evaluatedHungarian = set(gameStatistics.hungarian, meaning, !checked);
 										setGameStatistics({ ...gameStatistics, hungarian: evaluatedHungarian });
 									}}
 								/>

@@ -13,6 +13,7 @@ import DeletedWordIcons from "./DeletedWordIcons";
 /* Utils */
 import { calculateRowBackground, convertMemoryLevelToText } from "./utils";
 import dayjs, { Dayjs } from "dayjs";
+import { getFirstKey } from "src/utils/utils";
 
 const WordRow = styled.div<{ background: string }>`
 	display: flex;
@@ -75,8 +76,8 @@ export default function DeletedWordRow({ word, rowNumber, updateWord, deleteWord
 
 	return (
 		<WordRow key={word.id} background={background}>
-			<EnglishWord>{word.english}</EnglishWord>
-			<HungarianWords>{word.hungarian.map((hunWord: string) => `${hunWord} `)}</HungarianWords>
+			<EnglishWord>{getFirstKey(word.english)}</EnglishWord>
+			<HungarianWords>{Object.keys(word.hungarian).map((hunWord: string) => `${hunWord} `)}</HungarianWords>
 			<MemoryLevel>
 				<SpinnerBar size={24} status={word.memoryLevel} style={{ margin: "0 12px 0 0", background }} />
 				<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>

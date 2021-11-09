@@ -4,21 +4,20 @@ import { GameStatistics } from "sharedInterfaces";
 
 // Utils
 import get from "lodash/get";
+import { getFirstKey } from "src/utils/utils";
 
 function getMainWordKnown(word: WordInGame, gameStatistics: GameStatistics) {
-	if (word.wordToAnswer === word.english) {
+	if (word.wordToAnswer === getFirstKey(word.english)) {
 		if (gameStatistics.english === true) return true;
 	} else {
-		const indexOfWordToAnswer = word.hungarian.findIndex((meaning: string) => meaning === word.wordToAnswer);
-		if (get(gameStatistics, ["hungarian", indexOfWordToAnswer]) === true) return true;
+		return get(gameStatistics, ["hungarian", word.wordToAnswer], false);
 	}
-	return false;
 }
 
 export function calculateGamePoints(word: WordInGame, gameStatistics: GameStatistics, correctGrammar: boolean): number {
 	let earnedPoints = 0;
 	const mainWordKnown = getMainWordKnown(word, gameStatistics);
-	const hungarianScore = gameStatistics.hungarian.filter((s: boolean) => s === true).length;
+	const hungarianScore = Object.values(gameStatistics.hungarian).filter((s: boolean) => s === true).length;
 
 	// Player knew the main word
 	if (mainWordKnown) earnedPoints += 1;
