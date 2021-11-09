@@ -12,7 +12,7 @@ import { BsSuitHeart, BsSuitHeartFill, BsPlus, BsX, BsTrash } from "react-icons/
 
 // Interfaces
 import { WordOperationType } from "../../../utils/interfaces";
-import { Word, WordType } from "sharedInterfaces";
+import { Word, WordType, MeaningWithPoint } from "sharedInterfaces";
 
 // Utils
 import set from "lodash/set";
@@ -218,19 +218,34 @@ const errorMessages: { [key: number]: string } = {
 
 export default function EditWord({ initialWord, title, save }: EditWordProps) {
 	const [word, setWord] = useState<Word>(initialWord || emptyWord);
+	const [hungarian, setHungarian] = useState<string[]>(Object.keys(initialWord?.hungarian || {}));
 	const [errors, setErrors] = useState<number[]>([]);
 	const { setActiveModal } = useContext(AppContext);
+
+	function calculateHungarian() {
+		const newHungarian: MeaningWithPoint = {};
+
+		hungarian.forEach((newMeaning: string) => {
+			if (Object.keys(word.hungarian).includes(newMeaning)) {
+				newHungarian[newMeaning] = word.hungarian[newMeaning];
+			} else {
+				newHungarian[newMeaning] = 0;
+			}
+		});
+
+		return newHungarian;
+	}
 
 	function formValidation() {
 		const checkedErrors: number[] = [];
 
-		if (word.english.length === 0) {
+		if (getFirstKey(word.english).length === 0) {
 			checkedErrors.push(1);
 		}
 
-		// word.hungarian.forEach((meaning: string) => {
-		// 	if (meaning.length === 0) checkedErrors.push(2);
-		// });
+		hungarian.forEach((meaning: string) => {
+			if (meaning.length === 0) checkedErrors.push(2);
+		});
 
 		word.exampleSentences.forEach((sentence: string) => {
 			if (sentence.length === 0) checkedErrors.push(3);
@@ -246,7 +261,7 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 
 	function saveForm() {
 		if (!formValidation()) return;
-		save(word, "edit");
+		save({ ...word, hungarian: calculateHungarian() }, "edit");
 		setActiveModal("none");
 	}
 
@@ -272,7 +287,7 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 								value={getFirstKey(word.english)}
 								onChange={(e) => {
 									setErrors(errors.filter((e: number) => e !== 1));
-									// setWord({ ...word, english: e.target.value });
+									setWord({ ...word, english: { [e.target.value]: 0 } });
 								}}
 							/>
 							<HeartIcon
@@ -285,7 +300,7 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 
 						{errors.includes(2) ? <Label error={true}>{errorMessages[2]}</Label> : <Label>Hungarian meanings</Label>}
 						<Block>
-							{Object.keys(word.hungarian).map((meaning: string, i: number) => (
+							{hungarian.map((meaning: string, i: number) => (
 								<Row key={`${i}_hunMean`}>
 									<StringInput
 										error={errors.includes(2) && i === 0}
@@ -293,16 +308,15 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 										value={meaning}
 										onChange={(e) => {
 											setErrors(errors.filter((e: number) => e !== 2));
-											const newWord = set({ ...word }, ["hungarian", i], e.target.value);
-											setWord(newWord);
+											const newHungarian = set(hungarian, [i], e.target.value);
+											setHungarian(newHungarian);
 										}}
 									/>
 									{i !== 0 && (
 										<DeleteIcon>
 											<BsTrash
 												onClick={(e) => {
-													// const newArray = word.hungarian.filter((s: string, index: number) => index !== i);
-													// setWord({ ...word, hungarian: newArray });
+													setHungarian(hungarian.filter((s: string, index: number) => index !== i));
 												}}
 											/>
 										</DeleteIcon>
@@ -312,7 +326,7 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 							<AddNewRow>
 								<CircleButton
 									onClick={() => {
-										// setWord({ ...word, hungarian: [...word.hungarian, ""] });
+										setHungarian([...hungarian, ""]);
 									}}>
 									<BsPlus />
 								</CircleButton>
