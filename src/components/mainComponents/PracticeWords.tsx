@@ -1,5 +1,31 @@
-import { Word } from "sharedInterfaces";
+import { Fragment, useState } from "react";
 
+/* Styles */
+import { colors } from "src/utils/colors";
+import styled from "styled-components";
+
+const WordChooserContainer = styled.div`
+	display: flex;
+	flex: 1;
+	min-height: 0;
+	min-width: 0;
+	border: 1px solid red;
+`;
+
+const Question = styled.div`
+	font-weight: 700;
+	font-size: 3rem;
+`;
+
+const WordCard = styled.div`
+	display: flex;
+	flex: 1;
+	min-width: 0;
+	min-height: 0;
+	padding: 32px;
+	background: ${colors.blockBackground};
+	border-radius: 24px;
+`;
 interface WordChoices {
 	question: string;
 	correctAnswer: string;
@@ -67,5 +93,18 @@ const dummyData: gameData = {
 };
 
 export default function PracticeWords() {
-	return <div>VALAMI</div>;
+	const [activeRiddle, setActiveRiddle] = useState<WordChoices | WordRelation | WordDefinition>();
+	return (
+		<WordChooserContainer>
+			{dummyData.multipleChoiceGame.map((riddle: WordChoices) => (
+				<Fragment>
+					<Question>{riddle.question}</Question>
+					<WordCard>{riddle.correctAnswer}</WordCard>
+					<WordCard>{riddle.wrongAnswer1}</WordCard>
+					<WordCard>{riddle.wrongAnswer2}</WordCard>
+					<WordCard>{riddle.wrongAnswer3}</WordCard>
+				</Fragment>
+			))}
+		</WordChooserContainer>
+	);
 }
