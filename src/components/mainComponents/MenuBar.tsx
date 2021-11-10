@@ -74,7 +74,7 @@ export default function MenuBar() {
 			</LogoContainer>
 			<Menu>
 				<MenuItem to="/my-words/active-words">My words</MenuItem>
-				<MenuItem to="/practice/grammatical-structues">Practice grammatical structures</MenuItem>
+				<MenuItem to="/practice/grammatical-structures">Practice grammatical structures</MenuItem>
 				<MenuItem to="/lets-play">Let's play</MenuItem>
 			</Menu>
 			<UserAvatarContainer>

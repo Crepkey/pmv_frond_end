@@ -27,7 +27,7 @@ function App() {
 				<Switch>
 					{/* Here you can pass any component that you want to test */}
 					<Route path="/my-words" component={MyWords} />
-					<Route path="/practice/grammatical-structues" component={PracticeGrammar} />
+					<Route path="/practice/grammatical-structures" component={PracticeGrammar} />
 					<Route path="/lets-play" component={Game} />
 					<Route path="/" exact component={Home} />
 					<Redirect to="/" />
