@@ -10,6 +10,7 @@ import { AppProvider } from "./AppContext";
 
 // Styles
 import styled from "styled-components";
+import PracticeWords from "./components/mainComponents/PracticeWords";
 
 const MainContainer = styled.div`
 	display: flex;
@@ -25,6 +26,7 @@ function App() {
 				<MenuBar />
 				<Switch>
 					{/* Here you can pass any component that you want to test */}
+					<Route path={"/practice/words"} component={PracticeWords} />
 					<Route path="/my-words" component={MyWords} />
 					<Route path="/lets-play" component={Game} />
 					<Route path="/" exact component={Home} />
