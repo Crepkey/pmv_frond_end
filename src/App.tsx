@@ -5,6 +5,7 @@ import MenuBar from "./components/mainComponents/MenuBar";
 import MyWords from "./components/mainComponents/MyWords";
 import Home from "./components/mainComponents/Home";
 import Game from "./components/mainComponents/Game";
+import PracticeGrammar from "./components/mainComponents/PracticeGrammar";
 import ToastHandler from "./components/generalComponents/toast/ToastHandler";
 import { AppProvider } from "./AppContext";
 
@@ -26,6 +27,7 @@ function App() {
 				<Switch>
 					{/* Here you can pass any component that you want to test */}
 					<Route path="/my-words" component={MyWords} />
+					<Route path="/practice/grammatical-structues" component={PracticeGrammar} />
 					<Route path="/lets-play" component={Game} />
 					<Route path="/" exact component={Home} />
 					<Redirect to="/" />
