@@ -224,7 +224,7 @@ const errorMessages: { [key: number]: string } = {
 };
 
 export default function EditWord({ initialWord, title, save }: EditWordProps) {
-	const initialHungarian: Hungarian[] = (initialWord?.hungarian || []).map((meaning: string, index: number) => {
+	const initialHungarian: Hungarian[] = (initialWord?.hungarian || [""]).map((meaning: string, index: number) => {
 		return { meaning, point: get(initialWord, ["statistics", "hungarian", index], 0) };
 	});
 
