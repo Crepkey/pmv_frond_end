@@ -1,7 +1,12 @@
 import { Fragment, useState } from "react";
+import { Word } from "sharedInterfaces";
+
+/* Utils */
+import random from "lodash/random";
 
 /* Styles */
 import { colors } from "src/utils/colors";
+import { generateID } from "src/utils/utils";
 import styled from "styled-components";
 
 const WordChooserContainer = styled.div`
@@ -26,85 +31,126 @@ const WordCard = styled.div`
 	background: ${colors.blockBackground};
 	border-radius: 24px;
 `;
-interface WordChoices {
-	question: string;
-	correctAnswer: string;
-	wrongAnswer1: string;
-	wrongAnswer2: string;
-	wrongAnswer3: string;
-}
-interface WordRelation {
-	english: string;
-	hungarianMeanings: string[];
+
+const NextButton = styled.button`
+	display: inline-block;
+	cursor: pointer;
+	color: ${colors.buttonFont};
+	font-size: 1rem;
+	font-weight: bold;
+	padding: 6px 24px;
+	text-decoration: none;
+	border-radius: 16px;
+	border: none;
+	background-color: ${colors.acceptButtonBackground};
+	:hover {
+		background: linear-gradient(to bottom, ${colors.acceptButtonGradientLight} 5%, ${colors.acceptButtonGradientDark} 100%);
+		background-color: ${colors.acceptButtonGradientLight};
+	}
+	:active {
+		position: relative;
+		top: 1px;
+	}
+`;
+
+type GameTypes = "multiple choice game" | "type the answer game" | "recognize it by the rule game";
+interface DummyData {
+	words: Word[];
+	gameTypes: GameTypes[]; // These describe the game types for every rounds
+	wrongAnswers: string[]; // As many wrong answers as possible theoretically
 }
 
-interface WordDefinition {
-	english: string;
-	definitions: string[];
-}
-
-interface gameData {
-	multipleChoiceGame: WordChoices[];
-	answerTypingGame: WordRelation[];
-	recognizeByTheRuleGame: WordDefinition[];
-}
-
-const dummyData: gameData = {
-	multipleChoiceGame: [
+const dummyData: DummyData = {
+	words: [
 		{
-			question: "What is the correct translation of the word: PINK?",
-			correctAnswer: "rózsaszín",
-			wrongAnswer1: "piros",
-			wrongAnswer2: "barna",
-			wrongAnswer3: "kék",
-		},
-		{
-			question: "What is the correct translation of the word: GRUELING?",
-			correctAnswer: "fárasztó",
-			wrongAnswer1: "álmos",
-			wrongAnswer2: "kabát",
-			wrongAnswer3: "macska",
-		},
-		{
-			question: "What is the correct translation of the word: PRAM?",
-			correctAnswer: "babakocsi",
-			wrongAnswer1: "patkány",
-			wrongAnswer2: "csicska",
-			wrongAnswer3: "mókua",
-		},
-	],
-	answerTypingGame: [
-		{ english: "willing", hungarianMeanings: ["hajlandó, készséges, önkéntes"] },
-		{ english: "assertion", hungarianMeanings: ["állítás", "kijelentés", "követelés"] },
-		{ english: "adamant", hungarianMeanings: ["hajthatatlan", "gyémántkeménységű anyag"] },
-	],
-	recognizeByTheRuleGame: [
-		{ english: "puppy", definitions: ["A young dog.", "A cheeky or arrogant boy or young man.", "A person or thing of a specified kind."] },
-		{
-			english: "cringing",
-			definitions: [
-				"Bent in fear or apprehension.",
-				"Obedient or attentive to an excessive or servile degree.",
-				"Experiencing embarrassment or disgust.",
+			id: generateID(),
+			english: "Unwed",
+			hungarian: ["hajadon", "nőtlen"],
+			exampleSentences: [
+				"What would have happened to those children of unwed teenage mothers if they hadn't been adopted?",
+				"Even over the past two years, it is estimated there are 18,000 fewer nuclear family homes, including both married and unwed parents",
 			],
+			type: "word",
+			ownerId: 1,
+			memoryLevel: 6,
+			favourite: false,
+			notes: "Petra is unwed",
+			deletionDate: null,
 		},
-		{ english: "unwed", definitions: ["Not married"] },
+		{
+			id: generateID(),
+			english: "Adamant",
+			hungarian: ["hajthatatlan", "gyémántkeménységű anyag"],
+			exampleSentences: [
+				"He is adamant that he is not going to resign",
+				"We tried to persuade them to let us show the film at Edinburgh, but Venice's new director was adamant that we couldn't",
+			],
+			type: "word",
+			ownerId: 1,
+			memoryLevel: 6,
+			favourite: false,
+			notes: "Petra is unwed",
+			deletionDate: null,
+		},
+		{
+			id: generateID(),
+			english: "Skillful",
+			hungarian: ["ügyes", "gyakorlott"],
+			exampleSentences: [
+				"You are brilliant, active and skillful in professional ventures and gain repute in your field of activity",
+				"He was also a robust, competitive and skillful GAA player in both hurling and football",
+			],
+			type: "word",
+			ownerId: 1,
+			memoryLevel: 6,
+			favourite: false,
+			notes: "Petra is unwed",
+			deletionDate: null,
+		},
 	],
+	gameTypes: ["multiple choice game", "type the answer game", "recognize it by the rule game"],
+	wrongAnswers: ["barna", "macska", "erkély", "szombat", "alma", "dörzsölődés", "éhezés", "mosoly", "óratorony"],
 };
 
 export default function PracticeWords() {
-	const [activeRiddle, setActiveRiddle] = useState<WordChoices | WordRelation | WordDefinition>();
-	return (
-		<WordChooserContainer>
-			{dummyData.multipleChoiceGame.map((riddle: WordChoices) => (
-				<Fragment>
-					<Question>{riddle.question}</Question>
-					<WordCard>{riddle.correctAnswer}</WordCard>
-					<WordCard>{riddle.wrongAnswer1}</WordCard>
-					<WordCard>{riddle.wrongAnswer2}</WordCard>
-					<WordCard>{riddle.wrongAnswer3}</WordCard>
-				</Fragment>
-			))}
-		</WordChooserContainer>
-	);
+	function generateRandomAnswers(correctWord: Word) {
+		const correctAnswerPosition: number = random(3); /* FIXME: HARD CODED!!! It will be dynamically changed*/
+		const answers: string[] = [];
+
+		while (answers.length !== 4) {
+			const randomIndex = random(dummyData.wrongAnswers.length - 1);
+			const randomWrongWord = dummyData.wrongAnswers[randomIndex];
+			if (answers.includes(randomWrongWord)) continue;
+			answers.push(randomWrongWord);
+		}
+
+		answers[correctAnswerPosition] = correctWord.hungarian[random(correctWord.hungarian.length - 1)];
+		return answers;
+	}
+
+	function renderGameElements(index: number) {
+		const currentGameType: GameTypes = dummyData.gameTypes[index];
+		const currentWord: Word = dummyData.words[index];
+
+		switch (currentGameType) {
+			case "multiple choice game":
+				const answers: string[] = generateRandomAnswers(currentWord);
+				return (
+					<Fragment key={currentWord.id}>
+						<Question>{`What is the correct translation of the word: ${currentWord.english}`}</Question>
+						<WordChooserContainer>
+							{answers.map((answer: string) => (
+								<WordCard key={answer}>{answer}</WordCard>
+							))}
+						</WordChooserContainer>
+					</Fragment>
+				);
+			case "type the answer game":
+				break;
+			case "recognize it by the rule game":
+				break;
+		}
+	}
+
+	return <Fragment>{[0, 1, 2].map((index: number) => renderGameElements(index))}</Fragment>;
 }
