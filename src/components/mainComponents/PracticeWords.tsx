@@ -113,6 +113,8 @@ const dummyData: DummyData = {
 };
 
 export default function PracticeWords() {
+	const [actualRiddle, setActualRiddle] = useState<number>(0);
+
 	function generateRandomAnswers(correctWord: Word) {
 		const correctAnswerPosition: number = random(3); /* FIXME: HARD CODED!!! It will be dynamically changed*/
 		const answers: string[] = [];
@@ -152,5 +154,10 @@ export default function PracticeWords() {
 		}
 	}
 
-	return <Fragment>{[0, 1, 2].map((index: number) => renderGameElements(index))}</Fragment>;
+	return (
+		<Fragment>
+			{renderGameElements(actualRiddle)}
+			<NextButton onClick={() => setActualRiddle((prevRiddle) => prevRiddle + 1)}>Next question</NextButton>
+		</Fragment>
+	);
 }
