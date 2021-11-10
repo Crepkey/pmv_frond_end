@@ -1,5 +1,8 @@
 //React
-import { useState } from "react";
+import { useContext, useState } from "react";
+
+// Context
+import { AppContext } from "src/AppContext";
 
 // Styles
 import { Card, CardHeader, CardBody, CardTitle, CardBodyScrollContainer, Block, GreenButton } from "../../generalComponents/styles";
@@ -16,6 +19,7 @@ import { BsCheckCircleFill, BsDashCircle } from "react-icons/bs";
 import get from "lodash/get";
 import set from "lodash/set";
 import capitalize from "lodash/capitalize";
+import { generateID } from "src/utils/utils";
 
 // Helper functions
 import { calculateGamePoints } from "./calculateFinalResult";
@@ -53,6 +57,8 @@ export default function EvaluationForm({ actualWord, grammaticalStructureId, get
 	const [gameStatistics, setGameStatistics] = useState<GameStatistics>(emptyStatistics);
 	const [correctGrammar, setCorrectGrammar] = useState<boolean>(false);
 
+	const { createToast } = useContext(AppContext);
+
 	const { wordToAsk, wordToAnswer } = actualWord;
 
 	async function save() {
@@ -64,15 +70,29 @@ export default function EvaluationForm({ actualWord, grammaticalStructureId, get
 		});
 		const parsedResponse: WordInGame | ServerError = await response.json();
 		if ("error" in parsedResponse) {
-			window.alert("Error in saving the evaluation result: " + parsedResponse.message);
+			createToast({
+				id: generateID(),
+				type: "error",
+				title: "Server Error",
+				details: `An error occurred while saving the evaluation result: ${parsedResponse.message}`,
+			});
+			return;
 		}
+		createToast({
+			id: generateID(),
+			type: "success",
+			title: "Success",
+			details: "Save successful, please wait 5 seconds for the next word.",
+		});
 
 		// calculate game points
 		const earnedPoints = calculateGamePoints(actualWord, gameStatistics, correctGrammar);
 		setUserPoints(userPoints + earnedPoints);
 
 		// show next card
-		getNextCard();
+		setTimeout(() => {
+			getNextCard();
+		}, 5000);
 	}
 
 	return (
