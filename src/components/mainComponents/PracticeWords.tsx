@@ -14,22 +14,34 @@ const WordChooserContainer = styled.div`
 	flex: 1;
 	min-height: 0;
 	min-width: 0;
-	border: 1px solid red;
+	padding: 12px;
 `;
 
 const Question = styled.div`
+	padding: 24px;
 	font-weight: 700;
-	font-size: 3rem;
+	font-size: 2rem;
 `;
 
+/* TODO: Better margin handling for WordCard and WordChooserContainer */
 const WordCard = styled.div`
 	display: flex;
 	flex: 1;
+	align-items: center;
+	justify-content: center;
 	min-width: 0;
 	min-height: 0;
 	padding: 32px;
-	background: ${colors.blockBackground};
+	margin: 12px;
+	font-size: 1.5rem;
+	font-weight: 600;
+	text-transform: uppercase;
 	border-radius: 24px;
+	background: ${colors.blockBackground};
+	border: 3px rgba(0, 0, 0, 0) solid;
+	:hover {
+		border: 3px ${colors.activeBorder} solid;
+	}
 `;
 
 const NextButton = styled.button`
@@ -39,6 +51,7 @@ const NextButton = styled.button`
 	font-size: 1rem;
 	font-weight: bold;
 	padding: 6px 24px;
+	margin: 24px;
 	text-decoration: none;
 	border-radius: 16px;
 	border: none;
@@ -139,7 +152,7 @@ export default function PracticeWords() {
 				const answers: string[] = generateRandomAnswers(currentWord);
 				return (
 					<Fragment key={currentWord.id}>
-						<Question>{`What is the correct translation of the word: ${currentWord.english}`}</Question>
+						<Question>{`What is the correct translation of the word: ${currentWord.english}?`}</Question>
 						<WordChooserContainer>
 							{answers.map((answer: string) => (
 								<WordCard key={answer}>{answer}</WordCard>
