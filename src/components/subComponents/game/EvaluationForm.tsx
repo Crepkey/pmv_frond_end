@@ -87,10 +87,10 @@ export default function EvaluationForm({ actualWord, grammaticalStructureId, get
 
 		// calculate game points
 		const earnedPoints = calculateGamePoints(actualWord, gameStatistics, correctGrammar);
-		setUserPoints(userPoints + earnedPoints);
 
 		// show next card
 		setTimeout(() => {
+			setUserPoints(userPoints + earnedPoints);
 			getNextCard();
 		}, 5000);
 	}
