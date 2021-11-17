@@ -6,7 +6,6 @@ import { GrammaticalStructure, Usage } from "../../utils/interfaces";
 
 // Utils
 import get from "lodash/get";
-import random from "lodash/random";
 
 // Styles
 import { Block, Card, CardBody, CardBodyScrollContainer, CardTitle, GreenButton } from "../generalComponents/styles";
@@ -17,8 +16,6 @@ export default function PracticeGrammar() {
 	const [actualIndex, setActualIndex] = useState<number>(0);
 
 	const actualStructure = grammaticalStructures[actualIndex];
-	const randomUsageIndex = random(get(actualStructure, ["realLifeUsages", "length"]) - 1);
-	const usageToShow: Usage = get(actualStructure, ["realLifeUsages", randomUsageIndex]);
 
 	useEffect(
 		() => {
@@ -66,8 +63,14 @@ export default function PracticeGrammar() {
 						<FormingSentence>{actualStructure.forming}</FormingSentence>
 
 						<Block>
-							<UsageDescription firstElement={true}>{usageToShow.description}</UsageDescription>
-							<UsageSentence>{usageToShow.example}</UsageSentence>
+							{actualStructure.realLifeUsages.map((usage: Usage, i: number) => (
+								<div key={i}>
+									<UsageDescription firstElement={i === 0}>
+										{i + 1}) {usage.description}
+									</UsageDescription>
+									<UsageSentence>{usage.example}</UsageSentence>
+								</div>
+							))}
 						</Block>
 
 						{actualStructure.notes && <Block>Note: {actualStructure.notes}</Block>}
