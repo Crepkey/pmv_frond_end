@@ -39,8 +39,7 @@ export default function Game() {
 	async function initialize(numberOfWords: number) {
 		setLoading(true);
 
-		const response = await fetch(`/lets-play?players=${playerIds[0]}&players=${playerIds[1]}`);
-		// TODO use number of words
+		const response = await fetch(`/lets-play?players=${playerIds[0]}&players=${playerIds[1]}&numberOfWords=${numberOfWords}`);
 		const parsedResponse = await response.json();
 
 		setLoading(false);
