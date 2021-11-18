@@ -1,6 +1,6 @@
 // Styles
 import { Card, CardHeader, CardBody, GreenButton } from "../../../generalComponents/styles";
-import { MainContainer, ScreenTitle, CardContainer, HeaderIcon, PointsContainer, BoldLargeMessage, ResultDescription } from "../styles";
+import { FlexContainer, ScreenTitle, CardContainer, HeaderIcon, PointsContainer, BoldLargeMessage, ResultDescription } from "../styles";
 
 // Icons
 import { GiSwordman, GiSwordwoman } from "react-icons/gi";
@@ -23,7 +23,7 @@ export default function FinalScreen({ owners, points, restartGame }: FinalScreen
 	const winners: User[] = owners.filter((o: User) => get(points, o.id) === maxPoint);
 
 	return (
-		<MainContainer>
+		<FlexContainer>
 			<ScreenTitle>Final points</ScreenTitle>
 
 			<CardContainer>
@@ -46,6 +46,6 @@ export default function FinalScreen({ owners, points, restartGame }: FinalScreen
 			<ResultDescription>{winners.length === 1 ? "You won." : "You had the same number of points."}</ResultDescription>
 
 			<GreenButton onClick={restartGame}>Play again</GreenButton>
-		</MainContainer>
+		</FlexContainer>
 	);
 }

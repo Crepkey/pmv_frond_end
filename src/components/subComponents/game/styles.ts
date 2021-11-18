@@ -30,6 +30,13 @@ export const BoldLargeMessage = styled.div`
 	margin: 16px;
 `;
 
+export const FlexContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 40px;
+`;
+
 // GAME COMPONENT
 export const GameMainContainer = styled.div`
 	display: flex;
@@ -39,13 +46,7 @@ export const GameMainContainer = styled.div`
 	min-height: 0;
 `;
 
-export const FlexContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin: 40px;
-`;
-
+// STARTSCREEN COMPONENT
 export const AnswerContainer = styled.div`
 	display: flex;
 `;
@@ -120,11 +121,6 @@ export const BoldText = styled.span`
 `;
 
 // FINALSCREEN COMPONENT
-export const MainContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-`;
 
 export const ScreenTitle = styled.div`
 	font-size: 2rem;
