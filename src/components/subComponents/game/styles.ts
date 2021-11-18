@@ -39,12 +39,31 @@ export const GameMainContainer = styled.div`
 	min-height: 0;
 `;
 
-// ERROR SCREEN
-export const ErrorContainer = styled.div`
+export const FlexContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	margin: 40px;
+`;
+
+export const AnswerContainer = styled.div`
+	display: flex;
+`;
+
+export const Answer = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	font-size: 1.5rem;
+	font-weight: bold;
+	border: solid 1px;
+	border-radius: 8px;
+	margin: 8px;
+	:hover {
+		cursor: pointer;
+	}
 `;
 
 // PLAYINGCARD COMPONENT

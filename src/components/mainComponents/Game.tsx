@@ -1,28 +1,27 @@
 // React
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 // Styles
-import { BoldLargeMessage, ErrorContainer, GameMainContainer } from "../subComponents/game/styles";
+import { GameMainContainer } from "../subComponents/game/styles";
 
 // Interfaces
 import { GrammaticalStructure, User, Points } from "../../utils/interfaces";
 import { WordInGame } from "../subComponents/game/interfaces";
 
 // Components
+import ErrorScreen from "../subComponents/game/fullScreenComponents/ErrorScreen";
+import StartScreen from "../subComponents/game/fullScreenComponents/StartScreen";
+import FinalScreen from "../subComponents/game/fullScreenComponents/FinalScreen";
 import PlayingCard from "../subComponents/game/PlayingCard";
 import EvaluationForm from "../subComponents/game/EvaluationForm";
-import FinalScreen from "../subComponents/game/FinalScreen";
 import GrammarCard from "../subComponents/game/GrammarCard";
 
 // Utils
 import set from "lodash/set";
 import get from "lodash/get";
 
-// Icons
-import { IoSadOutline } from "react-icons/io5";
-
 export default function Game() {
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
 	const [owners, setOwners] = useState<User[]>([]);
@@ -37,16 +36,11 @@ export default function Game() {
 	const actualOwnerId = actualWord?.ownerId;
 	const actualGrammaticalStructure = grammaticalStructures[actualIndex];
 
-	useEffect(
-		() => {
-			initialize();
-		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[],
-	);
+	async function initialize(numberOfWords: number) {
+		setLoading(true);
 
-	async function initialize() {
 		const response = await fetch(`/lets-play?players=${playerIds[0]}&players=${playerIds[1]}`);
+		// TODO use number of words
 		const parsedResponse = await response.json();
 
 		setLoading(false);
@@ -73,16 +67,15 @@ export default function Game() {
 
 	/* ERROR */
 	if (error !== null) {
-		return (
-			<ErrorContainer>
-				<IoSadOutline size={44} />
-				<BoldLargeMessage>Sorry, you can't play!</BoldLargeMessage>
-				{error}
-			</ErrorContainer>
-		);
+		return <ErrorScreen error={error} />;
 	}
 
-	/* END OF GAME */
+	/* START OF THE GAME */
+	if (words.length === 0) {
+		return <StartScreen initialize={initialize} />;
+	}
+
+	/* END OF THE GAME */
 	if (actualIndex >= words.length) {
 		return (
 			<FinalScreen
@@ -90,7 +83,7 @@ export default function Game() {
 				points={points}
 				restartGame={() => {
 					setActualIndex(0);
-					initialize();
+					setWords([]);
 				}}
 			/>
 		);

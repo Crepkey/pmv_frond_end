@@ -1,12 +1,12 @@
 // Styles
-import { Card, CardHeader, CardBody, GreenButton } from "../../generalComponents/styles";
-import { MainContainer, ScreenTitle, CardContainer, HeaderIcon, PointsContainer, BoldLargeMessage, ResultDescription } from "./styles";
+import { Card, CardHeader, CardBody, GreenButton } from "../../../generalComponents/styles";
+import { MainContainer, ScreenTitle, CardContainer, HeaderIcon, PointsContainer, BoldLargeMessage, ResultDescription } from "../styles";
 
 // Icons
 import { GiSwordman, GiSwordwoman } from "react-icons/gi";
 
 // Interfaces
-import { User, Points } from "../../../utils/interfaces";
+import { User, Points } from "../../../../utils/interfaces";
 
 // Utils
 import max from "lodash/max";
