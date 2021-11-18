@@ -6,7 +6,7 @@ import { GameMainContainer } from "../subComponents/game/styles";
 
 // Interfaces
 import { GrammaticalStructure, User, Points } from "../../utils/interfaces";
-import { WordInGame } from "../subComponents/game/interfaces";
+import { WordInGame } from "sharedInterfaces";
 
 // Components
 import ErrorScreen from "../subComponents/game/fullScreenComponents/ErrorScreen";

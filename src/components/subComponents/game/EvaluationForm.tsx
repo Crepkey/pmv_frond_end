@@ -9,8 +9,7 @@ import { Card, CardHeader, CardBody, CardTitle, CardBodyScrollContainer, Block, 
 import { CheckBox, BoldText, ButtonContainer } from "./styles";
 
 // Interfaces
-import { WordInGame } from "./interfaces";
-import { GameStatistics, ServerError } from "sharedInterfaces";
+import { GameStatistics, ServerError, WordInGame } from "sharedInterfaces";
 
 // Icons
 import { BsCheckCircleFill, BsDashCircle } from "react-icons/bs";
@@ -22,7 +21,7 @@ import capitalize from "lodash/capitalize";
 import { generateID } from "src/utils/utils";
 
 // Helper functions
-import { calculateGamePoints } from "./calculateFinalResult";
+import { calculateGamePoints } from "./calculations/calculateFinalResult";
 
 interface EvaluationRowProps {
 	title: string;
