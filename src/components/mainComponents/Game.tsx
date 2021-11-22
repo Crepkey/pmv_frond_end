@@ -1,5 +1,5 @@
 // React
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Styles
 import { GameMainContainer } from "../subComponents/game/styles";
@@ -28,6 +28,9 @@ export default function Game() {
 	const [words, setWords] = useState<WordInGame[]>([]);
 	const [grammaticalStructures, setGrammaticalStructures] = useState<GrammaticalStructure[]>([]);
 
+	const [timeCounter, setTimeCounter] = useState<number>(0);
+	const [timeIntervalId, setTimeIntervalId] = useState<NodeJS.Timeout | null>(null);
+
 	const [actualIndex, setActualIndex] = useState<number>(0);
 	const [points, setPoints] = useState<Points>({});
 
@@ -35,6 +38,13 @@ export default function Game() {
 	const actualWord = words[actualIndex];
 	const actualOwnerId = actualWord?.ownerId;
 	const actualGrammaticalStructure = grammaticalStructures[actualIndex];
+
+	useEffect(() => {
+		if (timeCounter === 0) {
+			clearInterval(timeIntervalId as NodeJS.Timeout);
+			setTimeIntervalId(null);
+		}
+	}, [timeCounter]);
 
 	async function initialize(numberOfWords: number) {
 		setLoading(true);
@@ -57,6 +67,16 @@ export default function Game() {
 		const initialPoints = {};
 		owners.forEach((o: User) => set(initialPoints, [o.id], 0));
 		setPoints(initialPoints);
+
+		setTimeCounter(5);
+		countDown();
+	}
+
+	function countDown() {
+		const newIntervalId = setInterval(() => {
+			setTimeCounter((prevCount) => prevCount - 1);
+		}, 1000);
+		setTimeIntervalId(newIntervalId);
 	}
 
 	/* LOADING */
@@ -70,8 +90,14 @@ export default function Game() {
 	}
 
 	/* START OF THE GAME */
-	if (words.length === 0) {
-		return <StartScreen initialize={initialize} />;
+	if (words.length === 0 || timeCounter > 0) {
+		return (
+			<StartScreen
+				initialize={initialize}
+				timeCounter={timeCounter}
+				firstPlayer={owners?.find((o: User) => o.id === words[0]?.ownerId)?.name || ""}
+			/>
+		);
 	}
 
 	/* END OF THE GAME */
