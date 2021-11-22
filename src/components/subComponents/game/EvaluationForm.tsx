@@ -5,8 +5,8 @@ import { useContext, useState } from "react";
 import { AppContext } from "src/AppContext";
 
 // Styles
-import { Card, CardHeader, CardBody, CardTitle, CardBodyScrollContainer, Block, GreenButton } from "../../generalComponents/styles";
-import { CheckBox, BoldText, ButtonContainer } from "./styles";
+import { Card, CardHeader, CardBody, CardTitle, CardBodyScrollContainer, GreenButton } from "../../generalComponents/styles";
+import { CheckBox, BoldText, ButtonContainer, EvalRow } from "./styles";
 
 // Interfaces
 import { GameStatistics, ServerError, WordInGame } from "sharedInterfaces";
@@ -32,13 +32,11 @@ interface EvaluationRowProps {
 
 function EvaluationRow({ title, checked, toggleChecked, mainWord }: EvaluationRowProps) {
 	return (
-		<Block>
-			<div style={{ display: "flex", alignItems: "center" }}>
-				<CheckBox onClick={toggleChecked}>{checked ? <BsCheckCircleFill size={20} /> : <BsDashCircle size={20} />}</CheckBox>
-				{mainWord && <BoldText>main word:</BoldText>}
-				{title}
-			</div>
-		</Block>
+		<EvalRow onClick={toggleChecked}>
+			<CheckBox>{checked ? <BsCheckCircleFill size={20} /> : <BsDashCircle size={20} />}</CheckBox>
+			{mainWord && <BoldText>main word:</BoldText>}
+			{title}
+		</EvalRow>
 	);
 }
 

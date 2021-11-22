@@ -2,6 +2,9 @@
 import styled from "styled-components";
 import { colors } from "../../../utils/colors";
 
+// Components
+import { Block } from "src/components/generalComponents/styles";
+
 // USED IN MORE COMPONENTS
 export const HeaderIcon = styled.div`
 	border: 2px gray solid;
@@ -102,6 +105,12 @@ export const Tag = styled.div<{ background?: string }>`
 `;
 
 // EVALUATIONFORM COMPONENT
+export const EvalRow = styled(Block)`
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+`;
+
 export const ButtonContainer = styled.div`
 	margin-top: 24px;
 	display: flex;
@@ -112,7 +121,6 @@ export const CheckBox = styled.div`
 	margin-right: 16px;
 	display: flex;
 	align-items: center;
-	cursor: pointer;
 `;
 
 export const BoldText = styled.span`
