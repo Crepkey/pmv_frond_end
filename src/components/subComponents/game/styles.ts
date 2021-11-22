@@ -53,6 +53,22 @@ export const GameMainContainer = styled.div`
 	justify-content: center;
 	min-width: 0;
 	min-height: 0;
+	flex-direction: column;
+`;
+
+export const GameHeader = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+`;
+
+export const GameBody = styled.div`
+	display: flex;
+	flex: 1;
+	justify-content: center;
+	min-width: 0;
+	min-height: 0;
+	padding: 0 12px 12px 12px;
 `;
 
 // STARTSCREEN COMPONENT

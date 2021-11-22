@@ -9,7 +9,7 @@ import get from "lodash/get";
 
 // Styles
 import { Block, Card, CardBody, CardBodyScrollContainer, CardTitle, GreenButton } from "../generalComponents/styles";
-import { SubTitle, FormingSentence, UsageDescription, UsageSentence, GameMainContainer, ButtonContainer } from "../subComponents/game/styles";
+import { SubTitle, FormingSentence, UsageDescription, UsageSentence, GameBody, ButtonContainer } from "../subComponents/game/styles";
 
 export default function PracticeGrammar() {
 	const [grammaticalStructures, setGrammaticalStructures] = useState<GrammaticalStructure[]>([]);
@@ -51,7 +51,7 @@ export default function PracticeGrammar() {
 	}
 
 	return (
-		<GameMainContainer>
+		<GameBody>
 			<Card>
 				<CardBody>
 					<CardTitle>
@@ -81,6 +81,6 @@ export default function PracticeGrammar() {
 					</ButtonContainer>
 				</CardBody>
 			</Card>
-		</GameMainContainer>
+		</GameBody>
 	);
 }

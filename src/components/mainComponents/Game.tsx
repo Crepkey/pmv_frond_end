@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 // Styles
-import { GameMainContainer } from "../subComponents/game/styles";
+import { GameMainContainer, GameHeader, GameBody } from "../subComponents/game/styles";
 
 // Interfaces
 import { GrammaticalStructure, User, Points } from "../../utils/interfaces";
@@ -15,10 +15,12 @@ import FinalScreen from "../subComponents/game/fullScreenComponents/FinalScreen"
 import PlayingCard from "../subComponents/game/PlayingCard";
 import EvaluationForm from "../subComponents/game/EvaluationForm";
 import GrammarCard from "../subComponents/game/GrammarCard";
+import ProgressBar from "../generalComponents/ProgressBar";
 
 // Utils
 import set from "lodash/set";
 import get from "lodash/get";
+import round from "lodash/round";
 
 export default function Game() {
 	const [loading, setLoading] = useState(false);
@@ -120,16 +122,21 @@ export default function Game() {
 	}
 	return (
 		<GameMainContainer>
-			<GrammarCard actualStructure={actualGrammaticalStructure} />
-			<PlayingCard owner={owners?.find((o: User) => o.id === actualOwnerId)} word={actualWord} />
-			<EvaluationForm
-				key={actualIndex}
-				actualWord={actualWord}
-				getNextCard={() => setActualIndex(actualIndex + 1)}
-				userPoints={get(points, actualOwnerId, 0)}
-				setUserPoints={(newPoints: number) => setPoints({ ...points, [actualOwnerId]: newPoints })}
-				grammaticalStructureId={actualGrammaticalStructure.id}
-			/>
+			<GameHeader>
+				<ProgressBar status={round(((actualIndex + 1) / words.length) * 100, 0)} />
+			</GameHeader>
+			<GameBody>
+				<GrammarCard actualStructure={actualGrammaticalStructure} />
+				<PlayingCard owner={owners?.find((o: User) => o.id === actualOwnerId)} word={actualWord} />
+				<EvaluationForm
+					key={actualIndex}
+					actualWord={actualWord}
+					getNextCard={() => setActualIndex(actualIndex + 1)}
+					userPoints={get(points, actualOwnerId, 0)}
+					setUserPoints={(newPoints: number) => setPoints({ ...points, [actualOwnerId]: newPoints })}
+					grammaticalStructureId={actualGrammaticalStructure.id}
+				/>
+			</GameBody>
 		</GameMainContainer>
 	);
 }
