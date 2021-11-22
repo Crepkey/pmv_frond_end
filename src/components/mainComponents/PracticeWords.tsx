@@ -197,6 +197,10 @@ export default function PracticeWords() {
 		}
 	}
 
+	if (actualRiddle > dummyData.gameTypes.length - 1) {
+		return <div>The practice is over.</div>;
+	}
+
 	return (
 		<Fragment>
 			{renderGameElements(actualRiddle)}
