@@ -44,7 +44,7 @@ export default function Game() {
 			clearInterval(timeIntervalId as NodeJS.Timeout);
 			setTimeIntervalId(null);
 		}
-	}, [timeCounter]);
+	}, [timeCounter, timeIntervalId]);
 
 	async function initialize(numberOfWords: number) {
 		setLoading(true);
@@ -68,11 +68,11 @@ export default function Game() {
 		owners.forEach((o: User) => set(initialPoints, [o.id], 0));
 		setPoints(initialPoints);
 
-		setTimeCounter(5);
-		countDown();
+		// countDown(5);
 	}
 
-	function countDown() {
+	function countDown(timeOfCounting: number) {
+		setTimeCounter(timeOfCounting);
 		const newIntervalId = setInterval(() => {
 			setTimeCounter((prevCount) => prevCount - 1);
 		}, 1000);

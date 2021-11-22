@@ -40,6 +40,12 @@ export const FlexContainer = styled.div`
 	margin: 40px;
 `;
 
+export const TitleIcon = styled.div`
+	color: gray;
+	padding-left: 16px;
+	cursor: pointer;
+`;
+
 // GAME COMPONENT
 export const GameMainContainer = styled.div`
 	display: flex;
@@ -80,11 +86,6 @@ export const SpinnerBarContainer = styled.div`
 export const TitleContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
-`;
-
-export const VolumeIcon = styled.div`
-	color: gray;
-	padding-left: 16px;
 `;
 
 export const TagContainer = styled.div`

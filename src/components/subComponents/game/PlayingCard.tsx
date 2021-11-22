@@ -1,7 +1,7 @@
 // Styles
 import { colors } from "../../../utils/colors";
 import { Card, CardHeader, CardBody, CardTitle, CardBodyScrollContainer, Block } from "../../generalComponents/styles";
-import { HeaderIcon, SpinnerBarContainer, TagContainer, Tag, SentenceCard, VolumeIcon, TitleContainer } from "./styles";
+import { HeaderIcon, SpinnerBarContainer, TagContainer, Tag, SentenceCard, TitleIcon, TitleContainer } from "./styles";
 
 // Icons
 import { MdVolumeUp } from "react-icons/md";
@@ -38,9 +38,9 @@ export default function PlayingCard({ owner, word }: PlayingCardProps) {
 			<CardBody>
 				<TitleContainer>
 					<CardTitle>{word.english}</CardTitle>
-					<VolumeIcon>
+					<TitleIcon>
 						<MdVolumeUp size={32} />
-					</VolumeIcon>
+					</TitleIcon>
 				</TitleContainer>
 
 				<CardBodyScrollContainer>
