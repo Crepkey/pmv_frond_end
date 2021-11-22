@@ -30,6 +30,7 @@ const defaultValues: AppContextProps = {
 		hungarian: ["Teszt adat"],
 		exampleSentences: ["This is a dummy data. If you see this and you are not in test. You screwed up! :)"],
 		notes: "Test or you did something wrong? Which one is correct? :P",
+		definitions: [],
 		ownerId: 1,
 		memoryLevel: 100,
 	},

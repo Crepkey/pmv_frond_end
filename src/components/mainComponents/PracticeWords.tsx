@@ -66,7 +66,7 @@ const NextButton = styled.button`
 	}
 `;
 
-type GameTypes = "multiple choice game" | "type the answer game" | "recognize it by the rule game";
+type GameTypes = "multiple choice game" | "type the answer game" | "recognize it by the definition game";
 interface DummyData {
 	words: Word[];
 	gameTypes: GameTypes[]; // These describe the game types for every rounds
@@ -88,6 +88,7 @@ const dummyData: DummyData = {
 			memoryLevel: 6,
 			favourite: false,
 			notes: "Petra is unwed",
+			definitions: ["Not married"],
 			deletionDate: null,
 		},
 		{
@@ -103,6 +104,10 @@ const dummyData: DummyData = {
 			memoryLevel: 6,
 			favourite: false,
 			notes: "Petra is unwed",
+			definitions: [
+				"Refusing to be persuaded or to change one's mind.",
+				"A legendary rock or mineral to which many, often contradictory, properties were attributed, formerly associated with diamond or lodestone.",
+			],
 			deletionDate: null,
 		},
 		{
@@ -118,18 +123,20 @@ const dummyData: DummyData = {
 			memoryLevel: 6,
 			favourite: false,
 			notes: "Petra is unwed",
+			definitions: ["Having or showing skill."],
 			deletionDate: null,
 		},
 	],
-	gameTypes: ["multiple choice game", "type the answer game", "recognize it by the rule game"],
+	gameTypes: ["multiple choice game", "type the answer game", "recognize it by the definition game"],
 	wrongAnswers: ["barna", "macska", "erkély", "szombat", "alma", "dörzsölődés", "éhezés", "mosoly", "óratorony"],
 };
 
 export default function PracticeWords() {
 	const [actualRiddle, setActualRiddle] = useState<number>(0);
+	const [typedAnswer, setTypedAnswer] = useState<string>();
 
 	function generateRandomAnswers(correctWord: Word) {
-		const correctAnswerPosition: number = random(3); /* FIXME: HARD CODED!!! It will be dynamically changed*/
+		const correctAnswerPosition: number = random(3);
 		const answers: string[] = [];
 
 		while (answers.length !== 4) {
@@ -151,7 +158,7 @@ export default function PracticeWords() {
 			case "multiple choice game":
 				const answers: string[] = generateRandomAnswers(currentWord);
 				return (
-					<Fragment key={currentWord.id}>
+					<Fragment>
 						<Question>{`What is the correct translation of the word: ${currentWord.english}?`}</Question>
 						<WordChooserContainer>
 							{answers.map((answer: string) => (
@@ -161,9 +168,32 @@ export default function PracticeWords() {
 					</Fragment>
 				);
 			case "type the answer game":
-				break;
-			case "recognize it by the rule game":
-				break;
+				return (
+					<Fragment>
+						<Question>{`Type one of the correct translations of this word: ${currentWord.english}?`}</Question>
+						<input
+							placeholder="Type your answer here"
+							value={typedAnswer}
+							onChange={(event) => {
+								setTypedAnswer(event.target.value);
+							}}></input>
+					</Fragment>
+				);
+
+			case "recognize it by the definition game":
+				const possibleAnswers: string[] = generateRandomAnswers(currentWord);
+				return (
+					<Fragment>
+						<Question>{`Choose the word which belongs to this defininition: ${
+							currentWord.definitions[random(currentWord.definitions.length - 1)]
+						}?`}</Question>
+						<WordChooserContainer>
+							{possibleAnswers.map((answer: string) => (
+								<WordCard key={answer}>{answer}</WordCard>
+							))}
+						</WordChooserContainer>
+					</Fragment>
+				);
 		}
 	}
 

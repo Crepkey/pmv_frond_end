@@ -16,6 +16,7 @@ export const emptyWord: WordWithScores = {
 	finalScore: 0,
 	favourite: false,
 	notes: null,
+	definitions: [],
 	deletionDate: null,
 	statistics: {
 		english: 0,
