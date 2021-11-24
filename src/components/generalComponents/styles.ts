@@ -40,7 +40,8 @@ export const CardTitle = styled.div`
 	font-size: 2rem;
 	margin-bottom: 24px;
 	font-weight: 550;
-	width: 100%;
+	width: 90%;
+	overflow: hidden;
 `;
 
 export const CardBodyScrollContainer = styled.div`
