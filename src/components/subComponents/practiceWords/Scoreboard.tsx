@@ -42,6 +42,24 @@ const TableBlock = styled.div`
 	border-radius: 24px;
 `;
 
+const TableHeader = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	min-height: 2rem;
+	font-weight: 550;
+	padding: 3px 12px 3px 12px;
+	border-radius: 16px 16px 0 0;
+	border: 1px ${colors.border} solid;
+	background-image: linear-gradient(to top, ${colors.headerGradientDarker}, ${colors.headerGradientDark}, ${colors.headerGradientLight});
+`;
+
+const TableHeaderElement = styled.div<{ size: number }>`
+	display: flex;
+	flex: ${({ size }) => size};
+	align-items: center;
+`;
+
 const WordContainer = styled.div`
 	display: flex;
 	flex: 10;
@@ -49,8 +67,10 @@ const WordContainer = styled.div`
 	overflow: scroll;
 	min-width: 0;
 	min-height: 0;
-	border: 1px solid ${colors.border};
-	border-radius: 16px;
+	border-left: 1px solid ${colors.border};
+	border-right: 1px solid ${colors.border};
+	border-bottom: 1px solid ${colors.border};
+	border-radius: 0 0 16px 16px;
 	background: ${colors.background};
 `;
 
@@ -113,6 +133,12 @@ export default function Scoreboard() {
 			<Title>THE RESULT OF YOUR PRACTICE</Title>
 			<TableContainer>
 				<TableBlock>
+					<TableHeader>
+						<TableHeaderElement size={1}>Question</TableHeaderElement>
+						<TableHeaderElement size={1}>Your answer</TableHeaderElement>
+						<TableHeaderElement size={1}>Possible Answers</TableHeaderElement>
+						<TableHeaderElement size={1}>Result</TableHeaderElement>
+					</TableHeader>
 					<WordContainer>
 						{dummyData.map((word: Word, index: number) => (
 							<ScoreboardRow word={word} rowNumber={index} />
