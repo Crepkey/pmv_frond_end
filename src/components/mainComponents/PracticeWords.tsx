@@ -145,9 +145,10 @@ export default function PracticeWords() {
 	const [actualRiddle, setActualRiddle] = useState<number>(0);
 	const [answer, setAnswer] = useState<string>("");
 	const [evaluatedAnswers, setEvaluatedAsnwers] = useState<EvaluatedAnswer[]>([]);
+	const [wrongAnswers, setWrongAnswers] = useState<string[]>(generateRandomAnswers());
 	const questionText: string = createQuestion();
 
-	function generateRandomAnswers(correctWord: Word) {
+	function generateRandomAnswers() {
 		const correctAnswerPosition: number = random(3);
 		const answers: string[] = [];
 
@@ -158,7 +159,7 @@ export default function PracticeWords() {
 			answers.push(randomWrongWord);
 		}
 
-		answers[correctAnswerPosition] = correctWord.hungarian[random(correctWord.hungarian.length - 1)];
+		answers[correctAnswerPosition] = dummyData.words[actualRiddle]?.hungarian[random(dummyData.words[actualRiddle].hungarian.length - 1)];
 		return answers;
 	}
 
@@ -196,16 +197,14 @@ export default function PracticeWords() {
 
 	function renderGameElements() {
 		const currentGameType: GameTypes = dummyData.gameTypes[actualRiddle];
-		const currentWord: Word = dummyData.words[actualRiddle];
 
 		switch (currentGameType) {
 			case "multiple choice game":
-				const possibleChoices: string[] = generateRandomAnswers(currentWord);
 				return (
 					<Fragment>
 						<Question>{questionText}</Question>
 						<WordChooserContainer>
-							{possibleChoices.map((answer: string) => (
+							{wrongAnswers.map((answer: string) => (
 								<WordCard
 									key={answer}
 									onClick={() => {
@@ -231,12 +230,11 @@ export default function PracticeWords() {
 				);
 
 			case "recognize it by the definition game":
-				const possibleDefinitions: string[] = generateRandomAnswers(currentWord);
 				return (
 					<Fragment>
 						<Question>{questionText}</Question>
 						<WordChooserContainer>
-							{possibleDefinitions.map((answer: string) => (
+							{wrongAnswers.map((answer: string) => (
 								<WordCard
 									key={answer}
 									onClick={() => {
@@ -261,6 +259,7 @@ export default function PracticeWords() {
 			<NextButton
 				onClick={() => {
 					evaluateAnswer();
+					if (dummyData.gameTypes[actualRiddle + 1] !== "type the answer game") setWrongAnswers(generateRandomAnswers());
 					setActualRiddle((prevRiddle) => prevRiddle + 1);
 				}}>
 				Next question
