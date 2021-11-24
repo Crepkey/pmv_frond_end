@@ -12,9 +12,12 @@ import styled from "styled-components";
 const WordChooserContainer = styled.div`
 	display: flex;
 	flex: 1;
+	justify-content: center;
+	flex-wrap: wrap;
 	min-height: 0;
 	min-width: 0;
 	padding: 12px;
+	overflow: scroll;
 `;
 
 const Question = styled.div`
@@ -26,11 +29,11 @@ const Question = styled.div`
 /* TODO: Better margin handling for WordCard and WordChooserContainer */
 const WordCard = styled.div`
 	display: flex;
-	flex: 1;
 	align-items: center;
 	justify-content: center;
-	min-width: 0;
-	min-height: 0;
+	flex: 1;
+	min-height: 25%;
+	min-width: 40%;
 	padding: 32px;
 	margin: 12px;
 	font-size: 1.5rem;
