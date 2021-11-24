@@ -19,7 +19,7 @@ export default function PracticeGrammar() {
 	const actualStructure = grammaticalStructures[actualIndex];
 
 	async function initialize(practiceType: string) {
-		const response = await fetch("/practice/grammatical-structures");
+		const response = await fetch(`/practice/grammatical-structures?type=${practiceType}`);
 		const parsedResponse = await response.json();
 
 		setGrammaticalStructures(get(parsedResponse, "grammaticalStructures", []));
