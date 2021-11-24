@@ -1,25 +1,8 @@
-import { useState, useEffect, useContext } from "react";
-import { Route, Link } from "react-router-dom";
-
-/* Context */
-import { AppContext } from "../../../AppContext";
-
-/* Interfaces */
-import { WordOperationType } from "../../../utils/interfaces";
-import { Word, ServerError } from "sharedInterfaces";
-
-/* Icons */
-import { BsFilter, BsChevronLeft, BsChevronRight, BsChevronDoubleLeft, BsChevronDoubleRight } from "react-icons/bs";
-
 /* Styles */
 import { colors } from "../../../utils/colors";
 import styled from "styled-components";
 
 /* Components */
-import Words from "../../subComponents/myWords/Words";
-import Modal from "../../generalComponents/Modal";
-import EditWord from "../../subComponents/myWords/EditWord";
-import { generateID } from "src/utils/utils";
 
 const MainContainer = styled.div`
 	display: flex;
