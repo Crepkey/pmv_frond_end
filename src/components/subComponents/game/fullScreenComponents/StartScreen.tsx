@@ -5,7 +5,7 @@ import range from "lodash/range";
 import { IoDiceOutline, IoAccessibility } from "react-icons/io5";
 
 // Styles
-import { FlexContainer, BoldLargeMessage, AnswerContainer, Answer } from "../styles";
+import { FlexContainer, BoldLargeMessage, AnswerContainer, Answer, LargerMessage } from "../styles";
 
 interface StartScreenProps {
 	initialize: (numberOfWords: number) => void;
@@ -18,7 +18,7 @@ export default function StartScreen({ initialize, timeCounter, firstPlayer }: St
 			<FlexContainer>
 				<IoAccessibility size={44} />
 				<BoldLargeMessage>The game starts with {firstPlayer}'s word</BoldLargeMessage>
-				<div>{timeCounter}</div>
+				<LargerMessage>in {timeCounter} seconds</LargerMessage>
 			</FlexContainer>
 		);
 	}
