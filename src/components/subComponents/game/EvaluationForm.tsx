@@ -104,7 +104,7 @@ export default function EvaluationForm({ actualWord, grammaticalStructureId, get
 					<CardTitle>
 						{capitalize(actualWord.type)} to ask: {wordToAsk}
 					</CardTitle>
-					<Timer />
+					<Timer timeOfCounting={30} iconButtonNeeded={true} />
 				</TitleContainer>
 
 				<CardBodyScrollContainer>

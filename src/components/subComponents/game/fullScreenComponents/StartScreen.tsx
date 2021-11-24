@@ -7,18 +7,23 @@ import { IoDiceOutline, IoAccessibility } from "react-icons/io5";
 // Styles
 import { FlexContainer, BoldLargeMessage, AnswerContainer, Answer, LargerMessage } from "../styles";
 
+// Components
+import Timer from "src/components/generalComponents/Timer";
+
 interface StartScreenProps {
 	initialize: (numberOfWords: number) => void;
-	timeCounter: number;
 	firstPlayer: string;
+	countDownOn: Boolean;
 }
-export default function StartScreen({ initialize, timeCounter, firstPlayer }: StartScreenProps) {
-	if (timeCounter > 0) {
+export default function StartScreen({ initialize, firstPlayer, countDownOn }: StartScreenProps) {
+	if (countDownOn) {
 		return (
 			<FlexContainer>
 				<IoAccessibility size={44} />
 				<BoldLargeMessage>The game starts with {firstPlayer}'s word</BoldLargeMessage>
-				<LargerMessage>in {timeCounter} seconds</LargerMessage>
+				<LargerMessage>
+					in <Timer timeOfCounting={5} /> seconds
+				</LargerMessage>
 			</FlexContainer>
 		);
 	}

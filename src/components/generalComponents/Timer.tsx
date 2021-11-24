@@ -7,9 +7,22 @@ import { IoTimerOutline } from "react-icons/io5";
 // Styles
 import { Icon } from "./styles";
 
-export default function Timer() {
-	const [timeCounter, setTimeCounter] = useState<number>(0);
+interface TimerProps {
+	timeOfCounting: number;
+	iconButtonNeeded?: boolean;
+}
+
+export default function Timer({ timeOfCounting, iconButtonNeeded }: TimerProps) {
+	const [timeCounter, setTimeCounter] = useState<number>(-1);
 	const [timeIntervalId, setTimeIntervalId] = useState<NodeJS.Timeout | null>(null);
+
+	useEffect(() => {
+		setTimeCounter(timeOfCounting);
+		if (iconButtonNeeded !== true) {
+			countDown(timeOfCounting);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [timeOfCounting, iconButtonNeeded]);
 
 	useEffect(() => {
 		if (timeCounter === 0) {
@@ -31,10 +44,14 @@ export default function Timer() {
 		setTimeIntervalId(newIntervalId);
 	}
 
-	return (
-		<Icon onClick={() => countDown(30)}>
-			<IoTimerOutline size={32} />
-			<div>{timeCounter}</div>
-		</Icon>
-	);
+	if (iconButtonNeeded) {
+		return (
+			<Icon onClick={() => countDown(timeOfCounting)}>
+				<IoTimerOutline size={32} />
+				<div>{timeCounter}</div>
+			</Icon>
+		);
+	}
+
+	return <div>{timeCounter}</div>;
 }

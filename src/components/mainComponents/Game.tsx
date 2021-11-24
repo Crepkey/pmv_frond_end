@@ -1,5 +1,5 @@
 // React
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 // Styles
 import { GameMainContainer, GameHeader, GameBody } from "../subComponents/game/styles";
@@ -30,8 +30,7 @@ export default function Game() {
 	const [words, setWords] = useState<WordInGame[]>([]);
 	const [grammaticalStructures, setGrammaticalStructures] = useState<GrammaticalStructure[]>([]);
 
-	const [timeCounter, setTimeCounter] = useState<number>(0);
-	const [timeIntervalId, setTimeIntervalId] = useState<NodeJS.Timeout | null>(null);
+	const [countDownOn, setCountDownOn] = useState<boolean>(false);
 
 	const [actualIndex, setActualIndex] = useState<number>(0);
 	const [points, setPoints] = useState<Points>({});
@@ -40,13 +39,6 @@ export default function Game() {
 	const actualWord = words[actualIndex];
 	const actualOwnerId = actualWord?.ownerId;
 	const actualGrammaticalStructure = grammaticalStructures[actualIndex];
-
-	useEffect(() => {
-		if (timeCounter === 0) {
-			clearInterval(timeIntervalId as NodeJS.Timeout);
-			setTimeIntervalId(null);
-		}
-	}, [timeCounter, timeIntervalId]);
 
 	async function initialize(numberOfWords: number) {
 		setLoading(true);
@@ -70,15 +62,8 @@ export default function Game() {
 		owners.forEach((o: User) => set(initialPoints, [o.id], 0));
 		setPoints(initialPoints);
 
-		// countDown(5);
-	}
-
-	function countDown(timeOfCounting: number) {
-		setTimeCounter(timeOfCounting);
-		const newIntervalId = setInterval(() => {
-			setTimeCounter((prevCount) => prevCount - 1);
-		}, 1000);
-		setTimeIntervalId(newIntervalId);
+		setCountDownOn(true);
+		setTimeout(() => setCountDownOn(false), 5000);
 	}
 
 	/* LOADING */
@@ -92,12 +77,12 @@ export default function Game() {
 	}
 
 	/* START OF THE GAME */
-	if (words.length === 0 || timeCounter > 0) {
+	if (words.length === 0 || countDownOn) {
 		return (
 			<StartScreen
 				initialize={initialize}
-				timeCounter={timeCounter}
 				firstPlayer={owners?.find((o: User) => o.id === words[0]?.ownerId)?.name || ""}
+				countDownOn={countDownOn}
 			/>
 		);
 	}

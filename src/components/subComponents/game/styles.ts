@@ -93,6 +93,7 @@ export const Answer = styled.div`
 `;
 export const LargerMessage = styled.div`
 	font-size: 1.1rem;
+	display: flex;
 `;
 
 // PLAYINGCARD COMPONENT
