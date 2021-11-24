@@ -71,14 +71,12 @@ const NextButton = styled.button`
 
 type GameTypes = "multiple choice game" | "type the answer game" | "recognize it by the definition game";
 
-interface Answer {
+interface EvaluatedAnswer {
 	question: string;
 	answer: string;
 	success: boolean;
 }
-interface EvaluatedAnswers {
-	[question: number]: Answer;
-}
+
 interface DummyData {
 	words: Word[];
 	gameTypes: GameTypes[]; // These describe the game types for every rounds
@@ -145,7 +143,10 @@ const dummyData: DummyData = {
 
 export default function PracticeWords() {
 	const [actualRiddle, setActualRiddle] = useState<number>(0);
-	const [answer, setAnswer] = useState<string>();
+	const [answer, setAnswer] = useState<string>("");
+	const [evaluatedAnswers, setEvaluatedAsnwers] = useState<EvaluatedAnswer[]>([]);
+
+	console.log(evaluatedAnswers);
 
 	function generateRandomAnswers(correctWord: Word) {
 		const correctAnswerPosition: number = random(3);
@@ -162,6 +163,28 @@ export default function PracticeWords() {
 		return answers;
 	}
 
+	function evaluateAnswer() {
+		const rightAnswers: string[] = dummyData.words[actualRiddle].hungarian;
+		const currentAnswers: EvaluatedAnswer[] = [...evaluatedAnswers];
+
+		if (rightAnswers.includes(answer)) {
+			currentAnswers.push({
+				question: dummyData.words[actualRiddle].english,
+				answer,
+				success: true,
+			});
+		} else {
+			currentAnswers.push({
+				question: dummyData.words[actualRiddle].english,
+				answer,
+				success: false,
+			});
+		}
+
+		setAnswer("");
+		setEvaluatedAsnwers(currentAnswers);
+	}
+
 	function renderGameElements() {
 		const currentGameType: GameTypes = dummyData.gameTypes[actualRiddle];
 		const currentWord: Word = dummyData.words[actualRiddle];
@@ -174,7 +197,13 @@ export default function PracticeWords() {
 						<Question>{`What is the correct translation of the word: ${currentWord.english}?`}</Question>
 						<WordChooserContainer>
 							{answers.map((answer: string) => (
-								<WordCard key={answer}>{answer}</WordCard>
+								<WordCard
+									key={answer}
+									onClick={() => {
+										setAnswer(answer);
+									}}>
+									{answer}
+								</WordCard>
 							))}
 						</WordChooserContainer>
 					</Fragment>
@@ -201,7 +230,13 @@ export default function PracticeWords() {
 						}?`}</Question>
 						<WordChooserContainer>
 							{possibleAnswers.map((answer: string) => (
-								<WordCard key={answer}>{answer}</WordCard>
+								<WordCard
+									key={answer}
+									onClick={() => {
+										setAnswer(answer);
+									}}>
+									{answer}
+								</WordCard>
 							))}
 						</WordChooserContainer>
 					</Fragment>
@@ -216,7 +251,13 @@ export default function PracticeWords() {
 	return (
 		<Fragment>
 			{renderGameElements()}
-			<NextButton onClick={() => setActualRiddle((prevRiddle) => prevRiddle + 1)}>Next question</NextButton>
+			<NextButton
+				onClick={() => {
+					evaluateAnswer();
+					setActualRiddle((prevRiddle) => prevRiddle + 1);
+				}}>
+				Next question
+			</NextButton>
 		</Fragment>
 	);
 }
