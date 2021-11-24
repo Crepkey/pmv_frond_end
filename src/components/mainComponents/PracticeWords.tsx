@@ -145,8 +145,7 @@ export default function PracticeWords() {
 	const [actualRiddle, setActualRiddle] = useState<number>(0);
 	const [answer, setAnswer] = useState<string>("");
 	const [evaluatedAnswers, setEvaluatedAsnwers] = useState<EvaluatedAnswer[]>([]);
-	const question: string = createQuestion();
-	const possibleAnswers: string[] = dummyData.words[actualRiddle].hungarian;
+	const questionText: string = createQuestion();
 
 	function generateRandomAnswers(correctWord: Word) {
 		const correctAnswerPosition: number = random(3);
@@ -184,7 +183,13 @@ export default function PracticeWords() {
 	function evaluateAnswer() {
 		const rightAnswers: string[] = dummyData.words[actualRiddle].hungarian;
 		const currentAnswers: EvaluatedAnswer[] = [...evaluatedAnswers];
-		currentAnswers.push({ question, answer, possibleAnswers, result: rightAnswers.includes(answer) ? true : false });
+		currentAnswers.push({
+			id: actualRiddle,
+			question: questionText,
+			answer,
+			possibleAnswers: dummyData.words[actualRiddle].hungarian,
+			result: rightAnswers.includes(answer) ? true : false,
+		});
 		setAnswer("");
 		setEvaluatedAsnwers(currentAnswers);
 	}
@@ -198,7 +203,7 @@ export default function PracticeWords() {
 				const possibleChoices: string[] = generateRandomAnswers(currentWord);
 				return (
 					<Fragment>
-						<Question>{question}</Question>
+						<Question>{questionText}</Question>
 						<WordChooserContainer>
 							{possibleChoices.map((answer: string) => (
 								<WordCard
@@ -215,7 +220,7 @@ export default function PracticeWords() {
 			case "type the answer game":
 				return (
 					<Fragment>
-						<Question>{question}</Question>
+						<Question>{questionText}</Question>
 						<input
 							placeholder="Type your answer here"
 							value={answer}
@@ -229,7 +234,7 @@ export default function PracticeWords() {
 				const possibleDefinitions: string[] = generateRandomAnswers(currentWord);
 				return (
 					<Fragment>
-						<Question>{question}</Question>
+						<Question>{questionText}</Question>
 						<WordChooserContainer>
 							{possibleDefinitions.map((answer: string) => (
 								<WordCard
@@ -247,7 +252,7 @@ export default function PracticeWords() {
 	}
 
 	if (actualRiddle > dummyData.gameTypes.length - 1) {
-		return <Scoreboard />;
+		return <Scoreboard evaluatedAnswers={evaluatedAnswers} />;
 	}
 
 	return (

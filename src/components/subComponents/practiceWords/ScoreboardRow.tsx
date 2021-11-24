@@ -1,15 +1,15 @@
+/* Utils */
+import { calculateRowBackground } from "../../../utils/utils";
+
 /* Interfaces */
-import { ColorCodeType, WordOperationType } from "../../../utils/interfaces";
-import { Word } from "sharedInterfaces";
+import { ColorCodeType } from "../../../utils/interfaces";
+import { EvaluatedAnswer } from "./interfaces";
 
 /* Styles */
 import styled from "styled-components";
 import { colors } from "../../../utils/colors";
 import { FcCancel } from "react-icons/fc";
 import { IoIosInformationCircleOutline } from "react-icons/io";
-
-/* Utils */
-import { calculateRowBackground } from "../../../utils/utils";
 
 const WordRow = styled.div<{ background: string }>`
 	display: flex;
@@ -52,18 +52,18 @@ const Result = styled.div`
 	font-weight: 350;
 `;
 
-interface ActiveWordRowProps {
-	word: Word;
+interface ScoreboardRowProps {
+	evaluatedAnswer: EvaluatedAnswer;
 	rowNumber: number;
 }
 
-export default function ScoreboardRow({ word, rowNumber }: ActiveWordRowProps) {
+export default function ScoreboardRow({ evaluatedAnswer, rowNumber }: ScoreboardRowProps) {
 	const background: ColorCodeType = calculateRowBackground(rowNumber);
 	return (
-		<WordRow key={word.id} background={background}>
-			<AskedWord>{word.english}</AskedWord>
+		<WordRow key={evaluatedAnswer.id} background={background}>
+			<AskedWord>{evaluatedAnswer.question}</AskedWord>
 			<YourAnswer>Fake Answer</YourAnswer>
-			<PossibleAnswers>{word.hungarian.map((hunWord: string) => `${hunWord} `)}</PossibleAnswers>
+			<PossibleAnswers>{evaluatedAnswer.possibleAnswers.map((hunWord: string) => `${hunWord} ,`)}</PossibleAnswers>
 			<AnswerResult>
 				<FcCancel size={24} color="red" />
 				<Result>Fail</Result>
