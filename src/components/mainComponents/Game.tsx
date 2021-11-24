@@ -70,7 +70,7 @@ export default function Game() {
 		owners.forEach((o: User) => set(initialPoints, [o.id], 0));
 		setPoints(initialPoints);
 
-		countDown(5);
+		// countDown(5);
 	}
 
 	function countDown(timeOfCounting: number) {

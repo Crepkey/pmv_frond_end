@@ -127,8 +127,8 @@ export default function EvaluationForm({ actualWord, grammaticalStructureId, get
 					</CardTitle>
 					<TitleIcon onClick={() => countDown(30)}>
 						<IoTimerOutline size={32} />
+						<div>{timeCounter}</div>
 					</TitleIcon>
-					<div>{timeCounter}</div>
 				</TitleContainer>
 
 				<CardBodyScrollContainer>

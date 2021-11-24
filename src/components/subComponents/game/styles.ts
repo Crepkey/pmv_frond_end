@@ -41,9 +41,12 @@ export const FlexContainer = styled.div`
 `;
 
 export const TitleIcon = styled.div`
+	display: flex;
+	flex-direction: column;
 	color: gray;
 	padding-left: 16px;
 	cursor: pointer;
+	align-items: center;
 `;
 
 // GAME COMPONENT
@@ -149,7 +152,6 @@ export const BoldText = styled.span`
 `;
 
 // FINALSCREEN COMPONENT
-
 export const ScreenTitle = styled.div`
 	font-size: 2rem;
 	margin: 24px 0 16px 0;
