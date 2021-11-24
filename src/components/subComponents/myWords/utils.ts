@@ -1,10 +1,3 @@
-import { colors } from "../../../utils/colors";
-
-export function calculateRowBackground(index: number) {
-	if (index % 2 === 0) return colors.rowBackgroundLight;
-	return colors.rowBackgroundDark;
-}
-
 export function convertMemoryLevelToText(memoryLevel: number) {
 	if (memoryLevel === 0) return "Unused word";
 	if (memoryLevel >= 1 && memoryLevel <= 25) return "New word";

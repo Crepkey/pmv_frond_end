@@ -1,4 +1,10 @@
 import { WordWithScores } from "sharedInterfaces";
+import { colors } from "./colors";
+
+export function calculateRowBackground(index: number) {
+	if (index % 2 === 0) return colors.rowBackgroundLight;
+	return colors.rowBackgroundDark;
+}
 
 export function generateID() {
 	return Date.now() + Math.random();

@@ -11,7 +11,8 @@ import SpinnerBar from "../../generalComponents/SpinnerBar";
 import DeletedWordIcons from "./DeletedWordIcons";
 
 /* Utils */
-import { calculateRowBackground, convertMemoryLevelToText } from "./utils";
+import { convertMemoryLevelToText } from "./utils";
+import { calculateRowBackground } from "src/utils/utils";
 import dayjs, { Dayjs } from "dayjs";
 
 const WordRow = styled.div<{ background: string }>`
