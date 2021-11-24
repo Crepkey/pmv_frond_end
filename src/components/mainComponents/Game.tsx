@@ -63,7 +63,7 @@ export default function Game() {
 		setPoints(initialPoints);
 
 		setCountDownOn(true);
-		setTimeout(() => setCountDownOn(false), 5000);
+		setTimeout(() => setCountDownOn(false), 5002);
 	}
 
 	/* LOADING */

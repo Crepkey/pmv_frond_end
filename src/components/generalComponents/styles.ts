@@ -118,3 +118,7 @@ export const Icon = styled.div`
 	cursor: pointer;
 	align-items: center;
 `;
+
+export const TimeLeft = styled.div`
+	margin: 0 4px;
+`;

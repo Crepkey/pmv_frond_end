@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { IoTimerOutline } from "react-icons/io5";
 
 // Styles
-import { Icon } from "./styles";
+import { Icon, TimeLeft } from "./styles";
 
 interface TimerProps {
 	timeOfCounting: number;
@@ -48,10 +48,10 @@ export default function Timer({ timeOfCounting, iconButtonNeeded }: TimerProps) 
 		return (
 			<Icon onClick={() => countDown(timeOfCounting)}>
 				<IoTimerOutline size={32} />
-				<div>{timeCounter}</div>
+				<TimeLeft>{timeCounter}</TimeLeft>
 			</Icon>
 		);
 	}
 
-	return <div>{timeCounter}</div>;
+	return <TimeLeft>{timeCounter}</TimeLeft>;
 }
