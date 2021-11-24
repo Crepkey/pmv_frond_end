@@ -108,3 +108,13 @@ export const ProgressTitle = styled.div`
 	font-size: 0.75rem;
 	margin: 0 8px;
 `;
+
+// TIMER
+export const Icon = styled.div`
+	display: flex;
+	flex-direction: column;
+	color: gray;
+	padding-left: 16px;
+	cursor: pointer;
+	align-items: center;
+`;

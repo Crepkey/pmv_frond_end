@@ -41,12 +41,9 @@ export const FlexContainer = styled.div`
 `;
 
 export const TitleIcon = styled.div`
-	display: flex;
-	flex-direction: column;
 	color: gray;
 	padding-left: 16px;
 	cursor: pointer;
-	align-items: center;
 `;
 
 // GAME COMPONENT

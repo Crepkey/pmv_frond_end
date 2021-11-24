@@ -1,19 +1,18 @@
-//React
-import { useContext, useEffect, useState } from "react";
+// React
+import { useContext, useState } from "react";
 
 // Context
 import { AppContext } from "src/AppContext";
 
 // Styles
 import { Card, CardHeader, CardBody, CardTitle, CardBodyScrollContainer, GreenButton } from "../../generalComponents/styles";
-import { CheckBox, BoldText, ButtonContainer, EvalRow, TitleContainer, TitleIcon } from "./styles";
+import { CheckBox, BoldText, ButtonContainer, EvalRow, TitleContainer } from "./styles";
 
 // Interfaces
 import { GameStatistics, ServerError, WordInGame } from "sharedInterfaces";
 
 // Icons
 import { BsCheckCircleFill, BsDashCircle } from "react-icons/bs";
-import { IoTimerOutline } from "react-icons/io5";
 
 // Utils
 import get from "lodash/get";
@@ -23,6 +22,9 @@ import { generateID } from "src/utils/utils";
 
 // Helper functions
 import { calculateGamePoints } from "./calculations/calculateFinalResult";
+
+// Components
+import Timer from "src/components/generalComponents/Timer";
 
 interface EvaluationRowProps {
 	title: string;
@@ -55,32 +57,9 @@ export default function EvaluationForm({ actualWord, grammaticalStructureId, get
 	const [gameStatistics, setGameStatistics] = useState<GameStatistics>(emptyStatistics);
 	const [correctGrammar, setCorrectGrammar] = useState<boolean>(false);
 
-	const [timeCounter, setTimeCounter] = useState<number>(0);
-	const [timeIntervalId, setTimeIntervalId] = useState<NodeJS.Timeout | null>(null);
-
 	const { createToast } = useContext(AppContext);
 
 	const { wordToAsk, wordToAnswer } = actualWord;
-
-	useEffect(() => {
-		if (timeCounter === 0) {
-			clearInterval(timeIntervalId as NodeJS.Timeout);
-			setTimeIntervalId(null);
-		}
-	}, [timeCounter, timeIntervalId]);
-
-	function countDown(timeOfCounting: number) {
-		if (timeIntervalId !== null) {
-			clearInterval(timeIntervalId as NodeJS.Timeout);
-			setTimeIntervalId(null);
-			return;
-		}
-		setTimeCounter(timeOfCounting);
-		const newIntervalId = setInterval(() => {
-			setTimeCounter((prevCount) => prevCount - 1);
-		}, 1000);
-		setTimeIntervalId(newIntervalId);
-	}
 
 	async function save() {
 		// save updated word and grammatical knowledge on backend
@@ -125,10 +104,7 @@ export default function EvaluationForm({ actualWord, grammaticalStructureId, get
 					<CardTitle>
 						{capitalize(actualWord.type)} to ask: {wordToAsk}
 					</CardTitle>
-					<TitleIcon onClick={() => countDown(30)}>
-						<IoTimerOutline size={32} />
-						<div>{timeCounter}</div>
-					</TitleIcon>
+					<Timer />
 				</TitleContainer>
 
 				<CardBodyScrollContainer>
