@@ -2,14 +2,14 @@
 import { useEffect, useState } from "react";
 
 // Interfaces
-import { GrammaticalStructure, Usage } from "../../utils/interfaces";
+import { GrammaticalStructure } from "../../utils/interfaces";
 
 // Utils
 import get from "lodash/get";
 
-// Styles
-import { Block, Card, CardBody, CardBodyScrollContainer, CardTitle, GreenButton } from "../generalComponents/styles";
-import { SubTitle, FormingSentence, UsageDescription, UsageSentence, GameBody, ButtonContainer } from "../subComponents/game/styles";
+// Components
+import PracticeGrammarCard from "../subComponents/practiceGrammar/PracticeGrammarCard";
+import FinalScreen from "../subComponents/practiceGrammar/fullScreenComponents/FinalScreen";
 
 export default function PracticeGrammar() {
 	const [grammaticalStructures, setGrammaticalStructures] = useState<GrammaticalStructure[]>([]);
@@ -34,15 +34,12 @@ export default function PracticeGrammar() {
 
 	if (actualIndex >= grammaticalStructures.length) {
 		return (
-			<ButtonContainer>
-				<GreenButton
-					onClick={() => {
-						setActualIndex(0);
-						initialize();
-					}}>
-					Play again
-				</GreenButton>
-			</ButtonContainer>
+			<FinalScreen
+				restartGame={() => {
+					setActualIndex(0);
+					initialize();
+				}}
+			/>
 		);
 	}
 
@@ -50,37 +47,5 @@ export default function PracticeGrammar() {
 		return null;
 	}
 
-	return (
-		<GameBody>
-			<Card>
-				<CardBody>
-					<CardTitle>
-						{actualStructure.title}
-						<SubTitle>{actualStructure.subtitle}</SubTitle>
-					</CardTitle>
-
-					<CardBodyScrollContainer>
-						<FormingSentence>{actualStructure.forming}</FormingSentence>
-
-						<Block>
-							{actualStructure.realLifeUsages.map((usage: Usage, i: number) => (
-								<div key={i}>
-									<UsageDescription firstElement={i === 0}>
-										{i + 1}) {usage.description}
-									</UsageDescription>
-									<UsageSentence>{usage.example}</UsageSentence>
-								</div>
-							))}
-						</Block>
-
-						{actualStructure.notes && <Block>Note: {actualStructure.notes}</Block>}
-					</CardBodyScrollContainer>
-
-					<ButtonContainer>
-						<GreenButton onClick={() => setActualIndex(actualIndex + 1)}>Show next structure</GreenButton>
-					</ButtonContainer>
-				</CardBody>
-			</Card>
-		</GameBody>
-	);
+	return <PracticeGrammarCard actualStructure={actualStructure} showNextCard={() => setActualIndex(actualIndex + 1)} />;
 }
