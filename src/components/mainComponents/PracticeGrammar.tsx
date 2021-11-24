@@ -1,5 +1,5 @@
 // React
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 // Interfaces
 import { GrammaticalStructure } from "../../utils/interfaces";
@@ -10,6 +10,7 @@ import get from "lodash/get";
 // Components
 import PracticeGrammarCard from "../subComponents/practiceGrammar/PracticeGrammarCard";
 import FinalScreen from "../subComponents/practiceGrammar/fullScreenComponents/FinalScreen";
+import StartScreen from "../subComponents/practiceGrammar/fullScreenComponents/StartScreen";
 
 export default function PracticeGrammar() {
 	const [grammaticalStructures, setGrammaticalStructures] = useState<GrammaticalStructure[]>([]);
@@ -17,19 +18,15 @@ export default function PracticeGrammar() {
 
 	const actualStructure = grammaticalStructures[actualIndex];
 
-	useEffect(
-		() => {
-			initialize();
-		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[],
-	);
-
-	async function initialize() {
+	async function initialize(practiceType: string) {
 		const response = await fetch("/practice/grammatical-structures");
 		const parsedResponse = await response.json();
 
 		setGrammaticalStructures(get(parsedResponse, "grammaticalStructures", []));
+	}
+
+	if (grammaticalStructures.length === 0) {
+		return <StartScreen initialize={initialize} />;
 	}
 
 	if (actualIndex >= grammaticalStructures.length) {
@@ -37,7 +34,7 @@ export default function PracticeGrammar() {
 			<FinalScreen
 				restartGame={() => {
 					setActualIndex(0);
-					initialize();
+					setGrammaticalStructures([]);
 				}}
 			/>
 		);
