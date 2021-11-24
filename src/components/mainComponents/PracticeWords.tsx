@@ -70,6 +70,15 @@ const NextButton = styled.button`
 `;
 
 type GameTypes = "multiple choice game" | "type the answer game" | "recognize it by the definition game";
+
+interface Answer {
+	question: string;
+	answer: string;
+	success: boolean;
+}
+interface EvaluatedAnswers {
+	[question: number]: Answer;
+}
 interface DummyData {
 	words: Word[];
 	gameTypes: GameTypes[]; // These describe the game types for every rounds
@@ -136,7 +145,7 @@ const dummyData: DummyData = {
 
 export default function PracticeWords() {
 	const [actualRiddle, setActualRiddle] = useState<number>(0);
-	const [typedAnswer, setTypedAnswer] = useState<string>();
+	const [answer, setAnswer] = useState<string>();
 
 	function generateRandomAnswers(correctWord: Word) {
 		const correctAnswerPosition: number = random(3);
@@ -153,9 +162,9 @@ export default function PracticeWords() {
 		return answers;
 	}
 
-	function renderGameElements(index: number) {
-		const currentGameType: GameTypes = dummyData.gameTypes[index];
-		const currentWord: Word = dummyData.words[index];
+	function renderGameElements() {
+		const currentGameType: GameTypes = dummyData.gameTypes[actualRiddle];
+		const currentWord: Word = dummyData.words[actualRiddle];
 
 		switch (currentGameType) {
 			case "multiple choice game":
@@ -176,9 +185,9 @@ export default function PracticeWords() {
 						<Question>{`Type one of the correct translations of this word: ${currentWord.english}?`}</Question>
 						<input
 							placeholder="Type your answer here"
-							value={typedAnswer}
+							value={answer}
 							onChange={(event) => {
-								setTypedAnswer(event.target.value);
+								setAnswer(event.target.value);
 							}}></input>
 					</Fragment>
 				);
@@ -206,7 +215,7 @@ export default function PracticeWords() {
 
 	return (
 		<Fragment>
-			{renderGameElements(actualRiddle)}
+			{renderGameElements()}
 			<NextButton onClick={() => setActualRiddle((prevRiddle) => prevRiddle + 1)}>Next question</NextButton>
 		</Fragment>
 	);
