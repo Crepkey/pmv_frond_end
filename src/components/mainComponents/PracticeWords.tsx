@@ -4,6 +4,9 @@ import { Word } from "sharedInterfaces";
 /* Utils */
 import random from "lodash/random";
 
+/* Components */
+import Scoreboard from "../subComponents/practiceWords/Scoreboard";
+
 /* Styles */
 import { colors } from "src/utils/colors";
 import { generateID } from "src/utils/utils";
@@ -245,7 +248,7 @@ export default function PracticeWords() {
 	}
 
 	if (actualRiddle > dummyData.gameTypes.length - 1) {
-		return <div>The practice is over.</div>;
+		return <Scoreboard />;
 	}
 
 	return (
