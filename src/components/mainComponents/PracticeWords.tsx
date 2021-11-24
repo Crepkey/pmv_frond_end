@@ -7,6 +7,9 @@ import random from "lodash/random";
 /* Components */
 import Scoreboard from "../subComponents/practiceWords/Scoreboard";
 
+/* Interfaces */
+import { EvaluatedAnswer } from "../subComponents/practiceWords/interfaces";
+
 /* Styles */
 import { colors } from "src/utils/colors";
 import { generateID } from "src/utils/utils";
@@ -73,12 +76,6 @@ const NextButton = styled.button`
 `;
 
 type GameTypes = "multiple choice game" | "type the answer game" | "recognize it by the definition game";
-
-interface EvaluatedAnswer {
-	question: string;
-	answer: string;
-	success: boolean;
-}
 
 interface DummyData {
 	words: Word[];
@@ -148,8 +145,8 @@ export default function PracticeWords() {
 	const [actualRiddle, setActualRiddle] = useState<number>(0);
 	const [answer, setAnswer] = useState<string>("");
 	const [evaluatedAnswers, setEvaluatedAsnwers] = useState<EvaluatedAnswer[]>([]);
-
-	console.log(evaluatedAnswers);
+	const question: string = createQuestion();
+	const possibleAnswers: string[] = dummyData.words[actualRiddle].hungarian;
 
 	function generateRandomAnswers(correctWord: Word) {
 		const correctAnswerPosition: number = random(3);
@@ -166,24 +163,28 @@ export default function PracticeWords() {
 		return answers;
 	}
 
+	function createQuestion() {
+		const gameType: string = dummyData.gameTypes[actualRiddle];
+		let result: string = "";
+		switch (gameType) {
+			case "multiple choice game":
+				result = `What is the correct translation of ${dummyData.words[actualRiddle].english}`;
+				break;
+			case "type the answer game":
+				result = `Type one of the correct translations of ${dummyData.words[actualRiddle].english}`;
+				break;
+			case "recognize it by the definition game":
+				result = `Which word belongs to this definition: ${
+					dummyData.words[actualRiddle].definitions[random(dummyData.words[actualRiddle].definitions.length - 1)]
+				}`;
+		}
+		return result;
+	}
+
 	function evaluateAnswer() {
 		const rightAnswers: string[] = dummyData.words[actualRiddle].hungarian;
 		const currentAnswers: EvaluatedAnswer[] = [...evaluatedAnswers];
-
-		if (rightAnswers.includes(answer)) {
-			currentAnswers.push({
-				question: dummyData.words[actualRiddle].english,
-				answer,
-				success: true,
-			});
-		} else {
-			currentAnswers.push({
-				question: dummyData.words[actualRiddle].english,
-				answer,
-				success: false,
-			});
-		}
-
+		currentAnswers.push({ question, answer, possibleAnswers, result: rightAnswers.includes(answer) ? true : false });
 		setAnswer("");
 		setEvaluatedAsnwers(currentAnswers);
 	}
@@ -194,12 +195,12 @@ export default function PracticeWords() {
 
 		switch (currentGameType) {
 			case "multiple choice game":
-				const answers: string[] = generateRandomAnswers(currentWord);
+				const possibleChoices: string[] = generateRandomAnswers(currentWord);
 				return (
 					<Fragment>
-						<Question>{`What is the correct translation of the word: ${currentWord.english}?`}</Question>
+						<Question>{question}</Question>
 						<WordChooserContainer>
-							{answers.map((answer: string) => (
+							{possibleChoices.map((answer: string) => (
 								<WordCard
 									key={answer}
 									onClick={() => {
@@ -214,7 +215,7 @@ export default function PracticeWords() {
 			case "type the answer game":
 				return (
 					<Fragment>
-						<Question>{`Type one of the correct translations of this word: ${currentWord.english}?`}</Question>
+						<Question>{question}</Question>
 						<input
 							placeholder="Type your answer here"
 							value={answer}
@@ -225,14 +226,12 @@ export default function PracticeWords() {
 				);
 
 			case "recognize it by the definition game":
-				const possibleAnswers: string[] = generateRandomAnswers(currentWord);
+				const possibleDefinitions: string[] = generateRandomAnswers(currentWord);
 				return (
 					<Fragment>
-						<Question>{`Choose the word which belongs to this defininition: ${
-							currentWord.definitions[random(currentWord.definitions.length - 1)]
-						}?`}</Question>
+						<Question>{question}</Question>
 						<WordChooserContainer>
-							{possibleAnswers.map((answer: string) => (
+							{possibleDefinitions.map((answer: string) => (
 								<WordCard
 									key={answer}
 									onClick={() => {
