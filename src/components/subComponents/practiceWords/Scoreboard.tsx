@@ -1,11 +1,7 @@
-/* Utils */
-import { generateID } from "src/utils/utils";
-
 /* Interfaces */
 import { EvaluatedAnswer } from "./interfaces";
 
 /* Components */
-import { Word } from "sharedInterfaces";
 import ScoreboardRow from "./ScoreboardRow";
 
 /* Styles */
