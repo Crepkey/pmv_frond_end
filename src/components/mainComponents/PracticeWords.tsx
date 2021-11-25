@@ -145,27 +145,28 @@ export default function PracticeWords() {
 	const [actualRiddle, setActualRiddle] = useState<number>(0);
 	const [answer, setAnswer] = useState<string>("");
 	const [evaluatedAnswers, setEvaluatedAsnwers] = useState<EvaluatedAnswer[]>([]);
-	const [wrongAnswers, setWrongAnswers] = useState<string[]>(generateRandomAnswers());
+	const [wrongAnswers, setWrongAnswers] = useState<string[]>([]);
 	const questionText: string = createQuestion();
 
 	useEffect(() => {
-		setWrongAnswers(generateRandomAnswers());
-	}, [actualRiddle]);
+		function generateRandomAnswers() {
+			if (dummyData.gameTypes[actualRiddle] === "type the answer game") return;
 
-	function generateRandomAnswers() {
-		const correctAnswerPosition: number = random(3);
-		const answers: string[] = [];
+			const correctAnswerPosition: number = random(3);
+			const answers: string[] = [];
 
-		while (answers.length !== 4) {
-			const randomIndex = random(dummyData.wrongAnswers.length - 1);
-			const randomWrongWord = dummyData.wrongAnswers[randomIndex];
-			if (answers.includes(randomWrongWord)) continue;
-			answers.push(randomWrongWord);
+			while (answers.length !== 4) {
+				const randomIndex = random(dummyData.wrongAnswers.length - 1);
+				const randomWrongWord = dummyData.wrongAnswers[randomIndex];
+				if (answers.includes(randomWrongWord)) continue;
+				answers.push(randomWrongWord);
+			}
+			answers[correctAnswerPosition] = dummyData.words[actualRiddle]?.hungarian[random(dummyData.words[actualRiddle].hungarian.length - 1)];
+			setWrongAnswers(answers);
 		}
 
-		answers[correctAnswerPosition] = dummyData.words[actualRiddle]?.hungarian[random(dummyData.words[actualRiddle].hungarian.length - 1)];
-		return answers;
-	}
+		generateRandomAnswers();
+	}, [actualRiddle]);
 
 	function createQuestion() {
 		const gameType: string = dummyData.gameTypes[actualRiddle];
