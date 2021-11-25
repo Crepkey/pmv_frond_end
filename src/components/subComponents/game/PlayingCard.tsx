@@ -13,6 +13,7 @@ import { TagColor, WordInGame } from "sharedInterfaces";
 
 // Components
 import SpinnerBar from "../../generalComponents/SpinnerBar";
+import Tooltip from "src/components/generalComponents/Tooltip";
 
 // Utils
 import get from "lodash/get";
@@ -53,7 +54,9 @@ export default function PlayingCard({ owner, word }: PlayingCardProps) {
 				<TitleContainer>
 					<CardTitle>{word.english}</CardTitle>
 					<TitleIcon>
-						<MdVolumeUp size={32} onClick={() => readWord(word.english)} />
+						<Tooltip title="Pronounce">
+							<MdVolumeUp size={32} onClick={() => readWord(word.english)} />
+						</Tooltip>
 					</TitleIcon>
 				</TitleContainer>
 
