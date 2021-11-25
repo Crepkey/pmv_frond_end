@@ -9,7 +9,7 @@ import { EvaluatedAnswer } from "./interfaces";
 import styled from "styled-components";
 import { colors } from "../../../utils/colors";
 import { FcCancel } from "react-icons/fc";
-import { IoIosInformationCircleOutline } from "react-icons/io";
+import { IoIosCheckmarkCircleOutline, IoIosInformationCircleOutline } from "react-icons/io";
 
 const WordRow = styled.div<{ background: string }>`
 	display: flex;
@@ -82,7 +82,11 @@ export default function ScoreboardRow({ evaluatedAnswer, rowNumber }: Scoreboard
 				)}
 			</PossibleAnswers>
 			<AnswerResult>
-				<FcCancel size={24} color="red" />
+				{evaluatedAnswer.result === true ? (
+					<IoIosCheckmarkCircleOutline size={24} color={colors.success} />
+				) : (
+					<FcCancel size={24} color={colors.error} />
+				)}
 				<ResultText>Correct</ResultText>
 			</AnswerResult>
 			<IconContainer>
