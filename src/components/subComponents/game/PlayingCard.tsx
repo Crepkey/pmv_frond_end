@@ -25,6 +25,20 @@ interface PlayingCardProps {
 export default function PlayingCard({ owner, word }: PlayingCardProps) {
 	const { tagColors } = word;
 
+	const synth = window.speechSynthesis;
+	function readWord(word: string) {
+		const utterance = new SpeechSynthesisUtterance(word);
+
+		const voices = speechSynthesis.getVoices();
+		for (const voice of voices) {
+			if (voice.lang === "en-US") {
+				utterance.voice = voice;
+			}
+		}
+
+		synth.speak(utterance);
+	}
+
 	return (
 		<Card>
 			<CardHeader>
@@ -39,7 +53,7 @@ export default function PlayingCard({ owner, word }: PlayingCardProps) {
 				<TitleContainer>
 					<CardTitle>{word.english}</CardTitle>
 					<TitleIcon>
-						<MdVolumeUp size={32} />
+						<MdVolumeUp size={32} onClick={() => readWord(word.english)} />
 					</TitleIcon>
 				</TitleContainer>
 
