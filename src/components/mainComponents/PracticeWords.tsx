@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Word } from "sharedInterfaces";
 
 /* Utils */
@@ -148,6 +148,10 @@ export default function PracticeWords() {
 	const [wrongAnswers, setWrongAnswers] = useState<string[]>(generateRandomAnswers());
 	const questionText: string = createQuestion();
 
+	useEffect(() => {
+		setWrongAnswers(generateRandomAnswers());
+	}, [actualRiddle]);
+
 	function generateRandomAnswers() {
 		const correctAnswerPosition: number = random(3);
 		const answers: string[] = [];
@@ -259,7 +263,6 @@ export default function PracticeWords() {
 			<NextButton
 				onClick={() => {
 					evaluateAnswer();
-					if (dummyData.gameTypes[actualRiddle + 1] !== "type the answer game") setWrongAnswers(generateRandomAnswers());
 					setActualRiddle((prevRiddle) => prevRiddle + 1);
 				}}>
 				Next question
