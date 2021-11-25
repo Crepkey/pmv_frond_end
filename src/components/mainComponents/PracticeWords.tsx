@@ -33,7 +33,7 @@ const Question = styled.div`
 `;
 
 /* TODO: Better margin handling for WordCard and WordChooserContainer */
-const WordCard = styled.div`
+const WordCard = styled.div<{ selected: boolean }>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -46,8 +46,9 @@ const WordCard = styled.div`
 	font-weight: 600;
 	text-transform: uppercase;
 	border-radius: 24px;
+	border: ${({ selected }) => (selected ? `3px ${colors.activeBorder} solid` : "3px rgba(0, 0, 0, 0) solid")};
 	background: ${colors.blockBackground};
-	border: 3px rgba(0, 0, 0, 0) solid;
+
 	:hover {
 		border: 3px ${colors.activeBorder} solid;
 	}
@@ -145,7 +146,7 @@ export default function PracticeWords() {
 	const [actualRiddle, setActualRiddle] = useState<number>(0);
 	const [answer, setAnswer] = useState<string>("");
 	const [evaluatedAnswers, setEvaluatedAsnwers] = useState<EvaluatedAnswer[]>([]);
-	const [wrongAnswers, setWrongAnswers] = useState<string[]>([]);
+	const [possibleAnswers, setPossibleAnswers] = useState<string[]>([]);
 	const questionText: string = createQuestion();
 
 	useEffect(() => {
@@ -162,7 +163,7 @@ export default function PracticeWords() {
 				answers.push(randomWrongWord);
 			}
 			answers[correctAnswerPosition] = dummyData.words[actualRiddle]?.hungarian[random(dummyData.words[actualRiddle].hungarian.length - 1)];
-			setWrongAnswers(answers);
+			setPossibleAnswers(answers);
 		}
 
 		generateRandomAnswers();
@@ -209,13 +210,14 @@ export default function PracticeWords() {
 					<Fragment>
 						<Question>{questionText}</Question>
 						<WordChooserContainer>
-							{wrongAnswers.map((answer: string) => (
+							{possibleAnswers.map((possibleAnswer: string) => (
 								<WordCard
-									key={answer}
+									key={possibleAnswer}
 									onClick={() => {
-										setAnswer(answer);
-									}}>
-									{answer}
+										setAnswer(possibleAnswer);
+									}}
+									selected={answer === possibleAnswer ? true : false}>
+									{possibleAnswer}
 								</WordCard>
 							))}
 						</WordChooserContainer>
@@ -239,13 +241,14 @@ export default function PracticeWords() {
 					<Fragment>
 						<Question>{questionText}</Question>
 						<WordChooserContainer>
-							{wrongAnswers.map((answer: string) => (
+							{possibleAnswers.map((possibleAnswer: string) => (
 								<WordCard
-									key={answer}
+									key={possibleAnswer}
 									onClick={() => {
-										setAnswer(answer);
-									}}>
-									{answer}
+										setAnswer(possibleAnswer);
+									}}
+									selected={answer === possibleAnswer ? true : false}>
+									{possibleAnswer}
 								</WordCard>
 							))}
 						</WordChooserContainer>
