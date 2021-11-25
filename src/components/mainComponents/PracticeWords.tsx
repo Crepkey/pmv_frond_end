@@ -174,13 +174,13 @@ export default function PracticeWords() {
 		let result: string = "";
 		switch (gameType) {
 			case "multiple choice game":
-				result = `What is the correct translation of ${dummyData.words[actualRiddle].english}`;
+				result = `What's the correct translation of ${dummyData.words[actualRiddle].english.toLocaleLowerCase()}?`;
 				break;
 			case "type the answer game":
-				result = `Type one of the correct translations of ${dummyData.words[actualRiddle].english}`;
+				result = `Type a translation of ${dummyData.words[actualRiddle].english.toLocaleLowerCase()}?`;
 				break;
 			case "recognize it by the definition game":
-				result = `Which word belongs to this definition: ${
+				result = `Which is this world? ${
 					dummyData.words[actualRiddle].definitions[random(dummyData.words[actualRiddle].definitions.length - 1)]
 				}`;
 		}
