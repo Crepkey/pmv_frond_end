@@ -147,8 +147,8 @@ const dummyData: DummyData = {
 
 export default function PracticeWords() {
 	/* States */
-	const [actualRiddle, setActualRiddle] = useState<number>(0);
-	const [answer, setAnswer] = useState<string>("");
+	const [actualQuiz, setActualRiddle] = useState<number>(0);
+	const [actualAnswer, setAnswer] = useState<string>("");
 	const [evaluatedAnswers, setEvaluatedAsnwers] = useState<EvaluatedAnswer[]>([]);
 	const [possibleAnswers, setPossibleAnswers] = useState<string[]>([]);
 
@@ -156,11 +156,11 @@ export default function PracticeWords() {
 	const { createToast } = useContext(AppContext);
 
 	/* Variables */
-	const questionText: string = createQuestion();
+	const actualQuestion: string = createQuestion();
 
 	useEffect(() => {
 		function generateRandomAnswers() {
-			if (dummyData.gameTypes[actualRiddle] === "type the answer game") return;
+			if (dummyData.gameTypes[actualQuiz] === "type the answer game") return;
 
 			const correctAnswerPosition: number = random(3);
 			const answers: string[] = [];
@@ -171,47 +171,47 @@ export default function PracticeWords() {
 				if (answers.includes(randomWrongWord)) continue;
 				answers.push(randomWrongWord);
 			}
-			answers[correctAnswerPosition] = dummyData.words[actualRiddle]?.hungarian[random(dummyData.words[actualRiddle].hungarian.length - 1)];
+			answers[correctAnswerPosition] = dummyData.words[actualQuiz]?.hungarian[random(dummyData.words[actualQuiz].hungarian.length - 1)];
 			setPossibleAnswers(answers);
 		}
 
 		generateRandomAnswers();
-	}, [actualRiddle]);
+	}, [actualQuiz]);
 
 	function createQuestion() {
-		const gameType: string = dummyData.gameTypes[actualRiddle];
+		const gameType: string = dummyData.gameTypes[actualQuiz];
 		let result: string = "";
 		switch (gameType) {
 			case "multiple choice game":
-				result = `What's the correct translation of ${dummyData.words[actualRiddle].english.toLocaleLowerCase()}?`;
+				result = `What's the correct translation of ${dummyData.words[actualQuiz].english.toLocaleLowerCase()}?`;
 				break;
 			case "type the answer game":
-				result = `Type a translation of ${dummyData.words[actualRiddle].english.toLocaleLowerCase()}?`;
+				result = `Type a translation of ${dummyData.words[actualQuiz].english.toLocaleLowerCase()}?`;
 				break;
 			case "recognize it by the definition game":
 				result = `Which is this world? ${
-					dummyData.words[actualRiddle].definitions[random(dummyData.words[actualRiddle].definitions.length - 1)]
+					dummyData.words[actualQuiz].definitions[random(dummyData.words[actualQuiz].definitions.length - 1)]
 				}`;
 		}
 		return result;
 	}
 
 	function evaluateAnswer() {
-		const rightAnswers: string[] = dummyData.words[actualRiddle].hungarian;
+		const rightAnswers: string[] = dummyData.words[actualQuiz].hungarian;
 		const currentAnswers: EvaluatedAnswer[] = [...evaluatedAnswers];
 		currentAnswers.push({
-			id: `${actualRiddle}_riddle`,
-			question: questionText,
-			answer,
-			possibleAnswers: dummyData.words[actualRiddle].hungarian,
-			result: rightAnswers.includes(answer) ? true : false,
+			id: `${actualQuiz}_riddle`,
+			question: actualQuestion,
+			answer: actualAnswer,
+			possibleAnswers: dummyData.words[actualQuiz].hungarian,
+			result: rightAnswers.includes(actualAnswer) ? true : false,
 		});
 		setAnswer("");
 		setEvaluatedAsnwers(currentAnswers);
 	}
 
 	function evaluateRound() {
-		if (answer === "") {
+		if (actualAnswer === "") {
 			createToast({
 				id: generateID(),
 				type: "error",
@@ -225,13 +225,13 @@ export default function PracticeWords() {
 	}
 
 	function renderGameElements() {
-		const currentGameType: GameTypes = dummyData.gameTypes[actualRiddle];
+		const currentGameType: GameTypes = dummyData.gameTypes[actualQuiz];
 
 		switch (currentGameType) {
 			case "multiple choice game":
 				return (
 					<Fragment>
-						<Question>{questionText}</Question>
+						<Question>{actualQuestion}</Question>
 						<WordChooserContainer>
 							{possibleAnswers.map((possibleAnswer: string) => (
 								<WordCard
@@ -239,7 +239,7 @@ export default function PracticeWords() {
 									onClick={() => {
 										setAnswer(possibleAnswer);
 									}}
-									selected={answer === possibleAnswer ? true : false}>
+									selected={actualAnswer === possibleAnswer ? true : false}>
 									{possibleAnswer}
 								</WordCard>
 							))}
@@ -249,10 +249,10 @@ export default function PracticeWords() {
 			case "type the answer game":
 				return (
 					<Fragment>
-						<Question>{questionText}</Question>
+						<Question>{actualQuestion}</Question>
 						<input
 							placeholder="Type your answer here"
-							value={answer}
+							value={actualAnswer}
 							onChange={(event) => {
 								setAnswer(event.target.value);
 							}}></input>
@@ -262,7 +262,7 @@ export default function PracticeWords() {
 			case "recognize it by the definition game":
 				return (
 					<Fragment>
-						<Question>{questionText}</Question>
+						<Question>{actualQuestion}</Question>
 						<WordChooserContainer>
 							{possibleAnswers.map((possibleAnswer: string) => (
 								<WordCard
@@ -270,7 +270,7 @@ export default function PracticeWords() {
 									onClick={() => {
 										setAnswer(possibleAnswer);
 									}}
-									selected={answer === possibleAnswer ? true : false}>
+									selected={actualAnswer === possibleAnswer ? true : false}>
 									{possibleAnswer}
 								</WordCard>
 							))}
@@ -280,7 +280,7 @@ export default function PracticeWords() {
 		}
 	}
 
-	if (actualRiddle > dummyData.gameTypes.length - 1) {
+	if (actualQuiz > dummyData.gameTypes.length - 1) {
 		return <Scoreboard evaluatedAnswers={evaluatedAnswers} />;
 	}
 
