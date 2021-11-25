@@ -56,7 +56,6 @@ const IconContainer = styled.div`
 	display: flex;
 	flex: 0.5;
 	justify-content: right;
-	/* border: 1px red solid; */
 `;
 
 interface ScoreboardRowProps {

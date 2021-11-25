@@ -42,10 +42,11 @@ const TableBlock = styled.div`
 	background: ${colors.blockBackground};
 	border-radius: 24px;
 `;
+/* FIXME: Header titles can shift relative to the values of row if you zoom in or out, 
+you change the size of the display size with devtool window. Maybe a GRID-based solution would be better.*/
 
 const TableHeader = styled.div`
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
 	min-height: 2rem;
 	font-weight: 550;
@@ -58,7 +59,6 @@ const TableHeader = styled.div`
 const TableHeaderElement = styled.div<{ size: number }>`
 	display: flex;
 	flex: ${({ size }) => size};
-	align-items: center;
 `;
 
 const WordContainer = styled.div`
@@ -75,6 +75,54 @@ const WordContainer = styled.div`
 	background: ${colors.background};
 `;
 
+const ButtonContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	padding: 12px 24px 24px 24px;
+`;
+
+const SamePracticeButton = styled.button`
+	display: inline-block;
+	cursor: pointer;
+	color: ${colors.buttonFont};
+	font-size: 1rem;
+	text-decoration: none;
+	padding: 6px 24px;
+	margin-left: 16px;
+	border-radius: 16px;
+	border: none;
+	background-color: ${colors.buttonBackground};
+	:hover {
+		background: linear-gradient(to bottom, ${colors.buttonGradientLight} 5%, ${colors.buttonGradientDark} 100%);
+		background-color: ${colors.buttonGradientLight};
+	}
+	:active {
+		position: relative;
+		top: 1px;
+	}
+`;
+
+const NewPracticeButton = styled.button`
+	display: inline-block;
+	cursor: pointer;
+	color: ${colors.buttonFont};
+	font-size: 1rem;
+	font-weight: bold;
+	padding: 6px 24px;
+	text-decoration: none;
+	border-radius: 16px;
+	border: none;
+	background-color: ${colors.acceptButtonBackground};
+	:hover {
+		background: linear-gradient(to bottom, ${colors.acceptButtonGradientLight} 5%, ${colors.acceptButtonGradientDark} 100%);
+		background-color: ${colors.acceptButtonGradientLight};
+	}
+	:active {
+		position: relative;
+		top: 1px;
+	}
+`;
+
 interface ScoreboardProps {
 	evaluatedAnswers: EvaluatedAnswer[];
 }
@@ -86,10 +134,13 @@ export default function Scoreboard({ evaluatedAnswers }: ScoreboardProps) {
 			<TableContainer>
 				<TableBlock>
 					<TableHeader>
-						<TableHeaderElement size={1}>Question</TableHeaderElement>
-						<TableHeaderElement size={1}>Your answer</TableHeaderElement>
-						<TableHeaderElement size={1}>Possible Answers</TableHeaderElement>
+						<TableHeaderElement size={5}>Question</TableHeaderElement>
+						<TableHeaderElement size={2}>Your answer</TableHeaderElement>
+						<TableHeaderElement size={5}>Possible Answers</TableHeaderElement>
 						<TableHeaderElement size={1}>Result</TableHeaderElement>
+						<TableHeaderElement size={0.5} style={{ justifyContent: "right" }}>
+							Info
+						</TableHeaderElement>
 					</TableHeader>
 					<WordContainer>
 						{evaluatedAnswers.map((answer: EvaluatedAnswer, index: number) => (
@@ -98,6 +149,10 @@ export default function Scoreboard({ evaluatedAnswers }: ScoreboardProps) {
 					</WordContainer>
 				</TableBlock>
 			</TableContainer>
+			<ButtonContainer>
+				<NewPracticeButton>Start new practice</NewPracticeButton>
+				<SamePracticeButton>Practice with same words</SamePracticeButton>
+			</ButtonContainer>
 		</MainContainer>
 	);
 }
