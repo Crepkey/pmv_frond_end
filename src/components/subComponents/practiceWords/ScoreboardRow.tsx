@@ -21,14 +21,14 @@ const WordRow = styled.div<{ background: string }>`
 	border-bottom: 1px ${colors.rowBorder} solid;
 `;
 
-const AskedWord = styled.div`
+const Question = styled.div`
 	display: flex;
-	flex: 2;
+	flex: 5;
 	padding-right: 12px;
 	font-weight: 450;
 `;
 
-const YourAnswer = styled.div`
+const Answer = styled.div`
 	display: flex;
 	flex: 2;
 	padding-right: 12px;
@@ -43,13 +43,20 @@ const PossibleAnswers = styled.div`
 
 const AnswerResult = styled.div`
 	display: flex;
-	flex: 2;
+	flex: 1;
 	align-items: center;
-	padding-right: 12px;
 `;
 
-const Result = styled.div`
+const ResultText = styled.div`
 	font-weight: 350;
+	margin-left: 8px;
+`;
+
+const IconContainer = styled.div`
+	display: flex;
+	flex: 0.5;
+	justify-content: right;
+	/* border: 1px red solid; */
 `;
 
 interface ScoreboardRowProps {
@@ -59,16 +66,28 @@ interface ScoreboardRowProps {
 
 export default function ScoreboardRow({ evaluatedAnswer, rowNumber }: ScoreboardRowProps) {
 	const background: ColorCodeType = calculateRowBackground(rowNumber);
+
+	function addCommaToElements(word: string, index: number, lastIndex: number) {
+		if (index === lastIndex) return word;
+		return `${word}, `;
+	}
+
 	return (
 		<WordRow key={evaluatedAnswer.id} background={background}>
-			<AskedWord>{evaluatedAnswer.question}</AskedWord>
-			<YourAnswer>Fake Answer</YourAnswer>
-			<PossibleAnswers>{evaluatedAnswer.possibleAnswers.map((hunWord: string) => `${hunWord} ,`)}</PossibleAnswers>
+			<Question>{evaluatedAnswer.question}</Question>
+			<Answer>{evaluatedAnswer.answer}</Answer>
+			<PossibleAnswers>
+				{evaluatedAnswer.possibleAnswers.map((word: string, index: number) =>
+					addCommaToElements(word, index, evaluatedAnswer.possibleAnswers.length - 1),
+				)}
+			</PossibleAnswers>
 			<AnswerResult>
 				<FcCancel size={24} color="red" />
-				<Result>Fail</Result>
+				<ResultText>Correct</ResultText>
 			</AnswerResult>
-			<IoIosInformationCircleOutline size={24} />
+			<IconContainer>
+				<IoIosInformationCircleOutline size={24} />
+			</IconContainer>
 		</WordRow>
 	);
 }
