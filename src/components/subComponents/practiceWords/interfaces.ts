@@ -1,5 +1,5 @@
 export interface EvaluatedAnswer {
-	id: number;
+	id: `${number}_riddle`;
 	question: string;
 	answer: string;
 	possibleAnswers: string[];

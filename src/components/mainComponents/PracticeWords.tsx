@@ -200,7 +200,7 @@ export default function PracticeWords() {
 		const rightAnswers: string[] = dummyData.words[actualRiddle].hungarian;
 		const currentAnswers: EvaluatedAnswer[] = [...evaluatedAnswers];
 		currentAnswers.push({
-			id: actualRiddle,
+			id: `${actualRiddle}_riddle`,
 			question: questionText,
 			answer,
 			possibleAnswers: dummyData.words[actualRiddle].hungarian,
@@ -290,7 +290,4 @@ export default function PracticeWords() {
 			<NextButton onClick={() => evaluateRound()}>Next question</NextButton>
 		</Fragment>
 	);
-}
-function createToast(arg0: { id: number; type: string; title: string; details: string }) {
-	throw new Error("Function not implemented.");
 }

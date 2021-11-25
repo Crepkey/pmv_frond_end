@@ -144,7 +144,7 @@ export default function Scoreboard({ evaluatedAnswers }: ScoreboardProps) {
 					</TableHeader>
 					<WordContainer>
 						{evaluatedAnswers.map((answer: EvaluatedAnswer, index: number) => (
-							<ScoreboardRow evaluatedAnswer={answer} rowNumber={index} />
+							<ScoreboardRow key={answer.id} evaluatedAnswer={answer} rowNumber={index} />
 						))}
 					</WordContainer>
 				</TableBlock>
