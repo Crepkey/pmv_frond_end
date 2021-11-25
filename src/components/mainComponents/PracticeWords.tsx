@@ -1,18 +1,21 @@
-import { Fragment, useEffect, useState } from "react";
-import { Word } from "sharedInterfaces";
+import { Fragment, useContext, useEffect, useState } from "react";
+
+/* Context */
+import { AppContext } from "src/AppContext";
 
 /* Utils */
 import random from "lodash/random";
+import { generateID } from "src/utils/utils";
 
 /* Components */
 import Scoreboard from "../subComponents/practiceWords/Scoreboard";
 
 /* Interfaces */
+import { Word } from "sharedInterfaces";
 import { EvaluatedAnswer } from "../subComponents/practiceWords/interfaces";
 
 /* Styles */
 import { colors } from "src/utils/colors";
-import { generateID } from "src/utils/utils";
 import styled from "styled-components";
 
 const WordChooserContainer = styled.div`
@@ -143,10 +146,16 @@ const dummyData: DummyData = {
 };
 
 export default function PracticeWords() {
+	/* States */
 	const [actualRiddle, setActualRiddle] = useState<number>(0);
 	const [answer, setAnswer] = useState<string>("");
 	const [evaluatedAnswers, setEvaluatedAsnwers] = useState<EvaluatedAnswer[]>([]);
 	const [possibleAnswers, setPossibleAnswers] = useState<string[]>([]);
+
+	/* Context */
+	const { createToast } = useContext(AppContext);
+
+	/* Variables */
 	const questionText: string = createQuestion();
 
 	useEffect(() => {
@@ -199,6 +208,20 @@ export default function PracticeWords() {
 		});
 		setAnswer("");
 		setEvaluatedAsnwers(currentAnswers);
+	}
+
+	function evaluateRound() {
+		if (answer === "") {
+			createToast({
+				id: generateID(),
+				type: "error",
+				title: "Error",
+				details: `An error occured. It seems you forgot to give an asnwer.`,
+			});
+			return;
+		}
+		evaluateAnswer();
+		setActualRiddle((prevRiddle) => prevRiddle + 1);
 	}
 
 	function renderGameElements() {
@@ -264,13 +287,10 @@ export default function PracticeWords() {
 	return (
 		<Fragment>
 			{renderGameElements()}
-			<NextButton
-				onClick={() => {
-					evaluateAnswer();
-					setActualRiddle((prevRiddle) => prevRiddle + 1);
-				}}>
-				Next question
-			</NextButton>
+			<NextButton onClick={() => evaluateRound()}>Next question</NextButton>
 		</Fragment>
 	);
+}
+function createToast(arg0: { id: number; type: string; title: string; details: string }) {
+	throw new Error("Function not implemented.");
 }

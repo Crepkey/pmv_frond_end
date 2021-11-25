@@ -83,6 +83,7 @@ const Title = styled.div<{ color: ColorCodeType }>`
 	justify-content: space-evenly;
 	align-items: center;
 	font-weight: bold;
+	margin-bottom: 8px;
 
 	animation-name: ${TitleAnimation};
 	animation-duration: 1s;
@@ -93,7 +94,6 @@ const Details = styled.div`
 	display: flex;
 	flex: 3;
 	justify-content: space-evenly;
-	align-items: center;
 	font-weight: 300;
 
 	animation-name: ${DetailsAnimation};
