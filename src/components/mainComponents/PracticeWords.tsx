@@ -178,6 +178,10 @@ export default function PracticeWords() {
 		generateRandomAnswers();
 	}, [actualQuiz]);
 
+	/* 	useEffect(() => {
+		const result = fetch();
+	}, []); */
+
 	function createQuestion() {
 		const gameType: string = dummyData.gameTypes[actualQuiz];
 		let result: string = "";

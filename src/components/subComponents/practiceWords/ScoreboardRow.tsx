@@ -34,7 +34,7 @@ const Answer = styled.div`
 	padding-right: 12px;
 	font-weight: 300;
 `;
-const PossibleAnswers = styled.div`
+const CorrectAnswers = styled.div`
 	display: flex;
 	flex: 5;
 	padding-right: 12px;
@@ -75,11 +75,11 @@ export default function ScoreboardRow({ evaluatedAnswer, rowNumber }: Scoreboard
 		<WordRow key={evaluatedAnswer.id} background={background}>
 			<Question>{evaluatedAnswer.question}</Question>
 			<Answer>{evaluatedAnswer.answer}</Answer>
-			<PossibleAnswers>
+			<CorrectAnswers>
 				{evaluatedAnswer.possibleAnswers.map((word: string, index: number) =>
 					addCommaToElements(word, index, evaluatedAnswer.possibleAnswers.length - 1),
 				)}
-			</PossibleAnswers>
+			</CorrectAnswers>
 			<AnswerResult>
 				{evaluatedAnswer.result === true ? (
 					<IoIosCheckmarkCircleOutline size={24} color={colors.success} />

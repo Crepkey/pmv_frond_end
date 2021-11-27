@@ -136,7 +136,7 @@ export default function Scoreboard({ evaluatedAnswers }: ScoreboardProps) {
 					<TableHeader>
 						<TableHeaderElement size={5}>Question</TableHeaderElement>
 						<TableHeaderElement size={2}>Your answer</TableHeaderElement>
-						<TableHeaderElement size={5}>Possible Answers</TableHeaderElement>
+						<TableHeaderElement size={5}>Correct Answers</TableHeaderElement>
 						<TableHeaderElement size={1}>Result</TableHeaderElement>
 						<TableHeaderElement size={0.5} style={{ justifyContent: "right" }}>
 							Info
