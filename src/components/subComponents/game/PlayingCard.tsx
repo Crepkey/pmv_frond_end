@@ -52,7 +52,9 @@ export default function PlayingCard({ owner, word }: PlayingCardProps) {
 
 			<CardBody>
 				<TitleContainer>
-					<CardTitle>{word.english}</CardTitle>
+					<Tooltip title={word.english} position="top-start">
+						<CardTitle>{word.english}</CardTitle>
+					</Tooltip>
 					<TitleIcon>
 						<Tooltip title="Pronounce">
 							<MdVolumeUp size={32} onClick={() => readWord(word.english)} />
