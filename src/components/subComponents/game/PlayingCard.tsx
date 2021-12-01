@@ -17,6 +17,7 @@ import Tooltip from "src/components/generalComponents/Tooltip";
 
 // Utils
 import get from "lodash/get";
+import { convertMemoryLevelToText } from "../myWords/utils";
 
 interface PlayingCardProps {
 	owner: User | undefined;
@@ -46,7 +47,7 @@ export default function PlayingCard({ owner, word }: PlayingCardProps) {
 				<HeaderIcon>{owner?.gender === "male" ? <GiSwordman size={28} /> : <GiSwordwoman size={28} />}</HeaderIcon>
 				{owner?.name}'s word
 				<SpinnerBarContainer>
-					<Tooltip title="Memory level" position="top">
+					<Tooltip title={`Memory level: ${convertMemoryLevelToText(word.memoryLevel)}`} position="top">
 						<SpinnerBar size={28} status={word.memoryLevel} style={{ background: colors.headerGradientDark }} />
 					</Tooltip>
 				</SpinnerBarContainer>
