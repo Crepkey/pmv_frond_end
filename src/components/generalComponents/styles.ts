@@ -12,7 +12,6 @@ export const Card = styled.div`
 	min-height: 0;
 	display: flex;
 	flex-direction: column;
-	overflow: hidden;
 `;
 
 export const CardHeader = styled.div`
@@ -23,6 +22,7 @@ export const CardHeader = styled.div`
 	border-bottom: 1px solid ${colors.border};
 	padding: 0 16px 0 16px;
 	min-height: 3rem;
+	border-radius: 8px 8px 0 0;
 `;
 
 export const CardBody = styled.div`

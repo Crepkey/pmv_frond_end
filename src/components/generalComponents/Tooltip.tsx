@@ -10,7 +10,6 @@ import isNumber from "lodash/isNumber";
 
 const MainContainer = styled.div`
 	position: relative;
-	width: 100%;
 `;
 
 const TitleContainer = styled.div<{ top: number | null; right: number | null; bottom: number | null; left: number | null }>`
@@ -50,7 +49,7 @@ interface TooltipProps {
 	children: React.ReactNode;
 }
 
-export default function Tooltip({ title, position, children }: TooltipProps) {
+export default function Tooltip({ title, position = "top", children }: TooltipProps) {
 	const [displayOn, setDisplayOn] = useState<boolean>(false);
 
 	let top = null;
