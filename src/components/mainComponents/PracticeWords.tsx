@@ -11,7 +11,7 @@ import { generateID } from "src/utils/utils";
 import Scoreboard from "../subComponents/practiceWords/Scoreboard";
 
 /* Interfaces */
-import { ServerError, WordPractice, WordPracticeType } from "sharedInterfaces";
+import { ServerError, Word, WordPractice, WordPracticeType } from "sharedInterfaces";
 import { EvaluatedAnswer } from "../subComponents/practiceWords/interfaces";
 
 /* Styles */
@@ -35,7 +35,6 @@ const Question = styled.div`
 	font-size: 2rem;
 `;
 
-/* TODO: Better margin handling for WordCard and WordChooserContainer */
 const WordCard = styled.div<{ selected: boolean }>`
 	display: flex;
 	align-items: center;
@@ -79,101 +78,20 @@ const NextButton = styled.button`
 	}
 `;
 
-const dummyData: WordPractice = {
-	words: [
-		{
-			id: generateID(),
-			english: "Unwed",
-			hungarian: ["hajadon", "nőtlen"],
-			exampleSentences: [
-				"What would have happened to those children of unwed teenage mothers if they hadn't been adopted?",
-				"Even over the past two years, it is estimated there are 18,000 fewer nuclear family homes, including both married and unwed parents",
-			],
-			type: "word",
-			ownerId: 1,
-			memoryLevel: 6,
-			favourite: false,
-			notes: "Petra is unwed",
-			definitions: ["Not married"],
-			deletionDate: null,
-		},
-		{
-			id: generateID(),
-			english: "Adamant",
-			hungarian: ["hajthatatlan", "gyémántkeménységű anyag"],
-			exampleSentences: [
-				"He is adamant that he is not going to resign",
-				"We tried to persuade them to let us show the film at Edinburgh, but Venice's new director was adamant that we couldn't",
-			],
-			type: "word",
-			ownerId: 1,
-			memoryLevel: 6,
-			favourite: false,
-			notes: "Petra is unwed",
-			definitions: [
-				"Refusing to be persuaded or to change one's mind.",
-				"A legendary rock or mineral to which many, often contradictory, properties were attributed, formerly associated with diamond or lodestone.",
-			],
-			deletionDate: null,
-		},
-		{
-			id: generateID(),
-			english: "Skillful",
-			hungarian: ["ügyes", "gyakorlott"],
-			exampleSentences: [
-				"You are brilliant, active and skillful in professional ventures and gain repute in your field of activity",
-				"He was also a robust, competitive and skillful GAA player in both hurling and football",
-			],
-			type: "word",
-			ownerId: 1,
-			memoryLevel: 6,
-			favourite: false,
-			notes: "Petra is unwed",
-			definitions: ["Having or showing skill."],
-			deletionDate: null,
-		},
-	],
-	practiceTypes: ["multiple choice game", "type the answer game", "recognize it by the definition game"],
-	wrongAnswers: ["barna", "macska", "erkély", "szombat", "alma", "dörzsölődés", "éhezés", "mosoly", "óratorony"],
-};
-
 export default function PracticeWords() {
-	/* States */
 	const [quizData, setQuizData] = useState<WordPractice>();
-	const [actualQuiz, setActualRiddle] = useState<number>(0);
-	const [actualAnswer, setAnswer] = useState<string>("");
+	const [numberOfActualQuiz, setNumberOfActualQuiz] = useState<number>(0);
+	const [answersOfActualQuiz, setAnswersOfActualQuiz] = useState<string[]>([]);
+	const [answerOfUser, setAnswerOfUser] = useState<string>("");
+	const [actualQuestionText, setActualQuestionText] = useState<string>();
 	const [evaluatedAnswers, setEvaluatedAsnwers] = useState<EvaluatedAnswer[]>([]);
-	const [possibleAnswers, setPossibleAnswers] = useState<string[]>([]);
 
 	/* Context */
-	const { createToast, activeUser } = useContext(AppContext);
-
-	/* Variables */
-	const actualQuestion: string = createQuestion();
+	const { createToast } = useContext(AppContext);
 
 	useEffect(() => {
-		function generateRandomAnswers() {
-			if (dummyData.practiceTypes[actualQuiz] === "type the answer game") return;
-
-			const correctAnswerPosition: number = random(3);
-			const answers: string[] = [];
-
-			while (answers.length !== 4) {
-				const randomIndex = random(dummyData.wrongAnswers.length - 1);
-				const randomWrongWord = dummyData.wrongAnswers[randomIndex];
-				if (answers.includes(randomWrongWord)) continue;
-				answers.push(randomWrongWord);
-			}
-			answers[correctAnswerPosition] = dummyData.words[actualQuiz]?.hungarian[random(dummyData.words[actualQuiz].hungarian.length - 1)];
-			setPossibleAnswers(answers);
-		}
-
-		generateRandomAnswers();
-	}, [actualQuiz]);
-
-	useEffect(() => {
-		async function load() {
-			const response: Response = await fetch(`/practice/words/${activeUser}`);
+		async function loadQuizData() {
+			const response: Response = await fetch(`/practice/words/2`);
 
 			if (response.status === 204) {
 				createToast({
@@ -196,46 +114,86 @@ export default function PracticeWords() {
 				});
 				return;
 			}
+			console.log(parsedResponse);
 
+			setActualQuestionText(createQuestion(parsedResponse, numberOfActualQuiz));
+			generateRandomAnswers(parsedResponse, numberOfActualQuiz);
 			setQuizData(parsedResponse);
 		}
-		load();
-	}, [activeUser]);
 
-	function createQuestion() {
-		const gameType: string = dummyData.practiceTypes[actualQuiz];
+		loadQuizData();
+	}, []);
+
+	useEffect(() => {
+		if (!quizData || numberOfActualQuiz > quizData.words.length - 1) return;
+		setActualQuestionText(createQuestion(quizData, numberOfActualQuiz));
+		generateRandomAnswers(quizData, numberOfActualQuiz);
+	}, [numberOfActualQuiz]);
+
+	function generateRandomAnswers(quizData: WordPractice, numberOfActualQuiz: number) {
+		if (quizData.practiceTypes[numberOfActualQuiz] === "type the answer game") return;
+
+		const correctAnswer: Word = quizData.words[numberOfActualQuiz];
+		const correctAnswerPosition: number = random(3);
+		const answers: string[] = [];
+
+		while (answers.length !== 4) {
+			const randomIndex = random(quizData.wrongAnswers.length - 1);
+			const randomWord = quizData.wrongAnswers[randomIndex];
+			if (answers.includes(randomWord) || correctAnswer.hungarian.includes(randomWord)) continue;
+			answers.push(randomWord);
+		}
+
+		answers[correctAnswerPosition] = correctAnswer.hungarian[random(correctAnswer.hungarian.length - 1)];
+		setAnswersOfActualQuiz(answers);
+	}
+
+	function createQuestion(quizData: WordPractice, numberOfActualQuiz: number) {
+		const gameType: string = quizData.practiceTypes[numberOfActualQuiz];
 		let result: string = "";
 		switch (gameType) {
 			case "multiple choice game":
-				result = `What's the correct translation of ${dummyData.words[actualQuiz].english.toLocaleLowerCase()}?`;
+				result = `What's the correct translation of ${quizData.words[numberOfActualQuiz].english.toLocaleLowerCase()}?`;
 				break;
 			case "type the answer game":
-				result = `Type a translation of ${dummyData.words[actualQuiz].english.toLocaleLowerCase()}?`;
+				result = `Type a translation of ${quizData.words[numberOfActualQuiz].english.toLocaleLowerCase()}?`;
 				break;
 			case "recognize it by the definition game":
 				result = `Which is this world? ${
-					dummyData.words[actualQuiz].definitions[random(dummyData.words[actualQuiz].definitions.length - 1)]
+					quizData.words[numberOfActualQuiz].definitions[random(quizData.words[numberOfActualQuiz].definitions.length - 1)]
 				}`;
 		}
 		return result;
 	}
 
-	function evaluateAnswer() {
-		const rightAnswers: string[] = dummyData.words[actualQuiz].hungarian;
+	function evaluateAnswer(
+		quizData: WordPractice,
+		numberOfActualQuiz: number,
+		actualQuestionText: string,
+		evaluatedAnswers: EvaluatedAnswer[],
+		answerOfUser: string,
+	) {
+		const rightAnswers: string[] = quizData.words[numberOfActualQuiz].hungarian;
 		const currentAnswers: EvaluatedAnswer[] = [...evaluatedAnswers];
 		currentAnswers.push({
-			id: `${actualQuiz}_riddle`,
-			question: actualQuestion,
-			answer: actualAnswer,
-			possibleAnswers: dummyData.words[actualQuiz].hungarian,
-			result: rightAnswers.includes(actualAnswer) ? true : false,
+			id: `${numberOfActualQuiz}_riddle`,
+			question: actualQuestionText,
+			answer: answerOfUser,
+			possibleAnswers: quizData.words[numberOfActualQuiz].hungarian,
+			result: rightAnswers.includes(answerOfUser) ? true : false,
 		});
-		setAnswer("");
+		setAnswerOfUser("");
 		setEvaluatedAsnwers(currentAnswers);
 	}
 
-	function evaluateRound() {
-		if (actualAnswer === "") {
+	function evaluateRound(
+		quizData: WordPractice,
+		numberOfActualQuiz: number,
+		actualQuestionText: string,
+		evaluatedAnswers: EvaluatedAnswer[],
+		answerOfUser: string,
+	) {
+		if (answerOfUser === "") {
 			createToast({
 				id: generateID(),
 				type: "error",
@@ -244,27 +202,27 @@ export default function PracticeWords() {
 			});
 			return;
 		}
-		evaluateAnswer();
-		setActualRiddle((prevRiddle) => prevRiddle + 1);
+		evaluateAnswer(quizData, numberOfActualQuiz, actualQuestionText, evaluatedAnswers, answerOfUser);
+		setNumberOfActualQuiz((prev) => prev + 1);
 	}
 
-	function renderGameElements() {
-		const currentGameType: WordPracticeType = dummyData.practiceTypes[actualQuiz];
+	function renderGameElements(quizData: WordPractice, numberOfActualQuiz: number, actualQuestionText: string, answersOfActualQuiz: string[]) {
+		const currentGameType: WordPracticeType = quizData.practiceTypes[numberOfActualQuiz];
 
 		switch (currentGameType) {
 			case "multiple choice game":
 				return (
 					<Fragment>
-						<Question>{actualQuestion}</Question>
+						<Question>{actualQuestionText}</Question>
 						<WordChooserContainer>
-							{possibleAnswers.map((possibleAnswer: string) => (
+							{answersOfActualQuiz.map((answerOfActualQuiz: string) => (
 								<WordCard
-									key={possibleAnswer}
+									key={answerOfActualQuiz}
 									onClick={() => {
-										setAnswer(possibleAnswer);
+										setAnswerOfUser(answerOfActualQuiz);
 									}}
-									selected={actualAnswer === possibleAnswer ? true : false}>
-									{possibleAnswer}
+									selected={answerOfUser === answerOfActualQuiz ? true : false}>
+									{answerOfActualQuiz}
 								</WordCard>
 							))}
 						</WordChooserContainer>
@@ -273,12 +231,12 @@ export default function PracticeWords() {
 			case "type the answer game":
 				return (
 					<Fragment>
-						<Question>{actualQuestion}</Question>
+						<Question>{actualQuestionText}</Question>
 						<input
 							placeholder="Type your answer here"
-							value={actualAnswer}
+							value={answerOfUser}
 							onChange={(event) => {
-								setAnswer(event.target.value);
+								setAnswerOfUser(event.target.value);
 							}}></input>
 					</Fragment>
 				);
@@ -286,16 +244,16 @@ export default function PracticeWords() {
 			case "recognize it by the definition game":
 				return (
 					<Fragment>
-						<Question>{actualQuestion}</Question>
+						<Question>{actualQuestionText}</Question>
 						<WordChooserContainer>
-							{possibleAnswers.map((possibleAnswer: string) => (
+							{answersOfActualQuiz.map((answerOfActualQuiz: string) => (
 								<WordCard
-									key={possibleAnswer}
+									key={answerOfActualQuiz}
 									onClick={() => {
-										setAnswer(possibleAnswer);
+										setAnswerOfUser(answerOfActualQuiz);
 									}}
-									selected={actualAnswer === possibleAnswer ? true : false}>
-									{possibleAnswer}
+									selected={answerOfUser === answerOfActualQuiz ? true : false}>
+									{answerOfActualQuiz}
 								</WordCard>
 							))}
 						</WordChooserContainer>
@@ -304,14 +262,18 @@ export default function PracticeWords() {
 		}
 	}
 
-	if (actualQuiz > dummyData.practiceTypes.length - 1) {
+	if (!quizData || !actualQuestionText) return null;
+
+	if (numberOfActualQuiz > quizData.words.length - 1) {
 		return <Scoreboard evaluatedAnswers={evaluatedAnswers} />;
 	}
 
 	return (
 		<Fragment>
-			{renderGameElements()}
-			<NextButton onClick={() => evaluateRound()}>Next question</NextButton>
+			{renderGameElements(quizData, numberOfActualQuiz, actualQuestionText, answersOfActualQuiz)}
+			<NextButton onClick={() => evaluateRound(quizData, numberOfActualQuiz, actualQuestionText, evaluatedAnswers, answerOfUser)}>
+				Next question
+			</NextButton>
 		</Fragment>
 	);
 }
