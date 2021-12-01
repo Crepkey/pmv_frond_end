@@ -11,7 +11,7 @@ import { generateID } from "src/utils/utils";
 import Scoreboard from "../subComponents/practiceWords/Scoreboard";
 
 /* Interfaces */
-import { ServerError, Word } from "sharedInterfaces";
+import { ServerError, WordPractice, WordPracticeType } from "sharedInterfaces";
 import { EvaluatedAnswer } from "../subComponents/practiceWords/interfaces";
 
 /* Styles */
@@ -79,15 +79,7 @@ const NextButton = styled.button`
 	}
 `;
 
-type GameTypes = "multiple choice game" | "type the answer game" | "recognize it by the definition game";
-
-interface DummyData {
-	words: Word[];
-	practiceTypes: GameTypes[]; // These describe the game types for every rounds
-	wrongAnswers: string[]; // As many wrong answers as possible theoretically
-}
-
-const dummyData: DummyData = {
+const dummyData: WordPractice = {
 	words: [
 		{
 			id: generateID(),
@@ -147,6 +139,7 @@ const dummyData: DummyData = {
 
 export default function PracticeWords() {
 	/* States */
+	const [quizData, setQuizData] = useState<WordPractice>();
 	const [actualQuiz, setActualRiddle] = useState<number>(0);
 	const [actualAnswer, setAnswer] = useState<string>("");
 	const [evaluatedAnswers, setEvaluatedAsnwers] = useState<EvaluatedAnswer[]>([]);
@@ -192,7 +185,19 @@ export default function PracticeWords() {
 				return;
 			}
 
-			/* TODO: Client use the data from fetch */
+			const parsedResponse: WordPractice | ServerError = await response.json();
+
+			if ("error" in parsedResponse) {
+				createToast({
+					id: generateID(),
+					type: "error",
+					title: "Server Error",
+					details: `An error occurred while processing the request: ${parsedResponse.message}`,
+				});
+				return;
+			}
+
+			setQuizData(parsedResponse);
 		}
 		load();
 	}, [activeUser]);
@@ -244,7 +249,7 @@ export default function PracticeWords() {
 	}
 
 	function renderGameElements() {
-		const currentGameType: GameTypes = dummyData.practiceTypes[actualQuiz];
+		const currentGameType: WordPracticeType = dummyData.practiceTypes[actualQuiz];
 
 		switch (currentGameType) {
 			case "multiple choice game":

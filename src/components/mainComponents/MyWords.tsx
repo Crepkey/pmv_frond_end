@@ -202,8 +202,8 @@ export default function MyWords() {
 
 	useEffect(() => {
 		async function load() {
-			const rawData: Response = await fetch(`/my-words/${activeUser}?numberOfDisplayedRows=50`);
-			const parsedResponse: GroupedWords | ServerError = await rawData.json();
+			const response: Response = await fetch(`/my-words/${activeUser}?numberOfDisplayedRows=50`);
+			const parsedResponse: GroupedWords | ServerError = await response.json();
 
 			if ("error" in parsedResponse) {
 				createToast({
