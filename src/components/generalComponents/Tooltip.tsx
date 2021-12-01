@@ -16,8 +16,8 @@ const TitleContainer = styled.div<{
 	right: Position;
 	bottom: Position;
 	left: Position;
-	transformHorizontal: number;
-	transformVertical: number;
+	transformHorizontal: Position;
+	transformVertical: Position;
 }>`
 	position: absolute;
 	font-size: 0.8rem;
@@ -31,7 +31,7 @@ const TitleContainer = styled.div<{
 	right: ${({ right }) => right};
 	bottom: ${({ bottom }) => bottom};
 	left: ${({ left }) => left};
-	transform: ${({ transformHorizontal, transformVertical }) => `translate(${transformHorizontal}%, ${transformVertical})`};
+	transform: ${({ transformHorizontal, transformVertical }) => `translate(${transformHorizontal}, ${transformVertical})`};
 `;
 
 type PositionType =
@@ -61,8 +61,8 @@ export default function Tooltip({ title, position = "top", children }: TooltipPr
 	let right: Position = "none";
 	let bottom: Position = "none";
 	let left: Position = "none";
-	let transformHorizontal = 0;
-	let transformVertical = 0;
+	let transformHorizontal: Position = 0;
+	let transformVertical: Position = 0;
 
 	switch (position) {
 		case "top-start":
@@ -72,14 +72,26 @@ export default function Tooltip({ title, position = "top", children }: TooltipPr
 		case "top":
 			top = "-30px";
 			left = "50%";
-			transformHorizontal = -50;
+			transformHorizontal = "-50%";
 			break;
 		case "top-end":
 			top = "-30px";
 			right = 0;
 			break;
 
-		// TODO rights an lefts
+		case "right-start":
+			top = 0;
+			left = "calc(100% + 6px)";
+			break;
+		case "right":
+			top = "50%";
+			left = "calc(100% + 6px)";
+			transformVertical = "-50%";
+			break;
+		case "right-end":
+			bottom = 0;
+			left = "calc(100% + 6px)";
+			break;
 
 		case "bottom-start":
 			bottom = "-30px";
@@ -88,12 +100,27 @@ export default function Tooltip({ title, position = "top", children }: TooltipPr
 		case "bottom":
 			bottom = "-30px";
 			left = "50%";
-			transformHorizontal = -50;
+			transformHorizontal = "-50%";
 			break;
 		case "bottom-end":
 			bottom = "-30px";
 			right = 0;
 			break;
+
+		case "left-start":
+			top = 0;
+			right = "calc(100% + 6px)";
+			break;
+		case "left":
+			top = "50%";
+			right = "calc(100% + 6px)";
+			transformVertical = "-50%";
+			break;
+		case "left-end":
+			bottom = 0;
+			right = "calc(100% + 6px)";
+			break;
+
 		default:
 			break;
 	}

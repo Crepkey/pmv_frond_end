@@ -46,7 +46,7 @@ export default function PlayingCard({ owner, word }: PlayingCardProps) {
 				<HeaderIcon>{owner?.gender === "male" ? <GiSwordman size={28} /> : <GiSwordwoman size={28} />}</HeaderIcon>
 				{owner?.name}'s word
 				<SpinnerBarContainer>
-					<Tooltip title="Memory level" position="bottom">
+					<Tooltip title="Memory level" position="top">
 						<SpinnerBar size={28} status={word.memoryLevel} style={{ background: colors.headerGradientDark }} />
 					</Tooltip>
 				</SpinnerBarContainer>
@@ -56,7 +56,9 @@ export default function PlayingCard({ owner, word }: PlayingCardProps) {
 				<TitleContainer>
 					<CardTitle>{word.english}</CardTitle>
 					<TitleIcon>
-						<MdVolumeUp size={32} onClick={() => readWord(word.english)} />
+						<Tooltip title="Pronounce" position="bottom">
+							<MdVolumeUp size={32} onClick={() => readWord(word.english)} />
+						</Tooltip>
 					</TitleIcon>
 				</TitleContainer>
 
