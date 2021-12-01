@@ -114,8 +114,6 @@ export default function PracticeWords() {
 				});
 				return;
 			}
-			console.log(parsedResponse);
-
 			setActualQuestionText(createQuestion(parsedResponse, numberOfActualQuiz));
 			generateRandomAnswers(parsedResponse, numberOfActualQuiz);
 			setQuizData(parsedResponse);
