@@ -11,7 +11,7 @@ import { generateID } from "src/utils/utils";
 import Scoreboard from "../subComponents/practiceWords/Scoreboard";
 
 /* Interfaces */
-import { Word } from "sharedInterfaces";
+import { ServerError, Word } from "sharedInterfaces";
 import { EvaluatedAnswer } from "../subComponents/practiceWords/interfaces";
 
 /* Styles */
@@ -83,7 +83,7 @@ type GameTypes = "multiple choice game" | "type the answer game" | "recognize it
 
 interface DummyData {
 	words: Word[];
-	gameTypes: GameTypes[]; // These describe the game types for every rounds
+	practiceTypes: GameTypes[]; // These describe the game types for every rounds
 	wrongAnswers: string[]; // As many wrong answers as possible theoretically
 }
 
@@ -141,7 +141,7 @@ const dummyData: DummyData = {
 			deletionDate: null,
 		},
 	],
-	gameTypes: ["multiple choice game", "type the answer game", "recognize it by the definition game"],
+	practiceTypes: ["multiple choice game", "type the answer game", "recognize it by the definition game"],
 	wrongAnswers: ["barna", "macska", "erkély", "szombat", "alma", "dörzsölődés", "éhezés", "mosoly", "óratorony"],
 };
 
@@ -153,14 +153,14 @@ export default function PracticeWords() {
 	const [possibleAnswers, setPossibleAnswers] = useState<string[]>([]);
 
 	/* Context */
-	const { createToast } = useContext(AppContext);
+	const { createToast, activeUser } = useContext(AppContext);
 
 	/* Variables */
 	const actualQuestion: string = createQuestion();
 
 	useEffect(() => {
 		function generateRandomAnswers() {
-			if (dummyData.gameTypes[actualQuiz] === "type the answer game") return;
+			if (dummyData.practiceTypes[actualQuiz] === "type the answer game") return;
 
 			const correctAnswerPosition: number = random(3);
 			const answers: string[] = [];
@@ -178,12 +178,27 @@ export default function PracticeWords() {
 		generateRandomAnswers();
 	}, [actualQuiz]);
 
-	/* 	useEffect(() => {
-		const result = fetch();
-	}, []); */
+	useEffect(() => {
+		async function load() {
+			const response: Response = await fetch(`/practice/words/${activeUser}`);
+
+			if (response.status === 204) {
+				createToast({
+					id: generateID(),
+					type: "error",
+					title: "Content Error",
+					details: `There are no stored words for the practice`,
+				});
+				return;
+			}
+
+			/* TODO: Client use the data from fetch */
+		}
+		load();
+	}, [activeUser]);
 
 	function createQuestion() {
-		const gameType: string = dummyData.gameTypes[actualQuiz];
+		const gameType: string = dummyData.practiceTypes[actualQuiz];
 		let result: string = "";
 		switch (gameType) {
 			case "multiple choice game":
@@ -229,7 +244,7 @@ export default function PracticeWords() {
 	}
 
 	function renderGameElements() {
-		const currentGameType: GameTypes = dummyData.gameTypes[actualQuiz];
+		const currentGameType: GameTypes = dummyData.practiceTypes[actualQuiz];
 
 		switch (currentGameType) {
 			case "multiple choice game":
@@ -284,7 +299,7 @@ export default function PracticeWords() {
 		}
 	}
 
-	if (actualQuiz > dummyData.gameTypes.length - 1) {
+	if (actualQuiz > dummyData.practiceTypes.length - 1) {
 		return <Scoreboard evaluatedAnswers={evaluatedAnswers} />;
 	}
 
