@@ -90,35 +90,6 @@ export default function PracticeWords() {
 	const { createToast } = useContext(AppContext);
 
 	useEffect(() => {
-		async function loadQuizData() {
-			const response: Response = await fetch(`/practice/words/2`);
-
-			if (response.status === 204) {
-				createToast({
-					id: generateID(),
-					type: "error",
-					title: "Content Error",
-					details: `There are no stored words for the practice`,
-				});
-				return;
-			}
-
-			const parsedResponse: WordPractice | ServerError = await response.json();
-
-			if ("error" in parsedResponse) {
-				createToast({
-					id: generateID(),
-					type: "error",
-					title: "Server Error",
-					details: `An error occurred while processing the request: ${parsedResponse.message}`,
-				});
-				return;
-			}
-			setActualQuestionText(createQuestion(parsedResponse, numberOfActualQuiz));
-			generateRandomAnswers(parsedResponse, numberOfActualQuiz);
-			setQuizData(parsedResponse);
-		}
-
 		loadQuizData();
 	}, []);
 
@@ -127,6 +98,36 @@ export default function PracticeWords() {
 		setActualQuestionText(createQuestion(quizData, numberOfActualQuiz));
 		generateRandomAnswers(quizData, numberOfActualQuiz);
 	}, [numberOfActualQuiz]);
+
+	async function loadQuizData() {
+		const response: Response = await fetch(`/practice/words/2`);
+
+		if (response.status === 204) {
+			createToast({
+				id: generateID(),
+				type: "error",
+				title: "Content Error",
+				details: `There are no stored words for the practice`,
+			});
+			return;
+		}
+
+		const parsedResponse: WordPractice | ServerError = await response.json();
+
+		if ("error" in parsedResponse) {
+			createToast({
+				id: generateID(),
+				type: "error",
+				title: "Server Error",
+				details: `An error occurred while processing the request: ${parsedResponse.message}`,
+			});
+			return;
+		}
+		setActualQuestionText(createQuestion(parsedResponse, 0));
+		generateRandomAnswers(parsedResponse, 0);
+		setNumberOfActualQuiz(0);
+		setQuizData(parsedResponse);
+	}
 
 	function generateRandomAnswers(quizData: WordPractice, numberOfActualQuiz: number) {
 		if (quizData.practiceTypes[numberOfActualQuiz] === "type the answer game") return;
@@ -263,7 +264,7 @@ export default function PracticeWords() {
 	if (!quizData || !actualQuestionText) return null;
 
 	if (numberOfActualQuiz > quizData.words.length - 1) {
-		return <Scoreboard evaluatedAnswers={evaluatedAnswers} />;
+		return <Scoreboard evaluatedAnswers={evaluatedAnswers} startNewGame={loadQuizData} />;
 	}
 
 	return (

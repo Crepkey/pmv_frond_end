@@ -125,9 +125,10 @@ const NewPracticeButton = styled.button`
 
 interface ScoreboardProps {
 	evaluatedAnswers: EvaluatedAnswer[];
+	startNewGame(): void;
 }
 
-export default function Scoreboard({ evaluatedAnswers }: ScoreboardProps) {
+export default function Scoreboard({ evaluatedAnswers, startNewGame }: ScoreboardProps) {
 	return (
 		<MainContainer>
 			<Title>THE RESULT OF YOUR PRACTICE</Title>
@@ -150,7 +151,7 @@ export default function Scoreboard({ evaluatedAnswers }: ScoreboardProps) {
 				</TableBlock>
 			</TableContainer>
 			<ButtonContainer>
-				<NewPracticeButton>Start new practice</NewPracticeButton>
+				<NewPracticeButton onClick={() => startNewGame()}>Start new practice</NewPracticeButton>
 				<SamePracticeButton>Practice with same words</SamePracticeButton>
 			</ButtonContainer>
 		</MainContainer>
