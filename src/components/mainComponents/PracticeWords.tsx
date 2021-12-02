@@ -87,7 +87,7 @@ export default function PracticeWords() {
 	const [evaluatedAnswers, setEvaluatedAsnwers] = useState<EvaluatedAnswer[]>([]);
 
 	/* Context */
-	const { createToast } = useContext(AppContext);
+	const { createToast, activeUser } = useContext(AppContext);
 
 	useEffect(() => {
 		loadQuizData();
@@ -100,7 +100,7 @@ export default function PracticeWords() {
 	}, [numberOfActualQuiz]);
 
 	async function loadQuizData() {
-		const response: Response = await fetch(`/practice/words/2`);
+		const response: Response = await fetch(`/practice/words/${activeUser}`);
 
 		if (response.status === 204) {
 			createToast({
