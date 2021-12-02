@@ -129,6 +129,25 @@ export default function PracticeWords() {
 		setQuizData(parsedResponse);
 	}
 
+	function generatePracticeTypes() {
+		const wordPracticeBasicTypes: WordPracticeType[] = ["multiple choice game", "type the answer game", "recognize it by the definition game"];
+		const practiceTypes: WordPracticeType[] = [];
+		for (let i = 10; i > 0; i--) {
+			const practiceType = wordPracticeBasicTypes[random(2)];
+			practiceTypes.push(practiceType);
+		}
+		return practiceTypes;
+	}
+
+	function restartQuiz() {
+		if (quizData) {
+			const currentQuizData: WordPractice = { ...quizData };
+			currentQuizData.practiceTypes = generatePracticeTypes();
+			setQuizData(currentQuizData);
+			setNumberOfActualQuiz(0);
+		}
+	}
+
 	function generateRandomAnswers(quizData: WordPractice, numberOfActualQuiz: number) {
 		if (quizData.practiceTypes[numberOfActualQuiz] === "type the answer game") return;
 
@@ -264,7 +283,7 @@ export default function PracticeWords() {
 	if (!quizData || !actualQuestionText) return null;
 
 	if (numberOfActualQuiz > quizData.words.length - 1) {
-		return <Scoreboard evaluatedAnswers={evaluatedAnswers} startNewGame={loadQuizData} />;
+		return <Scoreboard evaluatedAnswers={evaluatedAnswers} startNewPractice={loadQuizData} restartPractice={restartQuiz} />;
 	}
 
 	return (
