@@ -62,7 +62,7 @@ export default function Game() {
 		owners.forEach((o: User) => set(initialPoints, [o.id], 0));
 		setPoints(initialPoints);
 
-		// setCountDownOn(true);
+		setCountDownOn(true);
 		setTimeout(() => setCountDownOn(false), 5002);
 	}
 

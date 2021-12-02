@@ -16,6 +16,14 @@ export default function Timer({ timeOfCounting, iconButtonNeeded }: TimerProps) 
 	const [timeCounter, setTimeCounter] = useState<number>(-1);
 	const [timeIntervalId, setTimeIntervalId] = useState<NodeJS.Timeout | null>(null);
 
+	// Cleanup
+	useEffect(() => {
+		return () => {
+			stopTimer();
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	useEffect(() => {
 		setTimeCounter(timeOfCounting);
 		if (iconButtonNeeded !== true) {
@@ -26,22 +34,30 @@ export default function Timer({ timeOfCounting, iconButtonNeeded }: TimerProps) 
 
 	useEffect(() => {
 		if (timeCounter === 0) {
-			clearInterval(timeIntervalId as NodeJS.Timeout);
-			setTimeIntervalId(null);
+			stopTimer();
 		}
-	}, [timeCounter, timeIntervalId]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [timeCounter]);
 
-	function countDown(timeOfCounting: number) {
-		if (timeIntervalId !== null) {
-			clearInterval(timeIntervalId as NodeJS.Timeout);
-			setTimeIntervalId(null);
-			return;
-		}
+	function startTimer(timeOfCounting: number) {
 		setTimeCounter(timeOfCounting);
 		const newIntervalId = setInterval(() => {
 			setTimeCounter((prevCount) => prevCount - 1);
 		}, 1000);
 		setTimeIntervalId(newIntervalId);
+	}
+
+	function stopTimer() {
+		clearInterval(timeIntervalId as NodeJS.Timeout);
+		setTimeIntervalId(null);
+	}
+
+	function countDown(timeOfCounting: number) {
+		if (timeIntervalId !== null) {
+			stopTimer();
+			return;
+		}
+		startTimer(timeOfCounting);
 	}
 
 	if (iconButtonNeeded) {
