@@ -27,7 +27,7 @@ export default function ActiveWordIcons({ word, updateWord }: WordHandlerProps) 
 	const [isTrashIconHovered, setTrashIconHover] = useState(false);
 	const [isFavoriteIconHovered, setFavoriteIconHover] = useState(false);
 	const [isEditIconHovered, setEditIconHover] = useState(false);
-	const { setActiveModal: setIsModalOpen, setWordForEditing } = useContext(AppContext);
+	const { setActiveModal, setWordForEditing } = useContext(AppContext);
 
 	function toggleWordFavorite() {
 		word.favourite = !word.favourite;
@@ -71,7 +71,7 @@ export default function ActiveWordIcons({ word, updateWord }: WordHandlerProps) 
 						style={{ marginRight: 12 }}
 						onClick={() => {
 							setWordForEditing(word);
-							setIsModalOpen("Edit word");
+							setActiveModal("Edit word");
 						}}
 					/>
 				) : (
