@@ -1,3 +1,6 @@
+import { useContext } from "react";
+import { AppContext } from "../../../AppContext";
+
 /* Interfaces */
 import { ColorCodeType, WordOperationType } from "../../../utils/interfaces";
 import { Word } from "sharedInterfaces";
@@ -22,6 +25,7 @@ const WordRow = styled.div<{ background: string }>`
 	padding: 3px 12px 3px 12px;
 	background: ${({ background }) => background};
 	border-bottom: 1px ${colors.rowBorder} solid;
+	cursor: pointer;
 `;
 
 const EnglishWord = styled.div`
@@ -56,9 +60,16 @@ interface ActiveWordRowProps {
 }
 
 export default function ActiveWordRow({ word, rowNumber, updateWord }: ActiveWordRowProps) {
+	const { setActiveModal, setWordForEditing } = useContext(AppContext);
 	const background: ColorCodeType = calculateRowBackground(rowNumber);
 	return (
-		<WordRow key={word.id} background={background}>
+		<WordRow
+			key={word.id}
+			background={background}
+			onClick={() => {
+				setWordForEditing(word);
+				setActiveModal("Edit word");
+			}}>
 			<EnglishWord>{word.english}</EnglishWord>
 			<HungarianWords>
 				{word.hungarian.map((hunWord: string, index: number) => addCommaToElements(hunWord, index, word.hungarian.length - 1))}
