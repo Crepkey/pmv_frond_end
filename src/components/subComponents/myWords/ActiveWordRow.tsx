@@ -67,8 +67,8 @@ export default function ActiveWordRow({ word, rowNumber, updateWord }: ActiveWor
 			key={word.id}
 			background={background}
 			onClick={() => {
+				// FIXME bubbling: when clicking on the favourite icon, the modal opens as well
 				setWordForEditing(word);
-				setActiveModal("Edit word");
 			}}>
 			<EnglishWord>{word.english}</EnglishWord>
 			<HungarianWords>
