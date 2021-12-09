@@ -221,6 +221,7 @@ const errorMessages: { [key: number]: string } = {
 	1: "English field is required.",
 	2: "At least one Hungarian meaning is required (in the first field).",
 	3: "At least one example sentence is required (in the first field).",
+	4: "At least one definition is required (in the first field).",
 };
 
 export default function EditWord({ initialWord, title, save }: EditWordProps) {
@@ -385,6 +386,44 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 									<BsPlus />
 								</CircleButton>
 								Add one more example sentence
+							</AddNewRow>
+						</Block>
+
+						{errors.includes(3) ? <Label error={true}>{errorMessages[4]}</Label> : <Label>Definitions</Label>}
+						<Block>
+							{word.definitions.map((definition: string, i: number) => (
+								<Row key={`${i}definition`}>
+									<StringInput
+										error={errors.includes(4) && i === 0}
+										placeholder="Type one definition here..."
+										value={definition}
+										onChange={(e) => {
+											setErrors(errors.filter((e: number) => e !== 4));
+											const newWord = set({ ...word }, ["definitions", i], e.target.value);
+											setWord(newWord);
+										}}
+									/>
+
+									{i !== 0 && (
+										<DeleteIcon>
+											<BsTrash
+												onClick={(e) => {
+													const newArray = word.definitions.filter((s: string, index: number) => index !== i);
+													setWord({ ...word, definitions: newArray });
+												}}
+											/>
+										</DeleteIcon>
+									)}
+								</Row>
+							))}
+							<AddNewRow>
+								<CircleButton
+									onClick={() => {
+										setWord({ ...word, definitions: [...word.definitions, ""] });
+									}}>
+									<BsPlus />
+								</CircleButton>
+								Add one more definition
 							</AddNewRow>
 						</Block>
 

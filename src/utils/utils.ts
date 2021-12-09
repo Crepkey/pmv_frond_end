@@ -22,7 +22,7 @@ export const emptyWord: WordWithScores = {
 	finalScore: 0,
 	favourite: false,
 	notes: null,
-	definitions: [],
+	definitions: [""],
 	deletionDate: null,
 	statistics: {
 		english: 0,
