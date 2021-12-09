@@ -12,7 +12,7 @@ import DeletedWordIcons from "./DeletedWordIcons";
 
 /* Utils */
 import { convertMemoryLevelToText } from "./utils";
-import { calculateRowBackground } from "src/utils/utils";
+import { addCommaToElements, calculateRowBackground } from "src/utils/utils";
 import dayjs, { Dayjs } from "dayjs";
 
 const WordRow = styled.div<{ background: string }>`
@@ -77,7 +77,9 @@ export default function DeletedWordRow({ word, rowNumber, updateWord, deleteWord
 	return (
 		<WordRow key={word.id} background={background}>
 			<EnglishWord>{word.english}</EnglishWord>
-			<HungarianWords>{word.hungarian.map((hunWord: string) => `${hunWord} `)}</HungarianWords>
+			<HungarianWords>
+				{word.hungarian.map((hunWord: string, index: number) => addCommaToElements(hunWord, index, word.hungarian.length - 1))}
+			</HungarianWords>
 			<MemoryLevel>
 				<SpinnerBar size={24} status={word.memoryLevel} style={{ margin: "0 12px 0 0", background }} />
 				<MemoryState>{convertMemoryLevelToText(word.memoryLevel)}</MemoryState>

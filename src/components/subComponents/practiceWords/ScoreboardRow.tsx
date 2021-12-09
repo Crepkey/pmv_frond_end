@@ -1,5 +1,5 @@
 /* Utils */
-import { calculateRowBackground } from "../../../utils/utils";
+import { addCommaToElements, calculateRowBackground } from "../../../utils/utils";
 
 /* Interfaces */
 import { ColorCodeType } from "../../../utils/interfaces";
@@ -65,11 +65,6 @@ interface ScoreboardRowProps {
 
 export default function ScoreboardRow({ evaluatedAnswer, rowNumber }: ScoreboardRowProps) {
 	const background: ColorCodeType = calculateRowBackground(rowNumber);
-
-	function addCommaToElements(word: string, index: number, lastIndex: number) {
-		if (index === lastIndex) return word;
-		return `${word}, `;
-	}
 
 	return (
 		<WordRow key={evaluatedAnswer.id} background={background}>

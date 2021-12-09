@@ -10,6 +10,11 @@ export function generateID() {
 	return Date.now() + Math.random();
 }
 
+export function addCommaToElements(word: string, index: number, lastIndex: number) {
+	if (index === lastIndex) return word;
+	return `${word}, `;
+}
+
 export const emptyWord: WordWithScores = {
 	id: generateID(),
 	english: "",
