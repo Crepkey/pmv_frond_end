@@ -7,12 +7,16 @@ import { GrammaticalStructure, Usage } from "../../../utils/interfaces";
 
 // Utils
 import get from "lodash/get";
+import random from "lodash/random";
 
 interface GrammarCardProps {
 	actualStructure: GrammaticalStructure;
 }
 
 export default function GrammarCard({ actualStructure }: GrammarCardProps) {
+	const randomUsageIndex = random(get(actualStructure, ["realLifeUsages", "length"]) - 1);
+	const usageToShow: Usage = get(actualStructure, ["realLifeUsages", randomUsageIndex]);
+
 	return (
 		<Card>
 			<CardHeader>Grammatical structure</CardHeader>
@@ -27,14 +31,8 @@ export default function GrammarCard({ actualStructure }: GrammarCardProps) {
 					<FormingSentence>{actualStructure.forming}</FormingSentence>
 
 					<Block>
-						{actualStructure.realLifeUsages.map((usage: Usage, i: number) => (
-							<div key={i}>
-								<UsageDescription firstElement={i === 0}>
-									{i + 1}) {usage.description}
-								</UsageDescription>
-								<UsageSentence>{usage.example}</UsageSentence>
-							</div>
-						))}
+						<UsageDescription firstElement={true}>{usageToShow.description}</UsageDescription>
+						<UsageSentence>{usageToShow.example}</UsageSentence>
 					</Block>
 
 					{get(actualStructure, "basicSentences", []).length > 0 && (

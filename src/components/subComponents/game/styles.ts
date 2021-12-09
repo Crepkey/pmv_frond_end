@@ -2,6 +2,9 @@
 import styled from "styled-components";
 import { colors } from "../../../utils/colors";
 
+// Components
+import { Block } from "src/components/generalComponents/styles";
+
 // USED IN MORE COMPONENTS
 export const HeaderIcon = styled.div`
 	border: 2px gray solid;
@@ -30,6 +33,19 @@ export const BoldLargeMessage = styled.div`
 	margin: 16px;
 `;
 
+export const FlexContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 40px;
+`;
+
+export const TitleIcon = styled.div`
+	color: gray;
+	padding-left: 16px;
+	cursor: pointer;
+`;
+
 // GAME COMPONENT
 export const GameMainContainer = styled.div`
 	display: flex;
@@ -37,14 +53,48 @@ export const GameMainContainer = styled.div`
 	justify-content: center;
 	min-width: 0;
 	min-height: 0;
+	flex-direction: column;
 `;
 
-// ERROR SCREEN
-export const ErrorContainer = styled.div`
+export const GameHeader = styled.div`
 	display: flex;
-	flex-direction: column;
 	align-items: center;
-	margin: 40px;
+	justify-content: center;
+`;
+
+export const GameBody = styled.div`
+	display: flex;
+	flex: 1;
+	justify-content: center;
+	min-width: 0;
+	min-height: 0;
+	padding: 0 12px 12px 12px;
+`;
+
+// STARTSCREEN COMPONENT
+export const AnswerContainer = styled.div`
+	display: flex;
+`;
+
+export const Answer = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	font-size: 1.5rem;
+	font-weight: bold;
+	border: solid 1px;
+	border-radius: 8px;
+	margin: 8px;
+	:hover {
+		cursor: pointer;
+	}
+`;
+
+export const LargerMessage = styled.div`
+	font-size: 1.1rem;
+	display: flex;
 `;
 
 // PLAYINGCARD COMPONENT
@@ -57,11 +107,6 @@ export const SpinnerBarContainer = styled.div`
 export const TitleContainer = styled.div`
 	display: flex;
 	justify-content: space-between;
-`;
-
-export const VolumeIcon = styled.div`
-	color: gray;
-	padding-left: 16px;
 `;
 
 export const TagContainer = styled.div`
@@ -82,6 +127,12 @@ export const Tag = styled.div<{ background?: string }>`
 `;
 
 // EVALUATIONFORM COMPONENT
+export const EvalRow = styled(Block)`
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+`;
+
 export const ButtonContainer = styled.div`
 	margin-top: 24px;
 	display: flex;
@@ -92,7 +143,6 @@ export const CheckBox = styled.div`
 	margin-right: 16px;
 	display: flex;
 	align-items: center;
-	cursor: pointer;
 `;
 
 export const BoldText = styled.span`
@@ -101,12 +151,6 @@ export const BoldText = styled.span`
 `;
 
 // FINALSCREEN COMPONENT
-export const MainContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-`;
-
 export const ScreenTitle = styled.div`
 	font-size: 2rem;
 	margin: 24px 0 16px 0;

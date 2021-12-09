@@ -73,11 +73,9 @@ export default function MenuBar() {
 				PIMP MY VOCAB
 			</LogoContainer>
 			<Menu>
-				<MenuItem to="/test" style={{ color: colors.error }}>
-					Test your stuff
-				</MenuItem>
 				<MenuItem to="/my-words/active-words">My words</MenuItem>
 				<MenuItem to={"/practice/words"}> Practice your words</MenuItem>
+				<MenuItem to="/practice/grammatical-structures">Practice grammatical structures</MenuItem>
 				<MenuItem to="/lets-play">Let's play</MenuItem>
 			</Menu>
 			<UserAvatarContainer>

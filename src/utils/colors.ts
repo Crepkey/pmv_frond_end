@@ -11,6 +11,7 @@ export const colors: Colors = {
 	inactiveFont: "rgba(150, 150, 150, 1)",
 	placeholderFont: "rgba(225, 225, 225, 1)",
 	labelFont: "rgba(135, 135, 135, 1)",
+	tooltipFont: "rgba(255, 255, 255, 1)",
 
 	// BUTTONS & ICONS
 	acceptButtonBackground: "rgba(81, 203, 51, 1)",
@@ -40,6 +41,8 @@ export const colors: Colors = {
 
 	rowBackgroundDark: "rgba(236, 235, 240, 1)",
 	rowBackgroundLight: "rgba(255, 255, 255, 1)",
+
+	tooltipBackground: "rgba(80, 80, 80, 1)",
 
 	// BORDERS
 	activeBorder: "rgba(86, 171, 227, 1)",
