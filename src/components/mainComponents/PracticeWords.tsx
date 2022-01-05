@@ -17,6 +17,7 @@ import { EvaluatedAnswer } from "../subComponents/practiceWords/interfaces";
 /* Styles */
 import { colors } from "src/utils/colors";
 import styled from "styled-components";
+import WordCard from "../subComponents/practiceWords/WordCard";
 
 const WordChooserContainer = styled.div`
 	display: flex;
@@ -33,27 +34,6 @@ const Question = styled.div`
 	padding: 24px;
 	font-weight: 700;
 	font-size: 2rem;
-`;
-
-const WordCard = styled.div<{ selected: boolean }>`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex: 1;
-	min-height: 25%;
-	min-width: 40%;
-	padding: 32px;
-	margin: 12px;
-	font-size: 1.5rem;
-	font-weight: 600;
-	text-transform: uppercase;
-	border-radius: 24px;
-	border: ${({ selected }) => (selected ? `3px ${colors.activeBorder} solid` : "3px rgba(0, 0, 0, 0) solid")};
-	background: ${colors.blockBackground};
-
-	:hover {
-		border: 3px ${colors.activeBorder} solid;
-	}
 `;
 
 const NextButton = styled.button`
@@ -236,12 +216,11 @@ export default function PracticeWords() {
 							{answersOfActualQuiz.map((answerOfActualQuiz: string) => (
 								<WordCard
 									key={answerOfActualQuiz}
-									onClick={() => {
-										setAnswerOfUser(answerOfActualQuiz);
-									}}
-									selected={answerOfUser === answerOfActualQuiz ? true : false}>
-									{answerOfActualQuiz}
-								</WordCard>
+									setAnswerOfUser={setAnswerOfUser}
+									answerOfActualQuiz={answerOfActualQuiz}
+									selected={answerOfUser === answerOfActualQuiz ? true : false}
+									text={answerOfActualQuiz}
+								/>
 							))}
 						</WordChooserContainer>
 					</Fragment>
@@ -267,12 +246,11 @@ export default function PracticeWords() {
 							{answersOfActualQuiz.map((answerOfActualQuiz: string) => (
 								<WordCard
 									key={answerOfActualQuiz}
-									onClick={() => {
-										setAnswerOfUser(answerOfActualQuiz);
-									}}
-									selected={answerOfUser === answerOfActualQuiz ? true : false}>
-									{answerOfActualQuiz}
-								</WordCard>
+									setAnswerOfUser={setAnswerOfUser}
+									answerOfActualQuiz={answerOfActualQuiz}
+									selected={answerOfUser === answerOfActualQuiz ? true : false}
+									text={answerOfActualQuiz}
+								/>
 							))}
 						</WordChooserContainer>
 					</Fragment>
