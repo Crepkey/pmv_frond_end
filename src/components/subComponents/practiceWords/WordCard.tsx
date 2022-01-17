@@ -13,7 +13,7 @@ const Background = styled.div<{ selected: boolean }>`
 	min-width: 40%;
 	padding: 32px;
 	margin: 12px;
-	font-size: 1.5rem;
+	font-size: 2rem;
 	font-weight: 600;
 	text-transform: uppercase;
 	border-radius: 24px;
