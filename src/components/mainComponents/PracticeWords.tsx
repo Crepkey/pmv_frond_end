@@ -36,6 +36,12 @@ const Question = styled.div`
 	font-size: 2rem;
 `;
 
+const ButtonContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	padding: 24px;
+`;
+
 const NextButton = styled.button`
 	display: inline-block;
 	cursor: pointer;
@@ -43,7 +49,6 @@ const NextButton = styled.button`
 	font-size: 1rem;
 	font-weight: bold;
 	padding: 6px 24px;
-	margin: 24px;
 	text-decoration: none;
 	border-radius: 16px;
 	border: none;
@@ -267,9 +272,11 @@ export default function PracticeWords() {
 	return (
 		<Fragment>
 			{renderGameElements(quizData, numberOfActualQuiz, actualQuestionText, answersOfActualQuiz)}
-			<NextButton onClick={() => evaluateRound(quizData, numberOfActualQuiz, actualQuestionText, evaluatedAnswers, answerOfUser)}>
-				Next question
-			</NextButton>
+			<ButtonContainer>
+				<NextButton onClick={() => evaluateRound(quizData, numberOfActualQuiz, actualQuestionText, evaluatedAnswers, answerOfUser)}>
+					Next question
+				</NextButton>
+			</ButtonContainer>
 		</Fragment>
 	);
 }
