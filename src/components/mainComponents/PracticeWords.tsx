@@ -17,25 +17,7 @@ import { EvaluatedAnswer } from "../subComponents/practiceWords/interfaces";
 /* Styles */
 import { colors } from "src/utils/colors";
 import styled from "styled-components";
-import WordCard from "../subComponents/practiceWords/WordCard";
 import PracticeTypeSwitcher from "../subComponents/practiceWords/PracticeTypeSwitcher";
-
-const WordChooserContainer = styled.div`
-	display: flex;
-	flex: 1;
-	justify-content: center;
-	flex-wrap: wrap;
-	min-height: 0;
-	min-width: 0;
-	padding: 12px;
-	overflow: scroll;
-`;
-
-const Question = styled.div`
-	padding: 24px;
-	font-weight: 700;
-	font-size: 2rem;
-`;
 
 const ButtonContainer = styled.div`
 	display: flex;
@@ -63,6 +45,8 @@ const NextButton = styled.button`
 		top: 1px;
 	}
 `;
+
+/* FIXME: If I start a new practice with the same words that I used, I need to reset evaluated answers */
 
 export default function PracticeWords() {
 	const [quizData, setQuizData] = useState<WordPractice>();
@@ -208,60 +192,6 @@ export default function PracticeWords() {
 		}
 		evaluateAnswer(quizData, numberOfActualQuiz, actualQuestionText, evaluatedAnswers, answerOfUser);
 		setNumberOfActualQuiz((prev) => prev + 1);
-	}
-
-	function renderGameElements(quizData: WordPractice, numberOfActualQuiz: number, actualQuestionText: string, answersOfActualQuiz: string[]) {
-		const currentGameType: WordPracticeType = quizData.practiceTypes[numberOfActualQuiz];
-
-		switch (currentGameType) {
-			case "multiple choice game":
-				return (
-					<Fragment>
-						<Question>{actualQuestionText}</Question>
-						<WordChooserContainer>
-							{answersOfActualQuiz.map((answerOfActualQuiz: string) => (
-								<WordCard
-									key={answerOfActualQuiz}
-									setAnswerOfUser={setAnswerOfUser}
-									answerOfActualQuiz={answerOfActualQuiz}
-									selected={answerOfUser === answerOfActualQuiz ? true : false}
-									text={answerOfActualQuiz}
-								/>
-							))}
-						</WordChooserContainer>
-					</Fragment>
-				);
-			case "type the answer game":
-				return (
-					<Fragment>
-						<Question>{actualQuestionText}</Question>
-						<input
-							placeholder="Type your answer here"
-							value={answerOfUser}
-							onChange={(event) => {
-								setAnswerOfUser(event.target.value);
-							}}></input>
-					</Fragment>
-				);
-
-			case "recognize it by the definition game":
-				return (
-					<Fragment>
-						<Question>{actualQuestionText}</Question>
-						<WordChooserContainer>
-							{answersOfActualQuiz.map((answerOfActualQuiz: string) => (
-								<WordCard
-									key={answerOfActualQuiz}
-									setAnswerOfUser={setAnswerOfUser}
-									answerOfActualQuiz={answerOfActualQuiz}
-									selected={answerOfUser === answerOfActualQuiz ? true : false}
-									text={answerOfActualQuiz}
-								/>
-							))}
-						</WordChooserContainer>
-					</Fragment>
-				);
-		}
 	}
 
 	if (!quizData || !actualQuestionText) return null;
