@@ -147,7 +147,7 @@ export default function PracticeWords() {
 				result = `Type a translation of ${quizData.words[numberOfActualQuiz].english.toLocaleLowerCase()}?`;
 				break;
 			case "recognize it by the definition game":
-				result = `Which is this world? ${
+				result = `Which word is this? ${
 					quizData.words[numberOfActualQuiz].definitions[random(quizData.words[numberOfActualQuiz].definitions.length - 1)]
 				}`;
 		}
