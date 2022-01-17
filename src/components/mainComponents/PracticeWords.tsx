@@ -196,24 +196,26 @@ export default function PracticeWords() {
 
 	if (!quizData || !actualQuestionText) return null;
 
-	if (numberOfActualQuiz > quizData.words.length - 1) {
-		return <Scoreboard evaluatedAnswers={evaluatedAnswers} startNewPractice={loadQuizData} restartPractice={restartQuiz} />;
-	}
-
 	return (
 		<Fragment>
-			<PracticeTypeSwitcher
-				quizType={quizData.practiceTypes[numberOfActualQuiz]}
-				actualQuestionText={actualQuestionText}
-				answersOfActualQuiz={answersOfActualQuiz}
-				answerOfUser={answerOfUser}
-				setAnswerOfUser={setAnswerOfUser}
-			/>
-			<ButtonContainer>
-				<NextButton onClick={() => evaluateRound(quizData, numberOfActualQuiz, actualQuestionText, evaluatedAnswers, answerOfUser)}>
-					Next question
-				</NextButton>
-			</ButtonContainer>
+			{numberOfActualQuiz <= quizData.words.length - 1 ? (
+				<Fragment>
+					<PracticeTypeSwitcher
+						quizType={quizData.practiceTypes[numberOfActualQuiz]}
+						actualQuestionText={actualQuestionText}
+						answersOfActualQuiz={answersOfActualQuiz}
+						answerOfUser={answerOfUser}
+						setAnswerOfUser={setAnswerOfUser}
+					/>
+					<ButtonContainer>
+						<NextButton onClick={() => evaluateRound(quizData, numberOfActualQuiz, actualQuestionText, evaluatedAnswers, answerOfUser)}>
+							Next question
+						</NextButton>
+					</ButtonContainer>
+				</Fragment>
+			) : (
+				<Scoreboard evaluatedAnswers={evaluatedAnswers} startNewPractice={loadQuizData} restartPractice={restartQuiz} />
+			)}
 		</Fragment>
 	);
 }
