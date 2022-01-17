@@ -18,6 +18,7 @@ import { EvaluatedAnswer } from "../subComponents/practiceWords/interfaces";
 import { colors } from "src/utils/colors";
 import styled from "styled-components";
 import WordCard from "../subComponents/practiceWords/WordCard";
+import PracticeTypeSwitcher from "../subComponents/practiceWords/PracticeTypeSwitcher";
 
 const WordChooserContainer = styled.div`
 	display: flex;
@@ -271,7 +272,13 @@ export default function PracticeWords() {
 
 	return (
 		<Fragment>
-			{renderGameElements(quizData, numberOfActualQuiz, actualQuestionText, answersOfActualQuiz)}
+			<PracticeTypeSwitcher
+				quizType={quizData.practiceTypes[numberOfActualQuiz]}
+				actualQuestionText={actualQuestionText}
+				answersOfActualQuiz={answersOfActualQuiz}
+				answerOfUser={answerOfUser}
+				setAnswerOfUser={setAnswerOfUser}
+			/>
 			<ButtonContainer>
 				<NextButton onClick={() => evaluateRound(quizData, numberOfActualQuiz, actualQuestionText, evaluatedAnswers, answerOfUser)}>
 					Next question
