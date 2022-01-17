@@ -1,7 +1,7 @@
 // Styles
 import { colors } from "../../../utils/colors";
 import { Card, CardHeader, CardBody, CardTitle, CardBodyScrollContainer, Block } from "../../generalComponents/styles";
-import { HeaderIcon, SpinnerBarContainer, TagContainer, Tag, SentenceCard, VolumeIcon, TitleContainer } from "./styles";
+import { HeaderIcon, SpinnerBarContainer, TagContainer, Tag, SentenceCard, TitleIcon, TitleContainer } from "./styles";
 
 // Icons
 import { MdVolumeUp } from "react-icons/md";
@@ -9,14 +9,15 @@ import { GiSwordwoman, GiSwordman } from "react-icons/gi";
 
 // Interfaces
 import { User } from "../../../utils/interfaces";
-import { WordInGame } from "./interfaces";
-import { TagColor } from "sharedInterfaces";
+import { TagColor, WordInGame } from "sharedInterfaces";
 
 // Components
 import SpinnerBar from "../../generalComponents/SpinnerBar";
+import Tooltip from "src/components/generalComponents/Tooltip";
 
 // Utils
 import get from "lodash/get";
+import { convertMemoryLevelToText } from "../myWords/utils";
 
 interface PlayingCardProps {
 	owner: User | undefined;
@@ -26,22 +27,40 @@ interface PlayingCardProps {
 export default function PlayingCard({ owner, word }: PlayingCardProps) {
 	const { tagColors } = word;
 
+	const synth = window.speechSynthesis;
+	function readWord(word: string) {
+		const utterance = new SpeechSynthesisUtterance(word);
+
+		const voices = speechSynthesis.getVoices();
+		for (const voice of voices) {
+			if (voice.lang === "en-US") {
+				utterance.voice = voice;
+			}
+		}
+
+		synth.speak(utterance);
+	}
+
 	return (
 		<Card>
 			<CardHeader>
 				<HeaderIcon>{owner?.gender === "male" ? <GiSwordman size={28} /> : <GiSwordwoman size={28} />}</HeaderIcon>
 				{owner?.name}'s word
 				<SpinnerBarContainer>
-					<SpinnerBar size={28} status={word.memoryLevel} style={{ background: colors.headerGradientDark }} />
+					<Tooltip title={`Memory level: ${convertMemoryLevelToText(word.memoryLevel)}`} position="top">
+						<SpinnerBar size={28} status={word.memoryLevel} style={{ background: colors.headerGradientDark }} />
+					</Tooltip>
 				</SpinnerBarContainer>
 			</CardHeader>
 
 			<CardBody>
 				<TitleContainer>
 					<CardTitle>{word.english}</CardTitle>
-					<VolumeIcon>
-						<MdVolumeUp size={32} />
-					</VolumeIcon>
+					<TitleIcon>
+						<Tooltip title="Pronounce" position="bottom">
+							<MdVolumeUp size={32} onClick={() => readWord(word.english)} />
+						</Tooltip>
+					</TitleIcon>
 				</TitleContainer>
 
 				<CardBodyScrollContainer>

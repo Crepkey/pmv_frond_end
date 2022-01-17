@@ -1,13 +1,15 @@
-//React
-import { useState } from "react";
+// React
+import { useContext, useState } from "react";
+
+// Context
+import { AppContext } from "src/AppContext";
 
 // Styles
-import { Card, CardHeader, CardBody, CardTitle, CardBodyScrollContainer, Block, GreenButton } from "../../generalComponents/styles";
-import { CheckBox, BoldText, ButtonContainer } from "./styles";
+import { Card, CardHeader, CardBody, CardTitle, CardBodyScrollContainer, GreenButton } from "../../generalComponents/styles";
+import { CheckBox, BoldText, ButtonContainer, EvalRow, TitleContainer } from "./styles";
 
 // Interfaces
-import { WordInGame } from "./interfaces";
-import { GameStatistics, ServerError } from "sharedInterfaces";
+import { GameStatistics, ServerError, WordInGame } from "sharedInterfaces";
 
 // Icons
 import { BsCheckCircleFill, BsDashCircle } from "react-icons/bs";
@@ -16,9 +18,13 @@ import { BsCheckCircleFill, BsDashCircle } from "react-icons/bs";
 import get from "lodash/get";
 import set from "lodash/set";
 import capitalize from "lodash/capitalize";
+import { generateID } from "src/utils/utils";
 
 // Helper functions
-import { calculateGamePoints } from "./calculateFinalResult";
+import { calculateGamePoints } from "./calculations/calculateFinalResult";
+
+// Components
+import Timer from "src/components/generalComponents/Timer";
 
 interface EvaluationRowProps {
 	title: string;
@@ -29,13 +35,11 @@ interface EvaluationRowProps {
 
 function EvaluationRow({ title, checked, toggleChecked, mainWord }: EvaluationRowProps) {
 	return (
-		<Block>
-			<div style={{ display: "flex", alignItems: "center" }}>
-				<CheckBox onClick={toggleChecked}>{checked ? <BsCheckCircleFill size={20} /> : <BsDashCircle size={20} />}</CheckBox>
-				{mainWord && <BoldText>main word:</BoldText>}
-				{title}
-			</div>
-		</Block>
+		<EvalRow onClick={toggleChecked}>
+			<CheckBox>{checked ? <BsCheckCircleFill size={20} /> : <BsDashCircle size={20} />}</CheckBox>
+			{mainWord && <BoldText>main word:</BoldText>}
+			{title}
+		</EvalRow>
 	);
 }
 
@@ -53,6 +57,8 @@ export default function EvaluationForm({ actualWord, grammaticalStructureId, get
 	const [gameStatistics, setGameStatistics] = useState<GameStatistics>(emptyStatistics);
 	const [correctGrammar, setCorrectGrammar] = useState<boolean>(false);
 
+	const { createToast } = useContext(AppContext);
+
 	const { wordToAsk, wordToAnswer } = actualWord;
 
 	async function save() {
@@ -64,15 +70,29 @@ export default function EvaluationForm({ actualWord, grammaticalStructureId, get
 		});
 		const parsedResponse: WordInGame | ServerError = await response.json();
 		if ("error" in parsedResponse) {
-			window.alert("Error in saving the evaluation result: " + parsedResponse.message);
+			createToast({
+				id: generateID(),
+				type: "error",
+				title: "Server Error",
+				details: `An error occurred while saving the evaluation result: ${parsedResponse.message}`,
+			});
+			return;
 		}
+		createToast({
+			id: generateID(),
+			type: "success",
+			title: "Success",
+			details: "Save successful, please wait 5 seconds for the next word.",
+		});
 
 		// calculate game points
 		const earnedPoints = calculateGamePoints(actualWord, gameStatistics, correctGrammar);
-		setUserPoints(userPoints + earnedPoints);
 
 		// show next card
-		getNextCard();
+		setTimeout(() => {
+			setUserPoints(userPoints + earnedPoints);
+			getNextCard();
+		}, 5000);
 	}
 
 	return (
@@ -80,9 +100,12 @@ export default function EvaluationForm({ actualWord, grammaticalStructureId, get
 			<CardHeader>Evaluation form</CardHeader>
 
 			<CardBody>
-				<CardTitle>
-					{capitalize(actualWord.type)} to ask: {wordToAsk}
-				</CardTitle>
+				<TitleContainer>
+					<CardTitle>
+						{capitalize(actualWord.type)} to ask: {wordToAsk}
+					</CardTitle>
+					<Timer timeOfCounting={30} iconButtonNeeded={true} />
+				</TitleContainer>
 
 				<CardBodyScrollContainer>
 					{wordToAsk !== actualWord.english && (

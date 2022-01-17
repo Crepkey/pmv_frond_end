@@ -1,33 +1,36 @@
 // React
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 // Styles
-import { BoldLargeMessage, ErrorContainer, GameMainContainer } from "../subComponents/game/styles";
+import { GameMainContainer, GameHeader, GameBody } from "../subComponents/game/styles";
 
 // Interfaces
 import { GrammaticalStructure, User, Points } from "../../utils/interfaces";
-import { WordInGame } from "../subComponents/game/interfaces";
+import { WordInGame } from "sharedInterfaces";
 
 // Components
+import ErrorScreen from "../subComponents/game/fullScreenComponents/ErrorScreen";
+import StartScreen from "../subComponents/game/fullScreenComponents/StartScreen";
+import FinalScreen from "../subComponents/game/fullScreenComponents/FinalScreen";
 import PlayingCard from "../subComponents/game/PlayingCard";
 import EvaluationForm from "../subComponents/game/EvaluationForm";
-import FinalScreen from "../subComponents/game/FinalScreen";
 import GrammarCard from "../subComponents/game/GrammarCard";
+import ProgressBar from "../generalComponents/ProgressBar";
 
 // Utils
 import set from "lodash/set";
 import get from "lodash/get";
-
-// Icons
-import { IoSadOutline } from "react-icons/io5";
+import round from "lodash/round";
 
 export default function Game() {
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
 	const [owners, setOwners] = useState<User[]>([]);
 	const [words, setWords] = useState<WordInGame[]>([]);
 	const [grammaticalStructures, setGrammaticalStructures] = useState<GrammaticalStructure[]>([]);
+
+	const [countDownOn, setCountDownOn] = useState<boolean>(false);
 
 	const [actualIndex, setActualIndex] = useState<number>(0);
 	const [points, setPoints] = useState<Points>({});
@@ -37,16 +40,10 @@ export default function Game() {
 	const actualOwnerId = actualWord?.ownerId;
 	const actualGrammaticalStructure = grammaticalStructures[actualIndex];
 
-	useEffect(
-		() => {
-			initialize();
-		},
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[],
-	);
+	async function initialize(numberOfWords: number) {
+		setLoading(true);
 
-	async function initialize() {
-		const response = await fetch(`/lets-play?players=${playerIds[0]}&players=${playerIds[1]}`);
+		const response = await fetch(`/lets-play?players=${playerIds[0]}&players=${playerIds[1]}&numberOfWords=${numberOfWords}`);
 		const parsedResponse = await response.json();
 
 		setLoading(false);
@@ -64,6 +61,9 @@ export default function Game() {
 		const initialPoints = {};
 		owners.forEach((o: User) => set(initialPoints, [o.id], 0));
 		setPoints(initialPoints);
+
+		setCountDownOn(true);
+		setTimeout(() => setCountDownOn(false), 5002);
 	}
 
 	/* LOADING */
@@ -73,16 +73,21 @@ export default function Game() {
 
 	/* ERROR */
 	if (error !== null) {
+		return <ErrorScreen error={error} />;
+	}
+
+	/* START OF THE GAME */
+	if (words.length === 0 || countDownOn) {
 		return (
-			<ErrorContainer>
-				<IoSadOutline size={44} />
-				<BoldLargeMessage>Sorry, you can't play!</BoldLargeMessage>
-				{error}
-			</ErrorContainer>
+			<StartScreen
+				initialize={initialize}
+				firstPlayer={owners?.find((o: User) => o.id === words[0]?.ownerId)?.name || ""}
+				countDownOn={countDownOn}
+			/>
 		);
 	}
 
-	/* END OF GAME */
+	/* END OF THE GAME */
 	if (actualIndex >= words.length) {
 		return (
 			<FinalScreen
@@ -90,7 +95,7 @@ export default function Game() {
 				points={points}
 				restartGame={() => {
 					setActualIndex(0);
-					initialize();
+					setWords([]);
 				}}
 			/>
 		);
@@ -102,16 +107,21 @@ export default function Game() {
 	}
 	return (
 		<GameMainContainer>
-			<GrammarCard actualStructure={actualGrammaticalStructure} />
-			<PlayingCard owner={owners?.find((o: User) => o.id === actualOwnerId)} word={actualWord} />
-			<EvaluationForm
-				key={actualIndex}
-				actualWord={actualWord}
-				getNextCard={() => setActualIndex(actualIndex + 1)}
-				userPoints={get(points, actualOwnerId, 0)}
-				setUserPoints={(newPoints: number) => setPoints({ ...points, [actualOwnerId]: newPoints })}
-				grammaticalStructureId={actualGrammaticalStructure.id}
-			/>
+			<GameHeader>
+				<ProgressBar status={round(((actualIndex + 1) / words.length) * 100, 0)} />
+			</GameHeader>
+			<GameBody>
+				<GrammarCard actualStructure={actualGrammaticalStructure} />
+				<PlayingCard owner={owners?.find((o: User) => o.id === actualOwnerId)} word={actualWord} />
+				<EvaluationForm
+					key={actualIndex}
+					actualWord={actualWord}
+					getNextCard={() => setActualIndex(actualIndex + 1)}
+					userPoints={get(points, actualOwnerId, 0)}
+					setUserPoints={(newPoints: number) => setPoints({ ...points, [actualOwnerId]: newPoints })}
+					grammaticalStructureId={actualGrammaticalStructure.id}
+				/>
+			</GameBody>
 		</GameMainContainer>
 	);
 }
