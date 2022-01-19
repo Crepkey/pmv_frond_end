@@ -48,11 +48,13 @@ const Background = styled.div<{ selected: boolean; activeBackgroundColor: ColorC
 	min-width: 40%;
 	padding: 32px;
 	margin: 12px;
+	color: ${({ selected }) => (selected ? colors.activeCardFont : "inherit")};
 	font-size: 2rem;
 	font-weight: 600;
+	font-family: ${({ selected }) => (selected ? 'Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif' : "inherit")};
 	text-transform: uppercase;
 	border-radius: 24px;
-	background: ${colors.blockBackground};
+	background: ${({ selected, activeBackgroundColor }) => (selected ? activeBackgroundColor : colors.inactiveCardBackground)};
 	transition: all 0.8s ease;
 
 	:hover {
@@ -81,15 +83,15 @@ export default function WordCard({ text, selected, setAnswerOfUser, answerOfActu
 	const activeBackgroundColor: ColorCodeType = (() => {
 		switch (cardNumber) {
 			case 0:
-				return colors.activeCardColor1;
+				return colors.activeCardBackground1;
 			case 1:
-				return colors.activeCardColor2;
+				return colors.activeCardBackground2;
 			case 2:
-				return colors.activeCardColor3;
+				return colors.activeCardBackground3;
 			case 3:
-				return colors.activeCardColor4;
+				return colors.activeCardBackground4;
 			default:
-				return colors.activeCardColor1;
+				return colors.activeCardBackground1;
 		}
 	})();
 
