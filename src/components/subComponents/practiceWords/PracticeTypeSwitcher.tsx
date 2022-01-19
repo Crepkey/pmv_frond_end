@@ -21,6 +21,21 @@ const WordChooserContainer = styled.div`
 	overflow: scroll;
 `;
 
+const InputFieldContainer = styled.div`
+	min-height: 10%;
+	padding: 24px;
+`;
+
+const InputField = styled.input`
+	width: 97%;
+	height: 95%;
+	border-radius: 15px;
+	border: 3px gray solid;
+	font-size: 2rem;
+	color: gray;
+	padding-left: 24px;
+`;
+
 interface PracticeTypeSwitcherProps {
 	quizType: WordPracticeType;
 	questionText: string;
@@ -59,12 +74,15 @@ export default function PracticeTypeSwitcher({
 			return (
 				<Fragment>
 					<Question text={questionText} />
-					<input
-						placeholder="Type your answer here"
-						value={answerOfUser}
-						onChange={(event) => {
-							setAnswerOfUser(event.target.value);
-						}}></input>
+					<InputFieldContainer>
+						<InputField
+							placeholder="Type your answer here"
+							value={answerOfUser}
+							onChange={(event) => {
+								setAnswerOfUser(event.target.value);
+							}}
+						/>
+					</InputFieldContainer>
 				</Fragment>
 			);
 
