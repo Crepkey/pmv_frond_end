@@ -3,7 +3,41 @@ import { colors } from "src/utils/colors";
 import { ColorCodeType } from "src/utils/interfaces";
 
 /* Styles */
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const swing = keyframes`
+{
+    15%
+    {
+        -webkit-transform: translateX(10px);
+        transform: translateX(5px);
+    }
+    30%
+    {
+        -webkit-transform: translateX(-10px);
+       transform: translateX(-5px);
+    } 
+    50%
+    {
+        -webkit-transform: translateX(6px);
+        transform: translateX(3px);
+    }
+    65%
+    {
+        -webkit-transform: translateX(-6px);
+        transform: translateX(-3px);
+    }
+    80%
+    {
+        -webkit-transform: translateX(4px);
+        transform: translateX(2px);
+    }
+    100%
+    {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+}`;
 
 const Background = styled.div<{ selected: boolean; activeBackgroundColor: ColorCodeType }>`
 	display: flex;
@@ -19,12 +53,19 @@ const Background = styled.div<{ selected: boolean; activeBackgroundColor: ColorC
 	text-transform: uppercase;
 	border-radius: 24px;
 	background: ${colors.blockBackground};
-	transition: all 0.5s ease;
+	transition: all 0.8s ease;
 
 	:hover {
 		color: white;
 		background: ${({ activeBackgroundColor }) => activeBackgroundColor};
+
 		font-size: 3rem;
+		font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+
+		-webkit-animation: swing 1s ease;
+		animation: ${swing} 1s ease;
+		-webkit-animation-iteration-count: 1;
+		animation-iteration-count: 1;
 	}
 `;
 
