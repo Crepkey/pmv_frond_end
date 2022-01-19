@@ -23,7 +23,7 @@ const WordChooserContainer = styled.div`
 
 interface PracticeTypeSwitcherProps {
 	quizType: WordPracticeType;
-	actualQuestionText: string;
+	questionText: string;
 	answersOfActualQuiz: string[];
 	answerOfUser: string;
 	setAnswerOfUser: React.Dispatch<React.SetStateAction<string>>;
@@ -31,7 +31,7 @@ interface PracticeTypeSwitcherProps {
 
 export default function PracticeTypeSwitcher({
 	quizType,
-	actualQuestionText,
+	questionText,
 	answersOfActualQuiz,
 	answerOfUser,
 	setAnswerOfUser,
@@ -40,7 +40,7 @@ export default function PracticeTypeSwitcher({
 		case "multiple choice game":
 			return (
 				<Fragment>
-					<Question text={actualQuestionText} />
+					<Question text={questionText} />
 					<WordChooserContainer>
 						{answersOfActualQuiz.map((answerOfActualQuiz: string, index: number) => (
 							<WordCard
@@ -58,7 +58,7 @@ export default function PracticeTypeSwitcher({
 		case "type the answer game":
 			return (
 				<Fragment>
-					<Question text={actualQuestionText} />
+					<Question text={questionText} />
 					<input
 						placeholder="Type your answer here"
 						value={answerOfUser}
@@ -71,7 +71,7 @@ export default function PracticeTypeSwitcher({
 		case "recognize it by the definition game":
 			return (
 				<Fragment>
-					<Question text={actualQuestionText} />
+					<Question text={questionText} />
 					<WordChooserContainer>
 						{answersOfActualQuiz.map((answerOfActualQuiz: string, index: number) => (
 							<WordCard

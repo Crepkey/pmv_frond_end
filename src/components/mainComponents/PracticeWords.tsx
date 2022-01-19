@@ -202,7 +202,7 @@ export default function PracticeWords() {
 				<Fragment>
 					<PracticeTypeSwitcher
 						quizType={quizData.practiceTypes[numberOfActualQuiz]}
-						actualQuestionText={actualQuestionText}
+						questionText={actualQuestionText}
 						answersOfActualQuiz={answersOfActualQuiz}
 						answerOfUser={answerOfUser}
 						setAnswerOfUser={setAnswerOfUser}
