@@ -47,8 +47,8 @@ export const colors: Colors = {
 
 	activeCardBackground1: "rgba(222, 89, 86, 0.8)",
 	activeCardBackground2: "rgba(255, 143, 35, 0.8)",
-	activeCardBackground3: "rgba(86, 171, 227, 0.8)",
-	activeCardBackground4: "rgba(11, 201, 0, 0.8)",
+	activeCardBackground3: "rgba(11, 201, 0, 0.8)",
+	activeCardBackground4: "rgba(86, 171, 227, 0.8)",
 	inactiveCardBackground: "rgba(242, 241, 247, 1)",
 
 	// BORDERS
