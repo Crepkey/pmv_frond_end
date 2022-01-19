@@ -2,6 +2,7 @@ import { Fragment } from "react";
 
 /* Interfaces */
 import { WordPracticeType } from "sharedInterfaces";
+import { colors } from "src/utils/colors";
 
 /* Styles */
 import styled from "styled-components";
@@ -29,11 +30,20 @@ const InputFieldContainer = styled.div`
 const InputField = styled.input`
 	width: 97%;
 	height: 95%;
-	border-radius: 15px;
-	border: 3px gray solid;
 	font-size: 2rem;
-	color: gray;
+	font-weight: 550;
+	color: ${colors.activeFont};
 	padding-left: 24px;
+	border-top-style: hidden;
+	border-right-style: hidden;
+	border-left-style: hidden;
+	border-bottom: groove;
+	::placeholder {
+		color: ${colors.placeholderFont};
+	}
+	:focus {
+		outline: none;
+	}
 `;
 
 interface PracticeTypeSwitcherProps {
