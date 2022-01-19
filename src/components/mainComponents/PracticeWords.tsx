@@ -46,8 +46,6 @@ const NextButton = styled.button`
 	}
 `;
 
-/* FIXME: If I start a new practice with the same words that I used, I need to reset evaluated answers */
-
 export default function PracticeWords() {
 	const [quizData, setQuizData] = useState<WordPractice>();
 	const [numberOfActualQuiz, setNumberOfActualQuiz] = useState<number>(0);
@@ -96,6 +94,7 @@ export default function PracticeWords() {
 		setActualQuestionText(createQuestion(parsedResponse, 0));
 		generateRandomAnswers(parsedResponse, 0);
 		setNumberOfActualQuiz(0);
+		setEvaluatedAsnwers([]);
 		setQuizData(parsedResponse);
 	}
 
@@ -115,6 +114,7 @@ export default function PracticeWords() {
 			currentQuizData.practiceTypes = generatePracticeTypes();
 			setQuizData(currentQuizData);
 			setNumberOfActualQuiz(0);
+			setEvaluatedAsnwers([]);
 		}
 	}
 
