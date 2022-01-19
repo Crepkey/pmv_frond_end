@@ -12,6 +12,7 @@ export const colors: Colors = {
 	placeholderFont: "rgba(225, 225, 225, 1)",
 	labelFont: "rgba(135, 135, 135, 1)",
 	tooltipFont: "rgba(255, 255, 255, 1)",
+	activeCardFont: "rgba(255, 255, 255, 1)",
 
 	// BUTTONS & ICONS
 	acceptButtonBackground: "rgba(81, 203, 51, 1)",
@@ -62,4 +63,11 @@ export const colors: Colors = {
 	progressOrange: "rgba(255, 143, 35, 1)",
 	progressBlue: "rgba(86, 171, 227, 1)",
 	progressGreen: "rgba(11, 201, 0, 1)",
+
+	// CARDS
+
+	activeCardColor1: "rgba(222, 89, 86, 0.8)",
+	activeCardColor2: "rgba(255, 143, 35, 0.8)",
+	activeCardColor3: "rgba(86, 171, 227, 0.8)",
+	activeCardColor4: "rgba(11, 201, 0, 0.8)",
 };

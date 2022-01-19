@@ -41,13 +41,14 @@ export default function PracticeTypeSwitcher({
 				<Fragment>
 					<Question>{actualQuestionText}</Question>
 					<WordChooserContainer>
-						{answersOfActualQuiz.map((answerOfActualQuiz: string) => (
+						{answersOfActualQuiz.map((answerOfActualQuiz: string, index: number) => (
 							<WordCard
 								key={answerOfActualQuiz}
 								setAnswerOfUser={setAnswerOfUser}
 								answerOfActualQuiz={answerOfActualQuiz}
 								selected={answerOfUser === answerOfActualQuiz ? true : false}
 								text={answerOfActualQuiz}
+								cardNumber={index}
 							/>
 						))}
 					</WordChooserContainer>
@@ -71,13 +72,14 @@ export default function PracticeTypeSwitcher({
 				<Fragment>
 					<Question>{actualQuestionText}</Question>
 					<WordChooserContainer>
-						{answersOfActualQuiz.map((answerOfActualQuiz: string) => (
+						{answersOfActualQuiz.map((answerOfActualQuiz: string, index: number) => (
 							<WordCard
 								key={answerOfActualQuiz}
 								setAnswerOfUser={setAnswerOfUser}
 								answerOfActualQuiz={answerOfActualQuiz}
 								selected={answerOfUser === answerOfActualQuiz ? true : false}
 								text={answerOfActualQuiz}
+								cardNumber={index}
 							/>
 						))}
 					</WordChooserContainer>
