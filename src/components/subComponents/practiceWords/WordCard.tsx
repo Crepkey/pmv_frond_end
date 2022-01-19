@@ -51,7 +51,7 @@ const Background = styled.div<{ selected: boolean; activeBackgroundColor: ColorC
 	color: ${({ selected }) => (selected ? colors.activeCardFont : "inherit")};
 	font-size: 2rem;
 	font-weight: 600;
-	font-family: ${({ selected }) => (selected ? 'Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif' : "inherit")};
+	font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
 	text-transform: uppercase;
 	border-radius: 24px;
 	background: ${({ selected, activeBackgroundColor }) => (selected ? activeBackgroundColor : colors.inactiveCardBackground)};
@@ -60,9 +60,7 @@ const Background = styled.div<{ selected: boolean; activeBackgroundColor: ColorC
 	:hover {
 		color: white;
 		background: ${({ activeBackgroundColor }) => activeBackgroundColor};
-
 		font-size: 3rem;
-		font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
 
 		-webkit-animation: swing 1s ease;
 		animation: ${swing} 1s ease;
