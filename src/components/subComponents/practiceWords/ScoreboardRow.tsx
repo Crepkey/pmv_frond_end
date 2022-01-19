@@ -66,9 +66,15 @@ interface ScoreboardRowProps {
 export default function ScoreboardRow({ evaluatedAnswer, rowNumber }: ScoreboardRowProps) {
 	const background: ColorCodeType = calculateRowBackground(rowNumber);
 
+	function sliceText(text: string, length: number) {
+		if (text.length > length) {
+			return text.substring(0, length) + "...";
+		} else return text;
+	}
+
 	return (
 		<WordRow key={evaluatedAnswer.id} background={background}>
-			<Question>{evaluatedAnswer.question}</Question>
+			<Question>{sliceText(evaluatedAnswer.question, 100)}</Question>
 			<Answer>{evaluatedAnswer.answer}</Answer>
 			<CorrectAnswers>
 				{evaluatedAnswer.possibleAnswers.map((word: string, index: number) =>

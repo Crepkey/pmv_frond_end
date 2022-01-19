@@ -139,7 +139,7 @@ export default function ToastCard({ title, details, type }: Toast) {
 
 	function resizeDetails() {
 		if (details.length >= 150) {
-			return details.substr(0, 150) + "...";
+			return details.substring(0, 150) + "...";
 		}
 		return details;
 	}
