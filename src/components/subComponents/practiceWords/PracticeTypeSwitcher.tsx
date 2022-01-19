@@ -1,13 +1,14 @@
 import { Fragment } from "react";
-import { WordPracticeType } from "sharedInterfaces";
-import styled from "styled-components";
-import WordCard from "./WordCard";
 
-const Question = styled.div`
-	padding: 24px;
-	font-weight: 700;
-	font-size: 2rem;
-`;
+/* Interfaces */
+import { WordPracticeType } from "sharedInterfaces";
+
+/* Styles */
+import styled from "styled-components";
+
+/* Components */
+import Question from "./Question";
+import WordCard from "./WordCard";
 
 const WordChooserContainer = styled.div`
 	display: flex;
@@ -39,7 +40,7 @@ export default function PracticeTypeSwitcher({
 		case "multiple choice game":
 			return (
 				<Fragment>
-					<Question>{actualQuestionText}</Question>
+					<Question text={actualQuestionText} />
 					<WordChooserContainer>
 						{answersOfActualQuiz.map((answerOfActualQuiz: string, index: number) => (
 							<WordCard
@@ -57,7 +58,7 @@ export default function PracticeTypeSwitcher({
 		case "type the answer game":
 			return (
 				<Fragment>
-					<Question>{actualQuestionText}</Question>
+					<Question text={actualQuestionText} />
 					<input
 						placeholder="Type your answer here"
 						value={answerOfUser}
@@ -70,7 +71,7 @@ export default function PracticeTypeSwitcher({
 		case "recognize it by the definition game":
 			return (
 				<Fragment>
-					<Question>{actualQuestionText}</Question>
+					<Question text={actualQuestionText} />
 					<WordChooserContainer>
 						{answersOfActualQuiz.map((answerOfActualQuiz: string, index: number) => (
 							<WordCard
