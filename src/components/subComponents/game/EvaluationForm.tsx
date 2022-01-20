@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import { AppContext } from "src/AppContext";
 
 // Styles
-import { Card, CardHeader, CardBody, CardTitle, CardBodyScrollContainer, GreenButton } from "../../generalComponents/styles";
+import { Card, CardHeader, CardBody, CardTitle, CardBodyScrollContainer, ColoredButton } from "../../generalComponents/styles";
 import { CheckBox, BoldText, ButtonContainer, EvalRow, TitleContainer } from "./styles";
 
 // Interfaces
@@ -139,9 +139,7 @@ export default function EvaluationForm({ actualWord, grammaticalStructureId, get
 					<EvaluationRow title="grammatical structure" checked={correctGrammar} toggleChecked={() => setCorrectGrammar(!correctGrammar)} />
 				</CardBodyScrollContainer>
 
-				<ButtonContainer>
-					<GreenButton onClick={save}>Save</GreenButton>
-				</ButtonContainer>
+				<ButtonContainer>{/* <GreenButton onClick={save}>Save</GreenButton> */}</ButtonContainer>
 			</CardBody>
 		</Card>
 	);

@@ -2,11 +2,17 @@
 import { IoBookOutline } from "react-icons/io5";
 
 // Styles
-import { FlexContainer, BoldLargeMessage } from "../../game/styles";
-import { Answer } from "../styles";
+import { FlexContainer } from "../../game/styles";
 
 // Utils
 import snakeCase from "lodash/snakeCase";
+
+// Components
+import Question from "../../practiceWords/Question";
+import Button from "src/components/generalComponents/Button";
+
+// Interfaces
+import { ColorType } from "src/utils/interfaces";
 
 interface StartScreenProps {
 	initialize: (practiceType: string) => void;
@@ -15,13 +21,15 @@ interface StartScreenProps {
 export default function StartScreen({ initialize }: StartScreenProps) {
 	return (
 		<FlexContainer>
-			<IoBookOutline size={44} />
-			<BoldLargeMessage>What kind of grammatical structures do you want to practice?</BoldLargeMessage>
+			<IoBookOutline size={100} />
+			<Question text={"What kind of grammatical structures do you want to practice?"} />
 			<div>
-				{["My weakest", "Rarely asked", "Random"].map((i: string) => (
-					<Answer key={i} onClick={() => initialize(snakeCase(i))}>
-						{i}
-					</Answer>
+				{[
+					{ text: "My weakest", color: "red" },
+					{ text: "Rarely asked", color: "blue" },
+					{ text: "Random", color: "green" },
+				].map((i) => (
+					<Button key={i.text} onClick={() => initialize(snakeCase(i.text))} title={i.text} color={i.color as ColorType} />
 				))}
 			</div>
 		</FlexContainer>

@@ -1,5 +1,5 @@
 // Styles
-import { Card, CardHeader, CardBody, GreenButton } from "../../../generalComponents/styles";
+import { Card, CardHeader, CardBody } from "../../../generalComponents/styles";
 import { FlexContainer, ScreenTitle, CardContainer, HeaderIcon, PointsContainer, BoldLargeMessage, ResultDescription } from "../styles";
 
 // Icons
@@ -45,7 +45,7 @@ export default function FinalScreen({ owners, points, restartGame }: FinalScreen
 			<BoldLargeMessage>Congratulations {winners.map((winner: User) => winner.name).join(" and ")}!</BoldLargeMessage>
 			<ResultDescription>{winners.length === 1 ? "You won." : "You had the same number of points."}</ResultDescription>
 
-			<GreenButton onClick={restartGame}>Play again</GreenButton>
+			{/* <GreenButton onClick={restartGame}>Play again</GreenButton> */}
 		</FlexContainer>
 	);
 }

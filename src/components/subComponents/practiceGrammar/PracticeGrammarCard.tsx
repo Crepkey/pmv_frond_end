@@ -2,7 +2,7 @@
 import { GrammaticalStructure, Usage } from "src/utils/interfaces";
 
 // Styles
-import { Card, CardBody, CardTitle, CardBodyScrollContainer, Block, GreenButton } from "src/components/generalComponents/styles";
+import { Card, CardBody, CardTitle, CardBodyScrollContainer, Block, ColoredButton } from "src/components/generalComponents/styles";
 import { GameBody, SubTitle, FormingSentence, UsageDescription, UsageSentence, ButtonContainer } from "../game/styles";
 
 interface PracticeGrammarCardProps {
@@ -37,9 +37,7 @@ export default function PracticeGrammarCard({ actualStructure, showNextCard }: P
 						{actualStructure.notes && <Block>Note: {actualStructure.notes}</Block>}
 					</CardBodyScrollContainer>
 
-					<ButtonContainer>
-						<GreenButton onClick={showNextCard}>Show next structure</GreenButton>
-					</ButtonContainer>
+					<ButtonContainer>{/* <GreenButton onClick={showNextCard}>Show next structure</GreenButton> */}</ButtonContainer>
 				</CardBody>
 			</Card>
 		</GameBody>

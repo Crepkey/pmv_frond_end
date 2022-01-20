@@ -1,5 +1,4 @@
 // Styles
-import { GreenButton } from "src/components/generalComponents/styles";
 import { ButtonContainer } from "../../game/styles";
 
 interface FinalScreenProps {
@@ -7,9 +6,5 @@ interface FinalScreenProps {
 }
 
 export default function FinalScreen({ restartGame }: FinalScreenProps) {
-	return (
-		<ButtonContainer>
-			<GreenButton onClick={restartGame}>Play again</GreenButton>
-		</ButtonContainer>
-	);
+	return <ButtonContainer>{/* <GreenButton onClick={restartGame}>Play again</GreenButton> */}</ButtonContainer>;
 }

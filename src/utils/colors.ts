@@ -23,7 +23,11 @@ export const colors: Colors = {
 	rejectButtonGradientLight: "rgba(243, 60, 112, 1)",
 	rejectButtonGradientDark: "rgba(161, 40, 75, 1)",
 
-	buttonBackground: "rgba(86, 171, 227, 1)",
+	generalButtonBackground: "rgba(86, 171, 227, 1)",
+	generalButtonGradientLight: "rgba(129, 205, 255, 1)",
+	generalButtonGradientDark: "rgba(93, 143, 236, 1)",
+
+	buttonBackground: "rgba(86, 171, 227, 1)", // TODO delete, check usages
 	buttonGradientLight: "rgba(129, 205, 255, 1)",
 	buttonGradientDark: "rgba(93, 143, 236, 1)",
 

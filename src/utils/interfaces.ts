@@ -25,6 +25,14 @@ export interface GrammaticalStructure {
 
 export type ColorCodeType = `rgba(${number}, ${number}, ${number}, ${number})`;
 
+export type ColorType = "red" | "orange" | "green" | "blue";
+
+export interface ButtonColorType {
+	background: string;
+	gradiendLight: string;
+	gradientDark: string;
+}
+
 export interface Toast {
 	id: number;
 	type: "info" | "success" | "warning" | "error";

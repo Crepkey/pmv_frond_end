@@ -28,8 +28,8 @@ export const SentenceCard = styled.div<{ lastElement: boolean }>`
 `;
 
 export const BoldLargeMessage = styled.div`
-	font-size: 1.25rem;
-	font-weight: bolder;
+	font-size: 2rem;
+	font-weight: 550;
 	margin: 16px;
 `;
 
@@ -37,7 +37,7 @@ export const FlexContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin: 40px;
+	margin: 80px;
 `;
 
 export const TitleIcon = styled.div`

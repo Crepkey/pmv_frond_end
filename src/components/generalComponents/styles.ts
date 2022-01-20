@@ -1,3 +1,6 @@
+// Interfaces
+import { ButtonColorType } from "./../../utils/interfaces";
+
 // Styles
 import styled from "styled-components";
 import { colors } from "../../utils/colors";
@@ -61,7 +64,7 @@ export const Block = styled.div`
 `;
 
 // BUTTONS
-export const GreenButton = styled.div`
+export const ColoredButton = styled.div<{ buttonColors: ButtonColorType }>`
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -70,13 +73,14 @@ export const GreenButton = styled.div`
 	font-size: 1rem;
 	font-weight: bold;
 	padding: 6px 24px;
+	margin: 12px;
 	text-decoration: none;
 	border-radius: 16px;
 	border: none;
-	background-color: ${colors.acceptButtonBackground};
+	background-color: ${({ buttonColors }) => buttonColors.background};
 	:hover {
-		background: linear-gradient(to bottom, ${colors.acceptButtonGradientLight} 5%, ${colors.acceptButtonGradientDark} 100%);
-		background-color: ${colors.acceptButtonGradientLight};
+		background: ${({ buttonColors }) => `linear-gradient(to bottom, ${buttonColors.gradiendLight} 5%, ${buttonColors.gradientDark} 100%)`};
+		background-color: ${({ buttonColors }) => buttonColors.gradiendLight};
 	}
 	:active {
 		position: relative;
