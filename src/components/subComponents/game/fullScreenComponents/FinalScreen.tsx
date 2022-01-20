@@ -1,9 +1,10 @@
 // Styles
 import { Card, CardHeader, CardBody } from "../../../generalComponents/styles";
-import { FlexContainer, ScreenTitle, CardContainer, HeaderIcon, PointsContainer, Description } from "../styles";
+import { FlexContainer, CardContainer, HeaderIcon, PointsContainer, Description } from "../styles";
 
 // Icons
 import { GiSwordman, GiSwordwoman } from "react-icons/gi";
+import { IoBarChartSharp } from "react-icons/io5";
 
 // Interfaces
 import { User, Points } from "../../../../utils/interfaces";
@@ -28,7 +29,7 @@ export default function FinalScreen({ owners, points, restartGame }: FinalScreen
 
 	return (
 		<FlexContainer>
-			<ScreenTitle>Final points</ScreenTitle>
+			<IoBarChartSharp size={100} />
 
 			<CardContainer>
 				{owners.map((owner: User, i: number) => {

@@ -135,13 +135,9 @@ export const BoldText = styled.span`
 `;
 
 // FINALSCREEN COMPONENT
-export const ScreenTitle = styled.div`
-	font-size: 2rem;
-	margin: 24px 0 16px 0;
-	font-weight: 550;
-`;
 
 export const CardContainer = styled.div`
+	margin-top: 24px;
 	display: flex;
 `;
 
