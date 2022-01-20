@@ -384,7 +384,7 @@ export default function MyWords() {
 				<PaginationButton>
 					<BsChevronLeft />
 				</PaginationButton>
-				<PageNumber>2</PageNumber>
+				<PageNumber>1</PageNumber>
 				<PaginationButton>
 					<BsChevronRight />
 				</PaginationButton>

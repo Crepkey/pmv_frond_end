@@ -154,7 +154,7 @@ export const BoldText = styled.span`
 export const ScreenTitle = styled.div`
 	font-size: 2rem;
 	margin: 24px 0 16px 0;
-	font-weight: bold;
+	font-weight: 550;
 `;
 
 export const CardContainer = styled.div`
@@ -181,7 +181,7 @@ export const SubTitle = styled.div`
 `;
 
 export const FormingSentence = styled.div`
-	font-weight: bold;
+	font-weight: 500;
 	margin-bottom: 24px;
 	font-size: 1.1rem;
 `;
