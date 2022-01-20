@@ -5,7 +5,7 @@ import range from "lodash/range";
 import { IoDiceOutline, IoAccessibility } from "react-icons/io5";
 
 // Styles
-import { FlexContainer, AnswerContainer, Answer, LargerMessage } from "../styles";
+import { FlexContainer, AnswerContainer, LargerMessage } from "../styles";
 
 // Components
 import Timer from "src/components/generalComponents/Timer";

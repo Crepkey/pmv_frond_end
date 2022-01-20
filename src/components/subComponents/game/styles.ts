@@ -27,12 +27,6 @@ export const SentenceCard = styled.div<{ lastElement: boolean }>`
 	border-bottom: 1px ${colors.border} solid;
 `;
 
-export const BoldLargeMessage = styled.div`
-	font-size: 2rem;
-	font-weight: 550;
-	margin: 16px;
-`;
-
 export const FlexContainer = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -79,22 +73,6 @@ export const GameBody = styled.div`
 // STARTSCREEN COMPONENT
 export const AnswerContainer = styled.div`
 	display: flex;
-`;
-
-export const Answer = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 40px;
-	height: 40px;
-	font-size: 1.5rem;
-	font-weight: bold;
-	border: solid 1px;
-	border-radius: 8px;
-	margin: 8px;
-	:hover {
-		cursor: pointer;
-	}
 `;
 
 export const LargerMessage = styled.div`
