@@ -46,6 +46,11 @@ export const TitleIcon = styled.div`
 	cursor: pointer;
 `;
 
+export const Description = styled.div`
+	font-size: 1.25rem;
+	margin-bottom: 24px;
+`;
+
 // GAME COMPONENT
 export const GameMainContainer = styled.div`
 	display: flex;
@@ -169,10 +174,6 @@ export const PointsContainer = styled.div`
 	font-weight: bold;
 `;
 
-export const ResultDescription = styled.div`
-	margin-bottom: 24px;
-`;
-
 // GRAMMARCARD COMPONENT
 export const SubTitle = styled.div`
 	font-weight: normal;
@@ -196,10 +197,4 @@ export const UsageDescription = styled.div<{ firstElement: boolean }>`
 export const UsageSentence = styled.div`
 	padding: 8px 0 12px 16px;
 	border-bottom: 1px ${colors.border} solid;
-`;
-
-// ERRORSCREEN COMPONENT
-
-export const ErrorMessage = styled.div`
-	font-size: 1.25rem;
 `;

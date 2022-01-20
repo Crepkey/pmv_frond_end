@@ -1,6 +1,6 @@
 // Styles
 import { Card, CardHeader, CardBody } from "../../../generalComponents/styles";
-import { FlexContainer, ScreenTitle, CardContainer, HeaderIcon, PointsContainer, BoldLargeMessage, ResultDescription } from "../styles";
+import { FlexContainer, ScreenTitle, CardContainer, HeaderIcon, PointsContainer, Description } from "../styles";
 
 // Icons
 import { GiSwordman, GiSwordwoman } from "react-icons/gi";
@@ -14,6 +14,7 @@ import get from "lodash/get";
 
 // Components
 import Button from "src/components/generalComponents/Button";
+import Question from "../../practiceWords/Question";
 
 interface FinalScreenProps {
 	owners: User[];
@@ -45,8 +46,8 @@ export default function FinalScreen({ owners, points, restartGame }: FinalScreen
 				})}
 			</CardContainer>
 
-			<BoldLargeMessage>Congratulations {winners.map((winner: User) => winner.name).join(" and ")}!</BoldLargeMessage>
-			<ResultDescription>{winners.length === 1 ? "You won." : "You had the same number of points."}</ResultDescription>
+			<Question text={`Congratulations ${winners.map((winner: User) => winner.name).join(" and ")}!`} />
+			<Description>{winners.length === 1 ? "You won." : "You had the same number of points."}</Description>
 
 			<Button title="Play again" onClick={restartGame} color="green" />
 		</FlexContainer>
