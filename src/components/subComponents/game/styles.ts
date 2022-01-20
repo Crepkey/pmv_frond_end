@@ -134,7 +134,8 @@ export const EvalRow = styled(Block)`
 `;
 
 export const ButtonContainer = styled.div`
-	margin-top: 24px;
+	margin-top: 12px;
+	margin-bottom: -12px;
 	display: flex;
 	justify-content: center;
 `;
