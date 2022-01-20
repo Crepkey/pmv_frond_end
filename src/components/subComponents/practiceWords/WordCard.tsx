@@ -53,7 +53,7 @@ const Background = styled.div<{ selected: boolean; activeBackgroundColor: ColorC
 	font-weight: 600;
 	font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
 	text-transform: uppercase;
-	border-radius: 24px;
+	border-radius: 150px;
 	background: ${({ selected, activeBackgroundColor }) => (selected ? activeBackgroundColor : colors.inactiveCardBackground)};
 	transition: all 0.8s ease;
 

@@ -34,7 +34,7 @@ const FadeInAnimation = keyframes`
 
 const QuestionContainer = styled.div`
 	padding: 24px;
-	font-weight: 700;
+	font-weight: 550;
 	font-size: 2rem;
 
 	animation-name: ${FadeInAnimation};
