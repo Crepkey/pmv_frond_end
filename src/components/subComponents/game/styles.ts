@@ -197,3 +197,9 @@ export const UsageSentence = styled.div`
 	padding: 8px 0 12px 16px;
 	border-bottom: 1px ${colors.border} solid;
 `;
+
+// ERRORSCREEN COMPONENT
+
+export const ErrorMessage = styled.div`
+	font-size: 1.25rem;
+`;

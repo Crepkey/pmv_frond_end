@@ -2,8 +2,10 @@
 import { IoSadOutline } from "react-icons/io5";
 
 // Styles
-import { FlexContainer, BoldLargeMessage } from "../styles";
+import { FlexContainer, ErrorMessage } from "../styles";
 
+// Components
+import Question from "../../practiceWords/Question";
 interface ErrorScreenProps {
 	error: string;
 }
@@ -11,9 +13,10 @@ interface ErrorScreenProps {
 export default function ErrorScreen({ error }: ErrorScreenProps) {
 	return (
 		<FlexContainer>
-			<IoSadOutline size={44} />
-			<BoldLargeMessage>Sorry, you can't play!</BoldLargeMessage>
-			{error}
+			<IoSadOutline size={100} />
+
+			<Question text={"Sorry, you can't play!"} />
+			<ErrorMessage>{error}</ErrorMessage>
 		</FlexContainer>
 	);
 }
