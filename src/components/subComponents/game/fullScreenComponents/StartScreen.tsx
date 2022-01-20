@@ -5,10 +5,12 @@ import range from "lodash/range";
 import { IoDiceOutline, IoAccessibility } from "react-icons/io5";
 
 // Styles
-import { FlexContainer, BoldLargeMessage, AnswerContainer, Answer, LargerMessage } from "../styles";
+import { FlexContainer, AnswerContainer, Answer, LargerMessage } from "../styles";
 
 // Components
 import Timer from "src/components/generalComponents/Timer";
+import Question from "../../practiceWords/Question";
+import WordNumber from "../WordNumber";
 
 interface StartScreenProps {
 	initialize: (numberOfWords: number) => void;
@@ -19,8 +21,8 @@ export default function StartScreen({ initialize, firstPlayer, countDownOn }: St
 	if (countDownOn) {
 		return (
 			<FlexContainer>
-				<IoAccessibility size={44} />
-				<BoldLargeMessage>The game starts with {firstPlayer}'s word</BoldLargeMessage>
+				<IoAccessibility size={100} />
+				<Question text={`The game starts with ${firstPlayer}'s word`} />
 				<LargerMessage>
 					in <Timer timeOfCounting={5} /> seconds
 				</LargerMessage>
@@ -30,13 +32,11 @@ export default function StartScreen({ initialize, firstPlayer, countDownOn }: St
 
 	return (
 		<FlexContainer>
-			<IoDiceOutline size={44} />
-			<BoldLargeMessage>How may words do you want to play with?</BoldLargeMessage>
+			<IoDiceOutline size={100} />
+			<Question text={"How may words do you want to play with?"} />
 			<AnswerContainer>
 				{range(5, 11).map((i: number) => (
-					<Answer key={i} onClick={() => initialize(i)}>
-						{i}
-					</Answer>
+					<WordNumber key={i} cardNumber={i} onSelect={() => initialize(i)} />
 				))}
 			</AnswerContainer>
 		</FlexContainer>
