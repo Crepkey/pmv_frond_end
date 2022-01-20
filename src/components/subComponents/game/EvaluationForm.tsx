@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import { AppContext } from "src/AppContext";
 
 // Styles
-import { Card, CardHeader, CardBody, CardTitle, CardBodyScrollContainer, ColoredButton } from "../../generalComponents/styles";
+import { Card, CardHeader, CardBody, CardTitle, CardBodyScrollContainer } from "../../generalComponents/styles";
 import { CheckBox, BoldText, ButtonContainer, EvalRow, TitleContainer } from "./styles";
 
 // Interfaces
@@ -25,6 +25,7 @@ import { calculateGamePoints } from "./calculations/calculateFinalResult";
 
 // Components
 import Timer from "src/components/generalComponents/Timer";
+import Button from "src/components/generalComponents/Button";
 
 interface EvaluationRowProps {
 	title: string;
@@ -139,7 +140,9 @@ export default function EvaluationForm({ actualWord, grammaticalStructureId, get
 					<EvaluationRow title="grammatical structure" checked={correctGrammar} toggleChecked={() => setCorrectGrammar(!correctGrammar)} />
 				</CardBodyScrollContainer>
 
-				<ButtonContainer>{/* <GreenButton onClick={save}>Save</GreenButton> */}</ButtonContainer>
+				<ButtonContainer>
+					<Button title="Save" onClick={save} color="green" />
+				</ButtonContainer>
 			</CardBody>
 		</Card>
 	);

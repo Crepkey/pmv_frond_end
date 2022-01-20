@@ -12,6 +12,9 @@ import { User, Points } from "../../../../utils/interfaces";
 import max from "lodash/max";
 import get from "lodash/get";
 
+// Components
+import Button from "src/components/generalComponents/Button";
+
 interface FinalScreenProps {
 	owners: User[];
 	points: Points;
@@ -45,7 +48,7 @@ export default function FinalScreen({ owners, points, restartGame }: FinalScreen
 			<BoldLargeMessage>Congratulations {winners.map((winner: User) => winner.name).join(" and ")}!</BoldLargeMessage>
 			<ResultDescription>{winners.length === 1 ? "You won." : "You had the same number of points."}</ResultDescription>
 
-			{/* <GreenButton onClick={restartGame}>Play again</GreenButton> */}
+			<Button title="Play again" onClick={restartGame} color="green" />
 		</FlexContainer>
 	);
 }
