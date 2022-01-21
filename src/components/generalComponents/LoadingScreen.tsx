@@ -20,173 +20,40 @@ const logoAnim = keyframes`
 	}
 `;
 
-const LCharAnim = keyframes`
+function calcLetterAnim(
+	horizontalDirection: "left" | "right",
+	horizontalDepth: `${number}px`,
+	verticalDepth: `${number}px`,
+	rotation: `${number}deg`,
+	returnPoint: `${number}%`,
+) {
+	const key = keyframes`
     0%{
         position: relative;
-        right: 0
-    }
-    50%{
-        position: relative;
-        right: 600px;
-        transform: rotate(360deg)
-    }
-
-    65%{
-        position: relative;
-        right: 0;
-        transform: rotate(0deg);
-    }
-    100%{
-        position: relative;
-        right: 0
-    }
-`;
-
-const OCharAnim = keyframes`
-    0%{
-        position: relative;
-        right: 0;
+        ${horizontalDirection}: 0;
         bottom: 0;
     }
     50%{
         position: relative;
-        right: 600px;
-        transform: rotate(540deg);
-        bottom: -300px;
+        ${horizontalDirection}: ${horizontalDepth};
+        transform: rotate(${rotation});
+        bottom: ${verticalDepth};
     }
-    70%{
-        position: relative;
-        right: 0;
-        bottom: 0;
-        transform: rotate(0deg);
-    }
-    100%{
-        position: relative;
-        right: 0;
-        bottom: 0;
-    }
-`;
 
-const ACharAnim = keyframes`
-    0%{
+    ${returnPoint}{
         position: relative;
-        right: 0;
-        bottom: 0;
-    }
-    50%{
-        position: relative;
-        right: 600px;
-        transform: rotate(720deg);
-        bottom: -600px;
-    }
-    75%{
-        position: relative;
-        right: 0;
-        bottom: 0;
+        ${horizontalDirection}: 0;
         transform: rotate(0deg);
+        bottom: 0;
     }
     100%{
         position: relative;
-        right: 0;
+        ${horizontalDirection}: 0;
         bottom: 0;
     }
 `;
-
-const DCharAnim = keyframes`
-    0%{
-        position: relative;
-        right: 0;
-        bottom: 0;
-    }
-    50%{
-        position: relative;
-        right: 300px;
-        transform: rotate(720deg);
-        bottom: -900px;
-    }
-    80%{
-        position: relative;
-        right: 0;
-        bottom: 0;
-        transform: rotate(0deg);
-    }
-    100%{
-        position: relative;
-        right: 0;
-        bottom: 0;
-    }
-`;
-
-const ICharAnim = keyframes`
-    0%{
-        position: relative;
-        left: 0;
-        bottom: 0;
-    }
-    50%{
-        position: relative;
-        left: 100px;
-        transform: rotate(360deg);
-        bottom: -900px;
-    }
-    85%{
-        position: relative;
-        left: 0;
-        bottom: 0;
-        transform: rotate(0deg);
-    }
-    100%{
-        position: relative;
-        left: 0;
-        bottom: 0;
-    }
-`;
-
-const NCharAnim = keyframes`
-    0%{
-        position: relative;
-        left: 0;
-        bottom: 0;
-    }
-    50%{
-        position: relative;
-        left: 600px;
-        transform: rotate(360deg);
-        bottom: -600px;
-    }
-    90%{
-        position: relative;
-        left: 0;
-        bottom: 0;
-        transform: rotate(0deg);
-    }
-    100%{
-        position: relative;
-        left: 0;
-        bottom: 0;
-    }
-`;
-
-const GCharAnim = keyframes`
-    0%{
-        position: relative;
-        left: 0
-    }
-    50%{
-        position: relative;
-        left: 600px;
-        transform: rotate(540deg)
-    }
-    95%{
-        position: relative;
-        left: 0;
-        transform: rotate(0deg);
-    }
-    100%{
-        position: relative;
-        left: 0
-    }
-`;
+	return key;
+}
 
 const MainContainer = styled.div`
 	display: flex;
@@ -194,67 +61,41 @@ const MainContainer = styled.div`
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	color: ${colors.inactiveFont};
-	font-family: none;
 `;
 
 const AnimatedLogo = styled(MainLogo)`
 	animation: ${logoAnim} 3s ease-in-out infinite;
-	animation-fill-mode: backwards;
 `;
 
 const TextContainer = styled.div`
 	display: flex;
+	margin-top: 24px;
+	font-family: none;
+	font-size: 5rem;
+	font-weight: 700;
+	color: ${colors.inactiveFont};
 `;
 
 const LChar = styled.div`
-	font-size: 5rem;
-	font-weight: 700;
-	margin-top: 24px;
-
-	animation: ${LCharAnim} 3s ease-in-out infinite;
+	animation: ${calcLetterAnim("right", "600px", "0px", "360deg", "65%")} 3s ease-in-out infinite;
 `;
 const OChar = styled.div`
-	font-size: 5rem;
-	font-weight: 700;
-	margin-top: 24px;
-
-	animation: ${OCharAnim} 3s ease-in-out infinite;
+	animation: ${calcLetterAnim("right", "600px", "-300px", "540deg", "70%")} 3s ease-in-out infinite;
 `;
 const AChar = styled.div`
-	font-size: 5rem;
-	font-weight: 700;
-	margin-top: 24px;
-
-	animation: ${ACharAnim} 3s ease-in-out infinite;
+	animation: ${calcLetterAnim("right", "600px", "-600px", "720deg", "75%")} 3s ease-in-out infinite;
 `;
 const DChar = styled.div`
-	font-size: 5rem;
-	font-weight: 700;
-	margin-top: 24px;
-
-	animation: ${DCharAnim} 3s ease-in-out infinite;
+	animation: ${calcLetterAnim("right", "300px", "-900px", "720deg", "80%")} 3s ease-in-out infinite;
 `;
 const IChar = styled.div`
-	font-size: 5rem;
-	font-weight: 700;
-	margin-top: 24px;
-
-	animation: ${ICharAnim} 3s ease-in-out infinite;
+	animation: ${calcLetterAnim("left", "100px", "-900px", "360deg", "85%")} 3s ease-in-out infinite;
 `;
 const NChar = styled.div`
-	font-size: 5rem;
-	font-weight: 700;
-	margin-top: 24px;
-
-	animation: ${NCharAnim} 3s ease-in-out infinite;
+	animation: ${calcLetterAnim("left", "600px", "-600px", "360deg", "90%")} 3s ease-in-out infinite;
 `;
 const GChar = styled.div`
-	font-size: 5rem;
-	font-weight: 700;
-	margin-top: 24px;
-
-	animation: ${GCharAnim} 3s ease-in-out infinite;
+	animation: ${calcLetterAnim("left", "600px", "0px", "540deg", "95%")} 3s ease-in-out infinite;
 `;
 
 export default function LoadingScreen() {
