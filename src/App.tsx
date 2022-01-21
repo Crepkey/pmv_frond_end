@@ -12,6 +12,7 @@ import { AppProvider } from "./AppContext";
 // Styles
 import styled from "styled-components";
 import PracticeWords from "./components/mainComponents/PracticeWords";
+import LoadingScreen from "./components/generalComponents/LoadingScreen";
 
 const MainContainer = styled.div`
 	display: flex;
@@ -31,7 +32,7 @@ function App() {
 					<Route path="/my-words" component={MyWords} />
 					<Route path="/practice/grammatical-structures" component={PracticeGrammar} />
 					<Route path="/lets-play" component={Game} />
-					<Route path="/" exact component={Home} />
+					<Route path="/" exact component={LoadingScreen} />
 					<Redirect to="/" />
 				</Switch>
 				<ToastHandler />
