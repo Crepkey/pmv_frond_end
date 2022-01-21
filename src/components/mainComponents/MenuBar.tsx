@@ -9,6 +9,7 @@ import MainLogo from "../generalComponents/MainLogo";
 import styled from "styled-components";
 import { colors } from "../../utils/colors";
 import { AppContext } from "../../AppContext";
+import DropDown from "../generalComponents/DropDown";
 
 const MainContainer = styled.div`
 	background-image: linear-gradient(to top, ${colors.headerGradientDarker}, ${colors.headerGradientDark}, ${colors.headerGradientLight});
@@ -74,8 +75,10 @@ export default function MenuBar() {
 			</LogoContainer>
 			<Menu>
 				<MenuItem to="/my-words/active-words">My words</MenuItem>
-				<MenuItem to={"/practice/words"}> Practice your words</MenuItem>
-				<MenuItem to="/practice/grammatical-structures">Practice grammatical structures</MenuItem>
+				<DropDown title="Practice">
+					<MenuItem to={"/practice/words"}> My words</MenuItem>
+					<MenuItem to="/practice/grammatical-structures">Grammatical structures</MenuItem>
+				</DropDown>
 				<MenuItem to="/lets-play">Let's play</MenuItem>
 			</Menu>
 			<UserAvatarContainer>
