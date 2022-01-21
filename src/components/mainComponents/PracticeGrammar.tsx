@@ -1,5 +1,5 @@
 // React
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Interfaces
 import { GrammaticalStructure } from "../../utils/interfaces";
@@ -15,6 +15,27 @@ import StartScreen from "../subComponents/practiceGrammar/fullScreenComponents/S
 export default function PracticeGrammar() {
 	const [grammaticalStructures, setGrammaticalStructures] = useState<GrammaticalStructure[]>([]);
 	const [actualIndex, setActualIndex] = useState<number>(0);
+
+	function showNextCard() {
+		if (actualIndex < grammaticalStructures.length) {
+			setActualIndex(actualIndex + 1);
+		} else {
+			setGrammaticalStructures([]);
+			setActualIndex(0);
+		}
+	}
+
+	useEffect(() => {
+		function handleEnter(e: any) {
+			if (e.key === "Enter") {
+				showNextCard();
+			}
+		}
+		window.addEventListener("keydown", handleEnter);
+		return () => {
+			window.removeEventListener("keydown", handleEnter);
+		};
+	});
 
 	const actualStructure = grammaticalStructures[actualIndex];
 
@@ -44,5 +65,5 @@ export default function PracticeGrammar() {
 		return null;
 	}
 
-	return <PracticeGrammarCard actualStructure={actualStructure} showNextCard={() => setActualIndex(actualIndex + 1)} />;
+	return <PracticeGrammarCard actualStructure={actualStructure} showNextCard={showNextCard} />;
 }
