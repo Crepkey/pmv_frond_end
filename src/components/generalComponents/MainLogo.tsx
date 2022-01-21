@@ -1,7 +1,7 @@
 import { colors } from "../../utils/colors";
 import styled from "styled-components";
 
-const MainContainer = styled.div<SpinnerBarProps>`
+const MainContainer = styled.div<MainLogoProps>`
 	display: flex;
 	width: ${({ size }) => size + "px"};
 	height: ${({ size }) => size + "px"};
@@ -45,7 +45,7 @@ const GreenArea = styled.div`
 	margin-top: 3%;
 `;
 
-const WhiteCircle = styled.div<SpinnerBarProps>`
+const WhiteCircle = styled.div<MainLogoProps>`
 	width: 50%;
 	height: 50%;
 	position: relative;
@@ -54,14 +54,15 @@ const WhiteCircle = styled.div<SpinnerBarProps>`
 	border-radius: 100%;
 	background: ${({ backgroundColor }) => backgroundColor};
 `;
-interface SpinnerBarProps {
+interface MainLogoProps {
 	size?: number;
 	backgroundColor?: string; // A color code in HEX or RGB(a)
+	className?: any;
 }
 
-export default function MainLogo({ size = 50, backgroundColor = "rgba(255, 255, 255, 1)" }: SpinnerBarProps) {
+export default function MainLogo({ size = 50, backgroundColor = "rgba(255, 255, 255, 1)", className }: MainLogoProps) {
 	return (
-		<MainContainer size={size}>
+		<MainContainer className={className} size={size}>
 			<RedArea />
 			<OrangeArea />
 			<GreenArea />
