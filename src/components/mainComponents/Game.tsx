@@ -16,6 +16,7 @@ import PlayingCard from "../subComponents/game/PlayingCard";
 import EvaluationForm from "../subComponents/game/EvaluationForm";
 import GrammarCard from "../subComponents/game/GrammarCard";
 import ProgressBar from "../generalComponents/ProgressBar";
+import LoadingScreen from "../generalComponents/LoadingScreen";
 
 // Utils
 import set from "lodash/set";
@@ -40,14 +41,7 @@ export default function Game() {
 	const actualOwnerId = actualWord?.ownerId;
 	const actualGrammaticalStructure = grammaticalStructures[actualIndex];
 
-	async function initialize(numberOfWords: number) {
-		setLoading(true);
-
-		const response = await fetch(`/lets-play?players=${playerIds[0]}&players=${playerIds[1]}&numberOfWords=${numberOfWords}`);
-		const parsedResponse = await response.json();
-
-		setLoading(false);
-
+	function evaluateResponse(parsedResponse: any) {
 		if (parsedResponse.error) {
 			setError(parsedResponse.error);
 			return;
@@ -66,9 +60,21 @@ export default function Game() {
 		setTimeout(() => setCountDownOn(false), 5002);
 	}
 
+	async function initialize(numberOfWords: number) {
+		setLoading(true);
+
+		const response = await fetch(`/lets-play?players=${playerIds[0]}&players=${playerIds[1]}&numberOfWords=${numberOfWords}`);
+		const parsedResponse = await response.json();
+
+		setTimeout(() => {
+			setLoading(false);
+			evaluateResponse(parsedResponse);
+		}, 3000);
+	}
+
 	/* LOADING */
 	if (loading === true) {
-		return <div>LOADING</div>;
+		return <LoadingScreen />;
 	}
 
 	/* ERROR */
