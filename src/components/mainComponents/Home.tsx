@@ -115,6 +115,29 @@ const creatorsAnim = keyframes`
 	}
 `;
 
+const logoAnim = keyframes`
+	0%{
+		position: relative;
+		top: -350px;
+		transform: rotate(20deg);
+	}
+	50%{
+		position: relative;
+		top: 50px;
+		transform: rotate(80deg);
+	}
+	75%{
+		position: relative;
+		top: -150px;
+		transform: rotate(-360deg);
+	}
+	100%{
+		position: relative;
+		top: 0;
+		transform: rotate(-720deg);
+	}
+`;
+
 const MainContainer = styled.div`
 	display: flex;
 	flex: 1;
@@ -181,10 +204,15 @@ const Creators = styled.div`
 	animation-fill-mode: backwards;
 `;
 
+const AnimatedLogo = styled(MainLogo)`
+	animation: ${logoAnim} 3s ease;
+	animation-fill-mode: backwards;
+`;
+
 export default function Home() {
 	return (
 		<MainContainer>
-			<MainLogo size={200} />
+			<AnimatedLogo size={200} />
 			<WelcomeText>WELCOME</WelcomeText>
 			<ToText>TO</ToText>
 			<PimpMyText>PIMP MY</PimpMyText>
