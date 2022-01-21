@@ -30,6 +30,12 @@ const LCharAnim = keyframes`
         right: 600px;
         transform: rotate(360deg)
     }
+
+    65%{
+        position: relative;
+        right: 0;
+        transform: rotate(0deg);
+    }
     100%{
         position: relative;
         right: 0
@@ -47,6 +53,12 @@ const OCharAnim = keyframes`
         right: 600px;
         transform: rotate(540deg);
         bottom: -300px;
+    }
+    70%{
+        position: relative;
+        right: 0;
+        bottom: 0;
+        transform: rotate(0deg);
     }
     100%{
         position: relative;
@@ -67,6 +79,12 @@ const ACharAnim = keyframes`
         transform: rotate(720deg);
         bottom: -600px;
     }
+    75%{
+        position: relative;
+        right: 0;
+        bottom: 0;
+        transform: rotate(0deg);
+    }
     100%{
         position: relative;
         right: 0;
@@ -85,6 +103,12 @@ const DCharAnim = keyframes`
         right: 300px;
         transform: rotate(720deg);
         bottom: -900px;
+    }
+    80%{
+        position: relative;
+        right: 0;
+        bottom: 0;
+        transform: rotate(0deg);
     }
     100%{
         position: relative;
@@ -105,6 +129,12 @@ const ICharAnim = keyframes`
         transform: rotate(360deg);
         bottom: -900px;
     }
+    85%{
+        position: relative;
+        left: 0;
+        bottom: 0;
+        transform: rotate(0deg);
+    }
     100%{
         position: relative;
         left: 0;
@@ -124,6 +154,12 @@ const NCharAnim = keyframes`
         transform: rotate(360deg);
         bottom: -600px;
     }
+    90%{
+        position: relative;
+        left: 0;
+        bottom: 0;
+        transform: rotate(0deg);
+    }
     100%{
         position: relative;
         left: 0;
@@ -140,6 +176,11 @@ const GCharAnim = keyframes`
         position: relative;
         left: 600px;
         transform: rotate(540deg)
+    }
+    95%{
+        position: relative;
+        left: 0;
+        transform: rotate(0deg);
     }
     100%{
         position: relative;
