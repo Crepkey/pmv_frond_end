@@ -232,6 +232,7 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 	const [hungarian, setHungarian] = useState<Hungarian[]>(initialHungarian);
 	const [word, setWord] = useState<Word>(initialWord || emptyWord);
 	const [errors, setErrors] = useState<number[]>([]);
+	const [autoFocus, setAutofocus] = useState<string>("");
 	const { setActiveModal } = useContext(AppContext);
 
 	function transfromHungarian() {
@@ -311,35 +312,48 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 
 						{errors.includes(2) ? <Label error={true}>{errorMessages[2]}</Label> : <Label>Hungarian meanings</Label>}
 						<Block>
-							{hungarian.map((hun: Hungarian, i: number) => (
-								<Row key={`${i}_hunMean`}>
-									<StringInput
-										error={errors.includes(2) && i === 0}
-										placeholder="Type one Hungarian meaning here..."
-										value={hun.meaning}
-										onChange={(e) => {
-											setErrors(errors.filter((e: number) => e !== 2));
-											const newHungarian = hungarian.map((h: Hungarian, index: number) => {
-												if (index === i) {
-													return { ...h, meaning: e.target.value, characterChange: (h.characterChange || 0) + 1 };
+							{hungarian.map((hun: Hungarian, i: number) => {
+								const key = `${i}_hunMean`;
+								console.log(autoFocus === key);
+								return (
+									<Row key={key}>
+										<StringInput
+											autoFocus={autoFocus === key}
+											error={errors.includes(2) && i === 0}
+											placeholder="Type one Hungarian meaning here..."
+											value={hun.meaning}
+											onChange={(e) => {
+												setErrors(errors.filter((e: number) => e !== 2));
+												const newHungarian = hungarian.map((h: Hungarian, index: number) => {
+													if (index === i) {
+														return { ...h, meaning: e.target.value, characterChange: (h.characterChange || 0) + 1 };
+													}
+													return h;
+												});
+												setHungarian(newHungarian);
+											}}
+											onKeyDown={(e) => {
+												if (e.key === "Enter") {
+													const newHun = [...hungarian];
+													newHun.splice(i + 1, 0, { meaning: "", point: 0 });
+													setHungarian(newHun);
+													setAutofocus(`${i + 1}_hunMean`);
 												}
-												return h;
-											});
-											setHungarian(newHungarian);
-										}}
-									/>
-									{i !== 0 && (
-										<DeleteIcon>
-											<BsTrash
-												onClick={(e) => {
-													const newHungarian = hungarian.filter((h: Hungarian, index: number) => index !== i);
-													setHungarian(newHungarian);
-												}}
-											/>
-										</DeleteIcon>
-									)}
-								</Row>
-							))}
+											}}
+										/>
+										{i !== 0 && (
+											<DeleteIcon>
+												<BsTrash
+													onClick={(e) => {
+														const newHungarian = hungarian.filter((h: Hungarian, index: number) => index !== i);
+														setHungarian(newHungarian);
+													}}
+												/>
+											</DeleteIcon>
+										)}
+									</Row>
+								);
+							})}
 							<AddNewRow>
 								<CircleButton
 									onClick={() => {
@@ -353,31 +367,41 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 
 						{errors.includes(3) ? <Label error={true}>{errorMessages[3]}</Label> : <Label>Example sentences</Label>}
 						<Block>
-							{word.exampleSentences.map((sentence: string, i: number) => (
-								<Row key={`${i}_sentence`}>
-									<StringInput
-										error={errors.includes(3) && i === 0}
-										placeholder="Type one example sentence here..."
-										value={sentence}
-										onChange={(e) => {
-											setErrors(errors.filter((e: number) => e !== 3));
-											const newWord = set({ ...word }, ["exampleSentences", i], e.target.value);
-											setWord(newWord);
-										}}
-									/>
+							{word.exampleSentences.map((sentence: string, i: number) => {
+								const key = `${i}_sentence`;
+								return (
+									<Row key={key}>
+										<StringInput
+											autoFocus={autoFocus === key}
+											error={errors.includes(3) && i === 0}
+											placeholder="Type one example sentence here..."
+											value={sentence}
+											onChange={(e) => {
+												setErrors(errors.filter((e: number) => e !== 3));
+												const newWord = set({ ...word }, ["exampleSentences", i], e.target.value);
+												setWord(newWord);
+											}}
+											onKeyDown={(e) => {
+												if (e.key === "Enter") {
+													setWord({ ...word, exampleSentences: [...word.exampleSentences, ""] });
+													setAutofocus(`${i + 1}_sentence`);
+												}
+											}}
+										/>
 
-									{i !== 0 && (
-										<DeleteIcon>
-											<BsTrash
-												onClick={(e) => {
-													const newArray = word.exampleSentences.filter((s: string, index: number) => index !== i);
-													setWord({ ...word, exampleSentences: newArray });
-												}}
-											/>
-										</DeleteIcon>
-									)}
-								</Row>
-							))}
+										{i !== 0 && (
+											<DeleteIcon>
+												<BsTrash
+													onClick={(e) => {
+														const newArray = word.exampleSentences.filter((s: string, index: number) => index !== i);
+														setWord({ ...word, exampleSentences: newArray });
+													}}
+												/>
+											</DeleteIcon>
+										)}
+									</Row>
+								);
+							})}
 							<AddNewRow>
 								<CircleButton
 									onClick={() => {
@@ -391,31 +415,41 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 
 						{errors.includes(3) ? <Label error={true}>{errorMessages[4]}</Label> : <Label>Definitions</Label>}
 						<Block>
-							{word.definitions.map((definition: string, i: number) => (
-								<Row key={`${i}definition`}>
-									<StringInput
-										error={errors.includes(4) && i === 0}
-										placeholder="Type one definition here..."
-										value={definition}
-										onChange={(e) => {
-											setErrors(errors.filter((e: number) => e !== 4));
-											const newWord = set({ ...word }, ["definitions", i], e.target.value);
-											setWord(newWord);
-										}}
-									/>
+							{word.definitions.map((definition: string, i: number) => {
+								const key = `${i}_definition`;
+								return (
+									<Row key={key}>
+										<StringInput
+											autoFocus={autoFocus === key}
+											error={errors.includes(4) && i === 0}
+											placeholder="Type one definition here..."
+											value={definition}
+											onChange={(e) => {
+												setErrors(errors.filter((e: number) => e !== 4));
+												const newWord = set({ ...word }, ["definitions", i], e.target.value);
+												setWord(newWord);
+											}}
+											onKeyDown={(e) => {
+												if (e.key === "Enter") {
+													setWord({ ...word, definitions: [...word.definitions, ""] });
+													setAutofocus(`${i + 1}_definition`);
+												}
+											}}
+										/>
 
-									{i !== 0 && (
-										<DeleteIcon>
-											<BsTrash
-												onClick={(e) => {
-													const newArray = word.definitions.filter((s: string, index: number) => index !== i);
-													setWord({ ...word, definitions: newArray });
-												}}
-											/>
-										</DeleteIcon>
-									)}
-								</Row>
-							))}
+										{i !== 0 && (
+											<DeleteIcon>
+												<BsTrash
+													onClick={(e) => {
+														const newArray = word.definitions.filter((s: string, index: number) => index !== i);
+														setWord({ ...word, definitions: newArray });
+													}}
+												/>
+											</DeleteIcon>
+										)}
+									</Row>
+								);
+							})}
 							<AddNewRow>
 								<CircleButton
 									onClick={() => {
