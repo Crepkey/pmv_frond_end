@@ -38,7 +38,7 @@ export const HeartIcon = styled(Icon)`
 `;
 
 export const CardBody = styled.div`
-	padding-bottom: 24px;
+	padding-bottom: 12px;
 	display: flex;
 	flex-direction: column;
 	flex: 1;
@@ -56,7 +56,7 @@ export const ScrollContainer = styled.div`
 	min-height: 0;
 	overflow: scroll;
 	flex: 1;
-	margin-bottom: 24px;
+	margin-bottom: 12px;
 	padding: 24px 24px 0 24px;
 `;
 
@@ -119,28 +119,6 @@ export const Textarea = styled.textarea`
 	}
 	:focus {
 		outline: 1px ${colors.activeBorder} solid;
-	}
-`;
-
-export const Button = styled.div`
-	display: inline-block;
-	width: fit-content;
-	cursor: pointer;
-	color: ${colors.buttonFont};
-	font-size: 1rem;
-	font-weight: bold;
-	padding: 6px 24px;
-	text-decoration: none;
-	border-radius: 15px;
-	border: none;
-	background-color: ${colors.acceptButtonBackground};
-	:hover {
-		background: linear-gradient(to bottom, ${colors.acceptButtonGradientLight} 5%, ${colors.acceptButtonGradientDark} 100%);
-		background-color: ${colors.acceptButtonGradientLight};
-	}
-	:active {
-		position: relative;
-		top: 1px;
 	}
 `;
 

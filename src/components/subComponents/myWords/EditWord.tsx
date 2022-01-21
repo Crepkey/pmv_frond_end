@@ -19,7 +19,8 @@ import { emptyWord } from "../../../utils/utils";
 import ArrayInput from "./ArrayInput";
 
 // Styles
-import { Card, CardHeader, Icon, CardBody, ScrollContainer, Form, Label, Row, StringInput, HeartIcon, Select, Textarea, Button } from "./styles";
+import { Card, CardHeader, Icon, CardBody, ScrollContainer, Form, Label, Row, StringInput, HeartIcon, Select, Textarea } from "./styles";
+import Button from "src/components/generalComponents/Button";
 
 interface EditWordProps {
 	title: string;
@@ -223,7 +224,7 @@ export default function EditWord({ initialWord, title, save }: EditWordProps) {
 				</ScrollContainer>
 
 				<Row>
-					<Button onClick={saveForm}>Save</Button>
+					<Button onClick={saveForm} color="green" title="Save" />
 				</Row>
 			</CardBody>
 		</Card>
