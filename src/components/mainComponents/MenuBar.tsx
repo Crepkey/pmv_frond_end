@@ -47,6 +47,20 @@ const MenuItem = styled(Link)`
 	}
 `;
 
+const SelectItem = styled(Link)`
+	text-decoration: none;
+	color: ${colors.inactiveFont};
+	font-weight: 550;
+	margin-right: 8px;
+	padding: 4px 8px;
+	margin: 4px 0;
+	border-left: 3px rgba(0, 0, 0, 0) solid; // invisible border, but needed for the fix height
+	:hover {
+		color: ${colors.activeFont};
+		border-left: 3px ${colors.activeBorder} solid;
+	}
+`;
+
 const UserAvatarContainer = styled.div`
 	display: flex;
 	align-items: center;
@@ -76,8 +90,8 @@ export default function MenuBar() {
 			<Menu>
 				<MenuItem to="/my-words/active-words">My words</MenuItem>
 				<DropDown title="Practice">
-					<MenuItem to={"/practice/words"}> My words</MenuItem>
-					<MenuItem to="/practice/grammatical-structures">Grammatical structures</MenuItem>
+					<SelectItem to={"/practice/words"}> My words</SelectItem>
+					<SelectItem to="/practice/grammatical-structures">Grammatical structures</SelectItem>
 				</DropDown>
 				<MenuItem to="/lets-play">Let's play</MenuItem>
 			</Menu>

@@ -13,13 +13,15 @@ const ChildrenContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: max-content;
-	padding: 4px 8px;
+	padding: 8px;
 	z-index: 500;
-	border-radius: 4px;
+	border-radius: 8px;
 	top: 37px;
 	left: 50%;
 	transform: translate(-50%, 0);
 	background-image: linear-gradient(to top, ${colors.headerGradientDarker}, ${colors.headerGradientDark}, ${colors.headerGradientLight});
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	border: 1px solid ${colors.border};
 `;
 
 const MenuItem = styled.div`
@@ -48,7 +50,7 @@ export default function DropDown({ children, title }: DropDownProps) {
 		return (
 			<MainContainer onMouseLeave={() => setDisplayOn(false)}>
 				<MenuItem>{title}</MenuItem>
-				<ChildrenContainer>{children}</ChildrenContainer>
+				<ChildrenContainer onClick={() => setDisplayOn(false)}>{children}</ChildrenContainer>
 			</MainContainer>
 		);
 	}
