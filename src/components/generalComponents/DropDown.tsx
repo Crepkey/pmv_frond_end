@@ -8,7 +8,7 @@ const MainContainer = styled.div`
 	position: relative;
 `;
 
-const ChildrenContainer = styled.div`
+const ListContainer = styled.div`
 	position: absolute;
 	display: flex;
 	flex-direction: column;
@@ -24,7 +24,7 @@ const ChildrenContainer = styled.div`
 	border: 1px solid ${colors.border};
 `;
 
-const MenuItem = styled.div`
+const Title = styled.div`
 	text-decoration: none;
 	color: ${colors.inactiveFont};
 	font-weight: 550;
@@ -49,14 +49,14 @@ export default function DropDown({ children, title }: DropDownProps) {
 	if (displayOn) {
 		return (
 			<MainContainer onMouseLeave={() => setDisplayOn(false)}>
-				<MenuItem>{title}</MenuItem>
-				<ChildrenContainer onClick={() => setDisplayOn(false)}>{children}</ChildrenContainer>
+				<Title>{title}</Title>
+				<ListContainer onClick={() => setDisplayOn(false)}>{children}</ListContainer>
 			</MainContainer>
 		);
 	}
 	return (
 		<MainContainer onMouseEnter={() => setDisplayOn(true)}>
-			<MenuItem>{title}</MenuItem>
+			<Title>{title}</Title>
 		</MainContainer>
 	);
 }
