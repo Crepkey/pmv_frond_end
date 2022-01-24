@@ -38,6 +38,8 @@ export default function StartScreen({ initialize, firstPlayer, countDownOn }: St
 				{range(5, 11).map((i: number) => (
 					<WordNumber key={i} cardNumber={i} onSelect={() => initialize(i)} />
 				))}
+
+				<WordNumber cardNumber={100} onSelect={() => initialize(100)} />
 			</AnswerContainer>
 		</FlexContainer>
 	);
