@@ -23,7 +23,7 @@ You need to install the **REACT JS with TypeScript** and set the IDEA to start t
 Back-end repo: [Click here for the repo](https://github.com/PetraVagi/pmv_back_end).
 Shared-repo: [Click here for the repo](https://github.com/Crepkey/pmv_shared).
 
-All the folders of repos have to be in the same folder so that the references can work properly.
+Repo folders have to be in the same folder so that the references can work properly.
 
 ## Contacts
 
