@@ -69,7 +69,13 @@ export default function Game() {
 		setTimeout(() => {
 			setLoading(false);
 			evaluateResponse(parsedResponse);
-		}, 3000);
+		}, 3000); // this setTimeout is only needed so that we can show the loading screen
+	}
+
+	function restartGame() {
+		setActualIndex(0);
+		setWords([]);
+		setError(null);
 	}
 
 	/* LOADING */
@@ -79,7 +85,7 @@ export default function Game() {
 
 	/* ERROR */
 	if (error !== null) {
-		return <ErrorScreen error={error} />;
+		return <ErrorScreen error={error} restartGame={restartGame} />;
 	}
 
 	/* START OF THE GAME */
@@ -95,16 +101,7 @@ export default function Game() {
 
 	/* END OF THE GAME */
 	if (actualIndex >= words.length) {
-		return (
-			<FinalScreen
-				owners={owners}
-				points={points}
-				restartGame={() => {
-					setActualIndex(0);
-					setWords([]);
-				}}
-			/>
-		);
+		return <FinalScreen owners={owners} points={points} restartGame={restartGame} />;
 	}
 
 	/* GAME */

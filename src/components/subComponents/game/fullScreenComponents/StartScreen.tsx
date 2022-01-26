@@ -33,11 +33,13 @@ export default function StartScreen({ initialize, firstPlayer, countDownOn }: St
 	return (
 		<FlexContainer>
 			<IoDiceOutline size={100} />
-			<Question text={"How may words do you want to play with?"} />
+			<Question text={"How many words do you want to play with?"} />
 			<AnswerContainer>
 				{range(5, 11).map((i: number) => (
 					<WordNumber key={i} cardNumber={i} onSelect={() => initialize(i)} />
 				))}
+
+				<WordNumber cardNumber={100} onSelect={() => initialize(100)} />
 			</AnswerContainer>
 		</FlexContainer>
 	);

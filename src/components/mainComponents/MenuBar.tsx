@@ -90,8 +90,8 @@ export default function MenuBar() {
 			<Menu>
 				<MenuItem to="/my-words/active-words">My words</MenuItem>
 				<DropDown title="Practice">
-					<SelectItem to={"/practice/words"}> My words</SelectItem>
 					<SelectItem to="/practice/grammatical-structures">Grammatical structures</SelectItem>
+					<SelectItem to={"/practice/words"}> My words</SelectItem>
 				</DropDown>
 				<MenuItem to="/lets-play">Let's play</MenuItem>
 			</Menu>
